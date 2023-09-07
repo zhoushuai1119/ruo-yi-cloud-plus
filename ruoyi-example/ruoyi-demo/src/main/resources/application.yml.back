@@ -1,0 +1,146 @@
+# Tomcat
+server:
+  port: 9401
+
+# Spring
+spring:
+  application:
+    # 应用名称
+    name: ruoyi-demo
+  profiles:
+    # 环境配置
+    active: dev
+
+  cloud:
+    nacos:
+      # nacos 服务地址
+      server-addr: 139.196.208.53:8848
+      discovery:
+        namespace: ${spring.profiles.active}
+        username: nacos
+        password: nacos
+
+  datasource:
+    dynamic:
+      seata: false
+      # 设置默认的数据源或者数据源组,默认值即为 master
+      primary: master
+      datasource:
+        # 主库数据源
+        master:
+          type: ${spring.datasource.type}
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          url: ${datasource.system-master.url}
+          username: ${datasource.system-master.username}
+          password: ${datasource.system-master.password}
+        sharding:
+          lazy: true
+          type: ${spring.datasource.type}
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          # shardingproxy 服务的ip地址
+          url: jdbc:mysql://127.0.0.1:3307/data-center_db?useSSL=false&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true&tinyInt1isBit=false&allowMultiQueries=true&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true
+          username: root
+          password: root
+
+--- # elasticsearch 功能配置
+# 文档地址: https://www.easy-es.cn/
+# 更改包名需要去 EasyEsConfiguration 修改包扫描(后续版本支持配置文件读取)
+easy-es:
+  # 是否开启EE自动配置
+  enable: false
+  # es连接地址+端口 格式必须为ip:port,如果是集群则可用逗号隔开
+  address : 139.196.208.53:9200
+  # 默认为http
+  schema: http
+  # 注意ES建议使用账号认证 不使用会报警告日志
+  #如果无账号密码则可不配置此行
+  #username:
+  #如果无账号密码则可不配置此行
+  #password:
+  # 心跳策略时间 单位:ms
+  keep-alive-millis: 18000
+  # 连接超时时间 单位:ms
+  connectTimeout: 5000
+  # 通信超时时间 单位:ms
+  socketTimeout: 5000
+  # 请求超时时间 单位:ms
+  requestTimeout: 5000
+  # 连接请求超时时间 单位:ms
+  connectionRequestTimeout: 5000
+  # 最大连接数 单位:个
+  maxConnTotal: 100
+  # 最大连接路由数 单位:个
+  maxConnPerRoute: 100
+  global-config:
+    # 开启控制台打印通过本框架生成的DSL语句,默认为开启,测试稳定后的生产环境建议关闭,以提升少量性能
+    print-dsl: true
+    # 异步处理索引是否阻塞主线程 默认阻塞 数据量过大时调整为非阻塞异步进行 项目启动更快
+    asyncProcessIndexBlocking: true
+    db-config:
+      # 是否开启下划线转驼峰 默认为false
+      map-underscore-to-camel-case: true
+      # id生成策略 customize为自定义,id值由用户生成,比如取MySQL中的数据id,如缺省此项配置,则id默认策略为es自动生成
+      id-type: customize
+      # 字段更新策略 默认为not_null
+      field-strategy: not_null
+      # 默认开启,查询若指定了size超过1w条时也会自动开启,开启后查询所有匹配数据,若不开启,会导致无法获取数据总条数,其它功能不受影响.
+      enable-track-total-hits: true
+      # 数据刷新策略,默认为不刷新
+      refresh-policy: immediate
+      # 是否全局开启must查询类型转换为filter查询类型 默认为false不转换
+      enable-must2-filter: false
+
+websocket:
+  enabled: true
+  # 路径
+  path: /websocket
+  # 设置访问源地址
+  allowedOrigins: '*'
+
+mail:
+  enabled: false
+  host: smtp.163.com
+  port: 465
+  # 是否需要用户名密码验证
+  auth: true
+  # 发送方，遵循RFC-822标准
+  from: xxx@163.com
+  # 用户名（注意：如果使用foxmail邮箱，此处user为qq号）
+  user: xxx@163.com
+  # 密码（注意，某些邮箱需要为SMTP服务单独设置密码，详情查看相关帮助）
+  pass: xxxxxxxxxx
+  # 使用 STARTTLS安全连接，STARTTLS是对纯文本通信协议的扩展。
+  starttlsEnable: true
+  # 使用SSL安全连接
+  sslEnable: true
+  # SMTP超时时长，单位毫秒，缺省值不超时
+  timeout: 0
+  # Socket连接超时值，单位毫秒，缺省值不超时
+  connectionTimeout: 0
+
+# sms 短信 支持 阿里云 腾讯云 云片 等等各式各样的短信服务商
+# https://wind.kim/doc/start 文档地址 各个厂商可同时使用
+sms:
+  # 阿里云 dysmsapi.aliyuncs.com
+  alibaba:
+    #请求地址 默认为 dysmsapi.aliyuncs.com 如无特殊改变可以不用设置
+    requestUrl: dysmsapi.aliyuncs.com
+    #阿里云的accessKey
+    accessKeyId: xxxxxxx
+    #阿里云的accessKeySecret
+    accessKeySecret: xxxxxxx
+    #短信签名
+    signature: 测试
+  tencent:
+    #请求地址默认为 sms.tencentcloudapi.com 如无特殊改变可不用设置
+    requestUrl: sms.tencentcloudapi.com
+    #腾讯云的accessKey
+    accessKeyId: xxxxxxx
+    #腾讯云的accessKeySecret
+    accessKeySecret: xxxxxxx
+    #短信签名
+    signature: 测试
+    #短信sdkAppId
+    sdkAppId: appid
+    #地域信息默认为 ap-guangzhou 如无特殊改变可不用设置
+    territory: ap-guangzhou

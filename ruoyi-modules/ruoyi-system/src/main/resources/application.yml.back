@@ -1,0 +1,42 @@
+# Tomcat
+server:
+  port: 9201
+
+# Spring
+spring:
+  application:
+    # 应用名称
+    name: ruoyi-system
+  profiles:
+    # 环境配置
+    active: dev
+
+  cloud:
+    nacos:
+      server-addr: 139.196.208.53:8848
+      discovery:
+        namespace: ${spring.profiles.active}
+        username: nacos
+        password: nacos
+
+  # DingTalk告警
+  dinger:
+    project-id: ${spring.application.name}
+    default-dinger: wetalk
+    dingers:
+      wetalk:
+        token-id: 0a0b9279-ac5b-4b95-bb69-e30a9dde286e
+
+  datasource:
+    dynamic:
+      # 设置默认的数据源或者数据源组,默认值即为 master
+      primary: master
+      seata: true
+      datasource:
+        # 主库数据源
+        master:
+          type: ${spring.datasource.type}
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          url: ${datasource.system-master.url}
+          username: ${datasource.system-master.username}
+          password: ${datasource.system-master.password}

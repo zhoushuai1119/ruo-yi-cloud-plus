@@ -1,0 +1,66 @@
+# Tomcat
+server:
+  port: 9210
+
+# Spring
+spring:
+  application:
+    # 应用名称
+    name: ruoyi-auth
+  profiles:
+    # 环境配置
+    active: dev
+
+  cloud:
+    nacos:
+      server-addr: 139.196.208.53:8848
+      discovery:
+        namespace: ${spring.profiles.active}
+        username: nacos
+        password: nacos
+
+# 安全配置
+security:
+  # 验证码
+  captcha:
+    # 是否开启验证码
+    enabled: true
+    # 验证码类型 math 数组计算 char 字符验证
+    type: MATH
+    # line 线段干扰 circle 圆圈干扰 shear 扭曲干扰
+    category: CIRCLE
+    # 数字验证码位数
+    numberLength: 1
+    # 字符验证码长度
+    charLength: 4
+
+# 用户配置
+user:
+  password:
+    # 密码最大错误次数
+    maxRetryCount: 5
+    # 密码锁定时间（默认10分钟）
+    lockTime: 10
+
+--- # 三方授权
+justauth:
+  enabled: true
+  # 前端外网访问地址
+  address: http://localhost:8081
+  type:
+    maxkey:
+      # maxkey 服务器地址
+      # 注意 如下均配置均不需要修改 maxkey 已经内置好了数据
+      server-url: http://sso.maxkey.top
+      client-id: 876892492581044224
+      client-secret: x1Y5MTMwNzIwMjMxNTM4NDc3Mzche8
+      redirect-uri: ${justauth.address}/social-callback?source=maxkey
+    gitee:
+      client-id: e8c348258b45c17d433a77e672cae8104a09fd84b6c24858972badc483f137b3
+      client-secret: 6c23749d129a1aa931a9e7765b53bd46c3ef7e6b8a659896043b5af186091e3f
+      redirect-uri: ${justauth.address}/social-callback?source=gitee
+    alipay:
+      client-id: 10**********6
+      client-secret: 1f7d08**********5b7**********29e
+      redirect-uri: ${justauth.address}/social-callback?source=alipay
+      alipay-public-key: MIIB**************DAQAB

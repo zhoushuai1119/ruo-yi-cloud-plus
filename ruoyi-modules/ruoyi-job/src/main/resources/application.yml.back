@@ -1,0 +1,78 @@
+# Tomcat
+server:
+  port: 9203
+
+# Spring
+spring:
+  application:
+    # 应用名称
+    name: ruoyi-job
+  profiles:
+    # 环境配置
+    active: dev
+
+  cloud:
+    nacos:
+      # nacos 服务地址
+      server-addr: 139.196.208.53:8848
+      discovery:
+        # 注册组
+        namespace: ${spring.profiles.active}
+        username: nacos
+        password: nacos
+
+  datasource:
+    dynamic:
+      # 设置默认的数据源或者数据源组,默认值即为 master
+      primary: master
+      seata: false
+      datasource:
+        # 主库数据源
+        master:
+          type: ${spring.datasource.type}
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          url: ${datasource.system-master.url}
+          username: ${datasource.system-master.username}
+          password: ${datasource.system-master.password}
+
+# powerjob 配置
+powerjob:
+  worker:
+    enabled: true
+    # 接入应用名称，用于分组隔离，推荐填写 本 Java 项目名称
+    app-name: powerjob-worker-samples
+    # 29203 端口 随着主应用端口飘逸 避免集群冲突
+    port: 2${server.port}
+    enable-test-mode: false
+    # 单个任务追加的工作流上下文最大长度，超过这个长度的会被直接丢弃，默认值 8192
+    max-appended-wf-context-length: 4096
+    # 同时运行的轻量级任务数量上限
+    max-lightweight-task-num: 1024
+    # 同时运行的重量级任务数量上限
+    max-heavyweight-task-num: 64
+    # 任务返回结果信息的最大长度，超过这个长度的信息会被截断，默认值 8192
+    max-result-length: 4096
+    # 通讯协议，4.3.0 开始支持 HTTP 和 AKKA 两种协议，官方推荐使用 HTTP 协议（注意 server 和 worker 都要开放相应端口）
+    protocol: http
+    # 调度服务器地址，IP:Port 或 域名，多值逗号分隔
+    server-address: 127.0.0.1:7700
+    # 持久化方式，可选，默认 disk
+    store-strategy: disk
+
+#rocketmq配置
+cloud:
+  rocketmq:
+    acl:
+      accessKey: zhoushuai
+      secretKey: zs19921119
+    consumer:
+      enableMsgTrace: false
+      group-name: c-${spring.application.name}
+    name-server: 139.196.208.53:9876
+    producer:
+      enableMsgTrace: false
+      group-name: p-${spring.application.name}
+  time-based-job:
+    discardTaskSeconds: 300
+    enabled: true
+    thread-pool-size: 20
