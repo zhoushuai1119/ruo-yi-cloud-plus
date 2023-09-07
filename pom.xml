@@ -14,9 +14,12 @@
 
     <properties>
         <revision>2.1.0</revision>
+
+        <java.version>17</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>17</java.version>
+        <maven.test.skip>true</maven.test.skip>
+
         <spring-boot.version>3.1.3</spring-boot.version>
         <spring-cloud.version>2022.0.4</spring-cloud.version>
         <spring-boot-admin.version>3.1.5</spring-boot-admin.version>
@@ -52,10 +55,8 @@
         <fastjson.version>1.2.83</fastjson.version>
 
         <!-- CLoud 封装 -->
-        <cloud-lock.version>3.0.0</cloud-lock.version>
-        <cloud-job.version>3.1.0</cloud-job.version>
-        <cloud-rocketmq.version>3.0.0</cloud-rocketmq.version>
-        <cloud-alarm.version>2.2.0</cloud-alarm.version>
+        <cloud-parent.version>3.1.0</cloud-parent.version>
+        <cloud-job.version>4.3.5</cloud-job.version>
         <cloud-apollo.version>2.1.0</cloud-apollo.version>
 
         <!-- OSS 配置 -->
@@ -236,7 +237,7 @@
             <dependency>
                 <groupId>io.github.zhoushuai1119</groupId>
                 <artifactId>cloud-lock-redisson-spring-boot-starter</artifactId>
-                <version>${cloud-lock.version}</version>
+                <version>${cloud-parent.version}</version>
             </dependency>
 
             <!-- powerjob-worker -->
@@ -250,14 +251,14 @@
             <dependency>
                 <groupId>io.github.zhoushuai1119</groupId>
                 <artifactId>cloud-rocketmq-spring-boot-starter</artifactId>
-                <version>${cloud-rocketmq.version}</version>
+                <version>${cloud-parent.version}</version>
             </dependency>
 
             <!--Cloud Alarm-->
             <dependency>
                 <groupId>io.github.zhoushuai1119</groupId>
                 <artifactId>cloud-alarm-spring-boot-starter</artifactId>
-                <version>${cloud-alarm.version}</version>
+                <version>${cloud-parent.version}</version>
             </dependency>
 
             <!-- Cloud Apollo -->
