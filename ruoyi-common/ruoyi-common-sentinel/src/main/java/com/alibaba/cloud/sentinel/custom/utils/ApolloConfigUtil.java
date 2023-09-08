@@ -36,12 +36,12 @@ public final class ApolloConfigUtil {
     /**
      * sentinel限流规则配置namespace
      */
-    private static final String SENTINEL_RULES_NAMESPACE = "development.sentinel-rules";
+    private static final String SENTINEL_RULES_NAMESPACE = "sentinel-rules";
 
     /**
      * token server namespace
      */
-    private static final String TOKEN_SERVER_NAMESPACE = "development.token-server";
+    private static final String TOKEN_SERVER_NAMESPACE = "token-server";
 
     /**
      * token server rule key

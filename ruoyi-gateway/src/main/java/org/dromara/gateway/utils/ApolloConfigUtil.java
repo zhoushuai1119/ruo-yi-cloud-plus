@@ -31,7 +31,7 @@ public final class ApolloConfigUtil {
     /**
      * sentinel网关规则配置namespace
      */
-    private static final String SENTINEL_GATEWAY_RULES_NAMESPACE = "development.gateway-rules";
+    private static final String SENTINEL_GATEWAY_RULES_NAMESPACE = "gateway-rules";
 
 
     public static String getGatewayFlowDataId(String appName) {
