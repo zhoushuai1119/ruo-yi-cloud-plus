@@ -90,6 +90,7 @@ spring:
 
 # redisson 配置
 redisson:
+  enable: true
   # redis key前缀
   keyPrefix:
   # 线程池数量
