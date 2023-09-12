@@ -33,10 +33,11 @@
         </dependency>
 
         <!-- prometheus 监控 -->
-<!--        <dependency>-->
-<!--            <groupId>org.dromara</groupId>-->
-<!--            <artifactId>ruoyi-common-prometheus</artifactId>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>org.dromara</groupId>
+            <artifactId>ruoyi-common-prometheus</artifactId>
+        </dependency>
+
     </dependencies>
 
 </project>
