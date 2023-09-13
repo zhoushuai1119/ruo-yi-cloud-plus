@@ -20,11 +20,12 @@
     </description>
 
     <dependencies>
-        <!-- 自定义负载均衡(多团队开发使用) -->
-<!--        <dependency>-->
-<!--            <groupId>org.dromara</groupId>-->
-<!--            <artifactId>ruoyi-common-loadbalancer</artifactId>-->
-<!--        </dependency>-->
+
+        <!-- ELK 日志收集 -->
+        <dependency>
+            <groupId>net.logstash.logback</groupId>
+            <artifactId>logstash-logback-encoder</artifactId>
+        </dependency>
 
         <!-- skywalking 日志收集 -->
         <dependency>
