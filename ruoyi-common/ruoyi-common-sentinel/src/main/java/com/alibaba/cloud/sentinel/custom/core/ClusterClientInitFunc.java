@@ -36,15 +36,15 @@ public class ClusterClientInitFunc implements InitFunc {
     /**
      * token server namespace
      */
-    private String tokenServerNameSpace = ApolloConfigUtil.getTokenServerRulesNamespace();
+    private final String tokenServerNameSpace = ApolloConfigUtil.getTokenServerRulesNamespace();
     /**
      * sentinel限流规则配置namespace
      */
-    private String sentinelRulesNameSpace = ApolloConfigUtil.getSentinelRulesNamespace();
+    private final String sentinelRulesNameSpace = ApolloConfigUtil.getSentinelRulesNamespace();
     /**
      * defaultRules
      */
-    private String defaultRules = "[]";
+    private final String defaultRules = "[]";
 
     @Override
     public void init() {

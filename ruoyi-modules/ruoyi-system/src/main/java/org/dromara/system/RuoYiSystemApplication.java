@@ -14,6 +14,8 @@ import org.springframework.boot.context.metrics.buffering.BufferingApplicationSt
 @SpringBootApplication
 public class RuoYiSystemApplication {
     public static void main(String[] args) {
+        // 修改sentinel日志生成目录
+        System.setProperty("csp.sentinel.log.dir", "/logs/ruoyi/ruoyi-system/sentinel");
         SpringApplication application = new SpringApplication(RuoYiSystemApplication.class);
         application.setApplicationStartup(new BufferingApplicationStartup(2048));
         application.run(args);
