@@ -1,6 +1,7 @@
 package org.dromara.common.json.config;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
@@ -54,10 +55,18 @@ public class JacksonConfig {
             javaTimeModule.addSerializer(LocalDate.class, new LocalDateSerializer(MY_DATE));
             builder.modules(javaTimeModule);
             builder.timeZone(TimeZone.getDefault());
-            // 设置Date日期格式,不影响LocalDateTime和LocalDate
-            builder.dateFormat(DATE_FORMAT_TIME);
             // 空值不序列化
             builder.serializationInclusion(JsonInclude.Include.NON_NULL);
+            // 设置Date日期格式,不影响LocalDateTime和LocalDate
+            builder.dateFormat(DATE_FORMAT_TIME);
+            // 忽略无法转换的对象
+            builder.failOnUnknownProperties(false);
+            // 关闭日期序列化为时间戳的功能
+            builder.featuresToDisable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+            // 忽略无法转换的对象
+            builder.failOnEmptyBeans(false);
+            // 格式化输出
+            builder.indentOutput(false);
             log.info("初始化 jackson 配置");
         };
     }
