@@ -28,10 +28,8 @@
         <module>ruoyi-common-idempotent</module>
         <module>ruoyi-common-mail</module>
         <module>ruoyi-common-sms</module>
-        <module>ruoyi-common-logstash</module>
         <module>ruoyi-common-elasticsearch</module>
         <module>ruoyi-common-sentinel</module>
-        <module>ruoyi-common-skylog</module>
         <module>ruoyi-common-prometheus</module>
         <module>ruoyi-common-translation</module>
         <module>ruoyi-common-sensitive</module>
