@@ -70,6 +70,12 @@
         <maven-compiler-plugin.verison>3.11.0</maven-compiler-plugin.verison>
         <maven-surefire-plugin.version>3.1.2</maven-surefire-plugin.version>
         <flatten-maven-plugin.version>1.3.0</flatten-maven-plugin.version>
+
+        <!-- docker配置 -->
+        <docker.host.url>http://139.196.208.53:2375</docker.host.url>
+        <docker.repostory.url>139.196.208.53:5000</docker.repostory.url>
+        <docker.repostory.name>alibaba</docker.repostory.name>
+        <docker-maven-plugin.version>1.2.2</docker-maven-plugin.version>
     </properties>
 
     <!-- 依赖声明 -->
@@ -380,6 +386,39 @@
 
     <build>
         <plugins>
+            <!-- Docker maven plugin -->
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>${docker-maven-plugin.version}</version>
+                <configuration>
+                    <!-- docker私服的地址 -->
+                    <dockerHost>${docker.host.url}</dockerHost>
+                    <!--镜像名称以及版本号-->
+                    <imageName>
+                        ${docker.repostory.url}/${docker.repostory.name}/${project.artifactId}:${project.version}
+                    </imageName>
+                    <imageTags>
+                        <imageTag>${project.version}</imageTag>
+                    </imageTags>
+                    <!--Dockerfile的位置 -->
+                    <dockerDirectory>${project.basedir}/src/main/docker</dockerDirectory>
+                    <!-- 这里是复制 jar 包到 docker 容器指定目录配置 -->
+                    <resources>
+                        <resource>
+                            <targetPath>/</targetPath>
+                            <directory>${project.build.directory}</directory>
+                            <include>${project.build.finalName}.jar</include>
+                        </resource>
+                    </resources>
+                    <!-- 以下两行是为了docker push到DockerHub使用的。 -->
+                    <serverId>docker-harbor</serverId>
+                    <registryUrl>${docker.repostory.url}</registryUrl>
+                    <forceTags>true</forceTags>
+                    <pushImage>false</pushImage>
+                </configuration>
+            </plugin>
+            <!-- 编译插件 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
