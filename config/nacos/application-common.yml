@@ -51,9 +51,6 @@ spring:
       max-request-size: 20MB
       # 上传单个文件大小限制
       max-file-size: 10MB
-  mvc:
-    format:
-      date-time: yyyy-MM-dd HH:mm:ss
   cloud:
     # sentinel 配置
     sentinel:
