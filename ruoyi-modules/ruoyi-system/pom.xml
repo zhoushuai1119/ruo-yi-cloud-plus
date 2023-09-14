@@ -111,6 +111,12 @@
             <artifactId>cloud-alarm-spring-boot-starter</artifactId>
         </dependency>
 
+        <!--Cloud RocketMQ-->
+        <dependency>
+            <groupId>io.github.zhoushuai1119</groupId>
+            <artifactId>cloud-rocketmq-spring-boot-starter</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>

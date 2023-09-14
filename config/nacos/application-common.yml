@@ -191,21 +191,21 @@ springdoc:
   api-docs:
     # 是否开启接口文档
     enabled: true
-#  swagger-ui:
-#    # 持久化认证数据
-#    persistAuthorization: true
+    # 关闭SpringDoc文档,使用knife4j
+  swagger-ui:
+    enable: false
   info:
     # 标题
     title: '标题：RuoYi-Cloud-Plus微服务权限管理系统_接口文档'
     # 描述
-    description: '描述：微服务权限管理系统, 具体包括XXX,XXX模块...'
+    description: '描述：微服务权限管理系统'
     # 版本
-    version: '版本号：系统版本...'
+    version: '版本号: 2.1.0'
     # 作者信息
     contact:
-      name: Lion Li
-      email: crazylionli@163.com
-      url: https://gitee.com/dromara/RuoYi-Cloud-Plus
+      name: shuai.zhou
+      email: zs11195310@163.com
+      url: https://gitee.com/zhoushuai1119/ruo-yi-cloud-plus
   components:
     # 鉴权方式配置
     security-schemes:

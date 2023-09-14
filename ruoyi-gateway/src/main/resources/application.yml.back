@@ -90,6 +90,29 @@ security:
       - /auth/register
       - /auth/tenant/list
       - /resource/sms/code
+      - /doc.html
       - /*/v3/api-docs
+      - /v3/api-docs/**
       - /*/error
       - /csrf
+
+knife4j:
+  gateway:
+    enabled: true
+    tags-sorter: order
+    operations-sorter: order
+    strategy: manual
+    routes:
+    - name: 系统服务
+      url: /system/v3/api-docs
+      order: 1
+    - name: 认证服务
+      url: /auth/v3/api-docs
+      order: 2
+    - name: 资源服务
+      url: /resource/v3/api-docs
+      order: 3
+    - name: 演示服务
+      url: /demo/v3/api-docs
+      order: 4
+

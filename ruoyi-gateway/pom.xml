@@ -108,6 +108,12 @@
             </exclusions>
         </dependency>
 
+        <!-- knife4j-gateway -->
+        <dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>knife4j-gateway-spring-boot-starter</artifactId>
+        </dependency>
+
         <!-- Cloud Apollo -->
         <dependency>
             <groupId>com.ctrip.framework.apollo</groupId>

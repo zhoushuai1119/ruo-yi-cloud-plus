@@ -51,12 +51,6 @@ public class AuthFilter {
                                 "-100", "客户端ID与Token不匹配",
                                 StpUtil.getTokenValue());
                         }
-
-                        // 有效率影响 用于临时测试
-                        // if (log.isDebugEnabled()) {
-                        //     log.debug("剩余有效时间: {}", StpUtil.getTokenTimeout());
-                        //     log.debug("临时有效时间: {}", StpUtil.getTokenActivityTimeout());
-                        // }
                     });
             }).setError(e -> {
                 if (e instanceof NotLoginException) {
