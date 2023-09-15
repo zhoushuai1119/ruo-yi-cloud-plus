@@ -72,10 +72,10 @@ public class SysTenantPackageServiceImpl implements ISysTenantPackageService {
     }
 
     private LambdaQueryWrapper<SysTenantPackage> buildQueryWrapper(SysTenantPackageBo bo) {
-        Map<String, Object> params = bo.getParams();
         LambdaQueryWrapper<SysTenantPackage> lqw = Wrappers.lambdaQuery();
         lqw.like(StringUtils.isNotBlank(bo.getPackageName()), SysTenantPackage::getPackageName, bo.getPackageName());
         lqw.eq(StringUtils.isNotBlank(bo.getStatus()), SysTenantPackage::getStatus, bo.getStatus());
+        lqw.orderByAsc(SysTenantPackage::getPackageId);
         return lqw;
     }
 
