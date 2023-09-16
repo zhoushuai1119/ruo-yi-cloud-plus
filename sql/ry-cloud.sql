@@ -920,8 +920,7 @@ create table sys_oss_config (
   primary key (oss_config_id)
 ) engine=innodb comment='对象存储配置表';
 
-insert into sys_oss_config values (1, '000000', 'minio',  'ruoyi',            'ruoyi123',        'ruoyi',             '', '127.0.0.1:9000',                '','N', '',             '1' ,'0', '', 103, 1, sysdate(), 1, sysdate(), NULL);
-
+insert into sys_oss_config values (1, '000000', 'minio', 'zhoushuai',    'Zs11195310',      'ruoyi',     '', '139.196.208.53:9001',    '', 'N', '',  '1', '0', '', 103, 1, sysdate(), 1, sysdate(), NULL);
 -- ----------------------------
 -- 系统授权表
 -- ----------------------------
