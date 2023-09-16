@@ -203,9 +203,14 @@ springdoc:
     version: '版本号: 2.1.0'
     # 作者信息
     contact:
-      name: shuai.zhou
+      name: zhou shuai
       email: zs11195310@163.com
       url: https://gitee.com/zhoushuai1119/ruo-yi-cloud-plus
+    # 授权许可证信息
+    license:
+      name: Apache 2.0
+      url: https://www.apache.org/licenses/LICENSE-2.0.html
+      identifier: Apache-2.0
   components:
     # 鉴权方式配置
     security-schemes:
