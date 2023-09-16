@@ -534,27 +534,30 @@ insert into sys_role_menu values ('2', '2025');
 
 -- 在线用户
 insert into sys_menu values('301',  '在线用户',        '3',    '1', 'online',           'monitor/online/index',        '', 1, 0, 'C', '0', '0', 'monitor:online:list',         'online',        103, 1, sysdate(), null, null, '在线用户菜单');
+-- 接口文档
+insert into sys_menu values('302',  '接口文档',        '3',    '2', 'knife4j',           'monitor/knife4j/index',      '', 1, 0, 'C', '0', '0', 'monitor:knife4j:list',        'knife4j',      103, 1, sysdate(), null, null, '接口文档菜单');
 insert into sys_role_menu values ('2', '301');
+insert into sys_role_menu values ('2', '302');
+
 -- 在线用户按钮
 insert into sys_menu values('3011', '在线查询', '301', '1', '#', '', '', 1, 0, 'F', '0', '0', 'monitor:online:query',       '#', 103, 1, sysdate(), null, null, '');
 insert into sys_menu values('3012', '批量强退', '301', '2', '#', '', '', 1, 0, 'F', '0', '0', 'monitor:online:batchLogout', '#', 103, 1, sysdate(), null, null, '');
 insert into sys_menu values('3013', '单条强退', '301', '3', '#', '', '', 1, 0, 'F', '0', '0', 'monitor:online:forceLogout', '#', 103, 1, sysdate(), null, null, '');
-
 insert into sys_role_menu values ('2', '3011');
 insert into sys_role_menu values ('2', '3012');
 insert into sys_role_menu values ('2', '3013');
 
-insert into sys_menu values('302',  'PowerJob控制台',  '3',    '2', 'http://localhost:7700',        '',                '', 0, 0, 'C', '0', '0', 'monitor:job:list',             'job',           103, 1, sysdate(), null, null, '定时任务菜单');
-insert into sys_menu values('303',  'Sentinel控制台',  '3',    '3', 'http://localhost:8718',        '',                '', 0, 0, 'C', '0', '0', 'monitor:sentinel:list',        'sentinel',      103, 1, sysdate(), null, null, '流量控制菜单');
-insert into sys_menu values('304',  'Nacos控制台',     '3',    '4', 'http://139.196.208.53:8848/nacos',  '',           '', 0, 0, 'C', '0', '0', 'monitor:nacos:list',           'nacos',         103, 1, sysdate(), null, null, '服务治理菜单');
-insert into sys_menu values('305',  'Apollo配置中心',  '3',    '5', 'http://139.196.208.53:8070',  '',                 '', 0, 0, 'C', '0', '0', 'monitor:apollo:list',          'apollo',         103, 1, sysdate(), null, null, '服务配置菜单');
-insert into sys_menu values('306',  'RocketMQ控制台',  '3',    '6', 'http://139.196.208.53:18888',  '',                '', 0, 0, 'C', '0', '0', 'monitor:rocketmq:list',        'rocketmq',       103, 1, sysdate(), null, null, '服务RocketMQ菜单');
-
-insert into sys_role_menu values ('2', '302');
+-- 中间件控制台
+insert into sys_menu values('303',  'PowerJob控制台',  '3',    '3', 'http://localhost:7700',        '',                '', 0, 0, 'C', '0', '0', 'monitor:job:list',             'job',           103, 1, sysdate(), null, null, '定时任务菜单');
+insert into sys_menu values('304',  'Sentinel控制台',  '3',    '4', 'http://localhost:8718',        '',                '', 0, 0, 'C', '0', '0', 'monitor:sentinel:list',        'sentinel',      103, 1, sysdate(), null, null, '流量控制菜单');
+insert into sys_menu values('305',  'Nacos控制台',     '3',    '5', 'http://139.196.208.53:8848/nacos',  '',           '', 0, 0, 'C', '0', '0', 'monitor:nacos:list',           'nacos',         103, 1, sysdate(), null, null, '服务治理菜单');
+insert into sys_menu values('306',  'Apollo配置中心',  '3',    '6', 'http://139.196.208.53:8070',  '',                 '', 0, 0, 'C', '0', '0', 'monitor:apollo:list',          'apollo',         103, 1, sysdate(), null, null, '服务配置菜单');
+insert into sys_menu values('307',  'RocketMQ控制台',  '3',    '7', 'http://139.196.208.53:18888',  '',                '', 0, 0, 'C', '0', '0', 'monitor:rocketmq:list',        'rocketmq',       103, 1, sysdate(), null, null, '服务RocketMQ菜单');
 insert into sys_role_menu values ('2', '303');
 insert into sys_role_menu values ('2', '304');
 insert into sys_role_menu values ('2', '305');
 insert into sys_role_menu values ('2', '306');
+insert into sys_role_menu values ('2', '307');
 
 -- 系统工具 -- 二级菜单
 
