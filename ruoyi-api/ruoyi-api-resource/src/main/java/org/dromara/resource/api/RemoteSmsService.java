@@ -15,6 +15,14 @@ public interface RemoteSmsService {
     /**
      * 发送短信
      *
+     * @param phones  电话号(多个逗号分割)
+     * @param message message
+     */
+    RemoteSms send(String phones, String message) throws ServiceException;
+
+    /**
+     * 发送短信
+     *
      * @param phones     电话号(多个逗号分割)
      * @param templateId 模板id
      * @param param      模板对应参数
