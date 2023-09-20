@@ -40,3 +40,10 @@ spring:
           url: ${datasource.system-master.url}
           username: ${datasource.system-master.username}
           password: ${datasource.system-master.password}
+
+# arthas
+arthas:
+  telnetPort: -1
+  httpPort: -1
+  tunnel-server: ws://139.196.208.53:7777/ws
+  app-name: ${spring.application.name}
