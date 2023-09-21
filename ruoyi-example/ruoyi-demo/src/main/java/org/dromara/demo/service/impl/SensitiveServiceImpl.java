@@ -1,6 +1,5 @@
 package org.dromara.demo.service.impl;
 
-import org.dromara.common.satoken.utils.LoginHelper;
 import org.dromara.common.sensitive.core.SensitiveService;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +18,7 @@ public class SensitiveServiceImpl implements SensitiveService {
      */
     @Override
     public boolean isSensitive() {
-        return !LoginHelper.isSuperAdmin();
+        return true;
     }
 
 }

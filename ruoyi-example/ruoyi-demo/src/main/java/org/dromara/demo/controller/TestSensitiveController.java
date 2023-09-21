@@ -1,13 +1,18 @@
 package org.dromara.demo.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.dromara.common.core.domain.R;
 import org.dromara.common.sensitive.annotation.Sensitive;
 import org.dromara.common.sensitive.core.SensitiveStrategy;
+import org.dromara.common.sensitive.utils.SensitiveLogUtil;
 import org.dromara.common.web.core.BaseController;
 import lombok.Data;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.io.Serial;
+import java.io.Serializable;
 
 /**
  * 测试数据脱敏控制器
@@ -21,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/sensitive")
+@Slf4j
 public class TestSensitiveController extends BaseController {
 
     /**
@@ -29,16 +35,26 @@ public class TestSensitiveController extends BaseController {
     @GetMapping("/test")
     public R<TestSensitive> test() {
         TestSensitive testSensitive = new TestSensitive();
+        testSensitive.setTest("test111");
         testSensitive.setIdCard("210397198608215431");
         testSensitive.setPhone("17640125371");
         testSensitive.setAddress("北京市朝阳区某某四合院1203室");
         testSensitive.setEmail("17640125371@163.com");
         testSensitive.setBankCard("6226456952351452853");
+        log.info("testSensitive is {}", SensitiveLogUtil.toJsonStr(testSensitive));
         return R.ok(testSensitive);
     }
 
     @Data
-    static class TestSensitive {
+    static class TestSensitive implements Serializable {
+
+        @Serial
+        private static final long serialVersionUID = 4880946257358438193L;
+
+        /**
+         * test
+         */
+        private String test;
 
         /**
          * 身份证
