@@ -28,8 +28,9 @@ public class SensitiveLogUtil {
         try {
             SensitiveService sensitiveService = SpringUtils.getBean(SensitiveService.class);
             if (ObjectUtil.isNotNull(sensitiveService) && sensitiveService.isSensitive()) {
-                return getJsonStr(t);
+                return getSensitiveStr(t);
             } else {
+                log.warn("脱敏设置为:false, 打印明文日志!!!");
                 return JsonUtils.toJsonString(t);
             }
         } catch (BeansException e) {
@@ -38,7 +39,15 @@ public class SensitiveLogUtil {
         }
     }
 
-    private static <T> String getJsonStr(T t) {
+    /**
+     * 获取脱敏字符串
+     *
+     * @author: zhou shuai
+     * @date: 2023/9/21 20:47
+     * @param: t
+     * @return: java.lang.String
+     */
+    private static <T> String getSensitiveStr(T t) {
         Field[] fields = ReflectUtils.getFields(t.getClass());
         if (ArrayUtil.isNotEmpty(fields)) {
             for (Field field : fields) {
