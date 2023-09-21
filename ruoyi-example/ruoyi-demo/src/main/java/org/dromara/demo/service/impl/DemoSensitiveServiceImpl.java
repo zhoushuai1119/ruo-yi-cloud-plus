@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
  * @author Lion Li
  */
 @Service
-public class SensitiveServiceImpl implements SensitiveService {
+public class DemoSensitiveServiceImpl implements SensitiveService {
 
     /**
      * 是否脱敏
