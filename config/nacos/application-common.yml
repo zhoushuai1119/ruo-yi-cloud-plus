@@ -165,7 +165,7 @@ mybatis-plus:
 # 数据加密
 mybatis-encryptor:
   # 是否开启加密
-  enable: false
+  enable: true
   # 默认加密算法
   algorithm: BASE64
   # 编码方式 BASE64/HEX。默认BASE64
