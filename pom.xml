@@ -34,7 +34,7 @@
         <therapi-javadoc.version>0.15.0</therapi-javadoc.version>
         <poi.version>5.2.3</poi.version>
         <easyexcel.version>3.3.2</easyexcel.version>
-        <hutool.version>5.8.20</hutool.version>
+        <hutool.version>5.8.22</hutool.version>
         <satoken.version>1.36.0</satoken.version>
         <lombok.version>1.18.30</lombok.version>
         <logstash.version>7.4</logstash.version>
