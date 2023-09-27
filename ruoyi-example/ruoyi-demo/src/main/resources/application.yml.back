@@ -22,9 +22,9 @@ spring:
 
   datasource:
     dynamic:
-      seata: false
       # 设置默认的数据源或者数据源组,默认值即为 master
       primary: master
+      seata: true
       datasource:
         # 主库数据源
         master:
@@ -33,14 +33,6 @@ spring:
           url: ${datasource.system-master.url}
           username: ${datasource.system-master.username}
           password: ${datasource.system-master.password}
-        sharding:
-          lazy: true
-          type: ${spring.datasource.type}
-          driver-class-name: com.mysql.cj.jdbc.Driver
-          # shardingproxy 服务的ip地址
-          url: jdbc:mysql://127.0.0.1:3307/data-center_db?useSSL=false&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true&tinyInt1isBit=false&allowMultiQueries=true&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true
-          username: root
-          password: root
 
 --- # elasticsearch 功能配置
 # 文档地址: https://www.easy-es.cn/
@@ -144,3 +136,12 @@ sms:
       template-id: SMS_270350279
       # 模板变量名称
       template-name: code
+
+# seata配置
+seata:
+  # Seata 事务组编号，用于 TC 集群名
+  tx-service-group: demo_tx_group
+  # vgroup-mapping下一定要有一个对应tx-service-group的映射，映射到default（seata默认的集群名称）
+  service:
+    vgroup-mapping:
+      demo_tx_group: default
