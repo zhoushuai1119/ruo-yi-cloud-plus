@@ -75,11 +75,6 @@ public class SysUserBo extends BaseEntity {
     private String sex;
 
     /**
-     * 头像地址
-     */
-    private Long avatar;
-
-    /**
      * 密码
      */
     private String password;
@@ -88,16 +83,6 @@ public class SysUserBo extends BaseEntity {
      * 帐号状态（0正常 1停用）
      */
     private String status;
-
-    /**
-     * 最后登录IP
-     */
-    private String loginIp;
-
-    /**
-     * 最后登录时间
-     */
-    private Date loginDate;
 
     /**
      * 备注
