@@ -1,23 +1,11 @@
-# 内置配置 不允许修改 如需修改请在 nacos 上写相同配置覆盖
 # seata配置
 seata:
   # 是否启用
   enabled: true
   # Seata 应用编号，默认为应用名
   application-id: ${spring.application.name}
-  # Seata 事务组编号，用于 TC 集群名
-  tx-service-group: ${spring.application.name}-group
   # 关闭自动代理
   enable-auto-data-source-proxy: false
-  config:
-    type: nacos
-    nacos:
-      server-addr: ${spring.cloud.nacos.server-addr}
-      group: SEATA_GROUP
-      namespace: ${spring.profiles.active}
-      data-id: seata-server.properties
-      username: nacos
-      password: nacos
   registry:
     type: nacos
     nacos:

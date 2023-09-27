@@ -89,3 +89,12 @@ sms:
       template-id: SMS_270350279
       # 模板变量名称
       template-name: code
+
+# seata配置
+seata:
+  # Seata 事务组编号，用于 TC 集群名
+  tx-service-group: resource_tx_group
+  # vgroup-mapping下一定要有一个对应tx-service-group的映射，映射到default（seata默认的集群名称）
+  service:
+    vgroup-mapping:
+      resource_tx_group: default
