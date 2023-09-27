@@ -4,6 +4,7 @@ import io.seata.core.context.RootContext;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboService;
+import org.dromara.common.core.exception.ServiceException;
 import org.dromara.resource.api.RemoteResourceSeataService;
 import org.dromara.resource.domain.ResSeataTest;
 import org.dromara.resource.mapper.ResSeataTestMapper;
@@ -30,7 +31,9 @@ public class RemoteResourceSeataServiceImpl implements RemoteResourceSeataServic
         log.info("ruoyi-resource xid:{}", RootContext.getXID());
         ResSeataTest seataTest = new ResSeataTest();
         seataTest.setValue(value);
-        int i = 1 / 0;
+        if (true) {
+            throw new ServiceException("人为异常...");
+        }
         resSeataTestMapper.insert(seataTest);
     }
 
