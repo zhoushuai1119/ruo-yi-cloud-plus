@@ -952,19 +952,19 @@ insert into sys_client values (2, '428a8310cd442757ae699df5d894f051', 'app', 'ap
 -- ----------------------------
 drop table if exists res_seata_test;
 CREATE TABLE res_seata_test (
-    `id`         bigint unsigned      NOT NULL AUTO_INCREMENT     COMMENT '主键自增ID',
-    `tenant_id`  varchar(20)          DEFAULT '000000'            COMMENT '租户编号',
+    `id`         bigint unsigned      NOT NULL                    COMMENT '主键自增ID',
+    `tenant_id`  varchar(20)          DEFAULT      '000000'       COMMENT '租户编号',
     `value`      varchar(100)         NOT NULL                    COMMENT '值',
     primary key (id)
-) ENGINE=InnoDB AUTO_INCREMENT=1 comment='资源Seata测试表';
+) ENGINE=InnoDB comment='资源Seata测试表';
 
 drop table if exists sys_seata_test;
 CREATE TABLE sys_seata_test (
-     `id`         bigint unsigned      NOT NULL AUTO_INCREMENT     COMMENT '主键自增ID',
-     `tenant_id`  varchar(20)          DEFAULT '000000'            COMMENT '租户编号',
+     `id`         bigint unsigned      NOT NULL                    COMMENT '主键自增ID',
+     `tenant_id`  varchar(20)          DEFAULT     '000000'        COMMENT '租户编号',
      `value`      varchar(100)         NOT NULL                    COMMENT '值',
      primary key (id)
-) ENGINE=InnoDB AUTO_INCREMENT=1 comment='系统Seata测试表';
+) ENGINE=InnoDB comment='系统Seata测试表';
 
 -- for AT mode you must to init this sql for you business database. the seata server not need it.
 CREATE TABLE IF NOT EXISTS undo_log

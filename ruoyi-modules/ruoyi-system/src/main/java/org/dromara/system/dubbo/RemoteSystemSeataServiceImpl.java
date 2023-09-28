@@ -1,5 +1,6 @@
 package org.dromara.system.dubbo;
 
+import cn.hutool.core.util.RandomUtil;
 import io.seata.core.context.RootContext;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +30,7 @@ public class RemoteSystemSeataServiceImpl implements RemoteSystemSeataService {
     public void seataTest(String value) {
         log.info("ruoyi-system xid:{}", RootContext.getXID());
         SysSeataTest seataTest = new SysSeataTest();
+        seataTest.setId(RandomUtil.randomLong(4));
         seataTest.setValue(value);
         sysSeataTestMapper.insert(seataTest);
     }
