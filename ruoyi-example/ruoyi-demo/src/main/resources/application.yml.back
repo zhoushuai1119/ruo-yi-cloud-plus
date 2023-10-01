@@ -146,3 +146,12 @@ seata:
   service:
     vgroup-mapping:
       demo_tx_group: default
+
+# jasypt加密,默认ENC,为了和dynamic区分，重命名
+jasypt:
+  encryptor:
+    property:
+      prefix: JENC(
+      suffix: )
+  test:
+    value: JENC(M0nOoEBptpxDkVcO42NhxmJBJgm1vVD8Ky3SUiFylcuS2gO3iDzUEBV+QRrH0tV9)
