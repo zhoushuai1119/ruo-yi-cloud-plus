@@ -154,4 +154,4 @@ jasypt:
       prefix: JENC(
       suffix: )
   test:
-    value: JENC(M0nOoEBptpxDkVcO42NhxmJBJgm1vVD8Ky3SUiFylcuS2gO3iDzUEBV+QRrH0tV9)
+    value: JENC(gOTHk9bNOaUvAjzsESWGca02P5A8Kao9QVL9Y15uioSh56pm2dNZs7xFoDZC5kn0)

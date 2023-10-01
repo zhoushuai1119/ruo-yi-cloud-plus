@@ -29,8 +29,9 @@ public class TestJasyptController {
      */
     @GetMapping("/test")
     public R<String> jasyptTest(@RequestParam("value") String value) {
-        // 生产环境建议使用命令行参数设置password
-        System.setProperty("jasypt.encryptor.password", "EbfYkitulv73I2p0mXI50JMXoaxZTKJ7");
+        // 生产环境建议使用命令行参数设置password: -Djasypt.encryptor.password=374d1f97e22a6cf1aa7e42e3fa90fd06
+
+        //  System.setProperty("jasypt.encryptor.password", "374d1f97e22a6cf1aa7e42e3fa90fd06");
         String encValue = stringEncryptor.encrypt(value);
         return R.ok(encValue);
     }
