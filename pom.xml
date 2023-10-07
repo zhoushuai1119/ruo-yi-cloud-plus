@@ -60,6 +60,7 @@
         <cloud-parent.version>3.1.0</cloud-parent.version>
         <cloud-job.version>4.3.5</cloud-job.version>
         <cloud-apollo.version>2.1.0</cloud-apollo.version>
+        <cloud-async-tool>1.4.1</cloud-async-tool>
 
         <!-- OSS 配置 -->
         <aws-java-sdk-s3.version>1.12.540</aws-java-sdk-s3.version>
@@ -386,6 +387,12 @@
                 <groupId>com.github.ulisesbocchio</groupId>
                 <artifactId>jasypt-spring-boot-starter</artifactId>
                 <version>${jasypt.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.github.zhoushuai1119</groupId>
+                <artifactId>cloud-async-tool</artifactId>
+                <version>${cloud-async-tool}</version>
             </dependency>
 
         </dependencies>
