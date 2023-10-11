@@ -16,6 +16,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.servlet.http.HttpServletResponse;
+
 import java.util.List;
 
 /**
@@ -68,8 +69,8 @@ public class SysConfigController extends BaseController {
      * @param configKey 参数Key
      */
     @GetMapping(value = "/configKey/{configKey}")
-    public R<Void> getConfigKey(@PathVariable String configKey) {
-        return R.ok(configService.selectConfigByKey(configKey));
+    public R<String> getConfigKey(@PathVariable String configKey) {
+        return R.ok("操作成功", configService.selectConfigByKey(configKey));
     }
 
     /**
