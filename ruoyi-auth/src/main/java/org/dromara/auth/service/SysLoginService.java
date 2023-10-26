@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import me.zhyd.oauth.model.AuthUser;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.dromara.auth.form.RegisterBody;
+import org.dromara.auth.properties.CaptchaProperties;
 import org.dromara.auth.properties.UserPasswordProperties;
 import org.dromara.common.core.constant.Constants;
 import org.dromara.common.core.constant.GlobalConstants;
@@ -17,6 +18,8 @@ import org.dromara.common.core.constant.TenantConstants;
 import org.dromara.common.core.enums.LoginType;
 import org.dromara.common.core.enums.TenantStatus;
 import org.dromara.common.core.enums.UserType;
+import org.dromara.common.core.exception.CaptchaException;
+import org.dromara.common.core.exception.user.CaptchaExpireException;
 import org.dromara.common.core.exception.user.UserException;
 import org.dromara.common.core.utils.MessageUtils;
 import org.dromara.common.core.utils.ServletUtils;
@@ -35,7 +38,6 @@ import org.dromara.system.api.domain.bo.RemoteUserBo;
 import org.dromara.system.api.domain.vo.RemoteSocialVo;
 import org.dromara.system.api.domain.vo.RemoteTenantVo;
 import org.dromara.system.api.model.LoginUser;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
@@ -59,8 +61,9 @@ public class SysLoginService {
     @DubboReference
     private RemoteSocialService remoteSocialService;
 
-    @Autowired
-    private UserPasswordProperties userPasswordProperties;
+    private final UserPasswordProperties userPasswordProperties;
+
+    private final CaptchaProperties captchaProperties;
 
     /**
      * 绑定第三方用户
@@ -119,17 +122,45 @@ public class SysLoginService {
         // 校验用户类型是否存在
         String userType = UserType.getUserType(registerBody.getUserType()).getUserType();
 
+        boolean captchaEnabled = captchaProperties.getEnabled();
+        // 验证码开关
+        if (captchaEnabled) {
+            validateCaptcha(tenantId, username, registerBody.getCode(), registerBody.getUuid());
+        }
+
         // 注册用户信息
         RemoteUserBo remoteUserBo = new RemoteUserBo();
         remoteUserBo.setUserName(username);
         remoteUserBo.setNickName(username);
         remoteUserBo.setPassword(BCrypt.hashpw(password));
         remoteUserBo.setUserType(userType);
+
         boolean regFlag = remoteUserService.registerUserInfo(remoteUserBo);
         if (!regFlag) {
             throw new UserException("user.register.error");
         }
         recordLogininfor(tenantId, username, Constants.REGISTER, MessageUtils.message("user.register.success"));
+    }
+
+    /**
+     * 校验验证码
+     *
+     * @param username 用户名
+     * @param code     验证码
+     * @param uuid     唯一标识
+     */
+    public void validateCaptcha(String tenantId, String username, String code, String uuid) {
+        String verifyKey = GlobalConstants.CAPTCHA_CODE_KEY + StringUtils.defaultString(uuid, "");
+        String captcha = RedisUtils.getCacheObject(verifyKey);
+        RedisUtils.deleteObject(verifyKey);
+        if (captcha == null) {
+            recordLogininfor(tenantId, username, Constants.REGISTER, MessageUtils.message("user.jcaptcha.expire"));
+            throw new CaptchaExpireException();
+        }
+        if (!code.equalsIgnoreCase(captcha)) {
+            recordLogininfor(tenantId, username, Constants.REGISTER, MessageUtils.message("user.jcaptcha.error"));
+            throw new CaptchaException();
+        }
     }
 
     /**
