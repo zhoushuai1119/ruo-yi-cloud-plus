@@ -26,7 +26,6 @@ public class SysPostBo extends BaseEntity {
     /**
      * 岗位ID
      */
-    @NotNull(message = "岗位ID不能为空")
     private Long postId;
 
     /**

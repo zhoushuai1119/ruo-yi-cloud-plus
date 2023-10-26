@@ -27,7 +27,6 @@ public class SysNoticeBo extends BaseEntity {
     /**
      * 公告ID
      */
-    @NotNull(message = "公告ID不能为空")
     private Long noticeId;
 
     /**

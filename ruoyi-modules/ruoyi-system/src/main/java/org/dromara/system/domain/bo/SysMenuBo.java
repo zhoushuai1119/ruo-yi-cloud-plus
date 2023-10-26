@@ -2,16 +2,13 @@ package org.dromara.system.domain.bo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.github.linpeilie.annotations.AutoMapper;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import org.dromara.common.core.validate.AddGroup;
-import org.dromara.common.core.validate.EditGroup;
-import org.dromara.common.mybatis.core.domain.BaseEntity;
-import org.dromara.system.domain.SysMenu;
-
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import org.dromara.common.mybatis.core.domain.BaseEntity;
+import org.dromara.system.domain.SysMenu;
 
 /**
  * 菜单权限业务对象 sys_menu
@@ -27,7 +24,6 @@ public class SysMenuBo extends BaseEntity {
     /**
      * 菜单ID
      */
-    @NotNull(message = "菜单ID不能为空")
     private Long menuId;
 
     /**

@@ -25,7 +25,7 @@ public class SysClientBo extends BaseEntity {
     /**
      * id
      */
-    @NotNull(message = "id不能为空")
+    @NotNull(message = "id不能为空", groups = { EditGroup.class })
     private Long id;
 
     /**
@@ -36,19 +36,19 @@ public class SysClientBo extends BaseEntity {
     /**
      * 客户端key
      */
-    @NotBlank(message = "客户端key不能为空")
+    @NotBlank(message = "客户端key不能为空", groups = { AddGroup.class, EditGroup.class })
     private String clientKey;
 
     /**
      * 客户端秘钥
      */
-    @NotBlank(message = "客户端秘钥不能为空")
+    @NotBlank(message = "客户端秘钥不能为空", groups = { AddGroup.class, EditGroup.class })
     private String clientSecret;
 
     /**
      * 授权类型
      */
-    @NotNull(message = "授权类型不能为空")
+    @NotNull(message = "授权类型不能为空", groups = { AddGroup.class, EditGroup.class })
     private List<String> grantTypeList;
 
     /**

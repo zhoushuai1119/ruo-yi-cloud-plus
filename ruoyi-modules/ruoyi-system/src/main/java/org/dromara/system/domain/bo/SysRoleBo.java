@@ -29,7 +29,6 @@ public class SysRoleBo extends BaseEntity {
     /**
      * 角色ID
      */
-    @NotNull(message = "角色ID不能为空")
     private Long roleId;
 
     /**
