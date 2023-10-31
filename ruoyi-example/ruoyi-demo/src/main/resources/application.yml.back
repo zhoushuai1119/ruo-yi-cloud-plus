@@ -128,9 +128,9 @@ sms:
       #厂商标识，标定此配置是哪个厂商，详细请看厂商标识介绍部分
       supplier: alibaba
       # 阿里云accessKey
-      access-key-id: LTAI5tQFL317FWXUTsiyzZWN
+      access-key-id: JENC(s1r98KDzV5Jc3d/ucFMNOWgOADCDnIwBgQ/3qosbK7QxALW2IxQfTY36EaZ1ZasJQRtCNCF2beqLe3DfOV95pQ==)
       # 阿里云accessKeySecret
-      access-key-secret: 53wla4Ic4HeVNtjYMvF8BphBK8g8e4
+      access-key-secret: JENC(erXeLnBSsF0ZdL4bv9GU/w/6SZm4FWU+/u5Gc6djtZvCW/jSIaTnyzFFsI4d7Aqe2pkfdGUo7UtYf+CUqOR7Sw==)
       # 阿里云短信签名
       signature: 周帅个人博客
       # 模板ID
