@@ -59,7 +59,7 @@ public class XcxAuthStrategy implements IAuthStrategy {
         model.setActiveTimeout(client.getActiveTimeout());
         model.setExtra(LoginHelper.CLIENT_KEY, clientId);
         // 生成token
-        LoginHelper.login(loginUser, model);
+        LoginHelper.login(loginUser, model, loginBody.getGrantType());
 
         loginService.recordLogininfor(loginUser.getTenantId(), loginUser.getUsername(), Constants.LOGIN_SUCCESS, MessageUtils.message("user.login.success"));
         remoteUserService.recordLoginInfo(loginUser.getUserId(), ServletUtils.getClientIP());

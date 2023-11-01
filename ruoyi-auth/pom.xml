@@ -86,6 +86,12 @@
             <artifactId>apollo-client</artifactId>
         </dependency>
 
+        <!--Cloud RocketMQ-->
+        <dependency>
+            <groupId>io.github.zhoushuai1119</groupId>
+            <artifactId>cloud-rocketmq-spring-boot-starter</artifactId>
+        </dependency>
+
         <!-- ELK 日志收集 -->
         <dependency>
             <groupId>net.logstash.logback</groupId>

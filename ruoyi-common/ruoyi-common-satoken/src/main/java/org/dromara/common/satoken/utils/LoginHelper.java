@@ -36,6 +36,7 @@ public class LoginHelper {
     public static final String USER_KEY = "userId";
     public static final String DEPT_KEY = "deptId";
     public static final String CLIENT_KEY = "clientid";
+    public static final String GRANT_TYPE = "grantType";
 
     /**
      * 登录系统 基于 设备类型
@@ -43,8 +44,9 @@ public class LoginHelper {
      *
      * @param loginUser 登录用户信息
      * @param model     配置参数
+     * @param grantType 授权类型
      */
-    public static void login(LoginUser loginUser, SaLoginModel model) {
+    public static void login(LoginUser loginUser, SaLoginModel model, String grantType) {
         SaStorage storage = SaHolder.getStorage();
         storage.set(LOGIN_USER_KEY, loginUser);
         storage.set(TENANT_KEY, loginUser.getTenantId());
@@ -54,7 +56,8 @@ public class LoginHelper {
         StpUtil.login(loginUser.getLoginId(),
             model.setExtra(TENANT_KEY, loginUser.getTenantId())
                 .setExtra(USER_KEY, loginUser.getUserId())
-                .setExtra(DEPT_KEY, loginUser.getDeptId()));
+                .setExtra(DEPT_KEY, loginUser.getDeptId())
+                .setExtra(GRANT_TYPE, grantType));
         StpUtil.getSession().set(LOGIN_USER_KEY, loginUser);
     }
 
@@ -91,7 +94,7 @@ public class LoginHelper {
      * 获取用户id
      */
     public static Long getUserId() {
-        return  Convert.toLong(getExtra(USER_KEY));
+        return Convert.toLong(getExtra(USER_KEY));
     }
 
     /**

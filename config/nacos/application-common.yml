@@ -122,6 +122,7 @@ logging:
     org.springframework: warn
     org.apache.dubbo: warn
     com.alibaba.nacos: warn
+    io.netty.channel.nio: warn
     tech.powerjob.worker.background: warn
     RocketmqClient: error
     RocketmqRemoting: warn

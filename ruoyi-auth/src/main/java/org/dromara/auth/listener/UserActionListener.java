@@ -3,9 +3,15 @@ package org.dromara.auth.listener;
 import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.listener.SaTokenListener;
 import cn.dev33.satoken.stp.SaLoginModel;
+import cn.hutool.core.text.StrFormatter;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.http.useragent.UserAgent;
 import cn.hutool.http.useragent.UserAgentUtil;
+import cn.hutool.json.JSONUtil;
+import com.cloud.mq.base.core.CloudMQTemplate;
+import com.cloud.mq.base.dto.CloudMQSendResult;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.dromara.common.core.constant.CacheConstants;
 import org.dromara.common.core.enums.UserType;
 import org.dromara.common.core.utils.ServletUtils;
@@ -14,11 +20,11 @@ import org.dromara.common.redis.utils.RedisUtils;
 import org.dromara.common.satoken.utils.LoginHelper;
 import org.dromara.system.api.domain.SysUserOnline;
 import org.dromara.system.api.model.LoginUser;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
+
+import static org.dromara.common.core.constant.RocketMQConstants.LoginTopic.*;
 
 /**
  * 用户行为 侦听器的实现
@@ -32,16 +38,19 @@ public class UserActionListener implements SaTokenListener {
 
     private final SaTokenConfig tokenConfig;
 
+    private final CloudMQTemplate cloudMQTemplate;
+
     /**
      * 每次登录时触发
      */
     @Override
     public void doLogin(String loginType, Object loginId, String tokenValue, SaLoginModel loginModel) {
         UserType userType = UserType.getUserType(loginId.toString());
+        String grantType = String.valueOf(loginModel.getExtra(LoginHelper.GRANT_TYPE));
+        LoginUser user = LoginHelper.getLoginUser();
         if (userType == UserType.SYS_USER) {
             UserAgent userAgent = UserAgentUtil.parse(ServletUtils.getRequest().getHeader("User-Agent"));
             String ip = ServletUtils.getClientIP();
-            LoginUser user = LoginHelper.getLoginUser();
             SysUserOnline userOnline = new SysUserOnline();
             userOnline.setIpaddr(ip);
             userOnline.setLoginLocation(AddressUtils.getRealAddressByIP(ip));
@@ -55,7 +64,7 @@ public class UserActionListener implements SaTokenListener {
             if (ObjectUtil.isNotNull(user.getDeptName())) {
                 userOnline.setDeptName(user.getDeptName());
             }
-            if(tokenConfig.getTimeout() == -1) {
+            if (tokenConfig.getTimeout() == -1) {
                 RedisUtils.setCacheObject(CacheConstants.ONLINE_TOKEN_KEY + tokenValue, userOnline);
             } else {
                 RedisUtils.setCacheObject(CacheConstants.ONLINE_TOKEN_KEY + tokenValue, userOnline, Duration.ofSeconds(tokenConfig.getTimeout()));
@@ -63,6 +72,13 @@ public class UserActionListener implements SaTokenListener {
             log.info("user doLogin, useId:{}, token:{}", loginId, tokenValue);
         } else if (userType == UserType.APP_USER) {
             // app端 自行根据业务编写
+        }
+        try {
+            String loginKey = StrFormatter.format(RUOYI_LOGIN_KEY, grantType.toLowerCase(), user.getTenantId(), user.getUserType(), user.getUserId());
+            CloudMQSendResult emailMqSendResult = cloudMQTemplate.syncSend(RUOYI_LOGIN_TOPIC, RUOYI_LOGIN_TAG, loginKey, user);
+            log.info("{}登录发送MQ结果:{}", grantType.toUpperCase(), JSONUtil.toJsonStr(emailMqSendResult));
+        } catch (Exception e) {
+            log.warn("{}登录发送MQ结果失败:", grantType.toUpperCase(), e);
         }
     }
 
