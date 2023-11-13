@@ -1,9 +1,10 @@
 package org.dromara.system.service;
 
-import org.dromara.system.domain.vo.SysTenantVo;
-import org.dromara.system.domain.bo.SysTenantBo;
-import org.dromara.common.mybatis.core.page.TableDataInfo;
 import org.dromara.common.mybatis.core.page.PageQuery;
+import org.dromara.common.mybatis.core.page.TableDataInfo;
+import org.dromara.system.domain.bo.SysTenantBo;
+import org.dromara.system.domain.vo.SysDatasourceVo;
+import org.dromara.system.domain.vo.SysTenantVo;
 
 import java.util.Collection;
 import java.util.List;
@@ -24,6 +25,11 @@ public interface ISysTenantService {
      * 基于租户ID查询租户
      */
     SysTenantVo queryByTenantId(String tenantId);
+
+    /**
+     * 根据租户id获取租户配置的数据源
+     */
+    SysDatasourceVo queryDataSourceByTenantId(String tenantId);
 
     /**
      * 查询租户列表

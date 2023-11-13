@@ -19,6 +19,7 @@ import org.dromara.common.mybatis.core.page.PageQuery;
 import org.dromara.common.mybatis.core.page.TableDataInfo;
 import org.dromara.system.domain.*;
 import org.dromara.system.domain.bo.SysTenantBo;
+import org.dromara.system.domain.vo.SysDatasourceVo;
 import org.dromara.system.domain.vo.SysTenantVo;
 import org.dromara.system.mapper.*;
 import org.dromara.system.service.ISysTenantService;
@@ -52,6 +53,7 @@ public class SysTenantServiceImpl implements ISysTenantService {
     private final SysDictTypeMapper dictTypeMapper;
     private final SysDictDataMapper dictDataMapper;
     private final SysConfigMapper configMapper;
+    private final SysDatasourceMapper datasourceMapper;
 
     /**
      * 查询租户
@@ -68,6 +70,14 @@ public class SysTenantServiceImpl implements ISysTenantService {
     @Override
     public SysTenantVo queryByTenantId(String tenantId) {
         return baseMapper.selectVoOne(new LambdaQueryWrapper<SysTenant>().eq(SysTenant::getTenantId, tenantId));
+    }
+
+    /**
+     * 根据租户id获取租户配置的数据源
+     */
+    @Override
+    public SysDatasourceVo queryDataSourceByTenantId(String tenantId) {
+        return datasourceMapper.selectVoOne(new LambdaQueryWrapper<SysDatasource>().eq(SysDatasource::getTenantId, tenantId));
     }
 
     /**
