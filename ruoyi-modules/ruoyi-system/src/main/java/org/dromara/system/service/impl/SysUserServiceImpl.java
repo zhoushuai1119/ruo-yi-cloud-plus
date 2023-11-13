@@ -1,6 +1,7 @@
 package org.dromara.system.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.text.StrFormatter;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
@@ -9,10 +10,14 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.cloud.alarm.dinger.DingerSender;
+import com.cloud.alarm.dinger.core.entity.DingerRequest;
+import com.cloud.alarm.dinger.core.entity.enums.MessageSubType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.dromara.common.core.constant.CacheNames;
 import org.dromara.common.core.constant.UserConstants;
+import org.dromara.common.core.enums.UserStatus;
 import org.dromara.common.core.exception.ServiceException;
 import org.dromara.common.core.utils.MapstructUtils;
 import org.dromara.common.core.utils.StreamUtils;
@@ -21,6 +26,7 @@ import org.dromara.common.mybatis.core.page.PageQuery;
 import org.dromara.common.mybatis.core.page.TableDataInfo;
 import org.dromara.common.mybatis.helper.DataBaseHelper;
 import org.dromara.common.satoken.utils.LoginHelper;
+import org.dromara.system.api.model.LoginUser;
 import org.dromara.system.domain.SysDept;
 import org.dromara.system.domain.SysUser;
 import org.dromara.system.domain.SysUserPost;
@@ -38,6 +44,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * 用户 业务层处理
@@ -55,6 +62,7 @@ public class SysUserServiceImpl implements ISysUserService {
     private final SysPostMapper postMapper;
     private final SysUserRoleMapper userRoleMapper;
     private final SysUserPostMapper userPostMapper;
+    private final DingerSender dingerSender;
 
     @Override
     public TableDataInfo<SysUserVo> selectPageUserList(SysUserBo user, PageQuery pageQuery) {
@@ -344,10 +352,21 @@ public class SysUserServiceImpl implements ISysUserService {
      */
     @Override
     public int updateUserStatus(Long userId, String status) {
-        return baseMapper.update(null,
+        int updateResult = baseMapper.update(null,
             new LambdaUpdateWrapper<SysUser>()
                 .set(SysUser::getStatus, status)
                 .eq(SysUser::getUserId, userId));
+        if (updateResult > 0 && Objects.equals(status, UserStatus.DISABLE.getCode())) {
+            try {
+                SysUserVo sysUserVo = baseMapper.selectUserById(userId);
+                LoginUser loginUser = LoginHelper.getLoginUser();
+                String alarmContent = StrFormatter.format("{}将{}账号{}", loginUser.getUsername(), sysUserVo.getUserName(), UserStatus.DISABLE.getInfo());
+                dingerSender.send(MessageSubType.TEXT, DingerRequest.request(alarmContent, "账号停用!!!"));
+            } catch (Exception e) {
+                log.warn("账号停用企微告警消息发送失败:", e);
+            }
+        }
+        return updateResult;
     }
 
     /**

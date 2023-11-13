@@ -530,6 +530,22 @@ insert into sys_role_menu values ('2', '2023');
 insert into sys_role_menu values ('2', '2024');
 insert into sys_role_menu values ('2', '2025');
 
+-- 多数据源管理
+insert into sys_menu values('203', '多数据源管理',   '2',   '3', 'datasource',    'system/datasource/index',   '', 1, 0, 'C', '0', '0', 'system:datasource:list',   'datasource',          103, 1, sysdate(), null, null, '多数据源管理菜单');
+insert into sys_role_menu values ('2', '203');
+-- 多数据源管理相关按钮
+insert into sys_menu values ('2031', '多数据源查询', '203', '1', '#', '', '', 1, 0, 'F', '0', '0', 'system:datasource:query',   '#', 103, 1, sysdate(), null, null, '');
+insert into sys_menu values ('2032', '多数据源新增', '203', '2', '#', '', '', 1, 0, 'F', '0', '0', 'system:datasource:add',     '#', 103, 1, sysdate(), null, null, '');
+insert into sys_menu values ('2033', '多数据源修改', '203', '3', '#', '', '', 1, 0, 'F', '0', '0', 'system:datasource:edit',    '#', 103, 1, sysdate(), null, null, '');
+insert into sys_menu values ('2034', '多数据源删除', '203', '4', '#', '', '', 1, 0, 'F', '0', '0', 'system:datasource:remove',  '#', 103, 1, sysdate(), null, null, '');
+insert into sys_menu values ('2035', '多数据源导出', '203', '5', '#', '', '', 1, 0, 'F', '0', '0', 'system:datasource:export',  '#', 103, 1, sysdate(), null, null, '');
+
+insert into sys_role_menu values ('2', '2031');
+insert into sys_role_menu values ('2', '2032');
+insert into sys_role_menu values ('2', '2033');
+insert into sys_role_menu values ('2', '2034');
+insert into sys_role_menu values ('2', '2035');
+
 -- 系统监控 -- 二级菜单
 
 -- 在线用户
@@ -980,3 +996,24 @@ CREATE TABLE IF NOT EXISTS undo_log
     log_modified  DATETIME(6)  NOT NULL COMMENT 'modify datetime',
     UNIQUE KEY ux_undo_log (xid, branch_id)
 ) ENGINE = InnoDB COMMENT ='AT transaction mode undo table';
+
+
+-- ----------------------------
+-- 多数据源配置表
+-- ----------------------------
+drop table if exists sys_datasource_config;
+CREATE TABLE sys_datasource_config (
+    `id`                    bigint         NOT NULL        COMMENT '主键自增ID',
+    `tenant_id`           varchar(20)      NOT NULL        COMMENT '租户id',
+    `name`                varchar(30)      NOT NULL        COMMENT '数据源名称',
+    `driver_class_name`   varchar(200)     NOT NULL        COMMENT '数据库驱动',
+    `url`                 varchar(100)     NOT NULL        COMMENT '数据库连接地址',
+    `user_name`           varchar(20)      NOT NULL        COMMENT '数据库用户名',
+    `password`            varchar(100)     NOT NULL        COMMENT '数据库密码',
+    `create_time`          datetime        DEFAULT NULL    COMMENT '创建时间',
+    `create_by`             bigint         DEFAULT NULL    COMMENT '创建者',
+    `update_time`          datetime        DEFAULT NULL    COMMENT '更新时间',
+    `update_by`             bigint         DEFAULT NULL    COMMENT '更新者',
+    primary key (`id`),
+    UNIQUE KEY `uk_tenant_id` (`tenant_id`)
+) ENGINE=InnoDB COMMENT='多数据源配置表';
