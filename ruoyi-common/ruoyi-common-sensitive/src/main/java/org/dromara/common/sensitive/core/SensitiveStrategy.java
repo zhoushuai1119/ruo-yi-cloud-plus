@@ -37,7 +37,12 @@ public enum SensitiveStrategy {
     /**
      * 银行卡
      */
-    BANK_CARD(DesensitizedUtil::bankCard);
+    BANK_CARD(DesensitizedUtil::bankCard),
+
+    /**
+     * 密码
+     */
+    PASSWORD(DesensitizedUtil::password);
 
     //可自行添加其他脱敏策略
 

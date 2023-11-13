@@ -4,11 +4,11 @@ datasource:
   system-master:
     # jdbc 所有参数配置参考 https://lionli.blog.csdn.net/article/details/122018562
     # rewriteBatchedStatements=true 批处理优化 大幅提升批量插入更新删除性能
-    url: jdbc:mysql://139.196.208.53:3306/ruoyi-plus?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8&rewriteBatchedStatements=true&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://139.196.208.53:3306/ruoyi-plus?useUnicode=true&characterEncoding=utf8&useSSL=true&rewriteBatchedStatements=true&allowPublicKeyRetrieval=true
     username: root
     password: ENC(fNRODAiR0ZWQDwxYcLIL2uboPCo2wuZ9pcdnPBT3ptn1eA8wKKrSrQPO4ubSAM2FOWnrOihIz+o/WG5AbyxcgA==)
   gen:
-    url: jdbc:mysql://139.196.208.53:3306/ruoyi-plus?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8&rewriteBatchedStatements=true&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://139.196.208.53:3306/ruoyi-plus?useUnicode=true&characterEncoding=utf8&useSSL=true&rewriteBatchedStatements=true&allowPublicKeyRetrieval=true
     username: root
     password: ENC(fNRODAiR0ZWQDwxYcLIL2uboPCo2wuZ9pcdnPBT3ptn1eA8wKKrSrQPO4ubSAM2FOWnrOihIz+o/WG5AbyxcgA==)
 

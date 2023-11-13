@@ -1003,13 +1003,14 @@ CREATE TABLE IF NOT EXISTS undo_log
 -- ----------------------------
 drop table if exists sys_datasource_config;
 CREATE TABLE sys_datasource_config (
-    `id`                    bigint         NOT NULL        COMMENT '主键自增ID',
+    `id`                    bigint         NOT NULL        COMMENT '主键ID',
     `tenant_id`           varchar(20)      NOT NULL        COMMENT '租户id',
     `name`                varchar(30)      NOT NULL        COMMENT '数据源名称',
-    `driver_class_name`   varchar(200)     NOT NULL        COMMENT '数据库驱动',
-    `url`                 varchar(100)     NOT NULL        COMMENT '数据库连接地址',
+    `driver_class_name`   varchar(50)     NOT NULL        COMMENT '数据库驱动',
+    `url`                 varchar(300)     NOT NULL        COMMENT '数据库连接地址',
     `user_name`           varchar(20)      NOT NULL        COMMENT '数据库用户名',
     `password`            varchar(100)     NOT NULL        COMMENT '数据库密码',
+    `create_dept`           bigint         DEFAULT NULL    COMMENT '创建部门',
     `create_time`          datetime        DEFAULT NULL    COMMENT '创建时间',
     `create_by`             bigint         DEFAULT NULL    COMMENT '创建者',
     `update_time`          datetime        DEFAULT NULL    COMMENT '更新时间',
