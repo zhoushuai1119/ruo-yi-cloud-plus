@@ -1,5 +1,6 @@
 package org.dromara.common.tenant.handle;
 
+import cn.hutool.core.util.StrUtil;
 import com.cloud.lock.redisson.handler.KeyPrefixHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.dromara.common.core.constant.GlobalConstants;
@@ -33,7 +34,7 @@ public class TenantKeyPrefixHandler extends KeyPrefixHandler {
         if (StringUtils.isBlank(tenantId)) {
             log.error("无法获取有效的租户id -> Null");
         }
-        if (StringUtils.startsWith(name, tenantId)) {
+        if (StringUtils.startsWith(name, tenantId + StrUtil.EMPTY)) {
             // 如果存在则直接返回
             return super.map(name);
         }
@@ -56,7 +57,7 @@ public class TenantKeyPrefixHandler extends KeyPrefixHandler {
         if (StringUtils.isBlank(tenantId)) {
             log.error("无法获取有效的租户id -> Null");
         }
-        if (StringUtils.startsWith(unmap, tenantId)) {
+        if (StringUtils.startsWith(unmap, tenantId + StrUtil.EMPTY)) {
             // 如果存在则删除
             return unmap.substring((tenantId + ":").length());
         }

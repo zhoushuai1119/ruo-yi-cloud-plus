@@ -79,7 +79,7 @@ public class GenController extends BaseController {
      */
     @SaCheckPermission("tool:gen:list")
     @GetMapping(value = "/column/{tableId}")
-    public TableDataInfo<GenTableColumn> columnList(Long tableId) {
+    public TableDataInfo<GenTableColumn> columnList(@PathVariable("tableId") Long tableId) {
         TableDataInfo<GenTableColumn> dataInfo = new TableDataInfo<>();
         List<GenTableColumn> list = genTableService.selectGenTableColumnListByTableId(tableId);
         dataInfo.setRows(list);
@@ -211,7 +211,7 @@ public class GenController extends BaseController {
      */
     @SaCheckPermission("tool:gen:list")
     @GetMapping(value = "/getDataNames")
-    public R<Object> getCurrentDataSourceNameList(){
+    public R<Object> getCurrentDataSourceNameList() {
         return R.ok(DataBaseHelper.getDataSourceNameList());
     }
 }

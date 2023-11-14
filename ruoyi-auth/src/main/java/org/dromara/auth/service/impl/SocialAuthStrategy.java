@@ -2,23 +2,26 @@ package org.dromara.auth.service.impl;
 
 import cn.dev33.satoken.stp.SaLoginModel;
 import cn.dev33.satoken.stp.StpUtil;
+import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.http.HttpUtil;
+import cn.hutool.http.Method;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.zhyd.oauth.model.AuthResponse;
 import me.zhyd.oauth.model.AuthUser;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.dromara.auth.domain.vo.LoginVo;
+import org.dromara.auth.form.SocialLoginBody;
 import org.dromara.auth.service.IAuthStrategy;
 import org.dromara.auth.service.SysLoginService;
 import org.dromara.common.core.constant.Constants;
-import org.dromara.common.core.domain.model.LoginBody;
 import org.dromara.common.core.exception.ServiceException;
 import org.dromara.common.core.utils.MessageUtils;
 import org.dromara.common.core.utils.ServletUtils;
 import org.dromara.common.core.utils.ValidatorUtils;
-import org.dromara.common.core.validate.auth.SocialGroup;
+import org.dromara.common.json.utils.JsonUtils;
 import org.dromara.common.satoken.utils.LoginHelper;
 import org.dromara.common.social.config.properties.SocialProperties;
 import org.dromara.common.social.utils.SocialUtils;
@@ -47,25 +50,24 @@ public class SocialAuthStrategy implements IAuthStrategy {
     @DubboReference
     private RemoteUserService remoteUserService;
 
-    @Override
-    public void validate(LoginBody loginBody) {
-        ValidatorUtils.validate(loginBody, SocialGroup.class);
-    }
-
     /**
      * 登录-第三方授权登录
      *
-     * @param clientId  客户端id
-     * @param loginBody 登录信息
-     * @param client    客户端信息
+     * @param body   登录信息
+     * @param client 客户端信息
      */
     @Override
-    public LoginVo login(String clientId, LoginBody loginBody, RemoteClientVo client) {
-        AuthResponse<AuthUser> response = SocialUtils.loginAuth(loginBody, socialProperties);
+    public LoginVo login(String body, RemoteClientVo client) {
+        SocialLoginBody loginBody = JsonUtils.parseObject(body, SocialLoginBody.class);
+        ValidatorUtils.validate(loginBody);
+        AuthResponse<AuthUser> response = SocialUtils.loginAuth(
+            loginBody.getSource(), loginBody.getSocialCode(),
+            loginBody.getSocialState(), socialProperties);
         if (!response.ok()) {
             throw new ServiceException(response.getMsg());
         }
         AuthUser authUserData = response.getData();
+
         RemoteSocialVo socialVo = remoteSocialService.selectByAuthId(authUserData.getSource() + authUserData.getUuid());
         if (!ObjectUtil.isNotNull(socialVo)) {
             throw new ServiceException("你还没有绑定第三方账号，绑定后才可以登录！");
@@ -86,7 +88,7 @@ public class SocialAuthStrategy implements IAuthStrategy {
         // 例如: 后台用户30分钟过期 app用户1天过期
         model.setTimeout(client.getTimeout());
         model.setActiveTimeout(client.getActiveTimeout());
-        model.setExtra(LoginHelper.CLIENT_KEY, clientId);
+        model.setExtra(LoginHelper.CLIENT_KEY, client.getClientId());
         // 生成token
         LoginHelper.login(loginUser, model, loginBody.getGrantType());
 
@@ -96,7 +98,7 @@ public class SocialAuthStrategy implements IAuthStrategy {
         LoginVo loginVo = new LoginVo();
         loginVo.setAccessToken(StpUtil.getTokenValue());
         loginVo.setExpireIn(StpUtil.getTokenTimeout());
-        loginVo.setClientId(clientId);
+        loginVo.setClientId(client.getClientId());
         return loginVo;
     }
 
