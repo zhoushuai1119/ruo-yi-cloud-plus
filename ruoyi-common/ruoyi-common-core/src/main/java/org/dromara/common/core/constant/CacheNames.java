@@ -38,7 +38,7 @@ public interface CacheNames {
     /**
      * 租户数据源
      */
-    String SYS_TENANT_DATASOURCE = "sys_tenant_datasource#30d";
+    String SYS_TENANT_DATASOURCE = GlobalConstants.GLOBAL_REDIS_KEY + "sys_tenant_datasource#30d";
 
     /**
      * 用户账户

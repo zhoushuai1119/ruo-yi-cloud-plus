@@ -1018,5 +1018,3 @@ CREATE TABLE sys_datasource_config (
     primary key (`id`),
     UNIQUE KEY `uk_tenant_id` (`tenant_id`)
 ) ENGINE=InnoDB COMMENT='多数据源配置表';
-
-insert into sys_datasource_config values (1, '000000', 'master', 'com.mysql.cj.jdbc.Driver', 'jdbc:mysql://139.196.208.53:3306/ruoyi-plus?useUnicode=true&characterEncoding=utf8&useSSL=true&rewriteBatchedStatements=true&allowPublicKeyRetrieval=true', 'root', 'Zs11195310', 103, sysdate(), 1, sysdate(), 1);

@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboReference;
+import org.dromara.common.core.constant.TenantConstants;
 import org.dromara.common.core.exception.ServiceException;
 import org.dromara.common.json.utils.JsonUtils;
 import org.dromara.common.satoken.utils.LoginHelper;
@@ -15,6 +16,8 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Objects;
+
+import static org.dromara.common.core.constant.GlobalConstants.DEFAULT_TENANT_SOURCE;
 
 /**
  * @author: zhou shuai
@@ -34,8 +37,14 @@ public class DynamicDatasourceInterceptor implements HandlerInterceptor {
         if (StrUtil.isBlank(tenantId)) {
             throw new ServiceException("租户编号不能为空!!!");
         }
+        boolean isSuperTenant = Objects.equals(tenantId, TenantConstants.DEFAULT_TENANT_ID);
         RemoteTenantDataSourceVo tenantDataSource = remoteTenantService.queryDataSourceByTenantId(tenantId);
-        if (Objects.isNull(tenantDataSource)) {
+        // 如果是超级租户,默认设置数据源为master
+        if (isSuperTenant && Objects.isNull(tenantDataSource)) {
+            DynamicDataSourceContextHolder.push(DEFAULT_TENANT_SOURCE);
+            return true;
+        }
+        if (!isSuperTenant && Objects.isNull(tenantDataSource)) {
             throw new ServiceException("租户编号:" + tenantId + "未配置数据源!!!");
         }
         log.info("租户编号:{}配置的数据源信息为:{}", tenantId, JsonUtils.toJsonString(tenantDataSource));

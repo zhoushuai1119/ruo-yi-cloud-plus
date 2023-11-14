@@ -37,4 +37,9 @@ public interface GlobalConstants {
      */
     String SOCIAL_AUTH_CODE_KEY = GLOBAL_REDIS_KEY + "social_auth_codes:";
 
+    /**
+     * 主数据源名称
+     */
+    String DEFAULT_TENANT_SOURCE = "master";
+
 }

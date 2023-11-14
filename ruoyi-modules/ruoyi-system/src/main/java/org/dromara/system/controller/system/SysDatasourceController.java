@@ -1,10 +1,12 @@
 package org.dromara.system.controller.system;
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
+import cn.dev33.satoken.annotation.SaCheckRole;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
+import org.dromara.common.core.constant.TenantConstants;
 import org.dromara.common.core.domain.R;
 import org.dromara.common.core.validate.AddGroup;
 import org.dromara.common.core.validate.EditGroup;
@@ -41,6 +43,7 @@ public class SysDatasourceController extends BaseController {
     /**
      * 查询多数据源配置列表
      */
+    @SaCheckRole(TenantConstants.SUPER_ADMIN_ROLE_KEY)
     @SaCheckPermission("system:datasource:list")
     @GetMapping("/list")
     public TableDataInfo<SysDatasourceVo> list(SysDatasourceBo bo, PageQuery pageQuery) {
@@ -50,6 +53,7 @@ public class SysDatasourceController extends BaseController {
     /**
      * 导出多数据源配置列表
      */
+    @SaCheckRole(TenantConstants.SUPER_ADMIN_ROLE_KEY)
     @SaCheckPermission("system:datasource:export")
     @Log(title = "多数据源配置", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
@@ -63,6 +67,7 @@ public class SysDatasourceController extends BaseController {
      *
      * @param id 主键
      */
+    @SaCheckRole(TenantConstants.SUPER_ADMIN_ROLE_KEY)
     @SaCheckPermission("system:datasource:query")
     @GetMapping("/{id}")
     public R<SysDatasourceVo> getInfo(@NotNull(message = "主键不能为空")
@@ -73,6 +78,7 @@ public class SysDatasourceController extends BaseController {
     /**
      * 新增多数据源配置
      */
+    @SaCheckRole(TenantConstants.SUPER_ADMIN_ROLE_KEY)
     @SaCheckPermission("system:datasource:add")
     @Log(title = "多数据源配置", businessType = BusinessType.INSERT)
     @RepeatSubmit()
@@ -84,6 +90,7 @@ public class SysDatasourceController extends BaseController {
     /**
      * 修改多数据源配置
      */
+    @SaCheckRole(TenantConstants.SUPER_ADMIN_ROLE_KEY)
     @SaCheckPermission("system:datasource:edit")
     @Log(title = "多数据源配置", businessType = BusinessType.UPDATE)
     @RepeatSubmit()
@@ -97,6 +104,7 @@ public class SysDatasourceController extends BaseController {
      *
      * @param ids 主键串
      */
+    @SaCheckRole(TenantConstants.SUPER_ADMIN_ROLE_KEY)
     @SaCheckPermission("system:datasource:remove")
     @Log(title = "多数据源配置", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
