@@ -4,6 +4,8 @@ import com.alibaba.excel.annotation.ExcelIgnoreUnannotated;
 import com.alibaba.excel.annotation.ExcelProperty;
 import io.github.linpeilie.annotations.AutoMapper;
 import lombok.Data;
+import org.dromara.common.sensitive.annotation.Sensitive;
+import org.dromara.common.sensitive.core.SensitiveStrategy;
 import org.dromara.system.domain.SysDatasource;
 
 import java.io.Serial;
@@ -64,6 +66,7 @@ public class SysDatasourceVo implements Serializable {
      * 数据库密码
      */
     @ExcelProperty(value = "数据库密码")
+    @Sensitive(strategy = SensitiveStrategy.PASSWORD)
     private String password;
 
 }
