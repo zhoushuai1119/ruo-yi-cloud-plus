@@ -46,7 +46,7 @@ public class PlusSpringCacheManager implements CacheManager {
 
     private boolean dynamic = true;
 
-    private boolean allowNullValues = false;
+    private final boolean allowNullValues = false;
 
     private boolean transactionAware = true;
 
@@ -57,18 +57,6 @@ public class PlusSpringCacheManager implements CacheManager {
      * Creates CacheManager supplied by Redisson instance
      */
     public PlusSpringCacheManager() {
-    }
-
-
-    /**
-     * Defines possibility of storing {@code null} values.
-     * <p>
-     * Default is <code>true</code>
-     *
-     * @param allowNullValues stores if <code>true</code>
-     */
-    public void setAllowNullValues(boolean allowNullValues) {
-        this.allowNullValues = allowNullValues;
     }
 
     /**
@@ -146,13 +134,13 @@ public class PlusSpringCacheManager implements CacheManager {
         }
 
         if (config.getMaxIdleTime() == 0 && config.getTTL() == 0 && config.getMaxSize() == 0) {
-            return createMap(name, config);
+            return createMap(name);
         }
 
         return createMapCache(name, config);
     }
 
-    private Cache createMap(String name, CacheConfig config) {
+    private Cache createMap(String name) {
         RMap<Object, Object> map = RedisUtils.getClient().getMap(name);
 
         Cache cache = new RedissonCache(map, allowNullValues);
