@@ -1,6 +1,5 @@
 package org.dromara.common.redis.config;
 
-import lombok.extern.slf4j.Slf4j;
 import org.dromara.common.core.factory.YmlPropertySourceFactory;
 import org.dromara.common.redis.manager.PlusSpringCacheManager;
 import org.springframework.cache.CacheManager;
@@ -10,11 +9,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
 /**
- * redis配置
+ * redisson 配置
  *
- * @author Lion Li
+ * @author shuai.zhou
  */
-@Slf4j
 @EnableCaching
 @Configuration
 @PropertySource(value = "classpath:common-redisson.yml", factory = YmlPropertySourceFactory.class)
