@@ -21,7 +21,6 @@ import java.util.stream.Stream;
  * @version 3.1.0 新增
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-@SuppressWarnings(value = {"unchecked", "rawtypes"})
 public class RedisUtils {
 
     private static final RedissonClient CLIENT = SpringUtils.getBean(RedissonClient.class);
