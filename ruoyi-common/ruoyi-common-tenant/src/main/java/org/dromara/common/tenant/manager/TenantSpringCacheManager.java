@@ -4,6 +4,7 @@ import org.dromara.common.core.constant.GlobalConstants;
 import org.dromara.common.core.utils.StringUtils;
 import org.dromara.common.redis.manager.PlusSpringCacheManager;
 import org.dromara.common.tenant.helper.TenantHelper;
+import org.redisson.api.RedissonClient;
 import org.springframework.cache.Cache;
 
 /**
@@ -13,7 +14,8 @@ import org.springframework.cache.Cache;
  */
 public class TenantSpringCacheManager extends PlusSpringCacheManager {
 
-    public TenantSpringCacheManager() {
+    public TenantSpringCacheManager(RedissonClient redissonClient) {
+        super(redissonClient);
     }
 
     @Override

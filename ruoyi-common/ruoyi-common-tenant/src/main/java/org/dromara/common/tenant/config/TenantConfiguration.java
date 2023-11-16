@@ -14,6 +14,7 @@ import org.dromara.common.tenant.handle.PlusTenantLineHandler;
 import org.dromara.common.tenant.handle.TenantKeyPrefixHandler;
 import org.dromara.common.tenant.manager.TenantSpringCacheManager;
 import org.dromara.common.tenant.properties.TenantProperties;
+import org.redisson.api.RedissonClient;
 import org.redisson.config.ClusterServersConfig;
 import org.redisson.config.SingleServerConfig;
 import org.redisson.spring.starter.RedissonAutoConfigurationCustomizer;
@@ -90,8 +91,8 @@ public class TenantConfiguration {
      */
     @Primary
     @Bean
-    public CacheManager tenantCacheManager() {
-        return new TenantSpringCacheManager();
+    public CacheManager tenantCacheManager(RedissonClient redissonClient) {
+        return new TenantSpringCacheManager(redissonClient);
     }
 
     /**

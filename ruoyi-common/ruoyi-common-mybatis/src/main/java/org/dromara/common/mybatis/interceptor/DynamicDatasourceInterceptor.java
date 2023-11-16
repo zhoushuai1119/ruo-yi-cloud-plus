@@ -1,6 +1,7 @@
 package org.dromara.common.mybatis.interceptor;
 
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.extra.spring.SpringUtil;
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -15,6 +16,7 @@ import org.dromara.system.api.domain.vo.RemoteTenantDataSourceVo;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
 import java.util.Objects;
 
 import static org.dromara.common.core.constant.GlobalConstants.DEFAULT_TENANT_SOURCE;
@@ -30,8 +32,17 @@ public class DynamicDatasourceInterceptor implements HandlerInterceptor {
     @DubboReference
     private RemoteTenantService remoteTenantService;
 
+    /**
+     * 服务名白名单
+     */
+    private final static List<String> excludeApplicationNameList = List.of("ruoyi-demo");
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+        String applicationName = SpringUtil.getApplicationName();
+        if (excludeApplicationNameList.contains(applicationName)) {
+            return true;
+        }
         String tenantId = LoginHelper.getTenantId();
         log.info("多数据源配置tenantId:{}", tenantId);
         if (StrUtil.isBlank(tenantId)) {
