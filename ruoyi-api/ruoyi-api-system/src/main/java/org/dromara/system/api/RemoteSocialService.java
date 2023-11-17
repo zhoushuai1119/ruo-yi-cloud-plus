@@ -11,9 +11,15 @@ import org.dromara.system.api.domain.vo.RemoteSocialVo;
 public interface RemoteSocialService {
 
     /**
-     * 根据 authId 查询用户信息
+     * 查询用户信息
+     *
+     * @author: zhou shuai
+     * @date: 2023/11/17 20:08
+     * @param: authId
+     * @param: tenantId
+     * @return: org.dromara.system.api.domain.vo.RemoteSocialVo
      */
-    RemoteSocialVo selectByAuthId(String authId);
+    RemoteSocialVo selectByAuthId(String authId, String tenantId);
 
     /**
      * 保存社会化关系

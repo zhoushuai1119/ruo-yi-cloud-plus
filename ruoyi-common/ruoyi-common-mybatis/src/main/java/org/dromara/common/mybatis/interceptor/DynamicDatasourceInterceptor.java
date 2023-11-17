@@ -35,12 +35,12 @@ public class DynamicDatasourceInterceptor implements HandlerInterceptor {
     /**
      * 服务名白名单
      */
-    private final static List<String> excludeApplicationNameList = List.of("ruoyi-demo");
+    private final static List<String> EXCLUDE_APPLICATION_NAME_LIST = List.of("ruoyi-demo");
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         String applicationName = SpringUtil.getApplicationName();
-        if (excludeApplicationNameList.contains(applicationName)) {
+        if (EXCLUDE_APPLICATION_NAME_LIST.contains(applicationName)) {
             return true;
         }
         String tenantId = LoginHelper.getTenantId();

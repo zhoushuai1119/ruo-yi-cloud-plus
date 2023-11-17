@@ -15,11 +15,13 @@ import org.dromara.auth.domain.vo.LoginVo;
 import org.dromara.auth.domain.vo.TenantListVo;
 import org.dromara.auth.form.RegisterBody;
 import org.dromara.auth.form.SocialLoginBody;
-import org.dromara.auth.service.IAuthStrategy;
 import org.dromara.auth.service.SysLoginService;
+import org.dromara.auth.strategy.AuthFactory;
+import org.dromara.auth.strategy.IAuthStrategy;
 import org.dromara.common.core.constant.UserConstants;
 import org.dromara.common.core.domain.R;
 import org.dromara.common.core.domain.model.LoginBody;
+import org.dromara.common.core.exception.ServiceException;
 import org.dromara.common.core.utils.*;
 import org.dromara.common.json.utils.JsonUtils;
 import org.dromara.common.satoken.utils.LoginHelper;
@@ -56,6 +58,7 @@ public class TokenController {
     private final SocialProperties socialProperties;
     private final SysLoginService sysLoginService;
     private final ScheduledExecutorService scheduledExecutorService;
+    private final AuthFactory authFactory;
 
     @DubboReference
     private final RemoteConfigService remoteConfigService;
@@ -93,8 +96,13 @@ public class TokenController {
         }
         // 校验租户
         sysLoginService.checkTenant(loginBody.getTenantId());
+
+        IAuthStrategy authStrategy = authFactory.getLoginStrategy(grantType);
+        if (authStrategy == null) {
+            throw new ServiceException("授权类型不正确!");
+        }
         // 登录
-        LoginVo loginVo = IAuthStrategy.login(body, clientVo, grantType);
+        LoginVo loginVo = authStrategy.login(body, clientVo);
 
         Long userId = LoginHelper.getUserId();
         scheduledExecutorService.schedule(() -> {

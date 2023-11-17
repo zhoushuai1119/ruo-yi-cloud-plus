@@ -1,5 +1,6 @@
 package org.dromara.system.service.impl;
 
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import lombok.RequiredArgsConstructor;
 import org.dromara.common.core.utils.MapstructUtils;
@@ -94,14 +95,18 @@ public class SysSocialServiceImpl implements ISysSocialService {
 
 
     /**
-     * 根据 authId 查询用户信息
+     * 根据 authId和tenantId 查询 SysSocial 表和 SysUser 表，返回 SysSocialAuthResult 映射的对象
      *
-     * @param authId 认证id
-     * @return 授权信息
+     * @param authId   认证ID
+     * @param tenantId 租户ID
+     * @return SysSocial
      */
     @Override
-    public SysSocialVo selectByAuthId(String authId) {
-        return baseMapper.selectVoOne(new LambdaQueryWrapper<SysSocial>().eq(SysSocial::getAuthId, authId));
+    public SysSocialVo selectByAuthId(String authId, String tenantId) {
+        LambdaQueryWrapper<SysSocial> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(StrUtil.isNotBlank(authId), SysSocial::getAuthId, authId);
+        lambdaQueryWrapper.eq(StrUtil.isNotBlank(tenantId), SysSocial::getTenantId, tenantId);
+        return baseMapper.selectVoOne(lambdaQueryWrapper);
     }
 
 }

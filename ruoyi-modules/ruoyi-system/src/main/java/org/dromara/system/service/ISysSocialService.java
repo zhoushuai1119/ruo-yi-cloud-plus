@@ -46,11 +46,13 @@ public interface ISysSocialService {
 
 
     /**
-     * 根据 authId 查询 SysSocial 表和 SysUser 表，返回 SysSocialAuthResult 映射的对象
-     * @param authId 认证ID
+     * 根据 authId和tenantId 查询 SysSocial 表和 SysUser 表，返回 SysSocialAuthResult 映射的对象
+     *
+     * @param authId   认证ID
+     * @param tenantId 租户ID
      * @return SysSocial
      */
-    SysSocialVo selectByAuthId(String authId);
+    SysSocialVo selectByAuthId(String authId, String tenantId);
 
 
 }

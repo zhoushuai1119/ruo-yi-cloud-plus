@@ -6,7 +6,6 @@ import org.dromara.common.core.utils.MapstructUtils;
 import org.dromara.system.api.RemoteSocialService;
 import org.dromara.system.api.domain.bo.RemoteSocialBo;
 import org.dromara.system.api.domain.vo.RemoteSocialVo;
-import org.dromara.system.domain.SysSocial;
 import org.dromara.system.domain.bo.SysSocialBo;
 import org.dromara.system.domain.vo.SysSocialVo;
 import org.dromara.system.mapper.SysSocialMapper;
@@ -27,11 +26,17 @@ public class RemoteSocialServiceImpl implements RemoteSocialService {
     private final SysSocialMapper sysSocialMapper;
 
     /**
-     * 根据 authId 查询用户信息
+     * 查询用户信息
+     *
+     * @author: zhou shuai
+     * @date: 2023/11/17 20:08
+     * @param: authId
+     * @param: tenantId
+     * @return: org.dromara.system.api.domain.vo.RemoteSocialVo
      */
     @Override
-    public RemoteSocialVo selectByAuthId(String authId) {
-        SysSocialVo socialVo = sysSocialService.selectByAuthId(authId);
+    public RemoteSocialVo selectByAuthId(String authId, String tenantId) {
+        SysSocialVo socialVo = sysSocialService.selectByAuthId(authId, tenantId);
         return MapstructUtils.convert(socialVo, RemoteSocialVo.class);
     }
 

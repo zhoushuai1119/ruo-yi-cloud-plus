@@ -81,7 +81,7 @@ public class SysLoginService {
         bo.setUserName(authUserData.getUsername());
         bo.setNickName(authUserData.getNickname());
         // 查询是否已经绑定用户
-        RemoteSocialVo vo = remoteSocialService.selectByAuthId(authId);
+        RemoteSocialVo vo = remoteSocialService.selectByAuthId(authId, null);
         if (ObjectUtil.isEmpty(vo)) {
             // 没有绑定用户, 新增用户信息
             remoteSocialService.insertByBo(bo);
