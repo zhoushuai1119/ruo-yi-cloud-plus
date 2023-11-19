@@ -55,6 +55,7 @@ public class SocialAuthStrategy extends AbstractAuthStrategy {
     public LoginVo login(String body, RemoteClientVo client) {
         SocialLoginBody loginBody = JsonUtils.parseObject(body, SocialLoginBody.class);
         ValidatorUtils.validate(loginBody);
+        String tenantId = loginBody.getTenantId();
         AuthResponse<AuthUser> response = SocialUtils.loginAuth(
             loginBody.getSource(), loginBody.getSocialCode(),
             loginBody.getSocialState(), socialProperties);
@@ -62,14 +63,12 @@ public class SocialAuthStrategy extends AbstractAuthStrategy {
             throw new ServiceException(response.getMsg());
         }
         AuthUser authUserData = response.getData();
-
         String authId = authUserData.getSource() + authUserData.getUuid();
-
-        RemoteSocialVo socialVo = remoteSocialService.selectByAuthId(authId, loginBody.getTenantId());
+        RemoteSocialVo socialVo = remoteSocialService.selectByAuthId(authId, tenantId);
         if (Objects.isNull(socialVo)) {
             throw new ServiceException("您在当前租户下还没有绑定该第三方账号，绑定后才可以登录！");
         }
-        LoginUser loginUser = remoteUserService.getUserInfo(socialVo.getUserId(), loginBody.getTenantId());
+        LoginUser loginUser = remoteUserService.getUserInfo(socialVo.getUserId(), tenantId);
         return loginClient(client, loginUser, loginBody.getGrantType());
     }
 
