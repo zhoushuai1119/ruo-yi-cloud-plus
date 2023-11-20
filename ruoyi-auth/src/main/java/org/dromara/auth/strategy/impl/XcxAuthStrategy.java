@@ -1,11 +1,9 @@
 package org.dromara.auth.strategy.impl;
 
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.dromara.auth.domain.vo.LoginVo;
 import org.dromara.auth.form.XcxLoginBody;
-import org.dromara.auth.service.SysLoginService;
 import org.dromara.auth.strategy.AbstractAuthStrategy;
 import org.dromara.common.core.enums.LoginType;
 import org.dromara.common.core.utils.ValidatorUtils;
