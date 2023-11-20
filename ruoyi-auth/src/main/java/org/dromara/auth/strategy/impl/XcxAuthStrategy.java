@@ -1,11 +1,16 @@
 package org.dromara.auth.strategy.impl;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.dubbo.config.annotation.DubboReference;
 import org.dromara.auth.domain.vo.LoginVo;
 import org.dromara.auth.form.XcxLoginBody;
 import org.dromara.auth.service.SysLoginService;
 import org.dromara.auth.strategy.AbstractAuthStrategy;
+import org.dromara.common.core.constant.Constants;
 import org.dromara.common.core.enums.LoginType;
+import org.dromara.common.core.utils.MessageUtils;
+import org.dromara.common.core.utils.ServletUtils;
 import org.dromara.common.core.utils.ValidatorUtils;
 import org.dromara.common.json.utils.JsonUtils;
 import org.dromara.system.api.RemoteUserService;
@@ -22,14 +27,13 @@ import static org.dromara.common.core.enums.LoginType.XCX;
  */
 @Slf4j
 @Service("xcxAuthStrategy")
+@RequiredArgsConstructor
 public class XcxAuthStrategy extends AbstractAuthStrategy {
 
-    private final RemoteUserService remoteUserService;
+    private final SysLoginService loginService;
 
-    public XcxAuthStrategy(SysLoginService loginService, RemoteUserService remoteUserService) {
-        super(loginService, remoteUserService);
-        this.remoteUserService = remoteUserService;
-    }
+    @DubboReference
+    private RemoteUserService remoteUserService;
 
     @Override
     public LoginVo login(String body, RemoteClientVo client) {
@@ -46,6 +50,8 @@ public class XcxAuthStrategy extends AbstractAuthStrategy {
         XcxLoginUser loginUser = remoteUserService.getUserInfoByOpenid(openid);
         LoginVo loginVo = loginClient(client, loginUser, loginBody.getGrantType());
         loginVo.setOpenid(openid);
+        loginService.recordLogininfor(loginUser.getTenantId(), loginUser.getUsername(), Constants.LOGIN_SUCCESS, MessageUtils.message("user.login.success"));
+        remoteUserService.recordLoginInfo(loginUser.getUserId(), ServletUtils.getClientIP());
         return loginVo;
     }
 

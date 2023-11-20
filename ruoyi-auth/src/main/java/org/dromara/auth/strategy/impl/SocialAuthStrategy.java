@@ -1,14 +1,19 @@
 package org.dromara.auth.strategy.impl;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.zhyd.oauth.model.AuthResponse;
 import me.zhyd.oauth.model.AuthUser;
+import org.apache.dubbo.config.annotation.DubboReference;
 import org.dromara.auth.domain.vo.LoginVo;
 import org.dromara.auth.form.SocialLoginBody;
 import org.dromara.auth.service.SysLoginService;
 import org.dromara.auth.strategy.AbstractAuthStrategy;
+import org.dromara.common.core.constant.Constants;
 import org.dromara.common.core.enums.LoginType;
 import org.dromara.common.core.exception.ServiceException;
+import org.dromara.common.core.utils.MessageUtils;
+import org.dromara.common.core.utils.ServletUtils;
 import org.dromara.common.core.utils.ValidatorUtils;
 import org.dromara.common.json.utils.JsonUtils;
 import org.dromara.common.social.config.properties.SocialProperties;
@@ -31,19 +36,16 @@ import static org.dromara.common.core.enums.LoginType.SOCIAL;
  */
 @Slf4j
 @Service("socialAuthStrategy")
+@RequiredArgsConstructor
 public class SocialAuthStrategy extends AbstractAuthStrategy {
 
     private final SocialProperties socialProperties;
-    private final RemoteSocialService remoteSocialService;
-    private final RemoteUserService remoteUserService;
+    private final SysLoginService loginService;
 
-    public SocialAuthStrategy(SysLoginService loginService, RemoteUserService remoteUserService,
-                              SocialProperties socialProperties, RemoteSocialService remoteSocialService) {
-        super(loginService, remoteUserService);
-        this.remoteUserService = remoteUserService;
-        this.socialProperties = socialProperties;
-        this.remoteSocialService = remoteSocialService;
-    }
+    @DubboReference
+    private RemoteSocialService remoteSocialService;
+    @DubboReference
+    private RemoteUserService remoteUserService;
 
     /**
      * 登录-第三方授权登录
@@ -69,7 +71,10 @@ public class SocialAuthStrategy extends AbstractAuthStrategy {
             throw new ServiceException("您在当前租户下还没有绑定该第三方账号，绑定后才可以登录！");
         }
         LoginUser loginUser = remoteUserService.getUserInfo(socialVo.getUserId(), tenantId);
-        return loginClient(client, loginUser, loginBody.getGrantType());
+        LoginVo loginVo = loginClient(client, loginUser, loginBody.getGrantType());
+        loginService.recordLogininfor(loginUser.getTenantId(), socialVo.getUserName(), Constants.LOGIN_SUCCESS, MessageUtils.message("user.login.success"));
+        remoteUserService.recordLoginInfo(loginUser.getUserId(), ServletUtils.getClientIP());
+        return loginVo;
     }
 
     @Override

@@ -1,7 +1,9 @@
 package org.dromara.auth.strategy.impl;
 
 import cn.dev33.satoken.secure.BCrypt;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.dubbo.config.annotation.DubboReference;
 import org.dromara.auth.domain.vo.LoginVo;
 import org.dromara.auth.form.PasswordLoginBody;
 import org.dromara.auth.properties.CaptchaProperties;
@@ -13,6 +15,7 @@ import org.dromara.common.core.enums.LoginType;
 import org.dromara.common.core.exception.CaptchaException;
 import org.dromara.common.core.exception.user.CaptchaExpireException;
 import org.dromara.common.core.utils.MessageUtils;
+import org.dromara.common.core.utils.ServletUtils;
 import org.dromara.common.core.utils.StringUtils;
 import org.dromara.common.core.utils.ValidatorUtils;
 import org.dromara.common.json.utils.JsonUtils;
@@ -31,18 +34,14 @@ import static org.dromara.common.core.enums.LoginType.PASSWORD;
  */
 @Slf4j
 @Service("passwordAuthStrategy")
+@RequiredArgsConstructor
 public class PasswordAuthStrategy extends AbstractAuthStrategy {
 
     private final CaptchaProperties captchaProperties;
-    private final SysLoginService loginService;
-    private final RemoteUserService remoteUserService;
 
-    public PasswordAuthStrategy(SysLoginService loginService, RemoteUserService remoteUserService, CaptchaProperties captchaProperties) {
-        super(loginService, remoteUserService);
-        this.loginService = loginService;
-        this.remoteUserService = remoteUserService;
-        this.captchaProperties = captchaProperties;
-    }
+    private final SysLoginService loginService;
+    @DubboReference
+    private RemoteUserService remoteUserService;
 
     @Override
     public LoginVo login(String body, RemoteClientVo client) {
@@ -62,7 +61,10 @@ public class PasswordAuthStrategy extends AbstractAuthStrategy {
 
         LoginUser loginUser = remoteUserService.getUserInfo(username, tenantId);
         loginService.checkLogin(loginType(), tenantId, username, () -> !BCrypt.checkpw(password, loginUser.getPassword()));
-        return loginClient(client, loginUser, grantType);
+        LoginVo loginVo = loginClient(client, loginUser, grantType);
+        loginService.recordLogininfor(loginUser.getTenantId(), username, Constants.LOGIN_SUCCESS, MessageUtils.message("user.login.success"));
+        remoteUserService.recordLoginInfo(loginUser.getUserId(), ServletUtils.getClientIP());
+        return loginVo;
     }
 
     @Override

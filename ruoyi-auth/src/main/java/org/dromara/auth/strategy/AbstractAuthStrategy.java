@@ -3,12 +3,7 @@ package org.dromara.auth.strategy;
 import cn.dev33.satoken.stp.SaLoginModel;
 import cn.dev33.satoken.stp.StpUtil;
 import org.dromara.auth.domain.vo.LoginVo;
-import org.dromara.auth.service.SysLoginService;
-import org.dromara.common.core.constant.Constants;
-import org.dromara.common.core.utils.MessageUtils;
-import org.dromara.common.core.utils.ServletUtils;
 import org.dromara.common.satoken.utils.LoginHelper;
-import org.dromara.system.api.RemoteUserService;
 import org.dromara.system.api.domain.vo.RemoteClientVo;
 import org.dromara.system.api.model.LoginUser;
 
@@ -19,13 +14,6 @@ import org.dromara.system.api.model.LoginUser;
  * @version: v1
  */
 public abstract class AbstractAuthStrategy implements IAuthStrategy {
-    private final SysLoginService loginService;
-    private final RemoteUserService remoteUserService;
-
-    public AbstractAuthStrategy(SysLoginService loginService, RemoteUserService remoteUserService) {
-        this.loginService = loginService;
-        this.remoteUserService = remoteUserService;
-    }
 
     public LoginVo loginClient(RemoteClientVo client, LoginUser loginUser, String grantType) {
         loginUser.setClientKey(client.getClientKey());
@@ -38,9 +26,6 @@ public abstract class AbstractAuthStrategy implements IAuthStrategy {
         model.setExtra(LoginHelper.CLIENT_KEY, client.getClientId());
         // 生成token
         LoginHelper.login(loginUser, model, grantType);
-
-        loginService.recordLogininfor(loginUser.getTenantId(), loginUser.getUsername(), Constants.LOGIN_SUCCESS, MessageUtils.message("user.login.success"));
-        remoteUserService.recordLoginInfo(loginUser.getUserId(), ServletUtils.getClientIP());
 
         LoginVo loginVo = new LoginVo();
         loginVo.setAccessToken(StpUtil.getTokenValue());
