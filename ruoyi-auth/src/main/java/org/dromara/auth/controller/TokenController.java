@@ -61,15 +61,15 @@ public class TokenController {
     private final AuthFactory authFactory;
 
     @DubboReference
-    private final RemoteConfigService remoteConfigService;
+    private RemoteConfigService remoteConfigService;
     @DubboReference
-    private final RemoteTenantService remoteTenantService;
+    private RemoteTenantService remoteTenantService;
     @DubboReference
-    private final RemoteClientService remoteClientService;
+    private RemoteClientService remoteClientService;
     @DubboReference
-    private final RemoteSocialService remoteSocialService;
+    private RemoteSocialService remoteSocialService;
     @DubboReference
-    private final RemoteMessageService remoteMessageService;
+    private RemoteMessageService remoteMessageService;
 
 
     /**
