@@ -23,7 +23,7 @@ public class WebSocketSessionHolder {
     }
 
     public static void removeSession(Long sessionKey) {
-        if (USER_SESSION_MAP.containsKey(sessionKey)) {
+        if (existSession(sessionKey)) {
             USER_SESSION_MAP.remove(sessionKey);
         }
     }

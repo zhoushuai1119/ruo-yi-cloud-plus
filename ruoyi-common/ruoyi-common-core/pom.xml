@@ -83,6 +83,11 @@
 
         <dependency>
             <groupId>cn.hutool</groupId>
+            <artifactId>hutool-cron</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.hutool</groupId>
             <artifactId>hutool-json</artifactId>
             <scope>provided</scope>
         </dependency>

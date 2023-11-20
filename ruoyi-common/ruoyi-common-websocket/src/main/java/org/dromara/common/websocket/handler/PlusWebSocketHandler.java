@@ -9,6 +9,7 @@ import org.springframework.web.socket.*;
 import org.springframework.web.socket.handler.AbstractWebSocketHandler;
 
 import java.util.List;
+import java.util.Objects;
 
 import static org.dromara.common.websocket.constant.WebSocketConstants.LOGIN_USER_KEY;
 
@@ -72,8 +73,12 @@ public class PlusWebSocketHandler extends AbstractWebSocketHandler {
      * @throws Exception
      */
     @Override
-    public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {
+    public void handleTransportError(WebSocketSession session, Throwable exception) {
         log.error("[transport error] sessionId: {} , exception:{}", session.getId(), exception.getMessage());
+        LoginUser loginUser = (LoginUser) session.getAttributes().get(LOGIN_USER_KEY);
+        if (Objects.nonNull(loginUser)) {
+            WebSocketSessionHolder.removeSession(loginUser.getUserId());
+        }
     }
 
     /**

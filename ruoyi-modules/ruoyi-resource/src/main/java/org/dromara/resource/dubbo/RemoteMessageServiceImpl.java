@@ -26,6 +26,7 @@ public class RemoteMessageServiceImpl implements RemoteMessageService {
      */
     @Override
     public void sendMessage(Long sessionKey, String message) {
+        log.info("WebSocket发送消息; sessionKey:{},message:{}", sessionKey, message);
         WebSocketUtils.sendMessage(sessionKey, message);
     }
 
