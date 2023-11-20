@@ -15,7 +15,6 @@ import org.dromara.common.core.enums.LoginType;
 import org.dromara.common.core.exception.CaptchaException;
 import org.dromara.common.core.exception.user.CaptchaExpireException;
 import org.dromara.common.core.utils.MessageUtils;
-import org.dromara.common.core.utils.ServletUtils;
 import org.dromara.common.core.utils.StringUtils;
 import org.dromara.common.core.utils.ValidatorUtils;
 import org.dromara.common.json.utils.JsonUtils;
@@ -61,10 +60,7 @@ public class PasswordAuthStrategy extends AbstractAuthStrategy {
 
         LoginUser loginUser = remoteUserService.getUserInfo(username, tenantId);
         loginService.checkLogin(loginType(), tenantId, username, () -> !BCrypt.checkpw(password, loginUser.getPassword()));
-        LoginVo loginVo = loginClient(client, loginUser, grantType);
-        loginService.recordLogininfor(loginUser.getTenantId(), username, Constants.LOGIN_SUCCESS, MessageUtils.message("user.login.success"));
-        remoteUserService.recordLoginInfo(loginUser.getUserId(), ServletUtils.getClientIP());
-        return loginVo;
+        return loginClient(client, loginUser, grantType);
     }
 
     @Override

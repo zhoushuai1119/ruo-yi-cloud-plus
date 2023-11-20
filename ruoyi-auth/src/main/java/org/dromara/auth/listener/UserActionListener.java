@@ -12,12 +12,17 @@ import com.cloud.mq.base.core.CloudMQTemplate;
 import com.cloud.mq.base.dto.CloudMQSendResult;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.dubbo.config.annotation.DubboReference;
 import org.dromara.common.core.constant.CacheConstants;
-import org.dromara.common.core.enums.UserType;
+import org.dromara.common.core.constant.Constants;
+import org.dromara.common.core.utils.MessageUtils;
 import org.dromara.common.core.utils.ServletUtils;
+import org.dromara.common.core.utils.SpringUtils;
 import org.dromara.common.core.utils.ip.AddressUtils;
+import org.dromara.common.log.event.LogininforEvent;
 import org.dromara.common.redis.utils.RedisUtils;
 import org.dromara.common.satoken.utils.LoginHelper;
+import org.dromara.system.api.RemoteUserService;
 import org.dromara.system.api.domain.SysUserOnline;
 import org.dromara.system.api.model.LoginUser;
 import org.springframework.stereotype.Component;
@@ -37,42 +42,49 @@ import static org.dromara.common.core.constant.RocketMQConstants.LoginTopic.*;
 public class UserActionListener implements SaTokenListener {
 
     private final SaTokenConfig tokenConfig;
-
     private final CloudMQTemplate cloudMQTemplate;
+
+    @DubboReference
+    private RemoteUserService remoteUserService;
 
     /**
      * 每次登录时触发
      */
     @Override
     public void doLogin(String loginType, Object loginId, String tokenValue, SaLoginModel loginModel) {
-        UserType userType = UserType.getUserType(loginId.toString());
+        UserAgent userAgent = UserAgentUtil.parse(ServletUtils.getRequest().getHeader("User-Agent"));
+        String ip = ServletUtils.getClientIP();
         String grantType = String.valueOf(loginModel.getExtra(LoginHelper.GRANT_TYPE));
         LoginUser user = LoginHelper.getLoginUser();
-        if (userType == UserType.SYS_USER) {
-            UserAgent userAgent = UserAgentUtil.parse(ServletUtils.getRequest().getHeader("User-Agent"));
-            String ip = ServletUtils.getClientIP();
-            SysUserOnline userOnline = new SysUserOnline();
-            userOnline.setIpaddr(ip);
-            userOnline.setLoginLocation(AddressUtils.getRealAddressByIP(ip));
-            userOnline.setBrowser(userAgent.getBrowser().getName());
-            userOnline.setOs(userAgent.getOs().getName());
-            userOnline.setLoginTime(System.currentTimeMillis());
-            userOnline.setTokenId(tokenValue);
-            userOnline.setUserName(user.getUsername());
-            userOnline.setClientKey(user.getClientKey());
-            userOnline.setDeviceType(user.getDeviceType());
-            if (ObjectUtil.isNotNull(user.getDeptName())) {
-                userOnline.setDeptName(user.getDeptName());
-            }
-            if (tokenConfig.getTimeout() == -1) {
-                RedisUtils.setCacheObject(CacheConstants.ONLINE_TOKEN_KEY + tokenValue, userOnline);
-            } else {
-                RedisUtils.setCacheObject(CacheConstants.ONLINE_TOKEN_KEY + tokenValue, userOnline, Duration.ofSeconds(tokenConfig.getTimeout()));
-            }
-            log.info("user doLogin, useId:{}, token:{}", loginId, tokenValue);
-        } else if (userType == UserType.APP_USER) {
-            // app端 自行根据业务编写
+        SysUserOnline userOnline = new SysUserOnline();
+        userOnline.setIpaddr(ip);
+        userOnline.setLoginLocation(AddressUtils.getRealAddressByIP(ip));
+        userOnline.setBrowser(userAgent.getBrowser().getName());
+        userOnline.setOs(userAgent.getOs().getName());
+        userOnline.setLoginTime(System.currentTimeMillis());
+        userOnline.setTokenId(tokenValue);
+        userOnline.setUserName(user.getUsername());
+        userOnline.setClientKey(user.getClientKey());
+        userOnline.setDeviceType(user.getDeviceType());
+        if (ObjectUtil.isNotNull(user.getDeptName())) {
+            userOnline.setDeptName(user.getDeptName());
         }
+        if (tokenConfig.getTimeout() == -1) {
+            RedisUtils.setCacheObject(CacheConstants.ONLINE_TOKEN_KEY + tokenValue, userOnline);
+        } else {
+            RedisUtils.setCacheObject(CacheConstants.ONLINE_TOKEN_KEY + tokenValue, userOnline, Duration.ofSeconds(tokenConfig.getTimeout()));
+        }
+        // 记录登录日志
+        LogininforEvent logininforEvent = new LogininforEvent();
+        logininforEvent.setTenantId(user.getTenantId());
+        logininforEvent.setUsername(user.getUsername());
+        logininforEvent.setStatus(Constants.LOGIN_SUCCESS);
+        logininforEvent.setMessage(MessageUtils.message("user.login.success"));
+        logininforEvent.setRequest(ServletUtils.getRequest());
+        SpringUtils.context().publishEvent(logininforEvent);
+        // 更新登录信息
+        remoteUserService.recordLoginInfo(user.getUserId(), ServletUtils.getClientIP());
+        log.info("user doLogin, useId:{}, token:{}", loginId, tokenValue);
         try {
             String loginKey = StrFormatter.format(RUOYI_LOGIN_KEY, grantType.toLowerCase(), user.getTenantId(), user.getUserType(), user.getUserId());
             CloudMQSendResult emailMqSendResult = cloudMQTemplate.syncSend(RUOYI_LOGIN_TOPIC, RUOYI_LOGIN_TAG, loginKey, user);

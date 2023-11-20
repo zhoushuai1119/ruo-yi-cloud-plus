@@ -12,7 +12,6 @@ import org.dromara.common.core.constant.GlobalConstants;
 import org.dromara.common.core.enums.LoginType;
 import org.dromara.common.core.exception.user.CaptchaExpireException;
 import org.dromara.common.core.utils.MessageUtils;
-import org.dromara.common.core.utils.ServletUtils;
 import org.dromara.common.core.utils.StringUtils;
 import org.dromara.common.core.utils.ValidatorUtils;
 import org.dromara.common.json.utils.JsonUtils;
@@ -51,10 +50,7 @@ public class SmsAuthStrategy extends AbstractAuthStrategy {
         // 通过手机号查找用户
         LoginUser loginUser = remoteUserService.getUserInfoByPhonenumber(phonenumber, tenantId);
         loginService.checkLogin(loginType(), tenantId, loginUser.getUsername(), () -> !validateSmsCode(tenantId, phonenumber, smsCode));
-        LoginVo loginVo = loginClient(client, loginUser, grantType);
-        loginService.recordLogininfor(loginUser.getTenantId(), loginUser.getUsername(), Constants.LOGIN_SUCCESS, MessageUtils.message("user.login.success"));
-        remoteUserService.recordLoginInfo(loginUser.getUserId(), ServletUtils.getClientIP());
-        return loginVo;
+        return loginClient(client, loginUser, grantType);
     }
 
     @Override
