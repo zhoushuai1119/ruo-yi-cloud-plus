@@ -27,8 +27,6 @@ import static org.dromara.common.core.enums.LoginType.XCX;
 @RequiredArgsConstructor
 public class XcxAuthStrategy extends AbstractAuthStrategy {
 
-    private final SysLoginService loginService;
-
     @DubboReference
     private RemoteUserService remoteUserService;
 
