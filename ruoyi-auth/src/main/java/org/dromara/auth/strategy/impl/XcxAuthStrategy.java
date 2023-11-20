@@ -24,7 +24,6 @@ import static org.dromara.common.core.enums.LoginType.XCX;
  */
 @Slf4j
 @Service("xcxAuthStrategy")
-@RequiredArgsConstructor
 public class XcxAuthStrategy extends AbstractAuthStrategy {
 
     @DubboReference
