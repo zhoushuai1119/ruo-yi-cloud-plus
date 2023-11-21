@@ -32,4 +32,26 @@ public class DatabaseDocController {
         databaseDocService.doExportFile(EngineFileType.HTML);
     }
 
+    /**
+     * 导出 markdown 格式的数据文档
+     *
+     * @author: zhou shuai
+     * @date: 2023/11/21 16:16
+     */
+    @GetMapping("/exportMarkdown")
+    public void exportMarkdown() {
+        databaseDocService.doExportFile(EngineFileType.MD);
+    }
+
+    /**
+     * 导出 word 格式的数据文档
+     *
+     * @author: zhou shuai
+     * @date: 2023/11/21 16:16
+     */
+    @GetMapping("/exportWord")
+    public void exportWord() {
+        databaseDocService.doExportFile(EngineFileType.WORD);
+    }
+
 }
