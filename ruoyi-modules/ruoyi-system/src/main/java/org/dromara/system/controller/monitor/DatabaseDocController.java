@@ -1,5 +1,6 @@
 package org.dromara.system.controller.monitor;
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.smallbun.screw.core.engine.EngineFileType;
 import lombok.RequiredArgsConstructor;
 import org.dromara.system.service.IDatabaseDocService;
@@ -25,6 +26,7 @@ public class DatabaseDocController {
      * @author: zhou shuai
      * @date: 2023/11/21 16:16
      */
+    @SaCheckPermission("monitor:dbdoc:list")
     @GetMapping("/exportHtml")
     public void exportHtml() {
         databaseDocService.doExportFile(EngineFileType.HTML);

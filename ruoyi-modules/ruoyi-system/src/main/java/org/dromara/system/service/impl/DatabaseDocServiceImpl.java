@@ -41,7 +41,7 @@ public class DatabaseDocServiceImpl implements IDatabaseDocService {
     private static final String FILE_OUTPUT_DIR = System.getProperty("java.io.tmpdir") + File.separator + "db-doc";
     private static final String DOC_FILE_NAME = "数据库文档";
     private static final String DOC_VERSION = "2.1.1";
-    private static final String DOC_DESCRIPTION = "文档描述";
+    private static final String DOC_DESCRIPTION = "ruoyi-cloud-plus数据库文档";
 
     /**
      * 导出数据库文档

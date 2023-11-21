@@ -40,13 +40,9 @@ public class DynamicDatasourceInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         String applicationName = SpringUtil.getApplicationName();
-        if (EXCLUDE_APPLICATION_NAME_LIST.contains(applicationName)) {
-            return true;
-        }
         String tenantId = LoginHelper.getTenantId();
-        log.info("多数据源配置tenantId:{}", tenantId);
-        if (StrUtil.isBlank(tenantId)) {
-            throw new ServiceException("租户编号不能为空!!!");
+        if (EXCLUDE_APPLICATION_NAME_LIST.contains(applicationName) || StrUtil.isBlank(tenantId)) {
+            return true;
         }
         boolean isSuperTenant = Objects.equals(tenantId, TenantConstants.DEFAULT_TENANT_ID);
         RemoteTenantDataSourceVo tenantDataSource = remoteTenantService.queryDataSourceByTenantId(tenantId);

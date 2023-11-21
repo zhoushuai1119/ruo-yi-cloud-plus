@@ -565,11 +565,11 @@ insert into sys_menu values('302',  '接口文档',        '3',    '2', 'knife4j
 insert into sys_role_menu values ('2', '302');
 
 -- 缓存监控
-insert into sys_menu values('303',  '缓存监控',        '3',    '3',  'cache',              'monitor/cache/index',      '', 1, 0, 'C', '0', '0', 'monitor:cache:list',           'redis',         103, 1, sysdate(), null, null, '缓存监控');
+insert into sys_menu values('303',  '缓存监控',        '3',    '3',  'cache',            'monitor/cache/index',        '', 1, 0, 'C', '0', '0', 'monitor:cache:list',           'redis',       103, 1, sysdate(), null, null, '缓存监控');
 insert into sys_role_menu values ('2', '303');
 
 -- 数据库文档
-insert into sys_menu values('304',  '数据库文档',       '3',    '4', 'dbDoc',           'monitor/dbDoc/index',      '', 1, 0, 'C', '0', '0', 'monitor:dbDoc:list',            'dbDoc',      103, 1, sysdate(), null, null, '数据库文档');
+insert into sys_menu values('304',  '数据库文档',       '3',    '4', 'dbdoc',            'monitor/dbdoc/index',        '', 1, 0, 'C', '0', '0', 'monitor:dbdoc:list',            'dbdoc',      103, 1, sysdate(), null, null, '数据库文档');
 insert into sys_role_menu values ('2', '304');
 
 -- 中间件控制台
