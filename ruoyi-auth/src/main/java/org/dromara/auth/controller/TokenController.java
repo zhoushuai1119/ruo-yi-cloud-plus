@@ -68,7 +68,7 @@ public class TokenController {
     private RemoteClientService remoteClientService;
     @DubboReference
     private RemoteSocialService remoteSocialService;
-    @DubboReference
+    @DubboReference(stub = "true")
     private RemoteMessageService remoteMessageService;
 
 
@@ -105,9 +105,10 @@ public class TokenController {
         LoginVo loginVo = authStrategy.login(body, clientVo);
 
         Long userId = LoginHelper.getUserId();
+        log.info("=========欢迎登录RuoYi-Cloud-Plus微服务管理系统=========");
         scheduledExecutorService.schedule(() -> {
             remoteMessageService.sendMessage(userId, "欢迎登录RuoYi-Cloud-Plus微服务管理系统");
-        }, 3, TimeUnit.SECONDS);
+        }, 5, TimeUnit.SECONDS);
         return R.ok(loginVo);
     }
 
