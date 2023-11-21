@@ -105,6 +105,12 @@
             <artifactId>ruoyi-api-resource</artifactId>
         </dependency>
 
+        <!-- 数据库文档 -->
+        <dependency>
+            <groupId>cn.smallbun.screw</groupId>
+            <artifactId>screw-core</artifactId>
+        </dependency>
+
         <!--Cloud Alarm-->
         <dependency>
             <groupId>io.github.zhoushuai1119</groupId>

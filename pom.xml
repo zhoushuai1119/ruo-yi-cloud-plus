@@ -48,6 +48,8 @@
         <mapstruct-plus.lombok.version>0.2.0</mapstruct-plus.lombok.version>
         <arthas.version>3.7.1</arthas.version>
         <justauth.version>1.16.5</justauth.version>
+        <!-- 数据库文档 -->
+        <screw-core.version>1.0.5</screw-core.version>
         <!-- 离线IP地址定位库 -->
         <ip2region.version>2.7.0</ip2region.version>
         <!-- 临时修复 fastjson 漏洞 -->
@@ -335,11 +337,18 @@
                 <version>${aws-java-sdk-s3.version}</version>
             </dependency>
 
-            <!--短信sms4j-->
+            <!-- 短信sms4j -->
             <dependency>
                 <groupId>org.dromara.sms4j</groupId>
                 <artifactId>sms4j-spring-boot-starter</artifactId>
                 <version>${sms4j.version}</version>
+            </dependency>
+
+            <!-- 数据库文档 -->
+            <dependency>
+                <groupId>cn.smallbun.screw</groupId>
+                <artifactId>screw-core</artifactId>
+                <version>${screw-core.version}</version>
             </dependency>
 
             <!-- 离线IP地址定位库 ip2region -->
