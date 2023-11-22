@@ -55,6 +55,7 @@ public class DatabaseDocServiceImpl implements IDatabaseDocService {
         HttpServletResponse response = ServletUtils.getResponse();
         String docFileName = DOC_FILE_NAME + "_" + IdUtil.fastSimpleUUID();
         String filePath = doExportFile(fileOutputType, docFileName);
+        log.info("数据库文档生成文件路径为:{}", filePath);
         //下载后的文件名
         String downloadFileName = DOC_FILE_NAME + fileOutputType.getFileSuffix();
         try {

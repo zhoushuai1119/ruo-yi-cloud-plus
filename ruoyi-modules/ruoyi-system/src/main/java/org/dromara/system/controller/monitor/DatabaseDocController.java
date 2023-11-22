@@ -4,7 +4,7 @@ import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.smallbun.screw.core.engine.EngineFileType;
 import lombok.RequiredArgsConstructor;
 import org.dromara.system.service.IDatabaseDocService;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,7 +27,7 @@ public class DatabaseDocController {
      * @date: 2023/11/21 16:16
      */
     @SaCheckPermission("monitor:dbdoc:list")
-    @GetMapping("/exportHtml")
+    @PostMapping("/exportHtml")
     public void exportHtml() {
         databaseDocService.doExportFile(EngineFileType.HTML);
     }
@@ -38,7 +38,7 @@ public class DatabaseDocController {
      * @author: zhou shuai
      * @date: 2023/11/21 16:16
      */
-    @GetMapping("/exportMarkdown")
+    @PostMapping("/exportMarkdown")
     public void exportMarkdown() {
         databaseDocService.doExportFile(EngineFileType.MD);
     }
@@ -49,7 +49,7 @@ public class DatabaseDocController {
      * @author: zhou shuai
      * @date: 2023/11/21 16:16
      */
-    @GetMapping("/exportWord")
+    @PostMapping("/exportWord")
     public void exportWord() {
         databaseDocService.doExportFile(EngineFileType.WORD);
     }
