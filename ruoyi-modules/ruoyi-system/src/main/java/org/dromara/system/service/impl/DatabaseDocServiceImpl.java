@@ -97,6 +97,7 @@ public class DatabaseDocServiceImpl implements IDatabaseDocService {
         DataSourceProperty dataSourceProperty = dynamicDataSourceProperties.getDatasource().get(dbKey);
         // 创建 HikariConfig 配置类
         HikariConfig hikariConfig = new HikariConfig();
+        hikariConfig.setDriverClassName(dataSourceProperty.getDriverClassName());
         hikariConfig.setJdbcUrl(dataSourceProperty.getUrl());
         hikariConfig.setUsername(dataSourceProperty.getUsername());
         hikariConfig.setPassword(dataSourceProperty.getPassword());
