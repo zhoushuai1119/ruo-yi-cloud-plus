@@ -9,9 +9,9 @@ import com.baomidou.dynamic.datasource.exception.CannotFindDataSourceException;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.zaxxer.hikari.HikariDataSource;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.dromara.common.core.constant.CacheNames;
 import org.dromara.common.core.exception.ServiceException;
 import org.dromara.common.core.utils.MapstructUtils;
 import org.dromara.common.core.utils.StringUtils;
@@ -24,7 +24,6 @@ import org.dromara.system.domain.vo.SysDatasourceVo;
 import org.dromara.system.mapper.SysDatasourceMapper;
 import org.dromara.system.service.ISysDatasourceService;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 
 import javax.sql.DataSource;
@@ -100,7 +99,6 @@ public class SysDatasourceServiceImpl implements ISysDatasourceService, Initiali
 
     private LambdaQueryWrapper<SysDatasource> buildQueryWrapper(SysDatasourceBo bo) {
         LambdaQueryWrapper<SysDatasource> lqw = Wrappers.lambdaQuery();
-        lqw.eq(StringUtils.isNotBlank(bo.getTenantId()), SysDatasource::getTenantId, bo.getTenantId());
         return lqw;
     }
 
@@ -123,7 +121,6 @@ public class SysDatasourceServiceImpl implements ISysDatasourceService, Initiali
     /**
      * 修改多数据源配置
      */
-    @CacheEvict(cacheNames = CacheNames.SYS_TENANT_DATASOURCE, key = "#bo.tenantId")
     @Override
     public Boolean updateByBo(SysDatasourceBo bo) {
         SysDatasource update = MapstructUtils.convert(bo, SysDatasource.class);
@@ -149,20 +146,19 @@ public class SysDatasourceServiceImpl implements ISysDatasourceService, Initiali
             throw new IllegalArgumentException("数据源配置不正确，无法进行连接");
         }
         LambdaQueryWrapper<SysDatasource> lqw = Wrappers.lambdaQuery();
-        lqw.eq(StringUtils.isNotBlank(entity.getTenantId()), SysDatasource::getTenantId, entity.getTenantId());
+        lqw.eq(StringUtils.isNotBlank(entity.getName()), SysDatasource::getName, entity.getName());
         if (isUpdate) {
             lqw.ne(Objects.nonNull(entity.getId()), SysDatasource::getId, entity.getId());
         }
         SysDatasourceVo sysDatasourceVo = baseMapper.selectVoOne(lqw);
         if (Objects.nonNull(sysDatasourceVo)) {
-            throw new ServiceException("租户:" + entity.getTenantId() + "已配置数据源,不能重复配置!!!");
+            throw new ServiceException("数据库名称:" + entity.getName() + "已存在,不能重复配置!!!");
         }
     }
 
     /**
      * 批量删除多数据源配置
      */
-    @CacheEvict(cacheNames = CacheNames.SYS_TENANT_DATASOURCE, allEntries = true)
     @Override
     public Boolean deleteWithValidByIds(Collection<Long> ids, Boolean isValid) {
         if (isValid) {
@@ -186,6 +182,8 @@ public class SysDatasourceServiceImpl implements ISysDatasourceService, Initiali
     private Set<String> addDynamicDataSource(SysDatasourceBo bo) {
         DataSourceProperty dataSourceProperty = new DataSourceProperty();
         BeanUtil.copyProperties(bo, dataSourceProperty);
+        dataSourceProperty.setPoolName(bo.getName());
+        dataSourceProperty.setType(HikariDataSource.class);
         dataSourceProperty.setUsername(bo.getUserName());
         DynamicRoutingDataSource ds = (DynamicRoutingDataSource) dataSource;
         DataSource dataSource = hikariDataSourceCreator.createDataSource(dataSourceProperty);

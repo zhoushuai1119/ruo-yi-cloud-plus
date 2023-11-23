@@ -33,12 +33,6 @@ public class SysDatasourceVo implements Serializable {
     private Long id;
 
     /**
-     * 租户编号
-     */
-    @ExcelProperty(value = "租户编号")
-    private String tenantId;
-
-    /**
      * 数据源名称
      */
     @ExcelProperty(value = "数据源名称")

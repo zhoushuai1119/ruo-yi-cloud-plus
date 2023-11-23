@@ -12,6 +12,8 @@ import org.dromara.common.encrypt.enumd.AlgorithmType;
 import org.dromara.common.mybatis.core.domain.BaseEntity;
 import org.dromara.system.domain.SysDatasource;
 
+import java.io.Serial;
+
 /**
  * 多数据源配置业务对象 sys_datasource_config
  *
@@ -23,17 +25,14 @@ import org.dromara.system.domain.SysDatasource;
 @AutoMapper(target = SysDatasource.class, reverseConvertGenerate = false)
 public class SysDatasourceBo extends BaseEntity {
 
+    @Serial
+    private static final long serialVersionUID = -3596488359442364610L;
+
     /**
      * 主键自增ID
      */
     @NotNull(message = "主键自增ID不能为空", groups = { EditGroup.class })
     private Long id;
-
-    /**
-     * 租户编号
-     */
-    @NotBlank(message = "租户编号不能为空", groups = { AddGroup.class, EditGroup.class })
-    private String tenantId;
 
     /**
      * 数据源名称

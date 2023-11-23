@@ -94,15 +94,16 @@ public class DatabaseDocServiceImpl implements IDatabaseDocService {
      * 创建数据源
      */
     private HikariDataSource buildDataSource() {
-        String dbKey = DynamicDataSourceContextHolder.peek();
-        DataSourceProperty dataSourceProperty = dynamicDataSourceProperties.getDatasource().get(dbKey);
+        // 获得 DataSource 数据源，目前只支持首个
+        String primary = dynamicDataSourceProperties.getPrimary();
+        DataSourceProperty dataSourceProperty = dynamicDataSourceProperties.getDatasource().get(primary);
         // 创建 HikariConfig 配置类
         HikariConfig hikariConfig = new HikariConfig();
         hikariConfig.setDriverClassName(dataSourceProperty.getDriverClassName());
         hikariConfig.setJdbcUrl(dataSourceProperty.getUrl());
         hikariConfig.setUsername(dataSourceProperty.getUsername());
         hikariConfig.setPassword(dataSourceProperty.getPassword());
-        //设置可以获取tables remarks信息
+        // 设置可以获取 tables remarks 信息
         hikariConfig.addDataSourceProperty("useInformationSchema", "true");
         // 创建数据源
         return new HikariDataSource(hikariConfig);

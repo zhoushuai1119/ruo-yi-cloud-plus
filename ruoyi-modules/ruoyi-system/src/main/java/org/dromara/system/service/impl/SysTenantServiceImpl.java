@@ -73,15 +73,6 @@ public class SysTenantServiceImpl implements ISysTenantService {
     }
 
     /**
-     * 根据租户id获取租户配置的数据源
-     */
-    @Cacheable(cacheNames = CacheNames.SYS_TENANT_DATASOURCE, key = "#tenantId")
-    @Override
-    public SysDatasourceVo queryDataSourceByTenantId(String tenantId) {
-        return datasourceMapper.selectVoOne(new LambdaQueryWrapper<SysDatasource>().eq(SysDatasource::getTenantId, tenantId));
-    }
-
-    /**
      * 查询租户列表
      */
     @Override

@@ -27,11 +27,6 @@ public interface ISysTenantService {
     SysTenantVo queryByTenantId(String tenantId);
 
     /**
-     * 根据租户id获取租户配置的数据源
-     */
-    SysDatasourceVo queryDataSourceByTenantId(String tenantId);
-
-    /**
      * 查询租户列表
      */
     TableDataInfo<SysTenantVo> queryPageList(SysTenantBo bo, PageQuery pageQuery);

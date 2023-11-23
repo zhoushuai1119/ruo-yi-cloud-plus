@@ -36,11 +36,6 @@ public interface CacheNames {
     String SYS_TENANT = GlobalConstants.GLOBAL_REDIS_KEY + "sys_tenant#30d";
 
     /**
-     * 租户数据源
-     */
-    String SYS_TENANT_DATASOURCE = GlobalConstants.GLOBAL_REDIS_KEY + "sys_tenant_datasource#30d";
-
-    /**
      * 用户账户
      */
     String SYS_USER_NAME = "sys_user_name#30d";

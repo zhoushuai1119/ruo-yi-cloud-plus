@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.dromara.common.tenant.core.TenantEntity;
+import org.dromara.common.mybatis.core.domain.BaseEntity;
 
 import java.io.Serial;
 
@@ -17,7 +17,7 @@ import java.io.Serial;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @TableName("sys_datasource_config")
-public class SysDatasource extends TenantEntity {
+public class SysDatasource extends BaseEntity {
 
     @Serial
     private static final long serialVersionUID = 5141924099081833672L;

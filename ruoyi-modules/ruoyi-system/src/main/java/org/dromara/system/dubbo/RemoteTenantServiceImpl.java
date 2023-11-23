@@ -34,15 +34,6 @@ public class RemoteTenantServiceImpl implements RemoteTenantService {
     }
 
     /**
-     * 根据租户id获取租户配置的数据源
-     */
-    @Override
-    public RemoteTenantDataSourceVo queryDataSourceByTenantId(String tenantId) {
-        SysDatasourceVo vo = tenantService.queryDataSourceByTenantId(tenantId);
-        return MapstructUtils.convert(vo, RemoteTenantDataSourceVo.class);
-    }
-
-    /**
      * 获取租户列表
      */
     @Override
