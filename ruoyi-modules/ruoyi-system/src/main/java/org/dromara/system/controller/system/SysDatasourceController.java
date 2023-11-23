@@ -41,7 +41,6 @@ public class SysDatasourceController extends BaseController {
     /**
      * 查询多数据源配置列表
      */
-    @SaCheckRole(TenantConstants.SUPER_ADMIN_ROLE_KEY)
     @SaCheckPermission("system:datasource:list")
     @GetMapping("/list")
     public TableDataInfo<SysDatasourceVo> list(SysDatasourceBo bo, PageQuery pageQuery) {
@@ -53,7 +52,6 @@ public class SysDatasourceController extends BaseController {
      *
      * @param id 主键
      */
-    @SaCheckRole(TenantConstants.SUPER_ADMIN_ROLE_KEY)
     @SaCheckPermission("system:datasource:query")
     @GetMapping("/{id}")
     public R<SysDatasourceVo> getInfo(@NotNull(message = "主键不能为空")
