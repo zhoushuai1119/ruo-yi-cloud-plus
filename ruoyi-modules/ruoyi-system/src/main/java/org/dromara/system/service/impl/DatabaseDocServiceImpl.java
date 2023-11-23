@@ -94,7 +94,6 @@ public class DatabaseDocServiceImpl implements IDatabaseDocService {
      * 创建数据源
      */
     private HikariDataSource buildDataSource() {
-        // 获得 DataSource 数据源，目前只支持首个
         String primary = dynamicDataSourceProperties.getPrimary();
         DataSourceProperty dataSourceProperty = dynamicDataSourceProperties.getDatasource().get(primary);
         // 创建 HikariConfig 配置类

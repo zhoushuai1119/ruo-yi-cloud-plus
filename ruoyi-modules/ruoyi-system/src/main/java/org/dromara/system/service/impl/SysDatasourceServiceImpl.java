@@ -153,7 +153,7 @@ public class SysDatasourceServiceImpl implements ISysDatasourceService, Initiali
         }
         SysDatasourceVo sysDatasourceVo = baseMapper.selectVoOne(lqw);
         if (Objects.nonNull(sysDatasourceVo)) {
-            throw new ServiceException("数据库名称:" + entity.getName() + "已存在,不能重复配置!!!");
+            throw new ServiceException("数据库名称:" + entity.getName() + "已存在!");
         }
     }
 
