@@ -2,7 +2,6 @@ package org.dromara.system.controller.system;
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.dev33.satoken.annotation.SaCheckRole;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
@@ -10,7 +9,6 @@ import org.dromara.common.core.constant.TenantConstants;
 import org.dromara.common.core.domain.R;
 import org.dromara.common.core.validate.AddGroup;
 import org.dromara.common.core.validate.EditGroup;
-import org.dromara.common.excel.utils.ExcelUtil;
 import org.dromara.common.idempotent.annotation.RepeatSubmit;
 import org.dromara.common.log.annotation.Log;
 import org.dromara.common.log.enums.BusinessType;
@@ -48,18 +46,6 @@ public class SysDatasourceController extends BaseController {
     @GetMapping("/list")
     public TableDataInfo<SysDatasourceVo> list(SysDatasourceBo bo, PageQuery pageQuery) {
         return sysDatasourceService.queryPageList(bo, pageQuery);
-    }
-
-    /**
-     * 导出多数据源配置列表
-     */
-    @SaCheckRole(TenantConstants.SUPER_ADMIN_ROLE_KEY)
-    @SaCheckPermission("system:datasource:export")
-    @Log(title = "多数据源配置", businessType = BusinessType.EXPORT)
-    @PostMapping("/export")
-    public void export(SysDatasourceBo bo, HttpServletResponse response) {
-        List<SysDatasourceVo> list = sysDatasourceService.queryList(bo);
-        ExcelUtil.exportExcel(list, "多数据源配置", SysDatasourceVo.class, response);
     }
 
     /**

@@ -538,13 +538,11 @@ insert into sys_menu values ('2031', '多数据源查询', '203', '1', '#', '', 
 insert into sys_menu values ('2032', '多数据源新增', '203', '2', '#', '', '', 1, 0, 'F', '0', '0', 'system:datasource:add',     '#', 103, 1, sysdate(), null, null, '');
 insert into sys_menu values ('2033', '多数据源修改', '203', '3', '#', '', '', 1, 0, 'F', '0', '0', 'system:datasource:edit',    '#', 103, 1, sysdate(), null, null, '');
 insert into sys_menu values ('2034', '多数据源删除', '203', '4', '#', '', '', 1, 0, 'F', '0', '0', 'system:datasource:remove',  '#', 103, 1, sysdate(), null, null, '');
-insert into sys_menu values ('2035', '多数据源导出', '203', '5', '#', '', '', 1, 0, 'F', '0', '0', 'system:datasource:export',  '#', 103, 1, sysdate(), null, null, '');
 
 insert into sys_role_menu values ('2', '2031');
 insert into sys_role_menu values ('2', '2032');
 insert into sys_role_menu values ('2', '2033');
 insert into sys_role_menu values ('2', '2034');
-insert into sys_role_menu values ('2', '2035');
 
 -- 系统监控 -- 二级菜单
 
