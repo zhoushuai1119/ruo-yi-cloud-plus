@@ -99,6 +99,7 @@ public class SysDatasourceServiceImpl implements ISysDatasourceService, Initiali
 
     private LambdaQueryWrapper<SysDatasource> buildQueryWrapper(SysDatasourceBo bo) {
         LambdaQueryWrapper<SysDatasource> lqw = Wrappers.lambdaQuery();
+        lqw.like(StringUtils.isNotBlank(bo.getName()), SysDatasource::getName, bo.getName());
         return lqw;
     }
 
