@@ -108,7 +108,7 @@ public class TokenController {
         log.info("=========欢迎登录RuoYi-Cloud-Plus微服务管理系统=========");
         scheduledExecutorService.schedule(() -> {
             remoteMessageService.sendMessage(userId, "欢迎登录RuoYi-Cloud-Plus微服务管理系统");
-        }, 5, TimeUnit.SECONDS);
+        }, 6, TimeUnit.SECONDS);
         return R.ok(loginVo);
     }
 
