@@ -2,24 +2,27 @@ package org.dromara.system.controller.system;
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.hutool.core.util.ObjectUtil;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.dromara.common.core.domain.R;
-import org.dromara.common.web.core.BaseController;
 import org.dromara.common.excel.utils.ExcelUtil;
 import org.dromara.common.log.annotation.Log;
 import org.dromara.common.log.enums.BusinessType;
 import org.dromara.common.mybatis.core.page.PageQuery;
 import org.dromara.common.mybatis.core.page.TableDataInfo;
+import org.dromara.common.satoken.utils.LoginHelper;
+import org.dromara.common.web.core.BaseController;
 import org.dromara.system.domain.bo.SysDictDataBo;
 import org.dromara.system.domain.vo.SysDictDataVo;
+import org.dromara.system.service.ISysConfigService;
 import org.dromara.system.service.ISysDictDataService;
 import org.dromara.system.service.ISysDictTypeService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 数据字典信息
@@ -34,6 +37,7 @@ public class SysDictDataController extends BaseController {
 
     private final ISysDictDataService dictDataService;
     private final ISysDictTypeService dictTypeService;
+    private final ISysConfigService configService;
 
     /**
      * 查询字典数据列表
@@ -52,7 +56,13 @@ public class SysDictDataController extends BaseController {
     @PostMapping("/export")
     public void export(SysDictDataBo dictData, HttpServletResponse response) {
         List<SysDictDataVo> list = dictDataService.selectDictDataList(dictData);
-        ExcelUtil.exportExcel(list, "字典数据", SysDictDataVo.class, response);
+        String isWatermark = configService.selectConfigByKey("sys.export-download.watermark");
+        if (Objects.equals("true", isWatermark)) {
+            String waterMarkContent = LoginHelper.getUsername();
+            ExcelUtil.exportWaterMarkExcel(list, "字典数据", SysDictDataVo.class, waterMarkContent, response);
+        } else {
+            ExcelUtil.exportExcel(list, "字典数据", SysDictDataVo.class, response);
+        }
     }
 
     /**

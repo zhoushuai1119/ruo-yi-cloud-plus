@@ -1,14 +1,16 @@
 package org.dromara.system.controller.system;
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.dromara.common.core.domain.R;
-import org.dromara.common.web.core.BaseController;
 import org.dromara.common.excel.utils.ExcelUtil;
 import org.dromara.common.log.annotation.Log;
 import org.dromara.common.log.enums.BusinessType;
 import org.dromara.common.mybatis.core.page.PageQuery;
 import org.dromara.common.mybatis.core.page.TableDataInfo;
+import org.dromara.common.satoken.utils.LoginHelper;
+import org.dromara.common.web.core.BaseController;
 import org.dromara.system.domain.SysUserRole;
 import org.dromara.system.domain.bo.SysDeptBo;
 import org.dromara.system.domain.bo.SysRoleBo;
@@ -16,14 +18,15 @@ import org.dromara.system.domain.bo.SysUserBo;
 import org.dromara.system.domain.vo.DeptTreeSelectVo;
 import org.dromara.system.domain.vo.SysRoleVo;
 import org.dromara.system.domain.vo.SysUserVo;
+import org.dromara.system.service.ISysConfigService;
 import org.dromara.system.service.ISysDeptService;
 import org.dromara.system.service.ISysRoleService;
 import org.dromara.system.service.ISysUserService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 角色信息
@@ -39,6 +42,7 @@ public class SysRoleController extends BaseController {
     private final ISysRoleService roleService;
     private final ISysUserService userService;
     private final ISysDeptService deptService;
+    private final ISysConfigService configService;
 
     /**
      * 获取角色信息列表
@@ -57,7 +61,13 @@ public class SysRoleController extends BaseController {
     @PostMapping("/export")
     public void export(SysRoleBo role, HttpServletResponse response) {
         List<SysRoleVo> list = roleService.selectRoleList(role);
-        ExcelUtil.exportExcel(list, "角色数据", SysRoleVo.class, response);
+        String isWatermark = configService.selectConfigByKey("sys.export-download.watermark");
+        if (Objects.equals("true", isWatermark)) {
+            String waterMarkContent = LoginHelper.getUsername();
+            ExcelUtil.exportWaterMarkExcel(list, "角色数据", SysRoleVo.class, waterMarkContent, response);
+        } else {
+            ExcelUtil.exportExcel(list, "角色数据", SysRoleVo.class, response);
+        }
     }
 
     /**

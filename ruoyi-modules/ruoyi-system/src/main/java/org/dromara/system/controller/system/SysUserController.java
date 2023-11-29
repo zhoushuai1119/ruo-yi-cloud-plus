@@ -37,6 +37,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 用户信息
@@ -54,6 +55,7 @@ public class SysUserController extends BaseController {
     private final ISysPostService postService;
     private final ISysDeptService deptService;
     private final ISysTenantService tenantService;
+    private final ISysConfigService configService;
 
     /**
      * 获取用户列表
@@ -73,7 +75,13 @@ public class SysUserController extends BaseController {
     public void export(SysUserBo user, HttpServletResponse response) {
         List<SysUserVo> list = userService.selectUserList(user);
         List<SysUserExportVo> listVo = MapstructUtils.convert(list, SysUserExportVo.class);
-        ExcelUtil.exportExcel(listVo, "用户数据", SysUserExportVo.class, response);
+        String isWatermark = configService.selectConfigByKey("sys.export-download.watermark");
+        if (Objects.equals("true", isWatermark)) {
+            String waterMarkContent = LoginHelper.getUsername();
+            ExcelUtil.exportWaterMarkExcel(listVo, "用户数据", SysUserExportVo.class, waterMarkContent, response);
+        } else {
+            ExcelUtil.exportExcel(listVo, "用户数据", SysUserExportVo.class, response);
+        }
     }
 
     /**

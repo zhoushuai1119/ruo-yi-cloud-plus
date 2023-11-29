@@ -1,6 +1,8 @@
 package org.dromara.system.controller.system;
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
+import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import org.dromara.common.core.constant.UserConstants;
 import org.dromara.common.core.domain.R;
 import org.dromara.common.excel.utils.ExcelUtil;
@@ -8,16 +10,17 @@ import org.dromara.common.log.annotation.Log;
 import org.dromara.common.log.enums.BusinessType;
 import org.dromara.common.mybatis.core.page.PageQuery;
 import org.dromara.common.mybatis.core.page.TableDataInfo;
+import org.dromara.common.satoken.utils.LoginHelper;
 import org.dromara.common.web.core.BaseController;
 import org.dromara.system.domain.bo.SysPostBo;
 import org.dromara.system.domain.vo.SysPostVo;
+import org.dromara.system.service.ISysConfigService;
 import org.dromara.system.service.ISysPostService;
-import jakarta.servlet.http.HttpServletResponse;
-import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 岗位信息操作处理
@@ -31,6 +34,8 @@ import java.util.List;
 public class SysPostController extends BaseController {
 
     private final ISysPostService postService;
+
+    private final ISysConfigService configService;
 
     /**
      * 获取岗位列表
@@ -49,7 +54,13 @@ public class SysPostController extends BaseController {
     @PostMapping("/export")
     public void export(SysPostBo post, HttpServletResponse response) {
         List<SysPostVo> list = postService.selectPostList(post);
-        ExcelUtil.exportExcel(list, "岗位数据", SysPostVo.class, response);
+        String isWatermark = configService.selectConfigByKey("sys.export-download.watermark");
+        if (Objects.equals("true", isWatermark)) {
+            String waterMarkContent = LoginHelper.getUsername();
+            ExcelUtil.exportWaterMarkExcel(list, "岗位数据", SysPostVo.class, waterMarkContent, response);
+        } else {
+            ExcelUtil.exportExcel(list, "岗位数据", SysPostVo.class, response);
+        }
     }
 
     /**

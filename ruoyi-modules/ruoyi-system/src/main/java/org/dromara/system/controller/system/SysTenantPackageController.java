@@ -2,29 +2,32 @@ package org.dromara.system.controller.system;
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.dev33.satoken.annotation.SaCheckRole;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.dromara.common.core.constant.TenantConstants;
 import org.dromara.common.core.domain.R;
 import org.dromara.common.core.validate.AddGroup;
 import org.dromara.common.core.validate.EditGroup;
-import org.dromara.common.web.core.BaseController;
 import org.dromara.common.excel.utils.ExcelUtil;
 import org.dromara.common.idempotent.annotation.RepeatSubmit;
 import org.dromara.common.log.annotation.Log;
 import org.dromara.common.log.enums.BusinessType;
 import org.dromara.common.mybatis.core.page.PageQuery;
 import org.dromara.common.mybatis.core.page.TableDataInfo;
+import org.dromara.common.satoken.utils.LoginHelper;
+import org.dromara.common.web.core.BaseController;
 import org.dromara.system.domain.bo.SysTenantPackageBo;
 import org.dromara.system.domain.vo.SysTenantPackageVo;
+import org.dromara.system.service.ISysConfigService;
 import org.dromara.system.service.ISysTenantPackageService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 租户套餐管理
@@ -38,6 +41,8 @@ import java.util.List;
 public class SysTenantPackageController extends BaseController {
 
     private final ISysTenantPackageService tenantPackageService;
+
+    private final ISysConfigService configService;
 
     /**
      * 查询租户套餐列表
@@ -68,7 +73,13 @@ public class SysTenantPackageController extends BaseController {
     @PostMapping("/export")
     public void export(SysTenantPackageBo bo, HttpServletResponse response) {
         List<SysTenantPackageVo> list = tenantPackageService.queryList(bo);
-        ExcelUtil.exportExcel(list, "租户套餐", SysTenantPackageVo.class, response);
+        String isWatermark = configService.selectConfigByKey("sys.export-download.watermark");
+        if (Objects.equals("true", isWatermark)) {
+            String waterMarkContent = LoginHelper.getUsername();
+            ExcelUtil.exportWaterMarkExcel(list, "租户套餐", SysTenantPackageVo.class, waterMarkContent, response);
+        } else {
+            ExcelUtil.exportExcel(list, "租户套餐", SysTenantPackageVo.class, response);
+        }
     }
 
     /**
@@ -80,7 +91,7 @@ public class SysTenantPackageController extends BaseController {
     @SaCheckPermission("system:tenantPackage:query")
     @GetMapping("/{packageId}")
     public R<SysTenantPackageVo> getInfo(@NotNull(message = "主键不能为空")
-                                     @PathVariable Long packageId) {
+                                         @PathVariable Long packageId) {
         return R.ok(tenantPackageService.queryById(packageId));
     }
 

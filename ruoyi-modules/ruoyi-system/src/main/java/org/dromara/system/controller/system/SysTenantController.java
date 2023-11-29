@@ -3,31 +3,34 @@ package org.dromara.system.controller.system;
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.dev33.satoken.annotation.SaCheckRole;
 import com.cloud.lock.core.annotation.CloudLock;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.dromara.common.core.constant.TenantConstants;
 import org.dromara.common.core.domain.R;
 import org.dromara.common.core.validate.AddGroup;
 import org.dromara.common.core.validate.EditGroup;
-import org.dromara.common.web.core.BaseController;
 import org.dromara.common.excel.utils.ExcelUtil;
 import org.dromara.common.idempotent.annotation.RepeatSubmit;
 import org.dromara.common.log.annotation.Log;
 import org.dromara.common.log.enums.BusinessType;
 import org.dromara.common.mybatis.core.page.PageQuery;
 import org.dromara.common.mybatis.core.page.TableDataInfo;
+import org.dromara.common.satoken.utils.LoginHelper;
 import org.dromara.common.tenant.helper.TenantHelper;
+import org.dromara.common.web.core.BaseController;
 import org.dromara.system.domain.bo.SysTenantBo;
 import org.dromara.system.domain.vo.SysTenantVo;
+import org.dromara.system.service.ISysConfigService;
 import org.dromara.system.service.ISysTenantService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 租户管理
@@ -41,6 +44,7 @@ import java.util.List;
 public class SysTenantController extends BaseController {
 
     private final ISysTenantService tenantService;
+    private final ISysConfigService configService;
 
     /**
      * 查询租户列表
@@ -61,7 +65,13 @@ public class SysTenantController extends BaseController {
     @PostMapping("/export")
     public void export(SysTenantBo bo, HttpServletResponse response) {
         List<SysTenantVo> list = tenantService.queryList(bo);
-        ExcelUtil.exportExcel(list, "租户", SysTenantVo.class, response);
+        String isWatermark = configService.selectConfigByKey("sys.export-download.watermark");
+        if (Objects.equals("true", isWatermark)) {
+            String waterMarkContent = LoginHelper.getUsername();
+            ExcelUtil.exportWaterMarkExcel(list, "租户", SysTenantVo.class, waterMarkContent, response);
+        } else {
+            ExcelUtil.exportExcel(list, "租户", SysTenantVo.class, response);
+        }
     }
 
     /**
@@ -73,7 +83,7 @@ public class SysTenantController extends BaseController {
     @SaCheckPermission("system:tenant:query")
     @GetMapping("/{id}")
     public R<SysTenantVo> getInfo(@NotNull(message = "主键不能为空")
-                                     @PathVariable Long id) {
+                                  @PathVariable Long id) {
         return R.ok(tenantService.queryById(id));
     }
 

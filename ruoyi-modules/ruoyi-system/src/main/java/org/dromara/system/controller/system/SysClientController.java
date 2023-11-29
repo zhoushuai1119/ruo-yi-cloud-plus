@@ -14,14 +14,17 @@ import org.dromara.common.log.annotation.Log;
 import org.dromara.common.log.enums.BusinessType;
 import org.dromara.common.mybatis.core.page.PageQuery;
 import org.dromara.common.mybatis.core.page.TableDataInfo;
+import org.dromara.common.satoken.utils.LoginHelper;
 import org.dromara.common.web.core.BaseController;
 import org.dromara.system.domain.bo.SysClientBo;
 import org.dromara.system.domain.vo.SysClientVo;
 import org.dromara.system.service.ISysClientService;
+import org.dromara.system.service.ISysConfigService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 客户端管理
@@ -35,6 +38,8 @@ import java.util.List;
 public class SysClientController extends BaseController {
 
     private final ISysClientService sysClientService;
+
+    private final ISysConfigService configService;
 
     /**
      * 查询客户端管理列表
@@ -53,7 +58,13 @@ public class SysClientController extends BaseController {
     @PostMapping("/export")
     public void export(SysClientBo bo, HttpServletResponse response) {
         List<SysClientVo> list = sysClientService.queryList(bo);
-        ExcelUtil.exportExcel(list, "客户端管理", SysClientVo.class, response);
+        String isWatermark = configService.selectConfigByKey("sys.export-download.watermark");
+        if (Objects.equals("true", isWatermark)) {
+            String waterMarkContent = LoginHelper.getUsername();
+            ExcelUtil.exportWaterMarkExcel(list, "客户端管理", SysClientVo.class, waterMarkContent, response);
+        } else {
+            ExcelUtil.exportExcel(list, "客户端管理", SysClientVo.class, response);
+        }
     }
 
     /**
