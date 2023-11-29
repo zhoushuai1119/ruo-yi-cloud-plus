@@ -26,9 +26,9 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class WaterMarkHandler implements SheetWriteHandler {
 
-    private final String WATER_MARK;
+    private final String WATER_MARK_CONTENT;
 
-    public static ByteArrayOutputStream createWaterMark(String content) throws IOException {
+    public static ByteArrayOutputStream addExcelWaterMark(String waterMarkContent) throws IOException {
         int width = 200;
         int height = 150;
         // 获取bufferedImage对象
@@ -51,13 +51,13 @@ public class WaterMarkHandler implements SheetWriteHandler {
         //设置倾斜度
         g2d.rotate(-0.5, (double) image.getWidth() / 2, (double) image.getHeight() / 2);
         FontRenderContext context = g2d.getFontRenderContext();
-        Rectangle2D bounds = font.getStringBounds(content, context);
+        Rectangle2D bounds = font.getStringBounds(waterMarkContent, context);
         double x = (width - bounds.getWidth()) / 2;
         double y = (height - bounds.getHeight()) / 2;
         double ascent = -bounds.getY();
         double baseY = y + ascent;
         // 写入水印文字原定高度过小，所以累计写水印，增加高度
-        g2d.drawString(content, (int) x, (int) baseY);
+        g2d.drawString(waterMarkContent, (int) x, (int) baseY);
         // 设置透明度
         g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER));
         // 释放对象
@@ -90,7 +90,7 @@ public class WaterMarkHandler implements SheetWriteHandler {
         if (!(writeSheetHolder.getSheet() instanceof XSSFSheet)) {
             throw new ServiceException("表格必须是XSSFSheet");
         }
-        try (ByteArrayOutputStream waterMark = createWaterMark(WATER_MARK)) {
+        try (ByteArrayOutputStream waterMark = addExcelWaterMark(WATER_MARK_CONTENT)) {
             XSSFSheet sheet = (XSSFSheet) writeSheetHolder.getSheet();
             putWaterRemarkToExcel(sheet, waterMark.toByteArray());
         }
