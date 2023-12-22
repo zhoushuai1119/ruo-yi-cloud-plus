@@ -20,6 +20,7 @@ public class RemoteMessageServiceStub implements RemoteMessageService {
      * @param sessionKey session主键 一般为用户id
      * @param message    消息文本
      */
+    @Override
     public void sendMessage(Long sessionKey, String message) {
         try {
             log.info("WebSocket发送消息; sessionKey:{},message:{}", sessionKey, message);
@@ -29,6 +30,7 @@ public class RemoteMessageServiceStub implements RemoteMessageService {
         }
     }
 
+    @Override
     public void publishAll(String message) {
         try {
             remoteMessageService.publishAll(message);
