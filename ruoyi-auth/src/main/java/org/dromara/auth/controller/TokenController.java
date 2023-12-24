@@ -23,6 +23,7 @@ import org.dromara.common.core.domain.R;
 import org.dromara.common.core.domain.model.LoginBody;
 import org.dromara.common.core.exception.ServiceException;
 import org.dromara.common.core.utils.*;
+import org.dromara.common.encrypt.annotation.ApiEncrypt;
 import org.dromara.common.json.utils.JsonUtils;
 import org.dromara.common.satoken.utils.LoginHelper;
 import org.dromara.common.social.config.properties.SocialLoginConfigProperties;
@@ -78,8 +79,9 @@ public class TokenController {
      * @param body 登录信息
      * @return 结果
      */
+    @ApiEncrypt
     @PostMapping("/login")
-    public R<LoginVo> login(@Validated @RequestBody String body) {
+    public R<LoginVo> login(@RequestBody String body) {
         LoginBody loginBody = JsonUtils.parseObject(body, LoginBody.class);
         ValidatorUtils.validate(loginBody);
         // 授权类型和客户端id
@@ -175,6 +177,7 @@ public class TokenController {
     /**
      * 用户注册
      */
+    @ApiEncrypt
     @PostMapping("register")
     public R<Void> register(@RequestBody RegisterBody registerBody) {
         if (!remoteConfigService.selectRegisterEnabled(registerBody.getTenantId())) {

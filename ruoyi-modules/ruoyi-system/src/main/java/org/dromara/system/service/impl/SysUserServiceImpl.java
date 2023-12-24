@@ -534,6 +534,22 @@ public class SysUserServiceImpl implements ISysUserService {
         return flag;
     }
 
+    @Cacheable(cacheNames = CacheNames.SYS_USER_NAME, key = "#userId")
+    @Override
+    public String selectUserNameById(Long userId) {
+        SysUser sysUser = baseMapper.selectOne(new LambdaQueryWrapper<SysUser>()
+            .select(SysUser::getUserName).eq(SysUser::getUserId, userId));
+        return ObjectUtil.isNull(sysUser) ? null : sysUser.getUserName();
+    }
+
+    @Override
+    @Cacheable(cacheNames = CacheNames.SYS_NICKNAME, key = "#userId")
+    public String selectNicknameById(Long userId) {
+        SysUser sysUser = baseMapper.selectOne(new LambdaQueryWrapper<SysUser>()
+            .select(SysUser::getNickName).eq(SysUser::getUserId, userId));
+        return ObjectUtil.isNull(sysUser) ? null : sysUser.getNickName();
+    }
+
     /**
      * 通过部门id查询当前部门所有用户
      *
@@ -546,14 +562,6 @@ public class SysUserServiceImpl implements ISysUserService {
         lqw.eq(SysUser::getDeptId, deptId);
         lqw.orderByAsc(SysUser::getUserId);
         return baseMapper.selectVoList(lqw);
-    }
-
-    @Cacheable(cacheNames = CacheNames.SYS_USER_NAME, key = "#userId")
-    @Override
-    public String selectUserNameById(Long userId) {
-        SysUser sysUser = baseMapper.selectOne(new LambdaQueryWrapper<SysUser>()
-            .select(SysUser::getUserName).eq(SysUser::getUserId, userId));
-        return ObjectUtil.isNull(sysUser) ? null : sysUser.getUserName();
     }
 
 }

@@ -470,8 +470,11 @@ insert into sys_menu values('1101', '文件查询', '110', '1', '#', '', '', 1, 
 insert into sys_menu values('1102', '文件上传', '110', '2', '#', '', '', 1, 0, 'F', '0', '0', 'system:oss:upload',       '#', 103, 1, sysdate(), null, null, '');
 insert into sys_menu values('1103', '文件下载', '110', '3', '#', '', '', 1, 0, 'F', '0', '0', 'system:oss:download',     '#', 103, 1, sysdate(), null, null, '');
 insert into sys_menu values('1104', '文件删除', '110', '4', '#', '', '', 1, 0, 'F', '0', '0', 'system:oss:remove',       '#', 103, 1, sysdate(), null, null, '');
-insert into sys_menu values('1105', '配置添加', '110', '5', '#', '', '', 1, 0, 'F', '0', '0', 'system:oss:add',          '#', 103, 1, sysdate(), null, null, '');
-insert into sys_menu values('1106', '配置编辑', '110', '6', '#', '', '', 1, 0, 'F', '0', '0', 'system:oss:edit',         '#', 103, 1, sysdate(), null, null, '');
+
+insert into sys_menu values('1105', '配置列表', '110', '5', '#', '', '', 1, 0, 'F', '0', '0', 'system:ossConfig:list',   '#', 103, 1, sysdate(), null, null, '');
+insert into sys_menu values('1106', '配置添加', '110', '6', '#', '', '', 1, 0, 'F', '0', '0', 'system:ossConfig:add',    '#', 103, 1, sysdate(), null, null, '');
+insert into sys_menu values('1107', '配置编辑', '110', '7', '#', '', '', 1, 0, 'F', '0', '0', 'system:ossConfig:edit',   '#', 103, 1, sysdate(), null, null, '');
+insert into sys_menu values('1108', '配置删除', '110', '8', '#', '', '', 1, 0, 'F', '0', '0', 'system:ossConfig:remove', '#', 103, 1, sysdate(), null, null, '');
 
 insert into sys_role_menu values ('2', '1101');
 insert into sys_role_menu values ('2', '1102');
@@ -479,6 +482,8 @@ insert into sys_role_menu values ('2', '1103');
 insert into sys_role_menu values ('2', '1104');
 insert into sys_role_menu values ('2', '1105');
 insert into sys_role_menu values ('2', '1106');
+insert into sys_role_menu values ('2', '1107');
+insert into sys_role_menu values ('2', '1108');
 
 -- 客户端管理
 insert into sys_menu values('111',  '客户端管理',   '1',   '11', 'client',           'system/client/index',         '', 1, 0, 'C', '0', '0', 'system:client:list',          'international', 103, 1, sysdate(), null, null, '客户端管理菜单');
