@@ -170,7 +170,7 @@ springdoc:
     # 描述
     description: '描述：微服务权限管理系统'
     # 版本
-    version: '版本号: 2.1.1'
+    version: '版本号: 2.1.2'
     # 作者信息
     contact:
       name: zhou shuai

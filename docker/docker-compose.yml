@@ -2,7 +2,7 @@ version: '3'
 
 services:
   ruoyi-gateway:
-    image: 139.196.208.53:5000/alibaba/ruoyi-gateway:2.1.1
+    image: 139.196.208.53:5000/alibaba/ruoyi-gateway:2.1.2
     container_name: ruoyi-gateway
     restart: always
     environment:
@@ -24,7 +24,7 @@ services:
     privileged: true
 
   ruoyi-auth:
-    image: 139.196.208.53:5000/alibaba/ruoyi-auth:2.1.1
+    image: 139.196.208.53:5000/alibaba/ruoyi-auth:2.1.2
     container_name: ruoyi-auth
     restart: always
     environment:
@@ -46,7 +46,7 @@ services:
     privileged: true
 
   ruoyi-system:
-    image: 139.196.208.53:5000/alibaba/ruoyi-system:2.1.1
+    image: 139.196.208.53:5000/alibaba/ruoyi-system:2.1.2
     container_name: ruoyi-system
     restart: always
     environment:
@@ -68,7 +68,7 @@ services:
     privileged: true
 
   ruoyi-gen:
-    image: 139.196.208.53:5000/alibaba/ruoyi-gen:2.1.1
+    image: 139.196.208.53:5000/alibaba/ruoyi-gen:2.1.2
     container_name: ruoyi-gen
     restart: always
     environment:
@@ -90,7 +90,7 @@ services:
     privileged: true
 
   ruoyi-job:
-    image: 139.196.208.53:5000/alibaba/ruoyi-job:2.1.1
+    image: 139.196.208.53:5000/alibaba/ruoyi-job:2.1.2
     container_name: ruoyi-job
     restart: always
     environment:
@@ -112,7 +112,7 @@ services:
     privileged: true
 
   ruoyi-resource:
-    image: 139.196.208.53:5000/alibaba/ruoyi-resource:2.1.1
+    image: 139.196.208.53:5000/alibaba/ruoyi-resource:2.1.2
     container_name: ruoyi-resource
     restart: always
     environment:
