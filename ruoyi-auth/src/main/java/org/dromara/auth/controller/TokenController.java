@@ -109,8 +109,11 @@ public class TokenController {
         Long userId = LoginHelper.getUserId();
         log.info("=========欢迎登录RuoYi-Cloud-Plus微服务管理系统=========");
         scheduledExecutorService.schedule(() -> {
-            remoteMessageService.sendMessage(userId, "欢迎登录RuoYi-Cloud-Plus微服务管理系统");
-        }, 6, TimeUnit.SECONDS);
+            try {
+                remoteMessageService.sendMessage(userId, "欢迎登录RuoYi-Cloud-Plus微服务管理系统");
+            } catch (Exception ignored) {
+            }
+        }, 10, TimeUnit.SECONDS);
         return R.ok(loginVo);
     }
 
