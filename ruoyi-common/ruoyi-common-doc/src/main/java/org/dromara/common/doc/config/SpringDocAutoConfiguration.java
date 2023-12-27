@@ -62,7 +62,6 @@ public class SpringDocAutoConfiguration {
         keySet.forEach(securityRequirement::addList);
         list.add(securityRequirement);
         openApi.security(list);
-
         return openApi;
     }
 

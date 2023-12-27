@@ -24,12 +24,12 @@
         <spring-cloud.version>2022.0.4</spring-cloud.version>
         <spring-boot.mybatis>3.0.3</spring-boot.mybatis>
         <mybatis.version>3.5.13</mybatis.version>
-        <mybatis-plus.version>3.5.4</mybatis-plus.version>
+        <mybatis-plus.version>3.5.5</mybatis-plus.version>
         <p6spy.version>3.9.1</p6spy.version>
         <dynamic-ds.version>4.2.0</dynamic-ds.version>
         <jasypt.version>3.0.5</jasypt.version>
         <velocity.version>2.3</velocity.version>
-        <knife4j-gateway.version>4.3.0</knife4j-gateway.version>
+        <knife4j-gateway.version>4.4.0</knife4j-gateway.version>
         <swagger.core.version>2.2.15</swagger.core.version>
         <springdoc.version>2.2.0</springdoc.version>
         <therapi-javadoc.version>0.15.0</therapi-javadoc.version>
