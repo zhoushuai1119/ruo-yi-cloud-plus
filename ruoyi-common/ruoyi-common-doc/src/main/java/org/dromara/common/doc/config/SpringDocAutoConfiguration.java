@@ -25,7 +25,10 @@ import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 /**
  * Swagger 文档配置
@@ -108,7 +111,17 @@ public class SpringDocAutoConfiguration {
                 return;
             }
             PlusPaths newPaths = new PlusPaths();
-            oldPaths.forEach((k, v) -> newPaths.addPathItem(finalContextPath + k, v));
+            oldPaths.forEach((path, pathItem) -> {
+                /**
+                 * 为所有接口添加鉴权
+                 * 为了解决OpenAPI3规范中添加Authorization鉴权请求Header不生效
+                 * 参考链接: https://doc.xiaominfo.com/docs/blog/add-authorization-header
+                 */
+                pathItem.readOperations().forEach(operation -> {
+                    operation.security(openApi.getSecurity());
+                });
+                newPaths.addPathItem(finalContextPath + path, pathItem);
+            });
             openApi.setPaths(newPaths);
         };
     }
