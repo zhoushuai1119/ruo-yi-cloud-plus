@@ -188,8 +188,7 @@ springdoc:
         name: ${sa-token.token-name}
         type: APIKEY
         in: HEADER
-        scheme: Bearer
-        description: 鉴权Token
+        description: APIKEY鉴权Token
 
 # 多租户配置
 tenant:

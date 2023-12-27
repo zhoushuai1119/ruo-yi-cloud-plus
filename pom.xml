@@ -31,7 +31,7 @@
         <velocity.version>2.3</velocity.version>
         <knife4j-gateway.version>4.4.0</knife4j-gateway.version>
         <swagger.core.version>2.2.15</swagger.core.version>
-        <springdoc.version>2.2.0</springdoc.version>
+        <springdoc.version>2.3.0</springdoc.version>
         <therapi-javadoc.version>0.15.0</therapi-javadoc.version>
         <poi.version>5.2.3</poi.version>
         <easyexcel.version>3.3.3</easyexcel.version>
