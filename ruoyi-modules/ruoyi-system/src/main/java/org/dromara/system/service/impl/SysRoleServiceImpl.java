@@ -12,7 +12,6 @@ import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang3.ObjectUtils;
 import org.dromara.common.core.constant.TenantConstants;
 import org.dromara.common.core.constant.UserConstants;
 import org.dromara.common.core.exception.ServiceException;
@@ -81,7 +80,6 @@ public class SysRoleServiceImpl implements ISysRoleService {
             .between(params.get("beginTime") != null && params.get("endTime") != null,
                 "r.create_time", params.get("beginTime"), params.get("endTime"))
             .orderByAsc("r.role_sort").orderByAsc("r.create_time");
-        ;
         return wrapper;
     }
 
@@ -93,6 +91,17 @@ public class SysRoleServiceImpl implements ISysRoleService {
      */
     @Override
     public List<SysRoleVo> selectRolesByUserId(Long userId) {
+        return baseMapper.selectRolesByUserId(userId);
+    }
+
+    /**
+     * 根据用户ID查询角色列表(包含被授权状态)
+     *
+     * @param userId 用户ID
+     * @return 角色列表
+     */
+    @Override
+    public List<SysRoleVo> selectRolesAuthByUserId(Long userId) {
         List<SysRoleVo> userRoles = baseMapper.selectRolePermissionByUserId(userId);
         List<SysRoleVo> roles = selectRoleAll();
         for (SysRoleVo role : roles) {
@@ -142,7 +151,8 @@ public class SysRoleServiceImpl implements ISysRoleService {
      */
     @Override
     public List<Long> selectRoleListByUserId(Long userId) {
-        return baseMapper.selectRoleListByUserId(userId);
+        List<SysRoleVo> list = baseMapper.selectRolesByUserId(userId);
+        return StreamUtils.toList(list, SysRoleVo::getRoleId);
     }
 
     /**
@@ -204,7 +214,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
         if (ObjectUtil.isNotNull(role.getRoleId())) {
             SysRole sysRole = baseMapper.selectById(role.getRoleId());
             // 如果标识符不相等 判断为修改了管理员标识符
-            if (ObjectUtils.notEqual(sysRole.getRoleKey(), role.getRoleKey())) {
+            if (!StringUtils.equals(sysRole.getRoleKey(), role.getRoleKey())) {
                 if (StringUtils.equalsAny(sysRole.getRoleKey(), keys)) {
                     throw new ServiceException("不允许修改系统内置管理员角色标识符!");
                 } else if (StringUtils.equalsAny(role.getRoleKey(), keys)) {

@@ -50,14 +50,6 @@ public interface ISysUserService {
     SysUserVo selectUserByUserName(String userName);
 
     /**
-     * 通过手机号查询用户
-     *
-     * @param phonenumber 手机号
-     * @return 用户对象信息
-     */
-    SysUserVo selectUserByPhonenumber(String phonenumber);
-
-    /**
      * 通过用户ID查询用户
      *
      * @param userId 用户ID
@@ -68,18 +60,18 @@ public interface ISysUserService {
     /**
      * 根据用户ID查询用户所属角色组
      *
-     * @param userName 用户名
+     * @param userId 用户ID
      * @return 结果
      */
-    String selectUserRoleGroup(String userName);
+    String selectUserRoleGroup(Long userId);
 
     /**
      * 根据用户ID查询用户所属岗位组
      *
-     * @param userName 用户名
+     * @param userId 用户ID
      * @return 结果
      */
-    String selectUserPostGroup(String userName);
+    String selectUserPostGroup(Long userId);
 
     /**
      * 校验用户名称是否唯一

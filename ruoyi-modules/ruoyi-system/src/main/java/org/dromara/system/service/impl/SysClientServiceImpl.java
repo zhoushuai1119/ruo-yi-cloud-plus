@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.dromara.common.core.constant.CacheNames;
 import org.dromara.common.core.utils.MapstructUtils;
 import org.dromara.common.core.utils.StringUtils;
 import org.dromara.common.mybatis.core.page.PageQuery;
@@ -16,11 +17,12 @@ import org.dromara.system.domain.bo.SysClientBo;
 import org.dromara.system.domain.vo.SysClientVo;
 import org.dromara.system.mapper.SysClientMapper;
 import org.dromara.system.service.ISysClientService;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 客户端管理Service业务层处理
@@ -48,6 +50,7 @@ public class SysClientServiceImpl implements ISysClientService {
     /**
      * 查询客户端管理
      */
+    @Cacheable(cacheNames = CacheNames.SYS_CLIENT, key = "#clientId")
     @Override
     public SysClientVo queryByClientId(String clientId) {
         return baseMapper.selectVoOne(new LambdaQueryWrapper<SysClient>().eq(SysClient::getClientId, clientId));
@@ -105,6 +108,7 @@ public class SysClientServiceImpl implements ISysClientService {
     /**
      * 修改客户端管理
      */
+    @CacheEvict(cacheNames = CacheNames.SYS_CLIENT, key = "#bo.clientId")
     @Override
     public Boolean updateByBo(SysClientBo bo) {
         SysClient update = MapstructUtils.convert(bo, SysClient.class);
@@ -116,12 +120,13 @@ public class SysClientServiceImpl implements ISysClientService {
     /**
      * 修改状态
      */
+    @CacheEvict(cacheNames = CacheNames.SYS_CLIENT, key = "#clientId")
     @Override
-    public int updateUserStatus(Long id, String status) {
+    public int updateUserStatus(String clientId, String status) {
         return baseMapper.update(null,
             new LambdaUpdateWrapper<SysClient>()
                 .set(SysClient::getStatus, status)
-                .eq(SysClient::getId, id));
+                .eq(SysClient::getClientId, clientId));
     }
 
     /**
@@ -134,6 +139,7 @@ public class SysClientServiceImpl implements ISysClientService {
     /**
      * 批量删除客户端管理
      */
+    @CacheEvict(cacheNames = CacheNames.SYS_CLIENT, allEntries = true)
     @Override
     public Boolean deleteWithValidByIds(Collection<Long> ids, Boolean isValid) {
         if (isValid) {
