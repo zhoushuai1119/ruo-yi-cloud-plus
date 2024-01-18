@@ -88,15 +88,6 @@ public class SysDatasourceServiceImpl implements ISysDatasourceService, Initiali
         return TableDataInfo.build(result);
     }
 
-    /**
-     * 查询多数据源配置列表
-     */
-    @Override
-    public List<SysDatasourceVo> queryList(SysDatasourceBo bo) {
-        LambdaQueryWrapper<SysDatasource> lqw = buildQueryWrapper(bo);
-        return baseMapper.selectVoList(lqw);
-    }
-
     private LambdaQueryWrapper<SysDatasource> buildQueryWrapper(SysDatasourceBo bo) {
         LambdaQueryWrapper<SysDatasource> lqw = Wrappers.lambdaQuery();
         lqw.like(StringUtils.isNotBlank(bo.getName()), SysDatasource::getName, bo.getName());

@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.dromara.common.encrypt.annotation.EncryptField;
+import org.dromara.common.encrypt.enumd.AlgorithmType;
 import org.dromara.common.mybatis.core.domain.BaseEntity;
 
 import java.io.Serial;
@@ -51,6 +53,7 @@ public class SysDatasource extends BaseEntity {
     /**
      * 数据库密码
      */
+    @EncryptField(algorithm = AlgorithmType.AES, password = "10rfylhtccpuyke5")
     private String password;
 
 }

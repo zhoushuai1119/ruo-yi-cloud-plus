@@ -27,11 +27,6 @@ public interface ISysDatasourceService {
     TableDataInfo<SysDatasourceVo> queryPageList(SysDatasourceBo bo, PageQuery pageQuery);
 
     /**
-     * 查询多数据源配置列表
-     */
-    List<SysDatasourceVo> queryList(SysDatasourceBo bo);
-
-    /**
      * 新增多数据源配置
      */
     Boolean insertByBo(SysDatasourceBo bo);

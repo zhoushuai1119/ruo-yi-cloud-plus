@@ -7,8 +7,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.dromara.common.core.validate.AddGroup;
 import org.dromara.common.core.validate.EditGroup;
-import org.dromara.common.encrypt.annotation.EncryptField;
-import org.dromara.common.encrypt.enumd.AlgorithmType;
 import org.dromara.common.mybatis.core.domain.BaseEntity;
 import org.dromara.system.domain.SysDatasource;
 
@@ -62,7 +60,6 @@ public class SysDatasourceBo extends BaseEntity {
      * 数据库密码
      */
     @NotBlank(message = "数据库密码不能为空", groups = { AddGroup.class, EditGroup.class })
-    @EncryptField(algorithm = AlgorithmType.AES, password = "10rfylhtccpuyke5")
     private String password;
 
 }

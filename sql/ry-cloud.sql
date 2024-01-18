@@ -501,6 +501,20 @@ insert into sys_role_menu values ('2', '1113');
 insert into sys_role_menu values ('2', '1114');
 insert into sys_role_menu values ('2', '1115');
 
+-- 多数据源管理
+insert into sys_menu values('112', '多数据源管理',   '1',   '12', 'datasource',      'system/datasource/index',       '', 1, 0, 'C', '0', '0', 'system:datasource:list',       'datasource',  103, 1, sysdate(), null, null, '多数据源管理菜单');
+insert into sys_role_menu values ('2', '112');
+-- 多数据源管理相关按钮
+insert into sys_menu values ('1121', '多数据源查询', '112', '1', '#', '', '', 1, 0, 'F', '0', '0', 'system:datasource:query',   '#', 103, 1, sysdate(), null, null, '');
+insert into sys_menu values ('1122', '多数据源新增', '112', '2', '#', '', '', 1, 0, 'F', '0', '0', 'system:datasource:add',     '#', 103, 1, sysdate(), null, null, '');
+insert into sys_menu values ('1123', '多数据源修改', '112', '3', '#', '', '', 1, 0, 'F', '0', '0', 'system:datasource:edit',    '#', 103, 1, sysdate(), null, null, '');
+insert into sys_menu values ('1124', '多数据源删除', '112', '4', '#', '', '', 1, 0, 'F', '0', '0', 'system:datasource:remove',  '#', 103, 1, sysdate(), null, null, '');
+
+insert into sys_role_menu values ('2', '1121');
+insert into sys_role_menu values ('2', '1122');
+insert into sys_role_menu values ('2', '1123');
+insert into sys_role_menu values ('2', '1124');
+
 -- 租户管理 -- 二级菜单
 
 -- 租户管理
@@ -534,20 +548,6 @@ insert into sys_role_menu values ('2', '2022');
 insert into sys_role_menu values ('2', '2023');
 insert into sys_role_menu values ('2', '2024');
 insert into sys_role_menu values ('2', '2025');
-
--- 多数据源管理
-insert into sys_menu values('203', '多数据源管理',   '2',   '3', 'datasource',    'system/datasource/index',   '', 1, 0, 'C', '0', '0', 'system:datasource:list',   'datasource',          103, 1, sysdate(), null, null, '多数据源管理菜单');
-insert into sys_role_menu values ('2', '203');
--- 多数据源管理相关按钮
-insert into sys_menu values ('2031', '多数据源查询', '203', '1', '#', '', '', 1, 0, 'F', '0', '0', 'system:datasource:query',   '#', 103, 1, sysdate(), null, null, '');
-insert into sys_menu values ('2032', '多数据源新增', '203', '2', '#', '', '', 1, 0, 'F', '0', '0', 'system:datasource:add',     '#', 103, 1, sysdate(), null, null, '');
-insert into sys_menu values ('2033', '多数据源修改', '203', '3', '#', '', '', 1, 0, 'F', '0', '0', 'system:datasource:edit',    '#', 103, 1, sysdate(), null, null, '');
-insert into sys_menu values ('2034', '多数据源删除', '203', '4', '#', '', '', 1, 0, 'F', '0', '0', 'system:datasource:remove',  '#', 103, 1, sysdate(), null, null, '');
-
-insert into sys_role_menu values ('2', '2031');
-insert into sys_role_menu values ('2', '2032');
-insert into sys_role_menu values ('2', '2033');
-insert into sys_role_menu values ('2', '2034');
 
 -- 系统监控 -- 二级菜单
 
