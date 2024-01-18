@@ -57,6 +57,8 @@
         <ip2region.version>2.7.0</ip2region.version>
         <!-- 临时修复 fastjson 漏洞 -->
         <fastjson.version>1.2.83</fastjson.version>
+        <!-- 滑块验证码 -->
+        <tianai-captcha.version>1.4.1</tianai-captcha.version>
 
         <!-- CLoud 封装 -->
         <cloud-parent.version>3.1.0</cloud-parent.version>
@@ -407,6 +409,12 @@
                 <groupId>io.github.zhoushuai1119</groupId>
                 <artifactId>cloud-async-tool</artifactId>
                 <version>${cloud-async-tool}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>cloud.tianai.captcha</groupId>
+                <artifactId>tianai-captcha-springboot-starter</artifactId>
+                <version>${tianai-captcha.version}</version>
             </dependency>
 
         </dependencies>
