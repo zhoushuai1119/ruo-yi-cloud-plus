@@ -36,7 +36,7 @@ public class SliderCaptchaController {
      * @return: cloud.tianai.captcha.spring.vo.CaptchaResponse<cloud.tianai.captcha.spring.vo.ImageCaptchaVO>
      */
     @RateLimiter(time = 60, count = 10, limitType = LimitType.IP)
-    @GetMapping("/image")
+    @PostMapping("/image")
     public CaptchaResponse<ImageCaptchaVO> getSliderCaptchaImage() {
         // 1.生成滑块验证码(该数据返回给前端用于展示验证码数据)
         CaptchaResponse<ImageCaptchaVO> captchaResponse = imageCaptchaApplication.generateCaptcha(CaptchaTypeConstant.SLIDER);
