@@ -9,11 +9,11 @@ import cloud.tianai.captcha.spring.vo.ImageCaptchaVO;
 import cn.dev33.satoken.annotation.SaIgnore;
 import lombok.RequiredArgsConstructor;
 import org.dromara.auth.form.SliderCaptchaBody;
-import org.dromara.common.core.domain.R;
 import org.dromara.common.ratelimiter.annotation.RateLimiter;
 import org.dromara.common.ratelimiter.enums.LimitType;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Collections;
 
 /**
  * 滑块验证码操作处理
@@ -32,47 +32,50 @@ public class SliderCaptchaController {
      * 生成滑块验证码
      *
      * @author: zhou shuai
-     * @date: 2024/1/18 23:06
-     * @return: org.dromara.common.core.domain.R<cloud.tianai.captcha.spring.vo.ImageCaptchaVO>
+     * @date: 2024/1/19 19:44
+     * @return: cloud.tianai.captcha.spring.vo.CaptchaResponse<cloud.tianai.captcha.spring.vo.ImageCaptchaVO>
      */
     @RateLimiter(time = 60, count = 10, limitType = LimitType.IP)
     @GetMapping("/image")
-    public R<ImageCaptchaVO> getSliderCaptchaImage() {
+    public CaptchaResponse<ImageCaptchaVO> getSliderCaptchaImage() {
         // 1.生成滑块验证码(该数据返回给前端用于展示验证码数据)
         CaptchaResponse<ImageCaptchaVO> captchaResponse = imageCaptchaApplication.generateCaptcha(CaptchaTypeConstant.SLIDER);
-        return R.ok(captchaResponse.getCaptcha());
+        return captchaResponse;
     }
 
     /**
      * 滑块验证码验证
      *
      * @author: zhou shuai
-     * @date: 2024/1/18 23:14
+     * @date: 2024/1/19 19:46
      * @param: sliderCaptchaBody
-     * @return: org.dromara.common.core.domain.R<java.lang.Boolean>
+     * @return: cloud.tianai.captcha.common.response.ApiResponse<?>
      */
     @PostMapping("/check")
-    public R<Boolean> checkCaptcha(@RequestBody @Validated SliderCaptchaBody sliderCaptchaBody) {
+    public ApiResponse<?> checkCaptcha(@RequestBody SliderCaptchaBody sliderCaptchaBody) {
         ApiResponse<?> sliderCaptchaMatchResp = imageCaptchaApplication.matching(sliderCaptchaBody.getId(), sliderCaptchaBody.getData());
-        return R.ok(sliderCaptchaMatchResp.isSuccess());
+        if (sliderCaptchaMatchResp.isSuccess()) {
+            return ApiResponse.ofSuccess(Collections.singletonMap("id", sliderCaptchaBody.getId()));
+        }
+        return sliderCaptchaMatchResp;
     }
 
     /**
      * 滑块验证码二次验证
      *
      * @author: zhou shuai
-     * @date: 2024/1/18 23:06
+     * @date: 2024/1/19 19:47
      * @param: id
-     * @return: org.dromara.common.core.domain.R<java.lang.Boolean>
+     * @return: boolean
      */
     @GetMapping("/secondary/check")
-    public R<Boolean> secondaryCheck(@RequestParam("id") String id) {
+    public boolean secondaryCheck(@RequestParam("id") String id) {
         boolean secondaryVerification = false;
         // 如果开启了二次验证
         if (imageCaptchaApplication instanceof SecondaryVerificationApplication) {
             secondaryVerification = ((SecondaryVerificationApplication) imageCaptchaApplication).secondaryVerification(id);
         }
-        return R.ok(secondaryVerification);
+        return secondaryVerification;
     }
 
 }
