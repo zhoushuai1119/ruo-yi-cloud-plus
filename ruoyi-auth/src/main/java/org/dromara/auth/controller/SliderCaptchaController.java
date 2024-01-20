@@ -7,13 +7,14 @@ import cloud.tianai.captcha.spring.plugins.secondary.SecondaryVerificationApplic
 import cloud.tianai.captcha.spring.vo.CaptchaResponse;
 import cloud.tianai.captcha.spring.vo.ImageCaptchaVO;
 import cn.dev33.satoken.annotation.SaIgnore;
+import cn.hutool.core.util.StrUtil;
+import com.esotericsoftware.minlog.Log;
 import lombok.RequiredArgsConstructor;
 import org.dromara.auth.form.SliderCaptchaBody;
-import org.dromara.common.ratelimiter.annotation.RateLimiter;
-import org.dromara.common.ratelimiter.enums.LimitType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * 滑块验证码操作处理
@@ -28,18 +29,35 @@ public class SliderCaptchaController {
 
     private final ImageCaptchaApplication imageCaptchaApplication;
 
+    private final static String RANDOM = "RANDOM";
+
     /**
      * 生成滑块验证码
      *
      * @author: zhou shuai
-     * @date: 2024/1/19 19:44
+     * @date: 2024/1/20 17:56
+     * @param: type
      * @return: cloud.tianai.captcha.spring.vo.CaptchaResponse<cloud.tianai.captcha.spring.vo.ImageCaptchaVO>
      */
-    @RateLimiter(time = 60, count = 10, limitType = LimitType.IP)
     @PostMapping("/image")
-    public CaptchaResponse<ImageCaptchaVO> getSliderCaptchaImage() {
+    public CaptchaResponse<ImageCaptchaVO> getSliderCaptchaImage(@RequestParam(value = "type", required = false) String type) {
+        if (StrUtil.isBlank(type)) {
+            type = CaptchaTypeConstant.SLIDER;
+        }
+        if (StrUtil.equalsIgnoreCase(type, RANDOM)) {
+            int i = ThreadLocalRandom.current().nextInt(0, 4);
+            if (i == 0) {
+                type = CaptchaTypeConstant.SLIDER;
+            } else if (i == 1) {
+                type = CaptchaTypeConstant.CONCAT;
+            } else if (i == 2) {
+                type = CaptchaTypeConstant.ROTATE;
+            } else {
+                type = CaptchaTypeConstant.WORD_IMAGE_CLICK;
+            }
+        }
         // 1.生成滑块验证码(该数据返回给前端用于展示验证码数据)
-        CaptchaResponse<ImageCaptchaVO> captchaResponse = imageCaptchaApplication.generateCaptcha(CaptchaTypeConstant.SLIDER);
+        CaptchaResponse<ImageCaptchaVO> captchaResponse = imageCaptchaApplication.generateCaptcha(type);
         return captchaResponse;
     }
 
@@ -70,6 +88,7 @@ public class SliderCaptchaController {
      */
     @GetMapping("/secondary/check")
     public boolean secondaryCheck(@RequestParam("id") String id) {
+        Log.info("开始滑块验证码二次验证ID:{}", id);
         boolean secondaryVerification = false;
         // 如果开启了二次验证
         if (imageCaptchaApplication instanceof SecondaryVerificationApplication) {
