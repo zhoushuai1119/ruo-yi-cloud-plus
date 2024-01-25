@@ -83,6 +83,7 @@ security:
   ignore:
     whites:
       - /auth/code
+      - /auth/sms/sendCode
       - /auth/logout
       - /auth/login
       - /auth/binding/*

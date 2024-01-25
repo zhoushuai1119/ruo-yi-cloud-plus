@@ -62,7 +62,7 @@ public class SmsAuthStrategy extends AbstractAuthStrategy {
      * 校验短信验证码
      */
     private boolean validateSmsCode(String tenantId, String phonenumber, String smsCode) {
-        String code = RedisUtils.getCacheObject(GlobalConstants.CAPTCHA_CODE_KEY + phonenumber);
+        String code = RedisUtils.getCacheObject(GlobalConstants.PHONE_CODE_KEY + phonenumber);
         if (StringUtils.isBlank(code)) {
             loginService.recordLogininfor(tenantId, phonenumber, Constants.LOGIN_FAIL, MessageUtils.message("user.jcaptcha.expire"));
             throw new CaptchaExpireException();
