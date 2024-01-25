@@ -68,6 +68,11 @@ public interface Constants {
     Integer CAPTCHA_EXPIRATION = 2;
 
     /**
+     * 手机验证码有效期（分钟）
+     */
+    Integer PHONE_CODE_EXPIRATION = 5;
+
+    /**
      * 令牌
      */
     String TOKEN = "token";

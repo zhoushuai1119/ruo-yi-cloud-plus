@@ -41,9 +41,9 @@ public class SysSmsController extends BaseController {
     @RateLimiter(key = "#phonenumber", time = 60, count = 1)
     @GetMapping("/code")
     public R<Object> smsCaptcha(@NotBlank(message = "{user.phonenumber.not.blank}") String phonenumber) {
-        String key = GlobalConstants.CAPTCHA_CODE_KEY + phonenumber;
+        String key = GlobalConstants.PHONE_CODE_KEY + phonenumber;
         String code = RandomUtil.randomNumbers(4);
-        RedisUtils.setCacheObject(key, code, Duration.ofMinutes(Constants.CAPTCHA_EXPIRATION));
+        RedisUtils.setCacheObject(key, code, Duration.ofMinutes(Constants.PHONE_CODE_EXPIRATION));
         SmsBlend smsBlend = SmsFactory.getSmsBlend("alibaba");
         SmsResponse smsResponse = smsBlend.sendMessage(phonenumber, code);
         return R.ok(smsResponse);
