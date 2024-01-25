@@ -16,6 +16,7 @@ import org.dromara.sms4j.api.entity.SmsResponse;
 import org.dromara.sms4j.core.factory.SmsFactory;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,9 +27,7 @@ import java.time.Duration;
  *
  * @author Lion Li
  */
-@Slf4j
 @Validated
-@RequiredArgsConstructor
 @RestController
 @RequestMapping("/sms")
 public class SysSmsController extends BaseController {
@@ -39,8 +38,8 @@ public class SysSmsController extends BaseController {
      * @param phonenumber 用户手机号
      */
     @RateLimiter(key = "#phonenumber", time = 60, count = 1)
-    @GetMapping("/code")
-    public R<Object> smsCaptcha(@NotBlank(message = "{user.phonenumber.not.blank}") String phonenumber) {
+    @GetMapping("/code/{phonenumber}")
+    public R<SmsResponse> smsCaptcha(@NotBlank(message = "{user.phonenumber.not.blank}") @PathVariable("phonenumber") String phonenumber) {
         String key = GlobalConstants.PHONE_CODE_KEY + phonenumber;
         String code = RandomUtil.randomNumbers(4);
         RedisUtils.setCacheObject(key, code, Duration.ofMinutes(Constants.PHONE_CODE_EXPIRATION));
