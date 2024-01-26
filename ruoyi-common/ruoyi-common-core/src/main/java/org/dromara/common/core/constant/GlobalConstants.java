@@ -23,6 +23,11 @@ public interface GlobalConstants {
     String PHONE_CODE_KEY = GLOBAL_REDIS_KEY + "phone_codes:";
 
     /**
+     * 邮箱验证码 redis key
+     */
+    String EMAIL_CODE_KEY = GLOBAL_REDIS_KEY + "email_codes:";
+
+    /**
      * 防重提交 redis key
      */
     String REPEAT_SUBMIT_KEY = GLOBAL_REDIS_KEY + "repeat_submit:";

@@ -91,6 +91,7 @@ security:
       - /auth/tenant/list
       - /auth/slider/captcha/**
       - /resource/sms/code/*
+      - /resource/email/code/*
       - /*/error
       - /*/actuator/**
       - /csrf

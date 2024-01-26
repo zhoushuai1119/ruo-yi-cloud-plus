@@ -73,6 +73,11 @@ public interface Constants {
     Integer PHONE_CODE_EXPIRATION = 5;
 
     /**
+     * 邮箱验证码有效期（分钟）
+     */
+    Integer EMAIL_CODE_EXPIRATION = 10;
+
+    /**
      * 令牌
      */
     String TOKEN = "token";

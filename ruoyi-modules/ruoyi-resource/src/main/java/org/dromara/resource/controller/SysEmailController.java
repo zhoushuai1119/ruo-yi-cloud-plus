@@ -15,6 +15,7 @@ import org.dromara.common.redis.utils.RedisUtils;
 import org.dromara.common.web.core.BaseController;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -40,16 +41,16 @@ public class SysEmailController extends BaseController {
      * @param email 邮箱
      */
     @RateLimiter(key = "#email", time = 60, count = 1)
-    @GetMapping("/code")
-    public R<Void> emailCode(@NotBlank(message = "{user.email.not.blank}") String email) {
+    @GetMapping("/code/{email}")
+    public R<Void> emailCode(@NotBlank(message = "{user.email.not.blank}") @PathVariable("email") String email) {
         if (!mailProperties.getEnabled()) {
             return R.fail("当前系统没有开启邮箱功能！");
         }
-        String key = GlobalConstants.CAPTCHA_CODE_KEY + email;
+        String key = GlobalConstants.EMAIL_CODE_KEY + email;
         String code = RandomUtil.randomNumbers(4);
-        RedisUtils.setCacheObject(key, code, Duration.ofMinutes(Constants.CAPTCHA_EXPIRATION));
+        RedisUtils.setCacheObject(key, code, Duration.ofMinutes(Constants.EMAIL_CODE_EXPIRATION));
         try {
-            MailUtils.sendText(email, "登录验证码", "您本次验证码为：" + code + "，有效性为" + Constants.CAPTCHA_EXPIRATION + "分钟，请尽快填写。");
+            MailUtils.sendText(email, "登录验证码", "您本次验证码为：" + code + "，有效性为" + Constants.EMAIL_CODE_EXPIRATION + "分钟，请尽快填写。");
         } catch (Exception e) {
             log.error("验证码短信发送异常 => {}", e.getMessage());
             return R.fail(e.getMessage());

@@ -62,7 +62,7 @@ public class EmailAuthStrategy extends AbstractAuthStrategy {
      * 校验邮箱验证码
      */
     private boolean validateEmailCode(String tenantId, String email, String emailCode) {
-        String code = RedisUtils.getCacheObject(GlobalConstants.CAPTCHA_CODE_KEY + email);
+        String code = RedisUtils.getCacheObject(GlobalConstants.EMAIL_CODE_KEY + email);
         if (StringUtils.isBlank(code)) {
             loginService.recordLogininfor(tenantId, email, Constants.LOGIN_FAIL, MessageUtils.message("user.jcaptcha.expire"));
             throw new CaptchaExpireException();
