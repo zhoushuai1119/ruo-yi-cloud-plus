@@ -50,7 +50,7 @@ public class SysEmailController extends BaseController {
         String code = RandomUtil.randomNumbers(4);
         RedisUtils.setCacheObject(key, code, Duration.ofMinutes(Constants.EMAIL_CODE_EXPIRATION));
         try {
-            MailUtils.sendText(email, "登录验证码", "您本次验证码为：" + code + "，有效性为" + Constants.EMAIL_CODE_EXPIRATION + "分钟，请尽快填写。");
+            MailUtils.sendText(email, "RuoYi-Cloud-Plus邮箱登录验证码", "您本次验证码为：" + code + "，有效性为" + Constants.EMAIL_CODE_EXPIRATION + "分钟，请尽快填写。");
         } catch (Exception e) {
             log.error("验证码短信发送异常 => {}", e.getMessage());
             return R.fail(e.getMessage());
