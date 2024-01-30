@@ -3,6 +3,7 @@ package org.dromara.resource.controller;
 
 import cn.hutool.core.util.RandomUtil;
 import jakarta.validation.constraints.NotBlank;
+import lombok.extern.slf4j.Slf4j;
 import org.dromara.common.core.constant.Constants;
 import org.dromara.common.core.constant.GlobalConstants;
 import org.dromara.common.core.domain.R;
@@ -25,6 +26,7 @@ import java.time.Duration;
  *
  * @author Lion Li
  */
+@Slf4j
 @Validated
 @RestController
 @RequestMapping("/sms")
@@ -37,13 +39,17 @@ public class SysSmsController extends BaseController {
      */
     @RateLimiter(key = "#phonenumber", time = 60, count = 1)
     @GetMapping("/code/{phonenumber}")
-    public R<SmsResponse> smsCaptcha(@NotBlank(message = "{user.phonenumber.not.blank}") @PathVariable("phonenumber") String phonenumber) {
+    public R<Void> smsCaptcha(@NotBlank(message = "{user.phonenumber.not.blank}") @PathVariable("phonenumber") String phonenumber) {
         String key = GlobalConstants.PHONE_CODE_KEY + phonenumber;
         String code = RandomUtil.randomNumbers(4);
         RedisUtils.setCacheObject(key, code, Duration.ofMinutes(Constants.PHONE_CODE_EXPIRATION));
         SmsBlend smsBlend = SmsFactory.getSmsBlend("alibaba");
         SmsResponse smsResponse = smsBlend.sendMessage(phonenumber, code);
-        return R.ok(smsResponse);
+        if (!smsResponse.isSuccess()) {
+            log.error("验证码短信发送异常 => {}", smsResponse);
+            return R.fail(smsResponse.getData().toString());
+        }
+        return R.ok();
     }
 
 }
