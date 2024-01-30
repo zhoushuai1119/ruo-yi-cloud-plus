@@ -92,10 +92,6 @@ sms:
       template-id: SMS_270350279
       # 模板变量名称
       template-name: code
-      # 短信重试次数，默认0次不重试，如果你需要短信重试则根据自己的需求修改值即可
-      max-retries: 1
-      # 短信自动重试间隔时间  默认五秒
-      retry-interval: 3
 
 # seata配置
 seata:
