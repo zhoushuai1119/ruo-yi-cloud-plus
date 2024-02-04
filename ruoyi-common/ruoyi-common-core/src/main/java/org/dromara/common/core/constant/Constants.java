@@ -3,7 +3,7 @@ package org.dromara.common.core.constant;
 /**
  * 通用常量信息
  *
- * @author ruoyi
+ * @author shuai.zhou
  */
 public interface Constants {
 

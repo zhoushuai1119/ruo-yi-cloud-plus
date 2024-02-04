@@ -10,7 +10,7 @@ import java.io.Serial;
 /**
  * 业务异常
  *
- * @author ruoyi
+ * @author shuai.zhou
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

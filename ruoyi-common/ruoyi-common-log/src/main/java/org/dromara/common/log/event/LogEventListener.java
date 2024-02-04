@@ -24,7 +24,7 @@ import org.springframework.stereotype.Component;
 /**
  * 异步调用日志服务
  *
- * @author ruoyi
+ * @author shuai.zhou
  */
 @Component
 @Slf4j

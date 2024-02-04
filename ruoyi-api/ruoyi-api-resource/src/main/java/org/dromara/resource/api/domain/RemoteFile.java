@@ -8,7 +8,7 @@ import java.io.Serializable;
 /**
  * 文件信息
  *
- * @author ruoyi
+ * @author shuai.zhou
  */
 @Data
 public class RemoteFile implements Serializable {

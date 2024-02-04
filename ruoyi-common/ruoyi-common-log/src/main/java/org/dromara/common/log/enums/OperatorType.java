@@ -3,7 +3,7 @@ package org.dromara.common.log.enums;
 /**
  * 操作人类别
  *
- * @author ruoyi
+ * @author shuai.zhou
  */
 public enum OperatorType {
     /**

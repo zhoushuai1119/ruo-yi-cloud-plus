@@ -7,7 +7,7 @@ import java.io.Serial;
 /**
  * 用户信息异常类
  *
- * @author ruoyi
+ * @author shuai.zhou
  */
 public class UserException extends BaseException {
 
