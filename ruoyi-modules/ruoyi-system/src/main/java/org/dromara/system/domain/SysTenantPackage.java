@@ -12,7 +12,7 @@ import java.io.Serial;
 /**
  * 租户套餐对象 sys_tenant_package
  *
- * @author Michelle.Chung
+ * @author shuai.zhou
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * 租户Service接口
  *
- * @author Michelle.Chung
+ * @author shuai.zhou
  */
 public interface ISysTenantService {
 

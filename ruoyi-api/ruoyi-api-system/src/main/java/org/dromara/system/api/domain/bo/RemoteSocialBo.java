@@ -9,7 +9,7 @@ import java.io.Serializable;
 /**
  * 社会化关系业务对象 sys_social
  *
- * @author Michelle.Chung
+ * @author shuai.zhou
  */
 @Data
 @NoArgsConstructor

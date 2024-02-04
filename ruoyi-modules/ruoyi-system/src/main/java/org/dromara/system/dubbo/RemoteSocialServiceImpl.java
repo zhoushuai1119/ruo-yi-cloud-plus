@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 /**
  * 社会化关系服务
  *
- * @author Michelle.Chung
+ * @author shuai.zhou
  */
 @RequiredArgsConstructor
 @Service

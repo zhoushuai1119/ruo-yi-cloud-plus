@@ -6,7 +6,7 @@ import lombok.Data;
 /**
  * 登录验证信息
  *
- * @author Michelle.Chung
+ * @author shuai.zhou
  */
 @Data
 public class LoginVo {

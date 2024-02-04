@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 /**
  * 资源Seata服务
  *
- * @author Michelle.Chung
+ * @author shuai.zhou
  */
 @Slf4j
 @RequiredArgsConstructor

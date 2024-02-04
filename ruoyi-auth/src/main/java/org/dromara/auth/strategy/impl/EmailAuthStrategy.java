@@ -26,7 +26,7 @@ import static org.dromara.common.core.enums.LoginType.EMAIL;
 /**
  * 邮件认证策略
  *
- * @author Michelle.Chung
+ * @author shuai.zhou
  */
 @Slf4j
 @Service("emailAuthStrategy")

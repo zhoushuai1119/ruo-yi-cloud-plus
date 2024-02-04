@@ -7,7 +7,7 @@ import org.dromara.system.domain.vo.SysClientVo;
 /**
  * 授权管理Mapper接口
  *
- * @author Michelle.Chung
+ * @author shuai.zhou
  */
 public interface SysClientMapper extends BaseMapperPlus<SysClient, SysClientVo> {
 

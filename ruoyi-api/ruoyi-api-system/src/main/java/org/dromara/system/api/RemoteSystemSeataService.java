@@ -3,7 +3,7 @@ package org.dromara.system.api;
 /**
  * 系统Seata服务
  *
- * @author Michelle.Chung
+ * @author shuai.zhou
  */
 public interface RemoteSystemSeataService {
 

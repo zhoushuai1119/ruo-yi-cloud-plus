@@ -17,7 +17,7 @@ import java.util.Date;
 /**
  * 系统访问记录视图对象 sys_logininfor
  *
- * @author Michelle.Chung
+ * @author shuai.zhou
  * @date 2023-02-07
  */
 @Data

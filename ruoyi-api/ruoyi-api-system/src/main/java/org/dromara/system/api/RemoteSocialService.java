@@ -6,7 +6,7 @@ import org.dromara.system.api.domain.vo.RemoteSocialVo;
 /**
  * 社会化关系服务
  *
- * @author Michelle.Chung
+ * @author shuai.zhou
  */
 public interface RemoteSocialService {
 

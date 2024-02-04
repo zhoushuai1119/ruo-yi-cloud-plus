@@ -14,7 +14,7 @@ import jakarta.validation.constraints.Size;
 /**
  * 个人信息业务处理
  *
- * @author Michelle.Chung
+ * @author shuai.zhou
  */
 
 @Data

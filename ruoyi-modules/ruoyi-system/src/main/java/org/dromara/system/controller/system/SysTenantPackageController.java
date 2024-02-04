@@ -32,7 +32,7 @@ import java.util.Objects;
 /**
  * 租户套餐管理
  *
- * @author Michelle.Chung
+ * @author shuai.zhou
  */
 @Validated
 @RequiredArgsConstructor

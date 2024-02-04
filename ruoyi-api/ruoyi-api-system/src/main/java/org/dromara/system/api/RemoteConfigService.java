@@ -3,7 +3,7 @@ package org.dromara.system.api;
 /**
  * 配置服务
  *
- * @author Michelle.Chung
+ * @author shuai.zhou
  */
 public interface RemoteConfigService {
 

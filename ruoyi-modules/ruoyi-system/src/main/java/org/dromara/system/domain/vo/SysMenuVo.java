@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * 菜单权限视图对象 sys_menu
  *
- * @author Michelle.Chung
+ * @author shuai.zhou
  */
 @Data
 @AutoMapper(target = SysMenu.class)

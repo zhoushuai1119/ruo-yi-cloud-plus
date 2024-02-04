@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * 授权管理视图对象 sys_client
  *
- * @author Michelle.Chung
+ * @author shuai.zhou
  */
 @Data
 public class RemoteClientVo implements Serializable {

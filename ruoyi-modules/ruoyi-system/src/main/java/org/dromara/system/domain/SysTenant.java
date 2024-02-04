@@ -13,7 +13,7 @@ import java.util.Date;
 /**
  * 租户对象 sys_tenant
  *
- * @author Michelle.Chung
+ * @author shuai.zhou
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

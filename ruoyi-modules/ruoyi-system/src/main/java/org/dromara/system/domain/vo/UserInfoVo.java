@@ -9,7 +9,7 @@ import java.util.Set;
 /**
  * 登录用户信息
  *
- * @author Michelle.Chung
+ * @author shuai.zhou
  */
 @Data
 public class UserInfoVo implements Serializable {

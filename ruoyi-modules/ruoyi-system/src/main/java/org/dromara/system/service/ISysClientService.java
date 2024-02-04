@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * 客户端管理Service接口
  *
- * @author Michelle.Chung
+ * @author shuai.zhou
  */
 public interface ISysClientService {
 

@@ -15,7 +15,7 @@ import jakarta.validation.constraints.NotNull;
 /**
  * 租户套餐业务对象 sys_tenant_package
  *
- * @author Michelle.Chung
+ * @author shuai.zhou
  */
 
 @Data

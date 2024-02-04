@@ -15,7 +15,7 @@ import java.util.Date;
 /**
  * 通知公告视图对象 sys_notice
  *
- * @author Michelle.Chung
+ * @author shuai.zhou
  */
 @Data
 @AutoMapper(target = SysNotice.class)

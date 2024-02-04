@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * 用户信息视图对象 sys_user
  *
- * @author Michelle.Chung
+ * @author shuai.zhou
  */
 @Data
 @AutoMapper(target = SysUser.class)

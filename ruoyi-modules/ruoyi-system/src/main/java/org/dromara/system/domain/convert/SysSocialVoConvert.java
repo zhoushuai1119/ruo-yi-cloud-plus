@@ -10,7 +10,7 @@ import org.mapstruct.ReportingPolicy;
 /**
  * 社交数据转换器
  *
- * @author Michelle.Chung
+ * @author shuai.zhou
  */
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING, unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface SysSocialVoConvert extends BaseMapper<SysSocialVo, RemoteSocialVo> {

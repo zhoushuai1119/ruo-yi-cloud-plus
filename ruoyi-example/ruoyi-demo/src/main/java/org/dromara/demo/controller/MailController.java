@@ -14,7 +14,7 @@ import java.io.File;
 /**
  * 邮件发送案例
  *
- * @author Michelle.Chung
+ * @author shuai.zhou
  */
 @Validated
 @RequiredArgsConstructor

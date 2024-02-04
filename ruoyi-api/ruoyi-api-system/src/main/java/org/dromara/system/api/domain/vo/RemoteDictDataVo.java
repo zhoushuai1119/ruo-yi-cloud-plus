@@ -10,7 +10,7 @@ import java.util.Date;
 /**
  * 字典数据视图对象 sys_dict_data
  *
- * @author Michelle.Chung
+ * @author shuai.zhou
  */
 @Data
 public class RemoteDictDataVo implements Serializable {

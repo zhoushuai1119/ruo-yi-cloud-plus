@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * 角色菜单列表树信息
  *
- * @author Michelle.Chung
+ * @author shuai.zhou
  */
 @Data
 public class MenuTreeSelectVo implements Serializable {

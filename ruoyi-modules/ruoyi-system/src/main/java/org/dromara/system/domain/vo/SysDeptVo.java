@@ -15,7 +15,7 @@ import java.util.Date;
 /**
  * 部门视图对象 sys_dept
  *
- * @author Michelle.Chung
+ * @author shuai.zhou
  */
 @Data
 @ExcelIgnoreUnannotated

@@ -8,7 +8,7 @@ import java.io.Serializable;
 /**
  * 上传对象信息
  *
- * @author Michelle.Chung
+ * @author shuai.zhou
  */
 @Data
 public class SysOssUploadVo implements Serializable {

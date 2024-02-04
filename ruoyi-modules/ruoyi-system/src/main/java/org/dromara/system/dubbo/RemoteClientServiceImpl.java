@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 /**
  * 客户端服务
  *
- * @author Michelle.Chung
+ * @author shuai.zhou
  */
 @RequiredArgsConstructor
 @Service

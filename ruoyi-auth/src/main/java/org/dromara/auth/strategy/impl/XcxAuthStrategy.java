@@ -18,7 +18,7 @@ import static org.dromara.common.core.enums.LoginType.XCX;
 /**
  * 小程序认证策略
  *
- * @author Michelle.Chung
+ * @author shuai.zhou
  */
 @Slf4j
 @Service("xcxAuthStrategy")

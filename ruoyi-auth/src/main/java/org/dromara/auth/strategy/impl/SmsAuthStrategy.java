@@ -26,7 +26,7 @@ import static org.dromara.common.core.enums.LoginType.SMS;
 /**
  * 短信认证策略
  *
- * @author Michelle.Chung
+ * @author shuai.zhou
  */
 @Slf4j
 @Service("smsAuthStrategy")

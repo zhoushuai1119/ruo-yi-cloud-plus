@@ -15,7 +15,7 @@ import java.io.Serializable;
 /**
  * 租户套餐视图对象 sys_tenant_package
  *
- * @author Michelle.Chung
+ * @author shuai.zhou
  */
 @Data
 @ExcelIgnoreUnannotated

@@ -27,7 +27,7 @@ import java.util.List;
 /**
  * 客户端管理Service业务层处理
  *
- * @author Michelle.Chung
+ * @author shuai.zhou
  */
 @Slf4j
 @RequiredArgsConstructor

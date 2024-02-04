@@ -19,7 +19,6 @@ import org.dromara.common.mybatis.core.page.PageQuery;
 import org.dromara.common.mybatis.core.page.TableDataInfo;
 import org.dromara.system.domain.*;
 import org.dromara.system.domain.bo.SysTenantBo;
-import org.dromara.system.domain.vo.SysDatasourceVo;
 import org.dromara.system.domain.vo.SysTenantVo;
 import org.dromara.system.mapper.*;
 import org.dromara.system.service.ISysTenantService;
@@ -36,7 +35,7 @@ import java.util.List;
 /**
  * 租户Service业务层处理
  *
- * @author Michelle.Chung
+ * @author shuai.zhou
  */
 @RequiredArgsConstructor
 @Service

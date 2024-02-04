@@ -29,7 +29,7 @@ import static org.dromara.common.core.enums.LoginType.PASSWORD;
 /**
  * 密码认证策略
  *
- * @author Michelle.Chung
+ * @author shuai.zhou
  */
 @Slf4j
 @Service("passwordAuthStrategy")

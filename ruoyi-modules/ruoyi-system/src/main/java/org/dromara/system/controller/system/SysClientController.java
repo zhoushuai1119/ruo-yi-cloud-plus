@@ -29,7 +29,7 @@ import java.util.Objects;
 /**
  * 客户端管理
  *
- * @author Michelle.Chung
+ * @author shuai.zhou
  */
 @Validated
 @RequiredArgsConstructor

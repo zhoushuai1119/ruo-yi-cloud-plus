@@ -12,7 +12,7 @@ import java.io.Serializable;
 /**
  * 资源Seata测试 sys_seata_test
  *
- * @author Michelle.Chung
+ * @author shuai.zhou
  */
 @Data
 @TableName("sys_seata_test")
