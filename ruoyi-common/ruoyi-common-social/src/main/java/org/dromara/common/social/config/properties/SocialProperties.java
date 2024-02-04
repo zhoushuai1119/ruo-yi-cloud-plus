@@ -9,7 +9,7 @@ import java.util.Map;
 /**
  * Social 配置属性
  *
- * @author thiszhc
+ * @author shuai.zhou
  */
 @Data
 @Component

@@ -10,7 +10,7 @@ import java.util.Date;
 /**
  * 租户视图对象
  *
- * @author zhujie
+ * @author shuai.zhou
  */
 @Data
 public class RemoteTenantVo implements Serializable {

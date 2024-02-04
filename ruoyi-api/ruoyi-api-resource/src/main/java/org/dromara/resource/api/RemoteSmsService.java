@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * 短信服务
  *
- * @author Feng
+ * @author shuai.zhou
  */
 public interface RemoteSmsService {
 

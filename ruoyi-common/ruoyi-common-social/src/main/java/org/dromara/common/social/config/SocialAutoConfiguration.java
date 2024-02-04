@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Bean;
 
 /**
  * Social 配置属性
- * @author thiszhc
+ * @author shuai.zhou
  */
 @AutoConfiguration
 @EnableConfigurationProperties(SocialProperties.class)

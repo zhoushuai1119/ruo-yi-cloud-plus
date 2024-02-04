@@ -13,7 +13,7 @@ public interface RemoteSocialService {
     /**
      * 查询用户信息
      *
-     * @author: zhou shuai
+     * @author: shuai.zhou
      * @date: 2023/11/17 20:08
      * @param: authId
      * @param: tenantId

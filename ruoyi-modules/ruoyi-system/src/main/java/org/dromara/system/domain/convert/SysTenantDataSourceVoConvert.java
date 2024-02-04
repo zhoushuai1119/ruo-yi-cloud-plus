@@ -9,7 +9,7 @@ import org.mapstruct.ReportingPolicy;
 
 /**
  * 租户数据源转换器
- * @author zhujie
+ * @author shuai.zhou
  */
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING, unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface SysTenantDataSourceVoConvert extends BaseMapper<SysDatasourceVo, RemoteTenantDataSourceVo> {

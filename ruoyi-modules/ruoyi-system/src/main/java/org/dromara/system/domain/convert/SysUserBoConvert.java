@@ -13,7 +13,7 @@ import org.mapstruct.factory.Mappers;
 
 /**
  * 用户信息转换器
- * @author zhujie
+ * @author shuai.zhou
  */
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING, unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface SysUserBoConvert extends BaseMapper<RemoteUserBo, SysUserBo> {

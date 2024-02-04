@@ -5,7 +5,7 @@ import lombok.Data;
 /**
  * 社交登录配置
  *
- * @author thiszhc
+ * @author shuai.zhou
  */
 @Data
 public class SocialLoginConfigProperties {

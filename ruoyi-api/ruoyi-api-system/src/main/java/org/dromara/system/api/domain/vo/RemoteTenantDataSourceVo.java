@@ -9,7 +9,7 @@ import java.io.Serializable;
 /**
  * 租户视图对象
  *
- * @author zhujie
+ * @author shuai.zhou
  */
 @Data
 public class RemoteTenantDataSourceVo implements Serializable {

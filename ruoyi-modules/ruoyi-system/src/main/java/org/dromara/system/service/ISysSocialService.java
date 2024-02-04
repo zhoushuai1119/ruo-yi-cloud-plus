@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * 社会化关系Service接口
  *
- * @author thiszhc
+ * @author shuai.zhou
  */
 public interface ISysSocialService {
 

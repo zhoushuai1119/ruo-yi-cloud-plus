@@ -9,7 +9,7 @@ import org.mapstruct.ReportingPolicy;
 
 /**
  * 字典数据转换器
- * @author zhujie
+ * @author shuai.zhou
  */
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING, unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface SysDictDataVoConvert extends BaseMapper<SysDictDataVo, RemoteDictDataVo> {

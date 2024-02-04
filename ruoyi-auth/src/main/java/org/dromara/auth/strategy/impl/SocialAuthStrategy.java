@@ -28,7 +28,7 @@ import static org.dromara.common.core.enums.LoginType.SOCIAL;
 /**
  * 第三方授权策略
  *
- * @author thiszhc is 三三
+ * @author shuai.zhou
  */
 @Slf4j
 @Service("socialAuthStrategy")

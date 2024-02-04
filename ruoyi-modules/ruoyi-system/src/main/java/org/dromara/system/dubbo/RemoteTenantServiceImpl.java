@@ -4,10 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.dromara.common.core.utils.MapstructUtils;
 import org.dromara.system.api.RemoteTenantService;
-import org.dromara.system.api.domain.vo.RemoteTenantDataSourceVo;
 import org.dromara.system.api.domain.vo.RemoteTenantVo;
 import org.dromara.system.domain.bo.SysTenantBo;
-import org.dromara.system.domain.vo.SysDatasourceVo;
 import org.dromara.system.domain.vo.SysTenantVo;
 import org.dromara.system.service.ISysTenantService;
 import org.springframework.stereotype.Service;
@@ -15,7 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * @author zhujie
+ * @author shuai.zhou
  */
 @RequiredArgsConstructor
 @Service

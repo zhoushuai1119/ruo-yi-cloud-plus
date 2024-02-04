@@ -15,7 +15,7 @@ import org.dromara.common.social.maxkey.AuthMaxKeyRequest;
 /**
  * 认证授权工具类
  *
- * @author thiszhc
+ * @author shuai.zhou
  */
 public class SocialUtils  {
 

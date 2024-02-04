@@ -7,7 +7,7 @@ import lombok.Getter;
 /**
  * 桶访问策略配置
  *
- * @author 陈賝
+ * @author shuai.zhou
  */
 @Getter
 @AllArgsConstructor
