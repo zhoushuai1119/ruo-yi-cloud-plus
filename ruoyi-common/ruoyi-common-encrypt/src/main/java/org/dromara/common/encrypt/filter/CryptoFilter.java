@@ -74,7 +74,8 @@ public class CryptoFilter implements Filter {
 
         chain.doFilter(
             ObjectUtil.defaultIfNull(requestWrapper, request),
-            ObjectUtil.defaultIfNull(responseWrapper, response));
+            ObjectUtil.defaultIfNull(responseWrapper, response)
+        );
 
         if (responseFlag) {
             servletResponse.reset();
