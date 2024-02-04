@@ -6,7 +6,7 @@ import org.dromara.resource.api.domain.RemoteFile;
 /**
  * 文件服务
  *
- * @author Lion Li
+ * @author shuai.zhou
  */
 public interface RemoteFileService {
 

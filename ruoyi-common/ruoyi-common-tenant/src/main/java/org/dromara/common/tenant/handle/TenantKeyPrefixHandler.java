@@ -10,7 +10,7 @@ import org.dromara.common.tenant.helper.TenantHelper;
 /**
  * 多租户redis缓存key前缀处理
  *
- * @author Lion Li
+ * @author shuai.zhou
  */
 @Slf4j
 public class TenantKeyPrefixHandler extends KeyPrefixHandler {

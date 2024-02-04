@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
  * 短信演示案例
  * 请先阅读文档 否则无法使用
  *
- * @author Lion Li
+ * @author shuai.zhou
  * @version 4.2.0
  */
 @Validated

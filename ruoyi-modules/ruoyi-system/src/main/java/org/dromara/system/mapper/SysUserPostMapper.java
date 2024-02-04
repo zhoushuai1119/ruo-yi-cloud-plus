@@ -6,7 +6,7 @@ import org.dromara.system.domain.SysUserPost;
 /**
  * 用户与岗位关联表 数据层
  *
- * @author Lion Li
+ * @author shuai.zhou
  */
 public interface SysUserPostMapper extends BaseMapperPlus<SysUserPost, SysUserPost> {
 

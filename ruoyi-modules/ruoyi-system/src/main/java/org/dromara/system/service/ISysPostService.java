@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * 岗位信息 服务层
  *
- * @author Lion Li
+ * @author shuai.zhou
  */
 public interface ISysPostService {
 

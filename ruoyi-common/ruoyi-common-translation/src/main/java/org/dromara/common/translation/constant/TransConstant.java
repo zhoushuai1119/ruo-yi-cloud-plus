@@ -3,7 +3,7 @@ package org.dromara.common.translation.constant;
 /**
  * 翻译常量
  *
- * @author Lion Li
+ * @author shuai.zhou
  */
 public interface TransConstant {
 

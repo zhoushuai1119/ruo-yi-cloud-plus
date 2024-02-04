@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 /**
  * 用户登录对象
  *
- * @author Lion Li
+ * @author shuai.zhou
  */
 @Data
 @NoArgsConstructor

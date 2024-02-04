@@ -6,7 +6,7 @@ import org.dromara.system.domain.SysRoleMenu;
 /**
  * 角色与菜单关联表 数据层
  *
- * @author Lion Li
+ * @author shuai.zhou
  */
 public interface SysRoleMenuMapper extends BaseMapperPlus<SysRoleMenu, SysRoleMenu> {
 

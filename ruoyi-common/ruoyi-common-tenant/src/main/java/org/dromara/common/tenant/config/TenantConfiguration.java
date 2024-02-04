@@ -32,7 +32,7 @@ import java.util.List;
 /**
  * 租户配置类
  *
- * @author Lion Li
+ * @author shuai.zhou
  */
 @EnableConfigurationProperties(TenantProperties.class)
 @AutoConfiguration(after = {RedisConfiguration.class})

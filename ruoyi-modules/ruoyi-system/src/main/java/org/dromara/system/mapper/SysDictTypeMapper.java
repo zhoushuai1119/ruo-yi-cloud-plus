@@ -7,7 +7,7 @@ import org.dromara.system.domain.vo.SysDictTypeVo;
 /**
  * 字典表 数据层
  *
- * @author Lion Li
+ * @author shuai.zhou
  */
 public interface SysDictTypeMapper extends BaseMapperPlus<SysDictType, SysDictTypeVo> {
 

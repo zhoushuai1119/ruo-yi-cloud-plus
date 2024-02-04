@@ -3,7 +3,7 @@ package org.dromara.common.core.constant;
 /**
  * 租户常量信息
  *
- * @author Lion Li
+ * @author shuai.zhou
  */
 public interface TenantConstants {
 

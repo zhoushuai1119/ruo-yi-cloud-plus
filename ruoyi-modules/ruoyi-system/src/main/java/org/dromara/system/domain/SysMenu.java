@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * 菜单权限表 sys_menu
  *
- * @author Lion Li
+ * @author shuai.zhou
  */
 
 @Data

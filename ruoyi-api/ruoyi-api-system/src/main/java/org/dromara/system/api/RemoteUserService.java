@@ -9,7 +9,7 @@ import org.dromara.system.api.model.XcxLoginUser;
 /**
  * 用户服务
  *
- * @author Lion Li
+ * @author shuai.zhou
  */
 public interface RemoteUserService {
 

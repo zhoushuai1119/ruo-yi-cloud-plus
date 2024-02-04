@@ -43,7 +43,7 @@ import java.util.Objects;
 /**
  * 用户信息
  *
- * @author Lion Li
+ * @author shuai.zhou
  */
 @Validated
 @RequiredArgsConstructor

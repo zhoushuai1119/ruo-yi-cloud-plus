@@ -12,7 +12,7 @@ import jakarta.servlet.http.HttpServletRequest;
 /**
  * Mybatis异常处理器
  *
- * @author Lion Li
+ * @author shuai.zhou
  */
 @Slf4j
 @RestControllerAdvice

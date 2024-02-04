@@ -10,7 +10,7 @@ import org.dromara.common.tenant.core.TenantEntity;
 /**
  * 字典数据表 sys_dict_data
  *
- * @author Lion Li
+ * @author shuai.zhou
  */
 
 @Data

@@ -7,7 +7,7 @@ import org.dromara.system.domain.vo.SysConfigVo;
 /**
  * 参数配置 数据层
  *
- * @author Lion Li
+ * @author shuai.zhou
  */
 public interface SysConfigMapper extends BaseMapperPlus<SysConfig, SysConfigVo> {
 

@@ -20,7 +20,7 @@ import java.io.Serializable;
  * 默认管理员不过滤
  * 需自行根据业务重写实现
  *
- * @author Lion Li
+ * @author shuai.zhou
  * @version 3.6.0
  * @see org.dromara.common.sensitive.core.SensitiveService
  */

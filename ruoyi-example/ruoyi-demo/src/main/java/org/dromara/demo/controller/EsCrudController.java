@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * 搜索引擎 crud 演示案例
  *
- * @author Lion Li
+ * @author shuai.zhou
  */
 @ConditionalOnProperty(value = "easy-es.enable", havingValue = "true")
 @RequiredArgsConstructor

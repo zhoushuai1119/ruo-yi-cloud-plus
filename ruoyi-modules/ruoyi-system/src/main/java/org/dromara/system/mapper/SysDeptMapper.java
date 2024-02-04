@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * 部门管理 数据层
  *
- * @author Lion Li
+ * @author shuai.zhou
  */
 public interface SysDeptMapper extends BaseMapperPlus<SysDept, SysDeptVo> {
 

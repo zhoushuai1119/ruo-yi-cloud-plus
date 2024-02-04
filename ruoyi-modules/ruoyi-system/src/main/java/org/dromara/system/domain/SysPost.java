@@ -9,7 +9,7 @@ import lombok.EqualsAndHashCode;
 /**
  * 岗位表 sys_post
  *
- * @author Lion Li
+ * @author shuai.zhou
  */
 
 @Data

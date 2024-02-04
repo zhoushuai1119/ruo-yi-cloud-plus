@@ -16,7 +16,7 @@ import jakarta.validation.constraints.NotNull;
 /**
  * 测试国际化
  *
- * @author Lion Li
+ * @author shuai.zhou
  */
 @Validated
 @RestController

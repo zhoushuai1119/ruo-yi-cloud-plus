@@ -13,7 +13,7 @@ import org.dromara.demo.domain.TestDemo;
 /**
  * 测试单表业务对象 test_demo
  *
- * @author Lion Li
+ * @author shuai.zhou
  * @date 2021-07-26
  */
 

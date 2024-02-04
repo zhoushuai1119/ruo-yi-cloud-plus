@@ -9,7 +9,7 @@ import java.io.Serializable;
 /**
  * 当前在线会话
  *
- * @author Lion Li
+ * @author shuai.zhou
  */
 
 @Data

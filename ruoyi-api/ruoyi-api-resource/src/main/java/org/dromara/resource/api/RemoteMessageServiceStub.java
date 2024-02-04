@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * 消息服务
  *
- * @author Lion Li
+ * @author shuai.zhou
  */
 @Slf4j
 @RequiredArgsConstructor

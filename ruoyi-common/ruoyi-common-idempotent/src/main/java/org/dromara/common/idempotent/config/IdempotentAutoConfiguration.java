@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Bean;
 /**
  * 幂等功能配置
  *
- * @author Lion Li
+ * @author shuai.zhou
  */
 @AutoConfiguration(after = RedisConfiguration.class)
 public class IdempotentAutoConfiguration {

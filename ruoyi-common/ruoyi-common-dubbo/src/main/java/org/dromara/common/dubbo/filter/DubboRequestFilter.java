@@ -13,7 +13,7 @@ import org.dromara.common.json.utils.JsonUtils;
 /**
  * dubbo日志过滤器
  *
- * @author Lion Li
+ * @author shuai.zhou
  */
 @Slf4j
 @Activate(group = {CommonConstants.PROVIDER, CommonConstants.CONSUMER}, order = Integer.MAX_VALUE)

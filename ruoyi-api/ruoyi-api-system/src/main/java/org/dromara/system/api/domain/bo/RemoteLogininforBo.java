@@ -12,7 +12,7 @@ import java.util.Map;
 /**
  * 系统访问记录表 sys_logininfor
  *
- * @author Lion Li
+ * @author shuai.zhou
  */
 
 @Data

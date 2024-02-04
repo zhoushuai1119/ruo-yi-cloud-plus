@@ -7,7 +7,7 @@ import org.springframework.context.annotation.PropertySource;
 /**
  * seata 配置
  *
- * @author Lion Li
+ * @author shuai.zhou
  */
 @AutoConfiguration
 @PropertySource(value = "classpath:common-seata.yml", factory = YmlPropertySourceFactory.class)

@@ -48,7 +48,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * token 控制
  *
- * @author Lion Li
+ * @author shuai.zhou
  */
 @Slf4j
 @Validated

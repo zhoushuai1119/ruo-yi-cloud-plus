@@ -24,7 +24,7 @@ import java.time.Duration;
 /**
  * 邮件功能
  *
- * @author Lion Li
+ * @author shuai.zhou
  */
 @Slf4j
 @Validated

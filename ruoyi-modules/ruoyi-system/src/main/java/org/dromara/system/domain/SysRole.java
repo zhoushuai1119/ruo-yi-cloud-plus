@@ -11,7 +11,7 @@ import org.dromara.common.tenant.core.TenantEntity;
 /**
  * 角色表 sys_role
  *
- * @author Lion Li
+ * @author shuai.zhou
  */
 
 @Data

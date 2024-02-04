@@ -27,7 +27,7 @@ import java.util.Objects;
 /**
  * 系统访问记录
  *
- * @author Lion Li
+ * @author shuai.zhou
  */
 @Validated
 @RequiredArgsConstructor

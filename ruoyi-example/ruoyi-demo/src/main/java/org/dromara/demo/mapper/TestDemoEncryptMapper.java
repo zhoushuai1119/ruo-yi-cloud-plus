@@ -6,7 +6,7 @@ import org.dromara.demo.domain.TestDemoEncrypt;
 /**
  * 测试加密功能
  *
- * @author Lion Li
+ * @author shuai.zhou
  */
 public interface TestDemoEncryptMapper extends BaseMapperPlus<TestDemoEncrypt, TestDemoEncrypt> {
 

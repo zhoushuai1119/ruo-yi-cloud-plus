@@ -11,7 +11,7 @@ import static org.dromara.common.core.constant.UserConstants.*;
 /**
  * 密码登录对象
  *
- * @author Lion Li
+ * @author shuai.zhou
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

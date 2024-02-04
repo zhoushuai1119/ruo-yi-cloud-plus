@@ -3,7 +3,7 @@ package org.dromara.common.core.constant;
 /**
  * 全局的key常量 (业务无关的key)
  *
- * @author Lion Li
+ * @author shuai.zhou
  */
 public interface GlobalConstants {
 

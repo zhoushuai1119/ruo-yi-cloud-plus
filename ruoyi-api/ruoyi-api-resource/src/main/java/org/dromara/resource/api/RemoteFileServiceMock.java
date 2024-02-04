@@ -7,7 +7,7 @@ import org.dromara.resource.api.domain.RemoteFile;
 /**
  * 文件服务(降级处理)
  *
- * @author Lion Li
+ * @author shuai.zhou
  */
 @Slf4j
 public class RemoteFileServiceMock implements RemoteFileService {

@@ -14,7 +14,7 @@ import java.util.Date;
 /**
  * 测试单表视图对象 test_demo
  *
- * @author Lion Li
+ * @author shuai.zhou
  * @date 2021-07-26
  */
 @Data

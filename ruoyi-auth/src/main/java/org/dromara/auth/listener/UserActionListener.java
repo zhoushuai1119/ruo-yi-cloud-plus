@@ -34,7 +34,7 @@ import static org.dromara.common.core.constant.RocketMQConstants.LoginTopic.*;
 /**
  * 用户行为 侦听器的实现
  *
- * @author Lion Li
+ * @author shuai.zhou
  */
 @RequiredArgsConstructor
 @Component

@@ -33,7 +33,7 @@ import java.util.Set;
 /**
  * Swagger 文档配置
  *
- * @author Lion Li
+ * @author shuai.zhou
  */
 @RequiredArgsConstructor
 @AutoConfiguration(before = SpringDocConfiguration.class)

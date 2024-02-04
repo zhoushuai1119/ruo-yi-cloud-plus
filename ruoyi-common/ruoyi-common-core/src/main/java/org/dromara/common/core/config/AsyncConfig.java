@@ -19,7 +19,7 @@ import java.util.concurrent.*;
 /**
  * 异步配置
  *
- * @author Lion Li
+ * @author shuai.zhou
  */
 @Slf4j
 @EnableAsync(proxyTargetClass = true)

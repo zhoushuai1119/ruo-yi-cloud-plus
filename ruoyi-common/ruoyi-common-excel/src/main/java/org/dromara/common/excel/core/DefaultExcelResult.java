@@ -10,7 +10,7 @@ import java.util.List;
  * 默认excel返回对象
  *
  * @author Yjoioooo
- * @author Lion Li
+ * @author shuai.zhou
  */
 public class DefaultExcelResult<T> implements ExcelResult<T> {
 

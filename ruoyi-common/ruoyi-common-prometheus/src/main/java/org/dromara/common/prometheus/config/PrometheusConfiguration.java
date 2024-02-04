@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Bean;
 /**
  * prometheus 配置
  *
- * @author Lion Li
+ * @author shuai.zhou
  */
 @AutoConfiguration
 public class PrometheusConfiguration {

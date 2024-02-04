@@ -9,7 +9,7 @@ import org.dromara.common.tenant.core.TenantEntity;
 /**
  * OSS对象存储对象
  *
- * @author Lion Li
+ * @author shuai.zhou
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

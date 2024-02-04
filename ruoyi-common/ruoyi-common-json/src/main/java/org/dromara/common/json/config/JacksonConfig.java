@@ -26,7 +26,7 @@ import java.util.TimeZone;
 /**
  * jackson 配置
  *
- * @author Lion Li
+ * @author shuai.zhou
  */
 @Slf4j
 @AutoConfiguration(before = JacksonAutoConfiguration.class)

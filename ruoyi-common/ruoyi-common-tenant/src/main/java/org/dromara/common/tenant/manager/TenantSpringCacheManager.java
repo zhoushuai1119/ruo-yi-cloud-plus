@@ -10,7 +10,7 @@ import org.springframework.cache.Cache;
 /**
  * 重写 cacheName 处理方法 支持多租户
  *
- * @author Lion Li
+ * @author shuai.zhou
  */
 public class TenantSpringCacheManager extends PlusSpringCacheManager {
 

@@ -12,7 +12,7 @@ import java.util.Set;
 /**
  * 菜单 业务层
  *
- * @author Lion Li
+ * @author shuai.zhou
  */
 public interface ISysMenuService {
 

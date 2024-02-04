@@ -28,7 +28,7 @@ import java.util.List;
 /**
  * 数据权限拦截器
  *
- * @author Lion Li
+ * @author shuai.zhou
  * @version 3.5.0
  */
 @Slf4j

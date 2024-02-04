@@ -47,7 +47,7 @@ import java.util.function.Function;
 /**
  * 数据权限过滤
  *
- * @author Lion Li
+ * @author shuai.zhou
  * @version 3.5.0
  */
 @Slf4j

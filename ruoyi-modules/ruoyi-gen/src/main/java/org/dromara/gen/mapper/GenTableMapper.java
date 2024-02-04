@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * 业务 数据层
  *
- * @author Lion Li
+ * @author shuai.zhou
  */
 @InterceptorIgnore(dataPermission = "true", tenantLine = "true")
 public interface GenTableMapper extends BaseMapperPlus<GenTable, GenTable> {

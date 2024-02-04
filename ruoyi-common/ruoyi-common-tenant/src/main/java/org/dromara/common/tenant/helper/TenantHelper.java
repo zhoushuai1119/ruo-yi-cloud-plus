@@ -20,7 +20,7 @@ import java.util.function.Supplier;
 /**
  * 租户助手
  *
- * @author Lion Li
+ * @author shuai.zhou
  */
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PRIVATE)

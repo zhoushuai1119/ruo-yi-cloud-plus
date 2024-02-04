@@ -23,7 +23,7 @@ import java.util.List;
 /**
  * 系统用户自定义导入
  *
- * @author Lion Li
+ * @author shuai.zhou
  */
 @Slf4j
 public class SysUserImportListener extends AnalysisEventListener<SysUserImportVo> implements ExcelListener<SysUserImportVo> {

@@ -7,7 +7,7 @@ import java.util.Map;
 /**
  * 字典服务服务
  *
- * @author Lion Li
+ * @author shuai.zhou
  */
 public interface DictService {
 

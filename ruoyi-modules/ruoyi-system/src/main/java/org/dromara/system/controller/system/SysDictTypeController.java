@@ -24,7 +24,7 @@ import java.util.Objects;
 /**
  * 数据字典信息
  *
- * @author Lion Li
+ * @author shuai.zhou
  */
 @Validated
 @RequiredArgsConstructor

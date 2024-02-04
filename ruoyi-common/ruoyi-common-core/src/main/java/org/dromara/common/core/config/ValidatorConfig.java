@@ -12,7 +12,7 @@ import java.util.Properties;
 /**
  * 校验框架配置类
  *
- * @author Lion Li
+ * @author shuai.zhou
  */
 @AutoConfiguration
 public class ValidatorConfig {

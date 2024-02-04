@@ -3,7 +3,7 @@ package org.dromara.gen.constant;
 /**
  * 代码生成通用常量
  *
- * @author Lion Li
+ * @author shuai.zhou
  */
 public interface GenConstants {
     /**

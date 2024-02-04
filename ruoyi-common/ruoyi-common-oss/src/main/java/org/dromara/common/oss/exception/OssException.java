@@ -5,7 +5,7 @@ import java.io.Serial;
 /**
  * OSS异常类
  *
- * @author Lion Li
+ * @author shuai.zhou
  */
 public class OssException extends RuntimeException {
 

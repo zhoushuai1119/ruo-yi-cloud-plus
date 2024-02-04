@@ -8,7 +8,7 @@ import org.dromara.common.core.domain.model.LoginBody;
 /**
  * 三方登录对象
  *
- * @author Lion Li
+ * @author shuai.zhou
  */
 
 @Data

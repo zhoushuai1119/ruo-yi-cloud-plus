@@ -30,7 +30,7 @@ import java.lang.reflect.Method;
 /**
  * 限流处理
  *
- * @author Lion Li
+ * @author shuai.zhou
  */
 @Slf4j
 @Aspect

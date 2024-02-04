@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * 测试单表Service接口
  *
- * @author Lion Li
+ * @author shuai.zhou
  * @date 2021-07-26
  */
 public interface ITestDemoService {

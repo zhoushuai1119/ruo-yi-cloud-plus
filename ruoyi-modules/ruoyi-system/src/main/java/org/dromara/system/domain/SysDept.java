@@ -13,7 +13,7 @@ import java.io.Serial;
 /**
  * 部门表 sys_dept
  *
- * @author Lion Li
+ * @author shuai.zhou
  */
 
 @Data

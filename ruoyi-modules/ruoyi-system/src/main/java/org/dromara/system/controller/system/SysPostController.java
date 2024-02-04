@@ -25,7 +25,7 @@ import java.util.Objects;
 /**
  * 岗位信息操作处理
  *
- * @author Lion Li
+ * @author shuai.zhou
  */
 @Validated
 @RequiredArgsConstructor

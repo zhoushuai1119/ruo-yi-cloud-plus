@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 /**
  * easy-es 配置
  *
- * @author Lion Li
+ * @author shuai.zhou
  */
 @AutoConfiguration
 @ConditionalOnProperty(value = "easy-es.enable", havingValue = "true")

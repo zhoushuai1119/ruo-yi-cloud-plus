@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * 文件上传 服务层
  *
- * @author Lion Li
+ * @author shuai.zhou
  */
 public interface ISysOssService {
 

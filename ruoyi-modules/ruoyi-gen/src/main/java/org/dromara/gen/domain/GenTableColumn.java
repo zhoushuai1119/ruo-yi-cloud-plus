@@ -14,7 +14,7 @@ import org.dromara.common.mybatis.core.domain.BaseEntity;
 /**
  * 代码生成业务字段表 gen_table_column
  *
- * @author Lion Li
+ * @author shuai.zhou
  */
 
 @Data

@@ -10,7 +10,7 @@ import org.dromara.common.tenant.core.TenantEntity;
 /**
  * 通知公告表 sys_notice
  *
- * @author Lion Li
+ * @author shuai.zhou
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

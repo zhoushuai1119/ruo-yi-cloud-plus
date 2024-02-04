@@ -23,7 +23,7 @@ import java.util.Objects;
 /**
  * 参数配置 信息操作处理
  *
- * @author Lion Li
+ * @author shuai.zhou
  */
 @Validated
 @RequiredArgsConstructor

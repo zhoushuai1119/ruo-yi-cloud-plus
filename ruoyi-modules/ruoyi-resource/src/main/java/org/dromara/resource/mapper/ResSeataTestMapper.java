@@ -6,7 +6,7 @@ import org.dromara.resource.domain.ResSeataTest;
 /**
  * 资源Seata测试 数据层
  *
- * @author Lion Li
+ * @author shuai.zhou
  */
 public interface ResSeataTestMapper extends BaseMapperPlus<ResSeataTest, ResSeataTest> {
 

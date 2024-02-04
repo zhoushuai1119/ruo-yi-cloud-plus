@@ -9,7 +9,7 @@ import java.io.Serializable;
 /**
  * 角色
  *
- * @author Lion Li
+ * @author shuai.zhou
  */
 
 @Data

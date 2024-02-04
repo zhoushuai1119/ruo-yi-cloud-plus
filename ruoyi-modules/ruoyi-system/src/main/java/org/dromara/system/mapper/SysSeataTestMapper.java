@@ -6,7 +6,7 @@ import org.dromara.system.domain.SysSeataTest;
 /**
  * 系统Seata测试 数据层
  *
- * @author Lion Li
+ * @author shuai.zhou
  */
 public interface SysSeataTestMapper extends BaseMapperPlus<SysSeataTest, SysSeataTest> {
 

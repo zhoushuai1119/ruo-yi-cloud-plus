@@ -9,7 +9,7 @@ import org.dromara.common.core.domain.model.LoginBody;
 /**
  * 邮件登录对象
  *
- * @author Lion Li
+ * @author shuai.zhou
  */
 
 @Data

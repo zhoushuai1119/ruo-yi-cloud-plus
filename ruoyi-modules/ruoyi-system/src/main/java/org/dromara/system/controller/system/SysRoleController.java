@@ -31,7 +31,7 @@ import java.util.Objects;
 /**
  * 角色信息
  *
- * @author Lion Li
+ * @author shuai.zhou
  */
 @Validated
 @RequiredArgsConstructor

@@ -3,7 +3,7 @@ package org.dromara.system.api;
 /**
  * 数据权限服务
  *
- * @author Lion Li
+ * @author shuai.zhou
  */
 public interface RemoteDataScopeService {
 

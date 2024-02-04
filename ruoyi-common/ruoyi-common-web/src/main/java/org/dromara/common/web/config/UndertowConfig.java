@@ -9,7 +9,7 @@ import org.springframework.boot.web.server.WebServerFactoryCustomizer;
 /**
  * Undertow 自定义配置
  *
- * @author Lion Li
+ * @author shuai.zhou
  */
 @AutoConfiguration
 public class UndertowConfig implements WebServerFactoryCustomizer<UndertowServletWebServerFactory> {

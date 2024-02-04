@@ -9,7 +9,7 @@ import org.dromara.resource.domain.SysOss;
 /**
  * OSS对象存储分页查询对象 sys_oss
  *
- * @author Lion Li
+ * @author shuai.zhou
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

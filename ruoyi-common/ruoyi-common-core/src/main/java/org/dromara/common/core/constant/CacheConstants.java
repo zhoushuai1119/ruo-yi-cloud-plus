@@ -3,7 +3,7 @@ package org.dromara.common.core.constant;
 /**
  * 缓存的key 常量
  *
- * @author Lion Li
+ * @author shuai.zhou
  */
 public interface CacheConstants {
 

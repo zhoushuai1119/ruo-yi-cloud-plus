@@ -9,7 +9,7 @@ import org.dromara.common.tenant.core.TenantEntity;
 /**
  * 参数配置表 sys_config
  *
- * @author Lion Li
+ * @author shuai.zhou
  */
 
 @Data
