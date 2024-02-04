@@ -52,7 +52,6 @@ public class SysTenantServiceImpl implements ISysTenantService {
     private final SysDictTypeMapper dictTypeMapper;
     private final SysDictDataMapper dictDataMapper;
     private final SysConfigMapper configMapper;
-    private final SysDatasourceMapper datasourceMapper;
 
     /**
      * 查询租户

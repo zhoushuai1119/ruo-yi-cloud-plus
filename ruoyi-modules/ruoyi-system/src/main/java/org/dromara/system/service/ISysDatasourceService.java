@@ -6,12 +6,11 @@ import org.dromara.system.domain.bo.SysDatasourceBo;
 import org.dromara.system.domain.vo.SysDatasourceVo;
 
 import java.util.Collection;
-import java.util.List;
 
 /**
  * 多数据源配置Service接口
  *
- * @author LionLi
+ * @author shuai.zhou
  * @date 2023-11-13
  */
 public interface ISysDatasourceService {

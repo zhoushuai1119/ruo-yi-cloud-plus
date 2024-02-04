@@ -15,7 +15,7 @@ import java.io.Serial;
 /**
  * 多数据源配置业务对象 sys_datasource_config
  *
- * @author LionLi
+ * @author shuai.zhou
  * @date 2023-11-13
  */
 @Data

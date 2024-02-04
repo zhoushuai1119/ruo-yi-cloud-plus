@@ -37,7 +37,7 @@ import static org.dromara.common.core.constant.GlobalConstants.DEFAULT_TENANT_SO
 /**
  * 多数据源配置Service业务层处理
  *
- * @author LionLi
+ * @author shuai.zhou
  * @date 2023-11-13
  */
 @RequiredArgsConstructor

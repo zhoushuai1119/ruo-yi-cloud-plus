@@ -16,7 +16,7 @@ import java.io.Serializable;
 /**
  * 多数据源配置视图对象 sys_datasource_config
  *
- * @author LionLi
+ * @author shuai.zhou
  * @date 2023-11-13
  */
 @Data
