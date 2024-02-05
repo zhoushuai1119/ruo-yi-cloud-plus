@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 /**
  * 加密管理类
  *
- * @author 老马
+ * @author shuai.zhou
  * @version 4.6.0
  */
 @Slf4j

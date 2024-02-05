@@ -8,7 +8,7 @@ import org.dromara.common.encrypt.utils.EncryptUtils;
 /**
  * Base64算法实现
  *
- * @author 老马
+ * @author shuai.zhou
  * @version 4.6.0
  */
 public class Base64Encryptor extends AbstractEncryptor {

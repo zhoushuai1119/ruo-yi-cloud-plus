@@ -16,7 +16,7 @@ import java.util.Map;
 /**
  * 安全相关工具类
  *
- * @author 老马
+ * @author shuai.zhou
  */
 public class EncryptUtils {
     /**

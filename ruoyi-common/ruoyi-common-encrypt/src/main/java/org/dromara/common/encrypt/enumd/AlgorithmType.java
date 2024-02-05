@@ -7,7 +7,7 @@ import lombok.Getter;
 /**
  * 算法名称
  *
- * @author 老马
+ * @author shuai.zhou
  * @version 4.6.0
  */
 @Getter

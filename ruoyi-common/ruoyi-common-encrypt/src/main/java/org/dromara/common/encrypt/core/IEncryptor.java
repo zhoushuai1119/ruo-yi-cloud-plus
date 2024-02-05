@@ -6,7 +6,7 @@ import org.dromara.common.encrypt.enumd.EncodeType;
 /**
  * 加解者
  *
- * @author 老马
+ * @author shuai.zhou
  * @version 4.6.0
  */
 public interface IEncryptor {
