@@ -25,7 +25,7 @@ import java.util.Date;
 /**
  * 邮件发送客户端
  *
- * @author looly
+ * @author shuai.zhou
  * @since 3.2.0
  */
 public class Mail implements Builder<MimeMessage> {
@@ -145,24 +145,20 @@ public class Mail implements Builder<MimeMessage> {
      * 设置多个抄送人（carbon copy）
      *
      * @param ccs 抄送人列表
-     * @return this
      * @since 4.0.3
      */
-    public Mail setCcs(String... ccs) {
+    public void setCcs(String... ccs) {
         this.ccs = ccs;
-        return this;
     }
 
     /**
      * 设置多个密送人（blind carbon copy）
      *
      * @param bccs 密送人列表
-     * @return this
      * @since 4.0.3
      */
-    public Mail setBccs(String... bccs) {
+    public void setBccs(String... bccs) {
         this.bccs = bccs;
-        return this;
     }
 
     /**
@@ -181,11 +177,9 @@ public class Mail implements Builder<MimeMessage> {
      * 设置标题
      *
      * @param title 标题
-     * @return this
      */
-    public Mail setTitle(String title) {
+    public void setTitle(String title) {
         this.title = title;
-        return this;
     }
 
     /**
@@ -193,11 +187,9 @@ public class Mail implements Builder<MimeMessage> {
      * 正文可以是普通文本也可以是HTML（默认普通文本），可以通过调用{@link #setHtml(boolean)} 设置是否为HTML
      *
      * @param content 正文
-     * @return this
      */
-    public Mail setContent(String content) {
+    public void setContent(String content) {
         this.content = content;
-        return this;
     }
 
     /**
@@ -227,18 +219,17 @@ public class Mail implements Builder<MimeMessage> {
      * 设置文件类型附件，文件可以是图片文件，此时自动设置cid（正文中引用图片），默认cid为文件名
      *
      * @param files 附件文件列表
-     * @return this
      */
-    public Mail setFiles(File... files) {
+    public void setFiles(File... files) {
         if (ArrayUtil.isEmpty(files)) {
-            return this;
+            return;
         }
 
         final DataSource[] attachments = new DataSource[files.length];
         for (int i = 0; i < files.length; i++) {
             attachments[i] = new FileDataSource(files[i]);
         }
-        return setAttachments(attachments);
+        setAttachments(attachments);
     }
 
     /**
@@ -281,11 +272,10 @@ public class Mail implements Builder<MimeMessage> {
      *
      * @param cid         图片与占位符，占位符格式为cid:${cid}
      * @param imageStream 图片文件
-     * @return this
      * @since 4.6.3
      */
-    public Mail addImage(String cid, InputStream imageStream) {
-        return addImage(cid, imageStream, null);
+    public void addImage(String cid, InputStream imageStream) {
+        addImage(cid, imageStream, null);
     }
 
     /**
