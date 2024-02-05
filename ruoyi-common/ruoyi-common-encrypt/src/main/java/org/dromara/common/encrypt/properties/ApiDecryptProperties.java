@@ -5,7 +5,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * api解密属性配置类
- * @author wdhcr
+ * @author shuai.zhou
  */
 @Data
 @ConfigurationProperties(prefix = "api-decrypt")
