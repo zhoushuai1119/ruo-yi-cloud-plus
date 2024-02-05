@@ -6,6 +6,7 @@ import org.dromara.common.encrypt.interceptor.MybatisDecryptInterceptor;
 import org.dromara.common.encrypt.interceptor.MybatisEncryptInterceptor;
 import org.dromara.common.encrypt.properties.EncryptorProperties;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -19,6 +20,7 @@ import org.springframework.context.annotation.Bean;
 @AutoConfiguration
 @EnableConfigurationProperties(EncryptorProperties.class)
 @ConditionalOnProperty(value = "mybatis-encryptor.enable", havingValue = "true")
+@ConditionalOnClass(name = {"org.dromara.common.mybatis.config.MybatisPlusConfiguration"})
 public class EncryptorAutoConfiguration {
 
     @Bean
