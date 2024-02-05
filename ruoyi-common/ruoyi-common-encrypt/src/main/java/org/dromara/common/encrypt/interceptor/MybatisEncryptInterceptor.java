@@ -3,7 +3,7 @@ package org.dromara.common.encrypt.interceptor;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.util.ObjectUtil;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.executor.parameter.ParameterHandler;
 import org.apache.ibatis.plugin.Interceptor;
@@ -34,7 +34,7 @@ import java.util.*;
     method = "setParameters",
     args = {PreparedStatement.class})
 })
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class MybatisEncryptInterceptor implements Interceptor {
 
     private final EncryptorManager encryptorManager;

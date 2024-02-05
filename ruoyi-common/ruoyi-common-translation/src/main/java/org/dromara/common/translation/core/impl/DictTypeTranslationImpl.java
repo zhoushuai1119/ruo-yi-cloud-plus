@@ -1,18 +1,18 @@
 package org.dromara.common.translation.core.impl;
 
+import lombok.RequiredArgsConstructor;
 import org.dromara.common.core.service.DictService;
 import org.dromara.common.core.utils.StringUtils;
 import org.dromara.common.translation.annotation.TranslationType;
 import org.dromara.common.translation.constant.TransConstant;
 import org.dromara.common.translation.core.TranslationInterface;
-import lombok.AllArgsConstructor;
 
 /**
  * 字典翻译实现
  *
  * @author shuai.zhou
  */
-@AllArgsConstructor
+@RequiredArgsConstructor
 @TranslationType(type = TransConstant.DICT_TYPE_TO_LABEL)
 public class DictTypeTranslationImpl implements TranslationInterface<String> {
 
