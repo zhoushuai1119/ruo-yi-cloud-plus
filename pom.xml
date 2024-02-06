@@ -67,8 +67,8 @@
         <cloud-async-tool>1.4.1</cloud-async-tool>
 
         <!-- OSS 配置 -->
-        <aws.sdk.version>2.23.0</aws.sdk.version>
-        <aws.crt.version>0.29.6</aws.crt.version>
+        <aws.sdk.version>2.23.17</aws.sdk.version>
+        <aws.crt.version>0.29.9</aws.crt.version>
         <okhttp.version>4.10.0</okhttp.version>
 
         <!-- SMS 配置 -->
@@ -343,17 +343,17 @@
                 <artifactId>s3</artifactId>
                 <version>${aws.sdk.version}</version>
             </dependency>
-            <!-- 使用AWS基于 CRT 的 S3 客户端 -->
-            <dependency>
-                <groupId>software.amazon.awssdk.crt</groupId>
-                <artifactId>aws-crt</artifactId>
-                <version>${aws.crt.version}</version>
-            </dependency>
             <!-- 基于 AWS CRT 的 S3 客户端的性能增强的 S3 传输管理器 -->
             <dependency>
                 <groupId>software.amazon.awssdk</groupId>
                 <artifactId>s3-transfer-manager</artifactId>
                 <version>${aws.sdk.version}</version>
+            </dependency>
+            <!-- 使用AWS基于 CRT 的 S3 客户端 -->
+            <dependency>
+                <groupId>software.amazon.awssdk.crt</groupId>
+                <artifactId>aws-crt</artifactId>
+                <version>${aws.crt.version}</version>
             </dependency>
 
             <!-- 短信sms4j -->

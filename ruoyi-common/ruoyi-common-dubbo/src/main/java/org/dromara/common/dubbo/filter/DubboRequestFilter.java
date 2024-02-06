@@ -44,7 +44,7 @@ public class DubboRequestFilter implements Filter {
         long elapsed = System.currentTimeMillis() - startTime;
         // 如果发生异常 则打印异常日志
         if (result.hasException() && invoker.getInterface().equals(GenericService.class)) {
-            log.error("DUBBO - 服务异常: {},Exception={}", baselog, result.getException());
+            log.error("DUBBO - 服务异常: {},Exception=", baselog, result.getException());
         } else {
             if (properties.getLogLevel() == RequestLogEnum.INFO) {
                 log.info("DUBBO - 服务响应: {},SpendTime=[{}ms]", baselog, elapsed);
