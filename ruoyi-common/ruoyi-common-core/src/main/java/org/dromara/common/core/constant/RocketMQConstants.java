@@ -1,7 +1,7 @@
 package org.dromara.common.core.constant;
 
 /**
- * @author: zhou shuai
+ * @author: shuai.zhou
  * @date: 2023/11/1 19:42
  * @version: v1
  */
