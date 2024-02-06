@@ -20,7 +20,7 @@ import org.springframework.context.annotation.Bean;
 @AutoConfiguration
 @EnableConfigurationProperties(EncryptorProperties.class)
 @ConditionalOnProperty(value = "mybatis-encryptor.enable", havingValue = "true")
-@ConditionalOnClass(name = {"org.dromara.common.mybatis.config.MybatisPlusConfiguration"})
+@ConditionalOnClass(name = {"com.baomidou.mybatisplus.autoconfigure.MybatisPlusAutoConfiguration"})
 public class EncryptorAutoConfiguration {
 
     @Bean
