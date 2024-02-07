@@ -13,6 +13,7 @@ server.servlet.session.cookie.name=ruoyi_sentinel_dashboard_cookie
 #logging settings
 logging.level.org.springframework.web=info
 logging.level.com.ctrip.framework.apollo=warn
+logging.level.com.ctrip.framework.apollo.internals.AbstractConfigRepository=error
 logging.config=classpath:logback-plus.xml
 
 #auth settings
