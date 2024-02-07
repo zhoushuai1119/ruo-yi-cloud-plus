@@ -15,26 +15,6 @@
  */
 package com.alibaba.csp.sentinel.dashboard.metric;
 
-import java.net.ConnectException;
-import java.net.SocketTimeoutException;
-import java.nio.charset.Charset;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.RejectedExecutionHandler;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.ThreadPoolExecutor.DiscardPolicy;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicLong;
-
 import com.alibaba.csp.sentinel.Constants;
 import com.alibaba.csp.sentinel.concurrent.NamedThreadFactory;
 import com.alibaba.csp.sentinel.config.SentinelConfig;
@@ -42,10 +22,10 @@ import com.alibaba.csp.sentinel.dashboard.datasource.entity.MetricEntity;
 import com.alibaba.csp.sentinel.dashboard.discovery.AppInfo;
 import com.alibaba.csp.sentinel.dashboard.discovery.AppManagement;
 import com.alibaba.csp.sentinel.dashboard.discovery.MachineInfo;
+import com.alibaba.csp.sentinel.dashboard.repository.metric.MetricsRepository;
 import com.alibaba.csp.sentinel.node.metric.MetricNode;
 import com.alibaba.csp.sentinel.util.StringUtil;
-
-import com.alibaba.csp.sentinel.dashboard.repository.metric.MetricsRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.concurrent.FutureCallback;
@@ -56,10 +36,16 @@ import org.apache.http.impl.nio.client.HttpAsyncClients;
 import org.apache.http.impl.nio.reactor.IOReactorConfig;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import javax.annotation.Resource;
+import java.net.ConnectException;
+import java.net.SocketTimeoutException;
+import java.nio.charset.Charset;
+import java.util.*;
+import java.util.concurrent.*;
+import java.util.concurrent.ThreadPoolExecutor.DiscardPolicy;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * Fetch metric of machines.
@@ -67,6 +53,7 @@ import org.springframework.stereotype.Component;
  * @author leyou
  */
 @Component
+@Slf4j
 public class MetricFetcher {
 
     public static final String NO_METRICS = "No metrics";
@@ -75,23 +62,22 @@ public class MetricFetcher {
     private static final long FETCH_INTERVAL_SECOND = 6;
     private static final Charset DEFAULT_CHARSET = Charset.forName(SentinelConfig.charset());
     private final static String METRIC_URL_PATH = "metric";
-    private static Logger logger = LoggerFactory.getLogger(MetricFetcher.class);
-    private final long intervalSecond = 1;
 
-    private Map<String, AtomicLong> appLastFetchTime = new ConcurrentHashMap<>();
+    private final Map<String, AtomicLong> appLastFetchTime = new ConcurrentHashMap<>();
 
-    @Autowired
+    @Resource(name = "inMysqlMetricsRepository")
     private MetricsRepository<MetricEntity> metricStore;
-    @Autowired
+
+    @Resource
     private AppManagement appManagement;
 
-    private CloseableHttpAsyncClient httpclient;
+    private final CloseableHttpAsyncClient httpclient;
 
     @SuppressWarnings("PMD.ThreadPoolCreationRule")
-    private ScheduledExecutorService fetchScheduleService = Executors.newScheduledThreadPool(1,
+    private final ScheduledExecutorService fetchScheduleService = Executors.newScheduledThreadPool(1,
         new NamedThreadFactory("sentinel-dashboard-metrics-fetch-task", true));
-    private ExecutorService fetchService;
-    private ExecutorService fetchWorker;
+    private final ExecutorService fetchService;
+    private final ExecutorService fetchWorker;
 
     public MetricFetcher() {
         int cores = Runtime.getRuntime().availableProcessors() * 2;
@@ -103,7 +89,7 @@ public class MetricFetcher {
             new NamedThreadFactory("sentinel-dashboard-metrics-fetchService", true), handler);
         fetchWorker = new ThreadPoolExecutor(cores, cores,
             keepAliveTime, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<>(queueSize),
-            new NamedThreadFactory("sentinel-dashboard-metrics-fetchWorker",true), handler);
+            new NamedThreadFactory("sentinel-dashboard-metrics-fetchWorker", true), handler);
         IOReactorConfig ioConfig = IOReactorConfig.custom()
             .setConnectTimeout(3000)
             .setSoTimeout(3000)
@@ -125,11 +111,12 @@ public class MetricFetcher {
     }
 
     private void start() {
+        long intervalSecond = 1;
         fetchScheduleService.scheduleAtFixedRate(() -> {
             try {
                 fetchAllApp();
             } catch (Exception e) {
-                logger.info("fetchAllApp error:", e);
+                log.info("fetchAllApp error:", e);
             }
         }, 10, intervalSecond, TimeUnit.SECONDS);
     }
@@ -159,7 +146,7 @@ public class MetricFetcher {
                 try {
                     doFetchAppMetric(app);
                 } catch (Exception e) {
-                    logger.error("fetchAppMetric error", e);
+                    log.error("fetchAppMetric error", e);
                 }
             });
         }
@@ -175,12 +162,12 @@ public class MetricFetcher {
         AppInfo appInfo = appManagement.getDetailApp(app);
         // auto remove for app
         if (appInfo.isDead()) {
-            logger.info("Dead app removed: {}", app);
+            log.info("Dead app removed: {}", app);
             appManagement.removeApp(app);
             return;
         }
         Set<MachineInfo> machines = appInfo.getMachines();
-        logger.debug("enter fetchOnce(" + app + "), machines.size()=" + machines.size()
+        log.debug("enter fetchOnce(" + app + "), machines.size()=" + machines.size()
             + ", time intervalMs [" + startTime + ", " + endTime + "]");
         if (machines.isEmpty()) {
             return;
@@ -199,7 +186,7 @@ public class MetricFetcher {
             if (machine.isDead()) {
                 latch.countDown();
                 appManagement.getDetailApp(app).removeMachine(machine.getIp(), machine.getPort());
-                logger.info("Dead machine removed: {}:{} of {}", machine.getIp(), machine.getPort(), app);
+                log.info("Dead machine removed: {}:{} of {}", machine.getIp(), machine.getPort(), app);
                 continue;
             }
             if (!machine.isHealthy()) {
@@ -218,7 +205,7 @@ public class MetricFetcher {
                         handleResponse(response, machine, metricMap);
                         success.incrementAndGet();
                     } catch (Exception e) {
-                        logger.error(msg + " metric " + url + " error:", e);
+                        log.error(msg + " metric " + url + " error:", e);
                     } finally {
                         latch.countDown();
                     }
@@ -230,11 +217,11 @@ public class MetricFetcher {
                     fail.incrementAndGet();
                     httpGet.abort();
                     if (ex instanceof SocketTimeoutException) {
-                        logger.error("Failed to fetch metric from <{}>: socket timeout", url);
+                        log.error("Failed to fetch metric from <{}>: socket timeout", url);
                     } else if (ex instanceof ConnectException) {
-                        logger.error("Failed to fetch metric from <{}> (ConnectionException: {})", url, ex.getMessage());
+                        log.error("Failed to fetch metric from <{}> (ConnectionException: {})", url, ex.getMessage());
                     } else {
-                        logger.error(msg + " metric " + url + " error", ex);
+                        log.error(msg + " metric " + url + " error", ex);
                     }
                 }
 
@@ -249,12 +236,8 @@ public class MetricFetcher {
         try {
             latch.await(maxWaitSeconds, TimeUnit.SECONDS);
         } catch (Exception e) {
-            logger.info(msg + " metric, wait http client error:", e);
+            log.info(msg + " metric, wait http client error:", e);
         }
-        //long cost = System.currentTimeMillis() - start;
-        //logger.info("finished " + msg + " metric for " + app + ", time intervalMs [" + startTime + ", " + endTime
-        //    + "], total machines=" + machines.size() + ", dead=" + dead + ", fetch success="
-        //    + success + ", fetch fail=" + fail + ", time cost=" + cost + " ms");
         writeMetric(metricMap);
     }
 
@@ -281,11 +264,11 @@ public class MetricFetcher {
                 try {
                     fetchOnce(app, finalLastFetchMs, finalEndTime, 5);
                 } catch (Exception e) {
-                    logger.info("fetchOnce(" + app + ") error", e);
+                    log.info("fetchOnce(" + app + ") error", e);
                 }
             });
         } catch (Exception e) {
-            logger.info("submit fetchOnce(" + app + ") fail, intervalMs [" + lastFetchMs + ", " + endTime + "]", e);
+            log.info("submit fetchOnce(" + app + ") fail, intervalMs [" + lastFetchMs + ", " + endTime + "]", e);
         }
     }
 
@@ -310,8 +293,6 @@ public class MetricFetcher {
             return;
         }
         String[] lines = body.split("\n");
-        //logger.info(machine.getApp() + ":" + machine.getIp() + ":" + machine.getPort() +
-        //    ", bodyStr.length()=" + body.length() + ", lines=" + lines.length);
         handleBody(lines, machine, metricMap);
     }
 
@@ -350,7 +331,7 @@ public class MetricFetcher {
                 metricEntity.addExceptionQps(node.getExceptionQps());
                 metricEntity.addCount(1);
             } catch (Exception e) {
-                logger.warn("handleBody line exception, machine: {}, line: {}", machine.toLogString(), line);
+                log.warn("handleBody line exception, machine: {}, line: {}", machine.toLogString(), line);
             }
         }
     }
@@ -364,9 +345,9 @@ public class MetricFetcher {
     }
 
     private static final Set<String> RES_EXCLUSION_SET = new HashSet<String>() {{
-       add(Constants.TOTAL_IN_RESOURCE_NAME);
-       add(Constants.SYSTEM_LOAD_RESOURCE_NAME);
-       add(Constants.CPU_USAGE_RESOURCE_NAME);
+        add(Constants.TOTAL_IN_RESOURCE_NAME);
+        add(Constants.SYSTEM_LOAD_RESOURCE_NAME);
+        add(Constants.CPU_USAGE_RESOURCE_NAME);
     }};
 
 }

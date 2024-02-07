@@ -18,8 +18,10 @@
     <!-- 公共属性 -->
     <properties>
         <resource.delimiter>@</resource.delimiter>
-        <spring-boot.version>2.5.12</spring-boot.version>
+        <spring-boot.version>2.7.15</spring-boot.version>
         <commons-lang.version>2.6</commons-lang.version>
+        <mysql.version>8.0.33</mysql.version>
+        <mybatis-plus.version>3.5.5</mybatis-plus.version>
     </properties>
 
     <!-- 公共属性 -->
@@ -98,6 +100,19 @@
             <version>4.4.6</version>
         </dependency>
         <!-- org.apache.httpcomponents end -->
+
+        <!--Mysql5.8-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql.version}</version>
+        </dependency>
+        <!--Mybatis-plus-->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <version>${mybatis-plus.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
