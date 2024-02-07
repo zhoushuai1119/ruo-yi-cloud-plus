@@ -20,6 +20,12 @@
     </description>
 
     <dependencies>
+        <!-- lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+
         <!-- skywalking 日志收集 -->
         <dependency>
             <groupId>org.apache.skywalking</groupId>
