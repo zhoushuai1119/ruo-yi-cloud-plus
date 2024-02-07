@@ -1,0 +1,61 @@
+server:
+  port: 9999
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+    session:
+      cookie:
+        name: ruoyi_sentinel_dashboard_cookie
+
+spring:
+  application:
+    name: ruoyi-sentinel-dashboard
+  profiles:
+    active: dev
+
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://139.196.208.53:3306/sentinel-dashboard?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&useSSL=false&testWhileIdle=false
+    username: root
+    password: Zs11195310
+
+apollo:
+  meta: http://139.196.208.53:8070
+  token: 7cc183388e7befca0c2a1cd3ab6983471517ad8ad112703a4e9ed0bbf8cce034
+  user: zhoushuai
+  clusterName: default
+  namespaceName: sentinel-rules
+  gateway:
+    namespaceName: gateway-rules
+
+app:
+  id: cloud-sentinel-dashboard
+
+auth:
+  filter:
+    exclude-urls: /,/auth/login,/auth/logout,/registry/machine,/version
+    exclude-url-suffixes: htm,html,js,css,map,ico,ttf,woff,png
+  username: sentinel
+  password: 123456
+
+logging:
+  config: classpath:logback-plus.xml
+  level:
+    org:
+      springframework:
+        web: INFO
+
+mybatis-plus:
+  mapperLocations: classpath*:mapper/**/*Mapper.xml
+  global-config:
+    dbConfig:
+      idType: auto
+
+sentinel:
+  dashboard:
+    version: 1.8.7
+
+

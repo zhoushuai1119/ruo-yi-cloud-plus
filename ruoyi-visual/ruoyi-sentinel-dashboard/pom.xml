@@ -116,7 +116,7 @@
     </dependencies>
 
     <build>
-        <finalName>sentinel-dashboard</finalName>
+        <finalName>${project.artifactId}</finalName>
         <pluginManagement>
             <plugins>
                 <plugin>
