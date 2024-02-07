@@ -15,13 +15,13 @@
  */
 package com.alibaba.csp.sentinel.dashboard.util;
 
-import java.util.Optional;
-
 import com.alibaba.csp.sentinel.util.StringUtil;
 import com.alibaba.csp.sentinel.util.function.Tuple2;
 
+import java.util.Optional;
+
 /**
- * @author Eric Zhao
+ * @author shuai.zhou
  */
 public final class MachineUtils {
 

@@ -18,7 +18,7 @@ package com.alibaba.csp.sentinel.dashboard.domain.cluster;
 import java.util.Set;
 
 /**
- * @author Eric Zhao
+ * @author shuai.zhou
  * @since 1.4.1
  */
 public class ClusterAppAssignResultVO {

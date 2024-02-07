@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * @program: sentinel-parent
  * @description: 热点规则
- * @author: 01398395
+ * @author shuai.zhou
  * @create: 2020-07-21 17:08
  **/
 @Component("systemRuleApolloPublisher")

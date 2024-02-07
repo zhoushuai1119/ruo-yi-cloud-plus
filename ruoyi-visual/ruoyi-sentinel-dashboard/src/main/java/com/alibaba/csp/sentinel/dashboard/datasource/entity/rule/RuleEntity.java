@@ -20,7 +20,7 @@ import java.util.Date;
 import com.alibaba.csp.sentinel.slots.block.Rule;
 
 /**
- * @author leyou
+ * @author shuai.zhou
  */
 public interface RuleEntity {
 
@@ -35,6 +35,6 @@ public interface RuleEntity {
     Integer getPort();
 
     Date getGmtCreate();
-    
+
     Rule toRule();
 }

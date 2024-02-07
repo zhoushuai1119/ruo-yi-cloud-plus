@@ -32,7 +32,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 /**
- * @author 01398395
+ * @author shuai.zhou
  * @since 1.5.0
  */
 @Component("gatewayFlowRuleApolloPublisher")

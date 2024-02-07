@@ -34,7 +34,7 @@ import com.alibaba.csp.sentinel.dashboard.domain.cluster.state.ClusterServerStat
 import com.alibaba.csp.sentinel.dashboard.domain.cluster.state.ClusterUniversalStatePairVO;
 
 /**
- * @author Eric Zhao
+ * @author shuai.zhou
  * @since 1.4.1
  */
 public final class ClusterEntityUtils {

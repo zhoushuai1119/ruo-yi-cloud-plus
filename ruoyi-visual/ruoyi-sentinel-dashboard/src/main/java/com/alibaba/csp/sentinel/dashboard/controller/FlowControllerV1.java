@@ -33,8 +33,7 @@ import java.util.List;
 /**
  * Flow rule controller.
  *
- * @author leyou
- * @author Eric Zhao
+ * @author shuai.zhou
  */
 @RestController
 @RequestMapping(value = "/v1/flow")

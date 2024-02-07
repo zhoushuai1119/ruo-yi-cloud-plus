@@ -21,7 +21,7 @@ import com.alibaba.csp.sentinel.dashboard.domain.cluster.config.ServerFlowConfig
 import com.alibaba.csp.sentinel.dashboard.domain.cluster.config.ServerTransportConfig;
 
 /**
- * @author Eric Zhao
+ * @author shuai.zhou
  * @since 1.4.0
  */
 public class ClusterServerModifyRequest implements ClusterModifyRequest {

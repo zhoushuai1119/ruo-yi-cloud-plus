@@ -22,7 +22,7 @@ import com.alibaba.csp.sentinel.dashboard.discovery.MachineInfo;
 /**
  * Interface to store and find rules.
  *
- * @author leyou
+ * @author shuai.zhou
  */
 public interface RuleRepository<T, ID> {
 

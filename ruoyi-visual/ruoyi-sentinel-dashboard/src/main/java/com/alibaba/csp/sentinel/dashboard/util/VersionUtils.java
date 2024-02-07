@@ -24,7 +24,7 @@ import com.alibaba.csp.sentinel.dashboard.datasource.entity.SentinelVersion;
 /**
  * Util class for parsing version.
  *
- * @author Eric Zhao
+ * @author shuai.zhou
  * @since 0.2.1
  */
 public final class VersionUtils {
@@ -43,7 +43,7 @@ public final class VersionUtils {
         try {
             String versionFull = verStr;
             SentinelVersion version = new SentinelVersion();
-            
+
             // postfix
             int index = versionFull.indexOf("-");
             if (index == 0) {
@@ -55,11 +55,11 @@ public final class VersionUtils {
             } else if (index > 0) {
                 version.setPostfix(versionFull.substring(index + 1));
             }
-            
+
             if (index >= 0) {
                 versionFull = versionFull.substring(0, index);
             }
-            
+
             // x.x.x
             int segment = 0;
             int[] ver = new int[3];
@@ -75,7 +75,7 @@ public final class VersionUtils {
                 versionFull = versionFull.substring(index + 1);
                 segment ++;
             }
-            
+
             if (ver[0] < 1) {
                 // Wrong format, return empty.
                 return Optional.empty();

@@ -17,7 +17,7 @@ package com.alibaba.csp.sentinel.dashboard.domain.cluster;
 
 
 /**
- * @author Eric Zhao
+ * @author shuai.zhou
  * @since 1.4.0
  */
 public class ConnectionDescriptorVO {

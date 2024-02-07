@@ -30,7 +30,7 @@ import javax.servlet.Filter;
  * <p>
  * The excluded urls and urlSuffixes could be configured in {@code application.properties.back} file.
  *
- * @author cdfive
+ * @author shuai.zhou
  * @author wxq
  * @since 1.6.0
  */

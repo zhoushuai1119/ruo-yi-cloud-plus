@@ -18,7 +18,7 @@ package com.alibaba.csp.sentinel.dashboard.domain.cluster.request;
 import com.alibaba.csp.sentinel.dashboard.domain.cluster.config.ClusterClientConfig;
 
 /**
- * @author Eric Zhao
+ * @author shuai.zhou
  * @since 1.4.0
  */
 public class ClusterClientModifyRequest implements ClusterModifyRequest {

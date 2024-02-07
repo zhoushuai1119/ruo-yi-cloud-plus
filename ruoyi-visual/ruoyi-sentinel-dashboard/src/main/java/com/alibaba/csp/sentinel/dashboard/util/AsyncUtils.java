@@ -25,7 +25,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * @author Eric Zhao
+ * @author shuai.zhou
  * @since 1.4.1
  */
 public final class AsyncUtils {

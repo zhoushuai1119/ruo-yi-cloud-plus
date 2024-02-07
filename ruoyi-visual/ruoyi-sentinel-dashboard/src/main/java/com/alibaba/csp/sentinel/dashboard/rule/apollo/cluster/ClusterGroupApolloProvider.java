@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * @program: sentinel-parent
  * @description: 集群流控
- * @author: 01398395
+ * @author shuai.zhou
  * @create: 2020-07-22 14:17
  **/
 @Component("clusterGroupApolloProvider")

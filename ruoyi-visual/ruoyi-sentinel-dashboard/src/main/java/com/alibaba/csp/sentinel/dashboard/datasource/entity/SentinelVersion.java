@@ -16,7 +16,7 @@
 package com.alibaba.csp.sentinel.dashboard.datasource.entity;
 
 /**
- * @author Eric Zhao
+ * @author shuai.zhou
  * @since 0.2.1
  */
 public class SentinelVersion {
@@ -24,22 +24,22 @@ public class SentinelVersion {
     private int minorVersion;
     private int fixVersion;
     private String postfix;
-    
+
     public SentinelVersion() {
         this(0, 0, 0);
     }
-    
+
     public SentinelVersion(int major, int minor, int fix) {
         this(major, minor, fix, null);
     }
-    
+
     public SentinelVersion(int major, int minor, int fix, String postfix) {
         this.majorVersion = major;
         this.minorVersion = minor;
         this.fixVersion = fix;
         this.postfix = postfix;
     }
-    
+
     /**
      * 000, 000, 000
      */

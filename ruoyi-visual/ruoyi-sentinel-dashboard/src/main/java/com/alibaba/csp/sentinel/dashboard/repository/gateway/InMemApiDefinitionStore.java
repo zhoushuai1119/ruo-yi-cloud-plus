@@ -24,7 +24,7 @@ import java.util.concurrent.atomic.AtomicLong;
 /**
  * Store {@link ApiDefinitionEntity} in memory.
  *
- * @author cdfive
+ * @author shuai.zhou
  * @since 1.7.0
  */
 @Component

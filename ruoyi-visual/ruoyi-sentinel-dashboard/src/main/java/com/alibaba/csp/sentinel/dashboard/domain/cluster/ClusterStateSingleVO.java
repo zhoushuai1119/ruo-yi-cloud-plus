@@ -16,7 +16,7 @@
 package com.alibaba.csp.sentinel.dashboard.domain.cluster;
 
 /**
- * @author Eric Zhao
+ * @author shuai.zhou
  * @since 1.4.1
  */
 public class ClusterStateSingleVO {

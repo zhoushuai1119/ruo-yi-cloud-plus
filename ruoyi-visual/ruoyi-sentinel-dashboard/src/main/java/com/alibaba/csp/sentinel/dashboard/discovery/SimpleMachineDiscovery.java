@@ -27,7 +27,7 @@ import com.alibaba.csp.sentinel.util.AssertUtil;
 import org.springframework.stereotype.Component;
 
 /**
- * @author leyou
+ * @author shuai.zhou
  */
 @Component
 public class SimpleMachineDiscovery implements MachineDiscovery {

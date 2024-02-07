@@ -30,7 +30,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * @author cdfive
+ * @author shuai.zhou
  * @since 1.6.0
  */
 @RestController

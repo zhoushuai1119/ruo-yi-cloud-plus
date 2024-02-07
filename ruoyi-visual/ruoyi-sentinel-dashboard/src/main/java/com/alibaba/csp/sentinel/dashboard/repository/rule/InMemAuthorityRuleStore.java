@@ -24,7 +24,7 @@ import org.springframework.stereotype.Component;
 /**
  * In-memory storage for authority rules.
  *
- * @author Eric Zhao
+ * @author shuai.zhou
  * @since 0.2.1
  */
 @Component

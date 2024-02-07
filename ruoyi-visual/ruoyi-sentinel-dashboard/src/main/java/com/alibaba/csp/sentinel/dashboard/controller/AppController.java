@@ -30,7 +30,7 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
- * @author Carpenter Lee
+ * @author shuai.zhou
  */
 @RestController
 @RequestMapping(value = "/app")

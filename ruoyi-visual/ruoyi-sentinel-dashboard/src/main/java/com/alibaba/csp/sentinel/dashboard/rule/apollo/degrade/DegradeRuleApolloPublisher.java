@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * @program: sentinel-parent
  * @description:
- * @author: 01398395
+ * @author shuai.zhou
  * @create: 2020-07-21 16:40
  **/
 @Component("degradeRuleApolloPublisher")

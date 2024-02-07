@@ -30,7 +30,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
- * @author Eric Zhao
+ * @author shuai.zhou
  */
 @Component("flowRuleDefaultProvider")
 public class FlowRuleApiProvider implements DynamicRuleProvider<List<FlowRuleEntity>> {

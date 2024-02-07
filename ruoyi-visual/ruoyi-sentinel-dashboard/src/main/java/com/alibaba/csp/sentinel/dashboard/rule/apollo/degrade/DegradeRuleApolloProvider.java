@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * @program: sentinel-parent
  * @description: 降级规则
- * @author: 01398395
+ * @author shuai.zhou
  * @create: 2020-07-21 16:36
  **/
 @Component("degradeRuleApolloProvider")

@@ -16,7 +16,7 @@
 package com.alibaba.csp.sentinel.dashboard.client;
 
 /**
- * @author Eric Zhao
+ * @author shuai.zhou
  */
 public class CommandFailedException extends RuntimeException {
 

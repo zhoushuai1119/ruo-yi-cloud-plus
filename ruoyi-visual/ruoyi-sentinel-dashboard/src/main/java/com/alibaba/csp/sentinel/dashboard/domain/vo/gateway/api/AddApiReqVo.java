@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * Value Object for add gateway api.
  *
- * @author cdfive
+ * @author shuai.zhou
  * @since 1.7.0
  */
 public class AddApiReqVo {

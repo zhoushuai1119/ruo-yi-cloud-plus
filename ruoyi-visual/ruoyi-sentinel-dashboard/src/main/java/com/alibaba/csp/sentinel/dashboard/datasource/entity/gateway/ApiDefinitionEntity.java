@@ -29,7 +29,7 @@ import java.util.Set;
 /**
  * Entity for {@link ApiDefinition}.
  *
- * @author cdfive
+ * @author shuai.zhou
  * @since 1.7.0
  */
 public class ApiDefinitionEntity implements RuleEntity {

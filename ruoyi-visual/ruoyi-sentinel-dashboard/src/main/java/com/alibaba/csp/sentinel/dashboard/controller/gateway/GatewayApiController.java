@@ -39,7 +39,7 @@ import static com.alibaba.csp.sentinel.adapter.gateway.common.SentinelGatewayCon
 /**
  * Gateway api Controller for manage gateway api definitions.
  *
- * @author cdfive
+ * @author shuai.zhou
  * @since 1.7.0
  */
 @RestController

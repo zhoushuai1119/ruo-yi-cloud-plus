@@ -33,7 +33,7 @@ import org.springframework.context.annotation.Configuration;
 import java.util.List;
 
 /**
- * @author 01398395
+ * @author shuai.zhou
  * @since 1.5.0
  */
 @Configuration

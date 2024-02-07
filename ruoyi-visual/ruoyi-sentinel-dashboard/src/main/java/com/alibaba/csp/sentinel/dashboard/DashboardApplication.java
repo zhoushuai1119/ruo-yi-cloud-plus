@@ -23,13 +23,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 /**
  * Sentinel dashboard application.
  *
- * @author Carpenter Lee
+ * @author shuai.zhou
  */
 @SpringBootApplication
 @MapperScan("com.alibaba.csp.sentinel.dashboard.mapper")
 public class DashboardApplication {
 
     public static void main(String[] args) {
+        // 修改sentinel日志生成目录
+        System.setProperty("csp.sentinel.log.dir", "/logs/ruoyi/ruoyi-visual/ruoyi-sentinel-dashboard/sentinel-record");
         triggerSentinelInit();
         SpringApplication.run(DashboardApplication.class, args);
     }

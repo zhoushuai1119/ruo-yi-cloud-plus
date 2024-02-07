@@ -26,7 +26,7 @@ import java.util.Objects;
 /**
  * Entity for {@link GatewayFlowRule}.
  *
- * @author cdfive
+ * @author shuai.zhou
  * @since 1.7.0
  */
 public class GatewayFlowRuleEntity implements RuleEntity {

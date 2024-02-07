@@ -23,7 +23,7 @@ import java.util.Map;
 import com.alibaba.csp.sentinel.command.vo.NodeVo;
 
 /**
- * @author leyou
+ * @author shuai.zhou
  */
 public class ResourceTreeNode {
     private String id;

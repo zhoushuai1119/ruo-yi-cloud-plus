@@ -22,7 +22,7 @@ import java.util.Objects;
 /**
  * Entity for {@link GatewayParamFlowItem}.
  *
- * @author cdfive
+ * @author shuai.zhou
  * @since 1.7.0
  */
 public class GatewayParamFlowItemEntity {

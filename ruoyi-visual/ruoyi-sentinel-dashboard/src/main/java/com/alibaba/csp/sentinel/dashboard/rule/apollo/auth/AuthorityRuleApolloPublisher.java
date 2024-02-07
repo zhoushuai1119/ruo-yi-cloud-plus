@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 /**
  * @program: sentinel-parent
  * @description: 授权规则
- * @author: 01398395
+ * @author shuai.zhou
  * @create: 2020-07-21 17:00
  **/
 @Component("authorityRuleApolloPublisher")

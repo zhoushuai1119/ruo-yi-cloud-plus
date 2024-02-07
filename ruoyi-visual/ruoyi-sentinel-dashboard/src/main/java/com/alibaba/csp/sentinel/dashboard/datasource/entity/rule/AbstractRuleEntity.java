@@ -21,7 +21,7 @@ import com.alibaba.csp.sentinel.slots.block.AbstractRule;
 import com.alibaba.csp.sentinel.slots.block.Rule;
 
 /**
- * @author Eric Zhao
+ * @author shuai.zhou
  * @since 0.2.1
  */
 public abstract class AbstractRuleEntity<T extends AbstractRule> implements RuleEntity {

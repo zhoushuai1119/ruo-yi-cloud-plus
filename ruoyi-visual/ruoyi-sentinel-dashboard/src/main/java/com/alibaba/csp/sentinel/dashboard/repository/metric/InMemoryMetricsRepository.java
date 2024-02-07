@@ -33,8 +33,7 @@ import java.util.stream.Collectors;
 /**
  * Caches metrics data in a period of time in memory.
  *
- * @author Carpenter Lee
- * @author Eric Zhao
+ * @author shuai.zhou
  */
 @Component
 public class InMemoryMetricsRepository implements MetricsRepository<MetricEntity> {

@@ -1,7 +1,7 @@
 /**
  * Parameter flow control service.
- * 
- * @author Eric Zhao
+ *
+ * @author shuai.zhou
  */
 angular.module('sentinelDashboardApp').service('ParamFlowService', ['$http', function ($http) {
   this.queryMachineRules = function(app, ip, port) {
