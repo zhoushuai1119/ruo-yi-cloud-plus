@@ -15,33 +15,20 @@
  */
 package com.alibaba.csp.sentinel.dashboard.controller.v2;
 
-import java.util.Date;
-import java.util.List;
-
 import com.alibaba.csp.sentinel.dashboard.auth.AuthAction;
-import com.alibaba.csp.sentinel.dashboard.auth.AuthService;
 import com.alibaba.csp.sentinel.dashboard.auth.AuthService.PrivilegeType;
-import com.alibaba.csp.sentinel.util.StringUtil;
-
 import com.alibaba.csp.sentinel.dashboard.datasource.entity.rule.FlowRuleEntity;
+import com.alibaba.csp.sentinel.dashboard.domain.Result;
 import com.alibaba.csp.sentinel.dashboard.repository.rule.InMemoryRuleRepositoryAdapter;
 import com.alibaba.csp.sentinel.dashboard.rule.DynamicRuleProvider;
 import com.alibaba.csp.sentinel.dashboard.rule.DynamicRulePublisher;
-import com.alibaba.csp.sentinel.dashboard.domain.Result;
+import com.alibaba.csp.sentinel.util.StringUtil;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import javax.annotation.Resource;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Flow rule controller (v2).
@@ -51,19 +38,15 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping(value = "/v2/flow")
+@Slf4j
 public class FlowControllerV2 {
 
-    private final Logger logger = LoggerFactory.getLogger(FlowControllerV2.class);
-
-    @Autowired
+    @Resource
     private InMemoryRuleRepositoryAdapter<FlowRuleEntity> repository;
-
-    @Autowired
-    @Qualifier("flowRuleDefaultProvider")
-    private DynamicRuleProvider<List<FlowRuleEntity>> ruleProvider;
-    @Autowired
-    @Qualifier("flowRuleDefaultPublisher")
-    private DynamicRulePublisher<List<FlowRuleEntity>> rulePublisher;
+    @Resource
+    private DynamicRuleProvider<List<FlowRuleEntity>> flowRuleApolloProvider;
+    @Resource
+    private DynamicRulePublisher<List<FlowRuleEntity>> flowRuleApolloPublisher;
 
     @GetMapping("/rules")
     @AuthAction(PrivilegeType.READ_RULE)
@@ -73,7 +56,7 @@ public class FlowControllerV2 {
             return Result.ofFail(-1, "app can't be null or empty");
         }
         try {
-            List<FlowRuleEntity> rules = ruleProvider.getRules(app);
+            List<FlowRuleEntity> rules = flowRuleApolloProvider.getRules(app);
             if (rules != null && !rules.isEmpty()) {
                 for (FlowRuleEntity entity : rules) {
                     entity.setApp(app);
@@ -85,7 +68,7 @@ public class FlowControllerV2 {
             rules = repository.saveAll(rules);
             return Result.ofSuccess(rules);
         } catch (Throwable throwable) {
-            logger.error("Error when querying flow rules", throwable);
+            log.error("Error when querying flow rules", throwable);
             return Result.ofThrowable(-1, throwable);
         }
     }
@@ -152,7 +135,7 @@ public class FlowControllerV2 {
             entity = repository.save(entity);
             publishRules(entity.getApp());
         } catch (Throwable throwable) {
-            logger.error("Failed to add flow rule", throwable);
+            log.error("Failed to add flow rule", throwable);
             return Result.ofThrowable(-1, throwable);
         }
         return Result.ofSuccess(entity);
@@ -193,7 +176,7 @@ public class FlowControllerV2 {
             }
             publishRules(oldEntity.getApp());
         } catch (Throwable throwable) {
-            logger.error("Failed to update flow rule", throwable);
+            log.error("Failed to update flow rule", throwable);
             return Result.ofThrowable(-1, throwable);
         }
         return Result.ofSuccess(entity);
@@ -221,6 +204,6 @@ public class FlowControllerV2 {
 
     private void publishRules(/*@NonNull*/ String app) throws Exception {
         List<FlowRuleEntity> rules = repository.findAllByApp(app);
-        rulePublisher.publish(app, rules);
+        flowRuleApolloPublisher.publish(app, rules);
     }
 }

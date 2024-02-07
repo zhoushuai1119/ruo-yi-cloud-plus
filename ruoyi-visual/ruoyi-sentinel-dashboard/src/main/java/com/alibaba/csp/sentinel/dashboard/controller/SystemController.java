@@ -15,41 +15,37 @@
  */
 package com.alibaba.csp.sentinel.dashboard.controller;
 
-import java.util.Date;
-import java.util.List;
-
 import com.alibaba.csp.sentinel.dashboard.auth.AuthAction;
 import com.alibaba.csp.sentinel.dashboard.auth.AuthService.PrivilegeType;
+import com.alibaba.csp.sentinel.dashboard.client.SentinelApiClient;
+import com.alibaba.csp.sentinel.dashboard.datasource.entity.rule.SystemRuleEntity;
 import com.alibaba.csp.sentinel.dashboard.discovery.AppManagement;
+import com.alibaba.csp.sentinel.dashboard.discovery.MachineInfo;
+import com.alibaba.csp.sentinel.dashboard.domain.Result;
 import com.alibaba.csp.sentinel.dashboard.repository.rule.RuleRepository;
 import com.alibaba.csp.sentinel.util.StringUtil;
-
-import com.alibaba.csp.sentinel.dashboard.datasource.entity.rule.SystemRuleEntity;
-import com.alibaba.csp.sentinel.dashboard.discovery.MachineInfo;
-import com.alibaba.csp.sentinel.dashboard.client.SentinelApiClient;
-import com.alibaba.csp.sentinel.dashboard.domain.Result;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.annotation.Resource;
+import java.util.Date;
+import java.util.List;
 
 /**
  * @author leyou(lihao)
  */
 @RestController
 @RequestMapping("/system")
+@Slf4j
 public class SystemController {
 
-    private final Logger logger = LoggerFactory.getLogger(SystemController.class);
-
-    @Autowired
+    @Resource
     private RuleRepository<SystemRuleEntity, Long> repository;
-    @Autowired
+    @Resource
     private SentinelApiClient sentinelApiClient;
-    @Autowired
+    @Resource
     private AppManagement appManagement;
 
     private <R> Result<R> checkBasicParams(String app, String ip, Integer port) {
@@ -84,7 +80,7 @@ public class SystemController {
             rules = repository.saveAll(rules);
             return Result.ofSuccess(rules);
         } catch (Throwable throwable) {
-            logger.error("Query machine system rules error", throwable);
+            log.error("Query machine system rules error", throwable);
             return Result.ofThrowable(-1, throwable);
         }
     }
@@ -156,11 +152,11 @@ public class SystemController {
         try {
             entity = repository.save(entity);
         } catch (Throwable throwable) {
-            logger.error("Add SystemRule error", throwable);
+            log.error("Add SystemRule error", throwable);
             return Result.ofThrowable(-1, throwable);
         }
         if (!publishRules(app, ip, port)) {
-            logger.warn("Publish system rules fail after rule add");
+            log.warn("Publish system rules fail after rule add");
         }
         return Result.ofSuccess(entity);
     }
@@ -168,7 +164,7 @@ public class SystemController {
     @GetMapping("/save.json")
     @AuthAction(PrivilegeType.WRITE_RULE)
     public Result<SystemRuleEntity> apiUpdateIfNotNull(Long id, String app, Double highestSystemLoad,
-            Double highestCpuUsage, Long avgRt, Long maxThread, Double qps) {
+                                                       Double highestCpuUsage, Long avgRt, Long maxThread, Double qps) {
         if (id == null) {
             return Result.ofFail(-1, "id can't be null");
         }
@@ -218,11 +214,11 @@ public class SystemController {
         try {
             entity = repository.save(entity);
         } catch (Throwable throwable) {
-            logger.error("save error:", throwable);
+            log.error("save error:", throwable);
             return Result.ofThrowable(-1, throwable);
         }
         if (!publishRules(entity.getApp(), entity.getIp(), entity.getPort())) {
-            logger.info("publish system rules fail after rule update");
+            log.info("publish system rules fail after rule update");
         }
         return Result.ofSuccess(entity);
     }
@@ -240,11 +236,11 @@ public class SystemController {
         try {
             repository.delete(id);
         } catch (Throwable throwable) {
-            logger.error("delete error:", throwable);
+            log.error("delete error:", throwable);
             return Result.ofThrowable(-1, throwable);
         }
         if (!publishRules(oldEntity.getApp(), oldEntity.getIp(), oldEntity.getPort())) {
-            logger.info("publish system rules fail after rule delete");
+            log.info("publish system rules fail after rule delete");
         }
         return Result.ofSuccess(id);
     }
