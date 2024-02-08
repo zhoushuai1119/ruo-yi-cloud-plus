@@ -1,38 +1,32 @@
 package com.cloud.sentinel.token.server.utils;
 
 /**
- * @program: sentinel-parent
- * @description:
- * @author: shuai.zhou
- * @create: 2020-07-21 10:20
- **/
-public final class ApolloConfigUtil {
+ * Apollo 工具类
+ *
+ * @author shuai.zhou
+ */
+public final class ApolloUtil {
 
     /**
      * sentinel限流规则配置namespace
      */
     private static final String SENTINEL_RULES_NAMESPACE = "sentinel-rules";
-
     /**
      * token server namespace
      */
     private static final String TOKEN_SERVER_NAMESPACE = "token-server";
-
     /**
      * token server rule key
      */
     private static final String TOKEN_SERVER_RULE_KEY = "token-server-cluster-map";
-
     /**
      * token server namespace set
      */
     private static final String TOKEN_SERVER_NAMESPACE_SET_KEY = "token-server-namespace-set";
-
     /**
      * 流控规则id
      */
     public static final String FLOW_DATA_ID_POSTFIX = "flow-rules";
-
     /**
      * 热点规则id
      */

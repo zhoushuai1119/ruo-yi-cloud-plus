@@ -79,6 +79,11 @@
             <artifactId>commons-collections4</artifactId>
             <version>${commons-collections4.version}</version>
         </dependency>
+        <!-- hutool -->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-extra</artifactId>
+        </dependency>
         <!--dingtalk-->
         <dependency>
             <groupId>io.github.zhoushuai1119</groupId>

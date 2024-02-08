@@ -1,4 +1,4 @@
-package com.cloud.sentinel.token.server.cluster;
+package com.cloud.sentinel.token.server.core;
 
 import com.alibaba.csp.sentinel.cluster.server.ClusterTokenServer;
 import com.alibaba.csp.sentinel.cluster.server.SentinelDefaultTokenServer;
@@ -7,10 +7,9 @@ import com.alibaba.csp.sentinel.util.HostNameUtil;
 import com.cloud.alarm.dinger.DingerSender;
 import com.cloud.alarm.dinger.core.entity.DingerRequest;
 import com.cloud.alarm.dinger.core.entity.enums.MessageSubType;
-import com.cloud.sentinel.token.server.apollo.ApolloClusterConfigManager;
 import jakarta.annotation.PostConstruct;
-import jakarta.annotation.Resource;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
@@ -30,15 +29,14 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author shuai.zhou
  */
-@Component
 @Slf4j
+@Component
+@RequiredArgsConstructor
 public class TokenServerBootstrap {
 
-    @Resource
-    private ApolloClusterConfigManager apolloClusterConfigManager;
+    private final ApolloClusterConfigManager apolloClusterConfigManager;
 
-    @Resource
-    private DingerSender dingerSender;
+    private final DingerSender dingerSender;
 
     @Value("${zookeeper.address}")
     private String zkAddress;
@@ -63,7 +61,6 @@ public class TokenServerBootstrap {
         log.info("[sentinel token server]启动成功，port: {}", tokenServerPort);
 
         //争抢token server master
-
         ZK_CLIENT = buildZkClient();
         TOKEN_SERVER_CLIENT = new TokenServerClient(ZK_CLIENT, LOCK_PATH);
 

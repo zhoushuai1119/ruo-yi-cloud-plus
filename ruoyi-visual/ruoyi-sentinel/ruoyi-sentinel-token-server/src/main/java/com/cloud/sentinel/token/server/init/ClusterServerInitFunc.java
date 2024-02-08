@@ -8,14 +8,14 @@ import com.alibaba.csp.sentinel.cluster.server.config.ServerFlowConfig;
 import com.alibaba.csp.sentinel.cluster.server.config.ServerTransportConfig;
 import com.alibaba.csp.sentinel.datasource.ReadableDataSource;
 import com.alibaba.csp.sentinel.datasource.apollo.ApolloDataSource;
-import com.cloud.sentinel.token.server.utils.ApolloConfigUtil;
-import com.cloud.sentinel.token.server.parser.ClusterServerFlowConfigParser;
-import com.cloud.sentinel.token.server.parser.TokenServerTransportConfigParser;
 import com.alibaba.csp.sentinel.init.InitFunc;
 import com.alibaba.csp.sentinel.slots.block.flow.FlowRule;
 import com.alibaba.csp.sentinel.slots.block.flow.param.ParamFlowRule;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
+import com.cloud.sentinel.token.server.parser.ClusterServerFlowConfigParser;
+import com.cloud.sentinel.token.server.parser.TokenServerTransportConfigParser;
+import com.cloud.sentinel.token.server.utils.ApolloUtil;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
@@ -43,9 +43,9 @@ public class ClusterServerInitFunc implements InitFunc {
     @Override
     public void init() {
 
-        String sentinelRulesNameSpace = ApolloConfigUtil.getSentinelRulesNamespace();
+        String sentinelRulesNameSpace = ApolloUtil.getSentinelRulesNamespace();
 
-        String tokenServerNameSpace = ApolloConfigUtil.getTokenServeNamespace();
+        String tokenServerNameSpace = ApolloUtil.getTokenServeNamespace();
 
         // 监听特定namespace下的集群限流规则
         initPropertySupplier(sentinelRulesNameSpace);
@@ -67,7 +67,7 @@ public class ClusterServerInitFunc implements InitFunc {
         // Register cluster flow rule property supplier which creates data source by namespace.
         ClusterFlowRuleManager.setPropertySupplier(appName -> {
             ReadableDataSource<String, List<FlowRule>> ds = new ApolloDataSource<>(sentinelRulesNameSpace,
-                    ApolloConfigUtil.getFlowDataId(appName), defaultRules, source -> JSON.parseObject(source,
+                    ApolloUtil.getFlowDataId(appName), defaultRules, source -> JSON.parseObject(source,
                     new TypeReference<List<FlowRule>>() {
                     }));
             return ds.getProperty();
@@ -76,7 +76,7 @@ public class ClusterServerInitFunc implements InitFunc {
         // Register cluster parameter flow rule property supplier.
         ClusterParamFlowRuleManager.setPropertySupplier(appName -> {
             ReadableDataSource<String, List<ParamFlowRule>> ds = new ApolloDataSource<>(sentinelRulesNameSpace,
-                    ApolloConfigUtil.getParamFlowDataId(appName), defaultRules, source -> JSON.parseObject(source,
+                    ApolloUtil.getParamFlowDataId(appName), defaultRules, source -> JSON.parseObject(source,
                     new TypeReference<List<ParamFlowRule>>() {
                     }));
             return ds.getProperty();
@@ -91,7 +91,7 @@ public class ClusterServerInitFunc implements InitFunc {
      */
     private void initTokenServerNameSpaces(String tokenServerNameSpace) {
         ReadableDataSource<String, Set<String>> namespaceDs = new ApolloDataSource<>(tokenServerNameSpace,
-                ApolloConfigUtil.getTokenServerNamespaceSetKey(), defaultRules, source -> JSON.parseObject(source,
+                ApolloUtil.getTokenServerNamespaceSetKey(), defaultRules, source -> JSON.parseObject(source,
                 new TypeReference<Set<String>>() {
                 }));
         log.info("namespaceDs : {}", namespaceDs.getProperty());
@@ -106,7 +106,7 @@ public class ClusterServerInitFunc implements InitFunc {
      */
     private void initServerTransportConfig(String tokenServerNameSpace) {
         ReadableDataSource<String, ServerTransportConfig> serverTransportDs = new ApolloDataSource<>(tokenServerNameSpace,
-                ApolloConfigUtil.getTokenServerRuleKey(), defaultRules,
+                ApolloUtil.getTokenServerRuleKey(), defaultRules,
                 new TokenServerTransportConfigParser());
         ClusterServerConfigManager.registerServerTransportProperty(serverTransportDs.getProperty());
     }
@@ -121,7 +121,7 @@ public class ClusterServerInitFunc implements InitFunc {
     private void initServerFlowConfig(String tokenServerNameSpace) {
         ClusterServerFlowConfigParser serverFlowConfigParser = new ClusterServerFlowConfigParser();
         ReadableDataSource<String, ServerFlowConfig> serverFlowConfigDs = new ApolloDataSource<>(tokenServerNameSpace,
-                ApolloConfigUtil.getTokenServerRuleKey(), defaultRules, s -> {
+                ApolloUtil.getTokenServerRuleKey(), defaultRules, s -> {
             ServerFlowConfig config = serverFlowConfigParser.convert(s);
             if (config != null) {
                 ClusterServerConfigManager.loadGlobalFlowConfig(config);

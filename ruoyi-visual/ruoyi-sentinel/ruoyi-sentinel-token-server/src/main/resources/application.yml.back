@@ -25,15 +25,13 @@ management:
       exposure:
         include: "*"
 
-app:
-  id: ${spring.application.name}
-
 apollo:
+  appId: ${spring.application.name}
   meta: http://139.196.208.53:8070
   token: 97fcc270e670946ca85f879575da2999a39497dbe3e80d18ce0391f649a66cda
   user: zhoushuai
   clusterName: default
-  namespaceName: token-server
+  namespace: token-server
 
 zookeeper:
   address: 139.196.208.53:2181
