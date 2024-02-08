@@ -29,11 +29,11 @@ public class GatewayInitFunc implements InitFunc {
     /**
      * sentinel 网关规则配置namespace
      */
-    private String sentinelGatewayRulesNameSpace = ApolloConfigUtil.getSentinelGatewayRulesNamespace();
+    private final String sentinelGatewayRulesNameSpace = ApolloConfigUtil.getSentinelGatewayRulesNamespace();
     /**
      * defaultRules
      */
-    private String defaultRules = "[]";
+    private final String defaultRules = "[]";
 
     @Override
     public void init() {
@@ -56,9 +56,9 @@ public class GatewayInitFunc implements InitFunc {
      */
     private void registerGatewayFlowRuleProperty(String appName) {
         ReadableDataSource<String, Set<GatewayFlowRule>> gatewayFlowRuleDataSource = new ApolloDataSource<>(sentinelGatewayRulesNameSpace,
-                ApolloConfigUtil.getGatewayFlowDataId(appName), defaultRules, source -> JSON.parseObject(source,
-                new TypeReference<Set<GatewayFlowRule>>() {
-                }));
+            ApolloConfigUtil.getGatewayFlowDataId(appName), defaultRules, source -> JSON.parseObject(source,
+            new TypeReference<Set<GatewayFlowRule>>() {
+            }));
         GatewayRuleManager.register2Property(gatewayFlowRuleDataSource.getProperty());
     }
 
@@ -70,7 +70,7 @@ public class GatewayInitFunc implements InitFunc {
      */
     private void registerGatewayApiProperty(String appName) {
         ReadableDataSource<String, Set<ApiDefinition>> apiDefinitionDataSource = new ApolloDataSource<>(sentinelGatewayRulesNameSpace,
-                ApolloConfigUtil.getGatewayApiGroupDataId(appName), defaultRules, new GatewayApiParser());
+            ApolloConfigUtil.getGatewayApiGroupDataId(appName), defaultRules, new GatewayApiParser());
         GatewayApiDefinitionManager.register2Property(apiDefinitionDataSource.getProperty());
     }
 
@@ -81,9 +81,9 @@ public class GatewayInitFunc implements InitFunc {
      */
     private void registerDegradeRuleProperty(String appName) {
         ReadableDataSource<String, List<DegradeRule>> degradeRuleDataSource = new ApolloDataSource<>(sentinelGatewayRulesNameSpace,
-                ApolloConfigUtil.getDegradeDataId(appName), defaultRules, source -> JSON.parseObject(source,
-                new TypeReference<List<DegradeRule>>() {
-                }));
+            ApolloConfigUtil.getDegradeDataId(appName), defaultRules, source -> JSON.parseObject(source,
+            new TypeReference<List<DegradeRule>>() {
+            }));
         DegradeRuleManager.register2Property(degradeRuleDataSource.getProperty());
     }
 
@@ -94,9 +94,9 @@ public class GatewayInitFunc implements InitFunc {
      */
     private void registerSystemRuleProperty(String appName) {
         ReadableDataSource<String, List<SystemRule>> systemRuleDataSource = new ApolloDataSource<>(sentinelGatewayRulesNameSpace,
-                ApolloConfigUtil.getSystemDataId(appName), defaultRules, source -> JSON.parseObject(source,
-                new TypeReference<List<SystemRule>>() {
-                }));
+            ApolloConfigUtil.getSystemDataId(appName), defaultRules, source -> JSON.parseObject(source,
+            new TypeReference<List<SystemRule>>() {
+            }));
         SystemRuleManager.register2Property(systemRuleDataSource.getProperty());
     }
 

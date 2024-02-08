@@ -15,9 +15,8 @@ import org.springframework.stereotype.Component;
 
 /**
  * @description: Sentinel自定义规则异常返回
- * @author: 周帅
+ * @author: shuai.zhou
  * @date: 2021/2/1 15:56
- * @version: V1.0
  */
 @Component
 public class SentinelBlockHandler implements BlockExceptionHandler {

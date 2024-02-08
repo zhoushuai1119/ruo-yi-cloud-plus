@@ -1,9 +1,8 @@
 package com.alibaba.cloud.sentinel.custom.core;
 
-import com.alibaba.cloud.sentinel.custom.utils.ApolloConfigUtil;
+import com.alibaba.cloud.sentinel.custom.utils.ApolloUtil;
 import com.alibaba.csp.sentinel.cluster.ClusterStateManager;
 import com.alibaba.csp.sentinel.cluster.client.config.ClusterClientAssignConfig;
-import com.alibaba.csp.sentinel.cluster.client.config.ClusterClientConfig;
 import com.alibaba.csp.sentinel.cluster.client.config.ClusterClientConfigManager;
 import com.alibaba.csp.sentinel.datasource.ReadableDataSource;
 import com.alibaba.csp.sentinel.datasource.apollo.ApolloDataSource;
@@ -36,11 +35,11 @@ public class ClusterClientInitFunc implements InitFunc {
     /**
      * token server namespace
      */
-    private final String tokenServerNameSpace = ApolloConfigUtil.getTokenServerRulesNamespace();
+    private final String tokenServerNameSpace = ApolloUtil.getTokenServerRulesNamespace();
     /**
      * sentinel限流规则配置namespace
      */
-    private final String sentinelRulesNameSpace = ApolloConfigUtil.getSentinelRulesNamespace();
+    private final String sentinelRulesNameSpace = ApolloUtil.getSentinelRulesNamespace();
     /**
      * defaultRules
      */
@@ -63,7 +62,7 @@ public class ClusterClientInitFunc implements InitFunc {
         //流控规则
         registerFlowRuleProperty(appName);
         //降级规则
-        registerFlowRuleProperty(appName);
+        registerDegradeRuleProperty(appName);
         //热点参数规则
         registerParamFlowRuleProperty(appName);
         //授权规则
@@ -80,14 +79,12 @@ public class ClusterClientInitFunc implements InitFunc {
         while (TransportConfig.getRuntimePort() == -1) {
             try {
                 Thread.sleep(10);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            } catch (Exception ignored) {
+
             }
         }
         //为每个client设置目标token server
         initClientServerAssignProperty(tokenServerNameSpace);
-        //初始化token client通用超时配置
-        initClientConfigProperty(tokenServerNameSpace);
         //初始化客户端状态为client 或者 server
         initStateProperty();
     }
@@ -100,9 +97,9 @@ public class ClusterClientInitFunc implements InitFunc {
      */
     private void registerFlowRuleProperty(String appName) {
         ReadableDataSource<String, List<FlowRule>> flowRuleDataSource = new ApolloDataSource<>(sentinelRulesNameSpace,
-                ApolloConfigUtil.getFlowDataId(appName), defaultRules, source -> JSON.parseObject(source,
-                new TypeReference<List<FlowRule>>() {
-                }));
+            ApolloUtil.getFlowDataId(appName), defaultRules, source -> JSON.parseObject(source,
+            new TypeReference<List<FlowRule>>() {
+            }));
         FlowRuleManager.register2Property(flowRuleDataSource.getProperty());
     }
 
@@ -114,9 +111,9 @@ public class ClusterClientInitFunc implements InitFunc {
      */
     private void registerDegradeRuleProperty(String appName) {
         ReadableDataSource<String, List<DegradeRule>> degradeRuleDataSource = new ApolloDataSource<>(sentinelRulesNameSpace,
-                ApolloConfigUtil.getDegradeDataId(appName), defaultRules, source -> JSON.parseObject(source,
-                new TypeReference<List<DegradeRule>>() {
-                }));
+            ApolloUtil.getDegradeDataId(appName), defaultRules, source -> JSON.parseObject(source,
+            new TypeReference<List<DegradeRule>>() {
+            }));
         DegradeRuleManager.register2Property(degradeRuleDataSource.getProperty());
     }
 
@@ -127,9 +124,9 @@ public class ClusterClientInitFunc implements InitFunc {
      */
     private void registerParamFlowRuleProperty(String appName) {
         ReadableDataSource<String, List<ParamFlowRule>> paramFlowRuleDataSource = new ApolloDataSource<>(sentinelRulesNameSpace,
-                ApolloConfigUtil.getParamFlowDataId(appName), defaultRules, source -> JSON.parseObject(source,
-                new TypeReference<List<ParamFlowRule>>() {
-                }));
+            ApolloUtil.getParamFlowDataId(appName), defaultRules, source -> JSON.parseObject(source,
+            new TypeReference<List<ParamFlowRule>>() {
+            }));
         ParamFlowRuleManager.register2Property(paramFlowRuleDataSource.getProperty());
     }
 
@@ -141,9 +138,9 @@ public class ClusterClientInitFunc implements InitFunc {
      */
     private void registerAuthorityRuleProperty(String appName) {
         ReadableDataSource<String, List<AuthorityRule>> authorityRuleDataSource = new ApolloDataSource<>(sentinelRulesNameSpace,
-                ApolloConfigUtil.getAuthorityDataId(appName), defaultRules, source -> JSON.parseObject(source,
-                new TypeReference<List<AuthorityRule>>() {
-                }));
+            ApolloUtil.getAuthorityDataId(appName), defaultRules, source -> JSON.parseObject(source,
+            new TypeReference<List<AuthorityRule>>() {
+            }));
         AuthorityRuleManager.register2Property(authorityRuleDataSource.getProperty());
     }
 
@@ -154,31 +151,18 @@ public class ClusterClientInitFunc implements InitFunc {
      */
     private void registerSystemRuleProperty(String appName) {
         ReadableDataSource<String, List<SystemRule>> systemRuleDataSource = new ApolloDataSource<>(sentinelRulesNameSpace,
-                ApolloConfigUtil.getSystemDataId(appName), defaultRules, source -> JSON.parseObject(source,
-                new TypeReference<List<SystemRule>>() {
-                }));
+            ApolloUtil.getSystemDataId(appName), defaultRules, source -> JSON.parseObject(source,
+            new TypeReference<List<SystemRule>>() {
+            }));
         SystemRuleManager.register2Property(systemRuleDataSource.getProperty());
     }
-
-
-    /**
-     * 客户端请求超时配置; 默认超时时间20ms
-     */
-    private void initClientConfigProperty(String tokenServerNameSpace) {
-        ReadableDataSource<String, ClusterClientConfig> clientConfigDs = new ApolloDataSource<>(tokenServerNameSpace,
-                ApolloConfigUtil.getClusterClientConfig(), defaultRules,
-                source -> JSON.parseObject(source, new TypeReference<ClusterClientConfig>() {
-                }));
-        ClusterClientConfigManager.registerClientConfigProperty(clientConfigDs.getProperty());
-    }
-
 
     /**
      * 设置 token client 需要链接的token server 的地址
      */
     public void initClientServerAssignProperty(String tokenServerNameSpace) {
         ReadableDataSource<String, ClusterClientAssignConfig> clientAssignDs = new ApolloDataSource<>(tokenServerNameSpace,
-                ApolloConfigUtil.getTokenServerRuleKey(), defaultRules, new ClusterAssignConfigParser());
+            ApolloUtil.getTokenServerRuleKey(), defaultRules, new ClusterAssignConfigParser());
         ClusterClientConfigManager.registerServerAssignProperty(clientAssignDs.getProperty());
     }
 

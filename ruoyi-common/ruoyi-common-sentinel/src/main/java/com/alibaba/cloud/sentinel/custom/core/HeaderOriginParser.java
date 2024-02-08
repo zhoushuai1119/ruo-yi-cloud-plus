@@ -8,9 +8,8 @@ import org.springframework.stereotype.Component;
 
 /**
  * @description: sentinel 授权规则
- * @author: zhou shuai
+ * @author: shuai.zhou
  * @date: 2022/10/21 13:41
- * @version: v1
  */
 @Component
 public class HeaderOriginParser implements RequestOriginParser {

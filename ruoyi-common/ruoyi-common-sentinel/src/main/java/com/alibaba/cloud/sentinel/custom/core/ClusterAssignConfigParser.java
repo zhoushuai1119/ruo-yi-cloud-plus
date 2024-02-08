@@ -1,9 +1,9 @@
 package com.alibaba.cloud.sentinel.custom.core;
 
+import cn.hutool.core.collection.CollectionUtil;
 import com.alibaba.cloud.sentinel.custom.entity.ClusterGroupEntity;
 import com.alibaba.csp.sentinel.cluster.client.config.ClusterClientAssignConfig;
 import com.alibaba.csp.sentinel.datasource.Converter;
-import com.alibaba.csp.sentinel.log.RecordLog;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import lombok.extern.slf4j.Slf4j;
@@ -21,11 +21,11 @@ public class ClusterAssignConfigParser implements Converter<String, ClusterClien
         if (source == null) {
             return null;
         }
-        RecordLog.info("[ClusterClientAssignConfigParser] Get data: " + source);
+        log.info("[ClusterClientAssignConfigParser] Get data: {}", source);
         //转换成对象List
         List<ClusterGroupEntity> groupList = JSON.parseObject(source, new TypeReference<List<ClusterGroupEntity>>() {
         });
-        if (groupList == null || groupList.isEmpty()) {
+        if (CollectionUtil.isEmpty(groupList)) {
             return null;
         }
         return extractClientAssignment(groupList);
