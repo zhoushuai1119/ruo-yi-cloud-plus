@@ -91,7 +91,9 @@ public class ClusterClientInitFunc implements InitFunc {
 
 
     /**
-     * 限流规则配置
+     * 限流规则配置:
+     * 当apollo配置发生变化时，会触发ApolloDataSource中的parser调整Property的，
+     * 并触发FlowRuleManager中FlowPropertyListener监听的configUpdate方法进行配置调整
      *
      * @param appName 应用名称
      */
@@ -100,6 +102,7 @@ public class ClusterClientInitFunc implements InitFunc {
             ApolloUtil.getFlowDataId(appName), defaultRules, source -> JSON.parseObject(source,
             new TypeReference<List<FlowRule>>() {
             }));
+        //获取apollo中的配置写入本地缓存配置中
         FlowRuleManager.register2Property(flowRuleDataSource.getProperty());
     }
 
