@@ -9,7 +9,7 @@
     </parent>
 
     <modules>
-        <module>ruoyi-sentinel-dashboard</module>
+        <module>ruoyi-sentinel</module>
     </modules>
 
     <artifactId>ruoyi-visual</artifactId>
