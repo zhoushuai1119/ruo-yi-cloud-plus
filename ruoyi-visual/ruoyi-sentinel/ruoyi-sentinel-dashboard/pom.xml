@@ -34,10 +34,10 @@
             <version>${cloud-apollo.version}</version>
         </dependency>
         <!-- apollo配置中心 -->
-        <!--<dependency>
+        <dependency>
             <groupId>com.ctrip.framework.apollo</groupId>
             <artifactId>apollo-client</artifactId>
-        </dependency>-->
+        </dependency>
 
         <!-- sentinel start -->
         <dependency>
