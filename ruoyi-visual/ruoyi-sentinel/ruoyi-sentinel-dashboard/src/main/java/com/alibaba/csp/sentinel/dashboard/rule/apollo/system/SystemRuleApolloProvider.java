@@ -1,52 +1,56 @@
 package com.alibaba.csp.sentinel.dashboard.rule.apollo.system;
 
+import cn.hutool.extra.spring.SpringUtil;
 import com.alibaba.csp.sentinel.dashboard.datasource.entity.rule.SystemRuleEntity;
 import com.alibaba.csp.sentinel.dashboard.rule.DynamicRuleProvider;
-import com.alibaba.csp.sentinel.dashboard.rule.apollo.ApolloConfigUtil;
+import com.alibaba.csp.sentinel.dashboard.util.ApolloUtil;
+import com.alibaba.csp.sentinel.dashboard.config.properties.ApolloProperties;
 import com.alibaba.csp.sentinel.datasource.Converter;
 import com.alibaba.csp.sentinel.util.StringUtil;
 import com.ctrip.framework.apollo.openapi.client.ApolloOpenApiClient;
 import com.ctrip.framework.apollo.openapi.dto.OpenItemDTO;
 import com.ctrip.framework.apollo.openapi.dto.OpenNamespaceDTO;
-import org.springframework.beans.factory.annotation.Value;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
- * @program: sentinel-parent
- * @description: 热点规则
+ * Apollo系统规则
+ *
  * @author shuai.zhou
- * @create: 2020-07-21 17:06
- **/
+ */
 @Component("systemRuleApolloProvider")
+@RequiredArgsConstructor
 public class SystemRuleApolloProvider implements DynamicRuleProvider<List<SystemRuleEntity>> {
-    @Resource
-    private ApolloOpenApiClient apolloOpenApiClient;
-    @Resource
-    private Converter<String, List<SystemRuleEntity>> converter;
 
-    @Value("${app.id}")
-    private String appId;
-    @Value("${spring.profiles.active}")
-    private String env;
-    @Value("${apollo.clusterName}")
-    private String clusterName;
-    @Value("${apollo.namespaceName}")
-    private String namespaceName;
-    @Value("${apollo.gateway.namespaceName}")
-    private String gatewayNamespaceName;
+    private final ApolloOpenApiClient apolloOpenApiClient;
 
+    private final Converter<String, List<SystemRuleEntity>> converter;
+
+    private final ApolloProperties apolloProperties;
+
+
+    /**
+     * 获取Apollo系统规则
+     *
+     * @author: zhou shuai
+     * @date: 2024/2/8 22:45
+     * @param: appName
+     * @return: java.util.List<com.alibaba.csp.sentinel.dashboard.datasource.entity.rule.SystemRuleEntity>
+     */
     @Override
     public List<SystemRuleEntity> getRules(String appName) {
-        String flowDataId = ApolloConfigUtil.getSystemDataId(appName);
+        String env = SpringUtil.getActiveProfile();
+        String flowDataId = ApolloUtil.getSystemDataId(appName);
         OpenNamespaceDTO openNamespaceDTO;
-        if (ApolloConfigUtil.isGatewayAppName(appName)) {
-            openNamespaceDTO = apolloOpenApiClient.getNamespace(appId, env, clusterName, gatewayNamespaceName);
+        // 将gateway规则单独放入gatewayNamespace
+        if (Objects.equals(appName, apolloProperties.getGatewayServerName())) {
+            openNamespaceDTO = apolloOpenApiClient.getNamespace(apolloProperties.getAppId(), env, apolloProperties.getClusterName(), apolloProperties.getGatewayNamespace());
         } else {
-            openNamespaceDTO = apolloOpenApiClient.getNamespace(appId, env, clusterName, namespaceName);
+            openNamespaceDTO = apolloOpenApiClient.getNamespace(apolloProperties.getAppId(), env, apolloProperties.getClusterName(), apolloProperties.getNamespace());
         }
         String rules = openNamespaceDTO
             .getItems()

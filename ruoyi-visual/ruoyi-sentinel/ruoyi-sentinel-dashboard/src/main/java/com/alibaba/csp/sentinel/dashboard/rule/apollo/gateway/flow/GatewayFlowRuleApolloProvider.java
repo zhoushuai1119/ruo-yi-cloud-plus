@@ -15,45 +15,51 @@
  */
 package com.alibaba.csp.sentinel.dashboard.rule.apollo.gateway.flow;
 
+import cn.hutool.extra.spring.SpringUtil;
 import com.alibaba.csp.sentinel.dashboard.datasource.entity.gateway.GatewayFlowRuleEntity;
 import com.alibaba.csp.sentinel.dashboard.rule.DynamicRuleProvider;
-import com.alibaba.csp.sentinel.dashboard.rule.apollo.ApolloConfigUtil;
+import com.alibaba.csp.sentinel.dashboard.util.ApolloUtil;
+import com.alibaba.csp.sentinel.dashboard.config.properties.ApolloProperties;
 import com.alibaba.csp.sentinel.datasource.Converter;
 import com.alibaba.csp.sentinel.util.StringUtil;
 import com.ctrip.framework.apollo.openapi.client.ApolloOpenApiClient;
 import com.ctrip.framework.apollo.openapi.dto.OpenItemDTO;
 import com.ctrip.framework.apollo.openapi.dto.OpenNamespaceDTO;
-import org.springframework.beans.factory.annotation.Value;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Apollo网关流控规则
+ *
  * @author shuai.zhou
- * @since 1.5.0
  */
 @Component("gatewayFlowRuleApolloProvider")
+@RequiredArgsConstructor
 public class GatewayFlowRuleApolloProvider implements DynamicRuleProvider<List<GatewayFlowRuleEntity>> {
 
-    @Resource
-    private ApolloOpenApiClient apolloOpenApiClient;
-    @Resource
-    private Converter<String, List<GatewayFlowRuleEntity>> converter;
-    @Value("${app.id}")
-    private String appId;
-    @Value("${spring.profiles.active}")
-    private String env;
-    @Value("${apollo.clusterName}")
-    private String clusterName;
-    @Value("${apollo.gateway.namespaceName}")
-    private String gatewayNamespaceName;
+    private final ApolloOpenApiClient apolloOpenApiClient;
 
+    private final Converter<String, List<GatewayFlowRuleEntity>> converter;
+
+    private final ApolloProperties apolloProperties;
+
+
+    /**
+     * 获取Apollo网关流控规则
+     *
+     * @author: zhou shuai
+     * @date: 2024/2/8 22:35
+     * @param: appName
+     * @return: java.util.List<com.alibaba.csp.sentinel.dashboard.datasource.entity.gateway.GatewayFlowRuleEntity>
+     */
     @Override
     public List<GatewayFlowRuleEntity> getRules(String appName) {
-        String flowDataId = ApolloConfigUtil.getGatewayFlowDataId(appName);
-        OpenNamespaceDTO openNamespaceDTO = apolloOpenApiClient.getNamespace(appId, env, clusterName, gatewayNamespaceName);
+        String env = SpringUtil.getActiveProfile();
+        String flowDataId = ApolloUtil.getGatewayFlowDataId(appName);
+        OpenNamespaceDTO openNamespaceDTO = apolloOpenApiClient.getNamespace(apolloProperties.getAppId(), env, apolloProperties.getClusterName(), apolloProperties.getGatewayNamespace());
         String rules = openNamespaceDTO
             .getItems()
             .stream()

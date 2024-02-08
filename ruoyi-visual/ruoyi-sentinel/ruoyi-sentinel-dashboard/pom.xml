@@ -34,10 +34,10 @@
             <version>${cloud-apollo.version}</version>
         </dependency>
         <!-- apollo配置中心 -->
-        <dependency>
+        <!--<dependency>
             <groupId>com.ctrip.framework.apollo</groupId>
             <artifactId>apollo-client</artifactId>
-        </dependency>
+        </dependency>-->
 
         <!-- sentinel start -->
         <dependency>
@@ -102,13 +102,18 @@
         </dependency>
         <!-- org.apache.httpcomponents end -->
 
-        <!--Mysql5.8-->
+        <!-- hutool -->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-extra</artifactId>
+        </dependency>
+        <!-- Mysql5.8 -->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>${mysql.version}</version>
         </dependency>
-        <!--Mybatis-plus-->
+        <!-- Mybatis-plus -->
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>

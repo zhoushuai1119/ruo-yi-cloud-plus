@@ -26,11 +26,11 @@ management:
         include: "*"
 
 app:
-  id: ruoyi-sentinel-dashboard
+  id: ${spring.application.name}
 
 apollo:
   meta: http://139.196.208.53:8070
-  token: 14ee62a2555a1a003528b8eaefb300fcdcea2401e9700ab74de9f1c8e6bdd7a8
+  token: 97fcc270e670946ca85f879575da2999a39497dbe3e80d18ce0391f649a66cda
   user: zhoushuai
   clusterName: default
   namespaceName: token-server

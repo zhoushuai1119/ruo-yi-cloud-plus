@@ -15,45 +15,48 @@
  */
 package com.alibaba.csp.sentinel.dashboard.rule.apollo.gateway.api;
 
+import cn.hutool.extra.spring.SpringUtil;
 import com.alibaba.csp.sentinel.dashboard.datasource.entity.gateway.ApiDefinitionEntity;
 import com.alibaba.csp.sentinel.dashboard.rule.DynamicRulePublisher;
-import com.alibaba.csp.sentinel.dashboard.rule.apollo.ApolloConfigUtil;
+import com.alibaba.csp.sentinel.dashboard.util.ApolloUtil;
+import com.alibaba.csp.sentinel.dashboard.config.properties.ApolloProperties;
 import com.alibaba.csp.sentinel.datasource.Converter;
 import com.alibaba.csp.sentinel.util.AssertUtil;
 import com.alibaba.fastjson.JSON;
 import com.ctrip.framework.apollo.openapi.client.ApolloOpenApiClient;
 import com.ctrip.framework.apollo.openapi.dto.NamespaceReleaseDTO;
 import com.ctrip.framework.apollo.openapi.dto.OpenItemDTO;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**
+ * Apollo网关API规则
+ *
  * @author shuai.zhou
- * @since 1.5.0
  */
-@Component("gatewayApiRuleApolloPublisher")
 @Slf4j
+@Component("gatewayApiRuleApolloPublisher")
+@RequiredArgsConstructor
 public class GatewayApiRuleApolloPublisher implements DynamicRulePublisher<List<ApiDefinitionEntity>> {
 
-    @Resource
-    private ApolloOpenApiClient apolloOpenApiClient;
-    @Resource
-    private Converter<List<ApiDefinitionEntity>, String> converter;
-    @Value("${app.id}")
-    private String appId;
-    @Value("${spring.profiles.active}")
-    private String env;
-    @Value("${apollo.user}")
-    private String user;
-    @Value("${apollo.clusterName}")
-    private String clusterName;
-    @Value("${apollo.gateway.namespaceName}")
-    private String gatewayNamespaceName;
+    private final ApolloOpenApiClient apolloOpenApiClient;
 
+    private final Converter<List<ApiDefinitionEntity>, String> converter;
+
+    private final ApolloProperties apolloProperties;
+
+
+    /**
+     * 推送网关API规则至Apollo
+     *
+     * @author: zhou shuai
+     * @date: 2024/2/8 22:00
+     * @param: app
+     * @param: rules
+     */
     @Override
     public void publish(String app, List<ApiDefinitionEntity> rules) {
         AssertUtil.notEmpty(app, "app name cannot be empty");
@@ -61,24 +64,24 @@ public class GatewayApiRuleApolloPublisher implements DynamicRulePublisher<List<
             return;
         }
         filterField(rules);
-        // Increase the configuration
-        String flowDataId = ApolloConfigUtil.getGatewayApiGroupDataId(app);
+        String env = SpringUtil.getActiveProfile();
+        // 创建配置
+        String flowDataId = ApolloUtil.getGatewayApiGroupDataId(app);
         OpenItemDTO openItemDTO = new OpenItemDTO();
         openItemDTO.setKey(flowDataId);
         openItemDTO.setValue(converter.convert(rules));
         openItemDTO.setComment(app + "网关API管理分组流控规则");
-        openItemDTO.setDataChangeCreatedBy(user);
-        apolloOpenApiClient.createOrUpdateItem(appId, env, clusterName, gatewayNamespaceName, openItemDTO);
+        openItemDTO.setDataChangeCreatedBy(apolloProperties.getUser());
+        apolloOpenApiClient.createOrUpdateItem(apolloProperties.getAppId(), env, apolloProperties.getClusterName(), apolloProperties.getGatewayNamespace(), openItemDTO);
 
         // 发布配置
         NamespaceReleaseDTO namespaceReleaseDTO = new NamespaceReleaseDTO();
         namespaceReleaseDTO.setEmergencyPublish(true);
-        namespaceReleaseDTO.setReleaseComment("Modify or add configurations");
-        namespaceReleaseDTO.setReleasedBy(user);
-        namespaceReleaseDTO.setReleaseTitle("Modify or add configurations");
-        apolloOpenApiClient.publishNamespace(appId, env, clusterName, gatewayNamespaceName, namespaceReleaseDTO);
-
-        log.info("set app : {} ApiDefinitionRule success rules: {}", app, JSON.toJSONString(rules));
+        namespaceReleaseDTO.setReleaseComment("publish GatewayApiRule config");
+        namespaceReleaseDTO.setReleasedBy(apolloProperties.getUser());
+        namespaceReleaseDTO.setReleaseTitle("publish GatewayApiRule config");
+        apolloOpenApiClient.publishNamespace(apolloProperties.getAppId(), env, apolloProperties.getClusterName(), apolloProperties.getGatewayNamespace(), namespaceReleaseDTO);
+        log.info("publish app:{} GatewayApiRule success rules: {}", app, JSON.toJSONString(rules));
     }
 
     /**

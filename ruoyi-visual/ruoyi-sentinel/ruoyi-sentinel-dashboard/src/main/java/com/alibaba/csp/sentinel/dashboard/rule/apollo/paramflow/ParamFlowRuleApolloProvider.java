@@ -1,58 +1,61 @@
 package com.alibaba.csp.sentinel.dashboard.rule.apollo.paramflow;
 
+import cn.hutool.extra.spring.SpringUtil;
 import com.alibaba.csp.sentinel.dashboard.datasource.entity.rule.ParamFlowRuleEntity;
 import com.alibaba.csp.sentinel.dashboard.datasource.entity.rule.correct.ParamFlowRuleCorrectEntity;
 import com.alibaba.csp.sentinel.dashboard.rule.DynamicRuleProvider;
-import com.alibaba.csp.sentinel.dashboard.rule.apollo.ApolloConfigUtil;
+import com.alibaba.csp.sentinel.dashboard.util.ApolloUtil;
+import com.alibaba.csp.sentinel.dashboard.config.properties.ApolloProperties;
 import com.alibaba.csp.sentinel.datasource.Converter;
 import com.alibaba.csp.sentinel.slots.block.flow.param.ParamFlowRule;
 import com.alibaba.csp.sentinel.util.StringUtil;
 import com.ctrip.framework.apollo.openapi.client.ApolloOpenApiClient;
 import com.ctrip.framework.apollo.openapi.dto.OpenItemDTO;
 import com.ctrip.framework.apollo.openapi.dto.OpenNamespaceDTO;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * @program: sentinel-parent
- * @description: 热点
+ * Apollo热点规则
+ *
  * @author shuai.zhou
- * @create: 2020-07-22 10:40
- **/
+ */
 @Component("paramFlowRuleApolloProvider")
+@RequiredArgsConstructor
 public class ParamFlowRuleApolloProvider implements DynamicRuleProvider<List<ParamFlowRuleEntity>> {
 
-    @Resource
-    private ApolloOpenApiClient apolloOpenApiClient;
-    @Resource
-    private Converter<String, List<ParamFlowRuleCorrectEntity>> converter;
-    @Value("${app.id}")
-    private String appId;
-    @Value("${spring.profiles.active}")
-    private String env;
-    @Value("${apollo.clusterName}")
-    private String clusterName;
-    @Value("${apollo.namespaceName}")
-    private String namespaceName;
+    private final ApolloOpenApiClient apolloOpenApiClient;
+
+    private final Converter<String, List<ParamFlowRuleCorrectEntity>> converter;
+
+    private final ApolloProperties apolloProperties;
 
 
+    /**
+     * 获取Apollo热点规则
+     *
+     * @author: zhou shuai
+     * @date: 2024/2/8 22:40
+     * @param: appName
+     * @return: java.util.List<com.alibaba.csp.sentinel.dashboard.datasource.entity.rule.ParamFlowRuleEntity>
+     */
     @Override
-    public List<ParamFlowRuleEntity> getRules(String appName){
-        String flowDataId = ApolloConfigUtil.getParamFlowDataId(appName);
-        OpenNamespaceDTO openNamespaceDTO = apolloOpenApiClient.getNamespace(appId, env, clusterName, namespaceName);
+    public List<ParamFlowRuleEntity> getRules(String appName) {
+        String env = SpringUtil.getActiveProfile();
+        String flowDataId = ApolloUtil.getParamFlowDataId(appName);
+        OpenNamespaceDTO openNamespaceDTO = apolloOpenApiClient.getNamespace(apolloProperties.getAppId(), env, apolloProperties.getClusterName(), apolloProperties.getNamespace());
         String rules = openNamespaceDTO
-                .getItems()
-                .stream()
-                .filter(p -> p.getKey().equals(flowDataId))
-                .map(OpenItemDTO::getValue)
-                .findFirst()
-                .orElse("");
+            .getItems()
+            .stream()
+            .filter(p -> p.getKey().equals(flowDataId))
+            .map(OpenItemDTO::getValue)
+            .findFirst()
+            .orElse("");
 
         if (StringUtil.isEmpty(rules)) {
             return new ArrayList<>();

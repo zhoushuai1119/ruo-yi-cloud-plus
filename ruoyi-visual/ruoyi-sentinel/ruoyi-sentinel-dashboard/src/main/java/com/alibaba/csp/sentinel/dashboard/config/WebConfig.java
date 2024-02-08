@@ -15,19 +15,12 @@
  */
 package com.alibaba.csp.sentinel.dashboard.config;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
-
 import com.alibaba.csp.sentinel.adapter.servlet.CommonFilter;
 import com.alibaba.csp.sentinel.adapter.servlet.callback.WebCallbackManager;
 import com.alibaba.csp.sentinel.dashboard.auth.AuthorizationInterceptor;
 import com.alibaba.csp.sentinel.dashboard.auth.LoginAuthenticationFilter;
 import com.alibaba.csp.sentinel.util.StringUtil;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -37,20 +30,23 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import javax.servlet.Filter;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author shuai.zhou
  */
 @Configuration
+@Slf4j
 public class WebConfig implements WebMvcConfigurer {
 
-    private final Logger logger = LoggerFactory.getLogger(WebConfig.class);
-
-    @Autowired
+    @Resource
     private LoginAuthenticationFilter loginAuthenticationFilter;
 
-    @Autowired
+    @Resource
     private AuthorizationInterceptor authorizationInterceptor;
 
     @Override
@@ -83,7 +79,7 @@ public class WebConfig implements WebMvcConfigurer {
         // In most scenarios that's enough, and it could reduce the memory footprint.
         registration.addInitParameter(CommonFilter.WEB_CONTEXT_UNIFY, "true");
 
-        logger.info("Sentinel servlet CommonFilter registered");
+        log.info("Sentinel servlet CommonFilter registered");
 
         return registration;
     }

@@ -13,8 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.alibaba.csp.sentinel.dashboard.rule.apollo;
+package com.alibaba.csp.sentinel.dashboard.config;
 
+import com.alibaba.csp.sentinel.dashboard.config.properties.ApolloProperties;
 import com.alibaba.csp.sentinel.dashboard.datasource.entity.gateway.ApiDefinitionEntity;
 import com.alibaba.csp.sentinel.dashboard.datasource.entity.gateway.GatewayFlowRuleEntity;
 import com.alibaba.csp.sentinel.dashboard.datasource.entity.rule.DegradeRuleEntity;
@@ -26,24 +27,20 @@ import com.alibaba.csp.sentinel.dashboard.domain.cluster.request.ClusterAppAssig
 import com.alibaba.csp.sentinel.datasource.Converter;
 import com.alibaba.fastjson.JSON;
 import com.ctrip.framework.apollo.openapi.client.ApolloOpenApiClient;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.List;
 
 /**
+ * Apollo 配置类
+ *
  * @author shuai.zhou
- * @since 1.5.0
  */
 @Configuration
+@EnableConfigurationProperties(ApolloProperties.class)
 public class ApolloConfig {
-
-    @Value("${apollo.meta}")
-    private String portalUrl;
-
-    @Value("${apollo.token}")
-    private String token;
 
     /**
      * 流控规则编码
@@ -203,10 +200,10 @@ public class ApolloConfig {
     }
 
     @Bean
-    public ApolloOpenApiClient apolloOpenApiClient() {
+    public ApolloOpenApiClient apolloOpenApiClient(ApolloProperties apolloProperties) {
         ApolloOpenApiClient client = ApolloOpenApiClient.newBuilder()
-            .withPortalUrl(portalUrl)
-            .withToken(token)
+            .withPortalUrl(apolloProperties.getMeta())
+            .withToken(apolloProperties.getToken())
             .build();
         return client;
     }

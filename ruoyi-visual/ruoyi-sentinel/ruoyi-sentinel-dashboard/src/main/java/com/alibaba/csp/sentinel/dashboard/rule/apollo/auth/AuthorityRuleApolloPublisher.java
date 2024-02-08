@@ -1,50 +1,49 @@
 package com.alibaba.csp.sentinel.dashboard.rule.apollo.auth;
 
+import cn.hutool.extra.spring.SpringUtil;
 import com.alibaba.csp.sentinel.dashboard.datasource.entity.rule.AuthorityRuleEntity;
 import com.alibaba.csp.sentinel.dashboard.datasource.entity.rule.correct.AuthorityRuleCorrectEntity;
 import com.alibaba.csp.sentinel.dashboard.rule.DynamicRulePublisher;
-import com.alibaba.csp.sentinel.dashboard.rule.apollo.ApolloConfigUtil;
+import com.alibaba.csp.sentinel.dashboard.util.ApolloUtil;
+import com.alibaba.csp.sentinel.dashboard.config.properties.ApolloProperties;
 import com.alibaba.csp.sentinel.datasource.Converter;
 import com.alibaba.csp.sentinel.util.AssertUtil;
 import com.alibaba.fastjson.JSON;
 import com.ctrip.framework.apollo.openapi.client.ApolloOpenApiClient;
 import com.ctrip.framework.apollo.openapi.dto.NamespaceReleaseDTO;
 import com.ctrip.framework.apollo.openapi.dto.OpenItemDTO;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * @program: sentinel-parent
- * @description: 授权规则
+ * Apollo授权规则
+ *
  * @author shuai.zhou
- * @create: 2020-07-21 17:00
- **/
-@Component("authorityRuleApolloPublisher")
+ */
 @Slf4j
+@Component("authorityRuleApolloPublisher")
+@RequiredArgsConstructor
 public class AuthorityRuleApolloPublisher implements DynamicRulePublisher<List<AuthorityRuleEntity>> {
 
-    @Resource
-    private ApolloOpenApiClient apolloOpenApiClient;
-    @Resource
-    private Converter<List<AuthorityRuleCorrectEntity>, String> converter;
-    @Value("${app.id}")
-    private String appId;
-    @Value("${spring.profiles.active}")
-    private String env;
-    @Value("${apollo.user}")
-    private String user;
-    @Value("${apollo.clusterName}")
-    private String clusterName;
-    @Value("${apollo.namespaceName}")
-    private String namespaceName;
+    private final ApolloOpenApiClient apolloOpenApiClient;
 
+    private final Converter<List<AuthorityRuleCorrectEntity>, String> converter;
 
+    private final ApolloProperties apolloProperties;
+
+    /**
+     * 推送授权规则至Apollo
+     *
+     * @author: zhou shuai
+     * @date: 2024/2/8 21:31
+     * @param: app
+     * @param: rules
+     */
     @Override
     public void publish(String app, List<AuthorityRuleEntity> rules) {
         AssertUtil.notEmpty(app, "app name cannot be empty");
@@ -60,24 +59,24 @@ public class AuthorityRuleApolloPublisher implements DynamicRulePublisher<List<A
             return entity;
         }).collect(Collectors.toList());
 
-        // Increase the configuration
-        String flowDataId = ApolloConfigUtil.getAuthorityDataId(app);
+        String env = SpringUtil.getActiveProfile();
+        // 创建配置
+        String flowDataId = ApolloUtil.getAuthorityDataId(app);
         OpenItemDTO openItemDTO = new OpenItemDTO();
         openItemDTO.setKey(flowDataId);
         openItemDTO.setValue(converter.convert(authorityRuleList));
         openItemDTO.setComment(app + "授权规则");
-        openItemDTO.setDataChangeCreatedBy(user);
-        apolloOpenApiClient.createOrUpdateItem(appId, env, clusterName, namespaceName, openItemDTO);
+        openItemDTO.setDataChangeCreatedBy(apolloProperties.getUser());
+        apolloOpenApiClient.createOrUpdateItem(apolloProperties.getAppId(), env, apolloProperties.getClusterName(), apolloProperties.getNamespace(), openItemDTO);
 
         // 发布配置
         NamespaceReleaseDTO namespaceReleaseDTO = new NamespaceReleaseDTO();
         namespaceReleaseDTO.setEmergencyPublish(true);
-        namespaceReleaseDTO.setReleaseComment("Modify or add configurations");
-        namespaceReleaseDTO.setReleasedBy(user);
-        namespaceReleaseDTO.setReleaseTitle("Modify or add configurations");
-        apolloOpenApiClient.publishNamespace(appId, env, clusterName, namespaceName, namespaceReleaseDTO);
-
-        log.info("set app : {} AuthorityRule success rules: {}", app, JSON.toJSONString(rules));
+        namespaceReleaseDTO.setReleaseComment("publish authorityRule config");
+        namespaceReleaseDTO.setReleasedBy(apolloProperties.getUser());
+        namespaceReleaseDTO.setReleaseTitle("publish authorityRule config");
+        apolloOpenApiClient.publishNamespace(apolloProperties.getAppId(), env, apolloProperties.getClusterName(), apolloProperties.getNamespace(), namespaceReleaseDTO);
+        log.info("publish app:{} AuthorityRule success rules: {}", app, JSON.toJSONString(rules));
     }
 
     /**

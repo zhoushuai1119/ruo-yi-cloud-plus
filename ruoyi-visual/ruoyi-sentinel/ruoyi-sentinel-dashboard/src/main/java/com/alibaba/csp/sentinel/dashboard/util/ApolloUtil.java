@@ -1,14 +1,11 @@
-package com.alibaba.csp.sentinel.dashboard.rule.apollo;
-
-import java.util.Objects;
+package com.alibaba.csp.sentinel.dashboard.util;
 
 /**
- * @program: sentinel-parent
- * @description:
+ * Apollo 工具类
+ *
  * @author shuai.zhou
- * @create: 2020-07-21 10:20
- **/
-public final class ApolloConfigUtil {
+ */
+public final class ApolloUtil {
 
     /**
      * 网关-api分组id
@@ -42,13 +39,9 @@ public final class ApolloConfigUtil {
      * 集群流控id
      */
     public static final String CLUSTER_GROUP_DATA_ID_POSTFIX = "cluster-group-rules";
-    /**
-     * 网关appName
-     */
-    public static final String GATEWAY_APP_NAME = "gateway-server";
 
 
-    private ApolloConfigUtil() {
+    private ApolloUtil() {
 
     }
 
@@ -82,10 +75,6 @@ public final class ApolloConfigUtil {
 
     public static String getAuthorityDataId(String appName) {
         return String.format("%s_%s", appName, AUTHORITY_DATA_ID_POSTFIX);
-    }
-
-    public static Boolean isGatewayAppName(String appName) {
-        return Objects.equals(appName, GATEWAY_APP_NAME);
     }
 
 }

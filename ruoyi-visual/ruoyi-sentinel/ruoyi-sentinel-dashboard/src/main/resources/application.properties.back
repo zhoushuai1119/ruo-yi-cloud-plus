@@ -13,7 +13,6 @@ server.servlet.session.cookie.name=ruoyi_sentinel_dashboard_cookie
 #logging settings
 logging.level.org.springframework.web=info
 logging.level.com.ctrip.framework.apollo=warn
-logging.level.com.ctrip.framework.apollo.internals.AbstractConfigRepository=error
 logging.config=classpath:logback-plus.xml
 
 #auth settings
@@ -30,13 +29,14 @@ sentinel.dashboard.version=1.8.7
 spring.profiles.active=dev
 
 # apollo config
-app.id=ruoyi-sentinel-dashboard
+apollo.appId=${spring.application.name}
 apollo.meta=http://139.196.208.53:8070
 apollo.token=14ee62a2555a1a003528b8eaefb300fcdcea2401e9700ab74de9f1c8e6bdd7a8
 apollo.user=zhoushuai
 apollo.clusterName=default
-apollo.namespaceName=sentinel-rules
-apollo.gateway.namespaceName=sentinel-gateway-rules
+apollo.namespace=sentinel-rules
+apollo.gatewayServerName=ruoyi-gateway
+apollo.gatewayNamespace=sentinel-gateway-rules
 
 # mysql
 spring.datasource.type= com.zaxxer.hikari.HikariDataSource

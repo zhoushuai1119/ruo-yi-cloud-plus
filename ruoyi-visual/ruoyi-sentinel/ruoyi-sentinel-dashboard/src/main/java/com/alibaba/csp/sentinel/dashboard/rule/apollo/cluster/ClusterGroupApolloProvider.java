@@ -1,46 +1,50 @@
 package com.alibaba.csp.sentinel.dashboard.rule.apollo.cluster;
 
+import cn.hutool.extra.spring.SpringUtil;
 import com.alibaba.csp.sentinel.dashboard.domain.cluster.request.ClusterAppAssignMap;
 import com.alibaba.csp.sentinel.dashboard.rule.DynamicRuleProvider;
-import com.alibaba.csp.sentinel.dashboard.rule.apollo.ApolloConfigUtil;
+import com.alibaba.csp.sentinel.dashboard.util.ApolloUtil;
+import com.alibaba.csp.sentinel.dashboard.config.properties.ApolloProperties;
 import com.alibaba.csp.sentinel.datasource.Converter;
 import com.alibaba.csp.sentinel.util.StringUtil;
 import com.ctrip.framework.apollo.openapi.client.ApolloOpenApiClient;
 import com.ctrip.framework.apollo.openapi.dto.OpenItemDTO;
 import com.ctrip.framework.apollo.openapi.dto.OpenNamespaceDTO;
-import org.springframework.beans.factory.annotation.Value;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @program: sentinel-parent
- * @description: 集群流控
+ * Apollo集群流控规则
+ *
  * @author shuai.zhou
- * @create: 2020-07-22 14:17
- **/
+ */
 @Component("clusterGroupApolloProvider")
+@RequiredArgsConstructor
 public class ClusterGroupApolloProvider implements DynamicRuleProvider<List<ClusterAppAssignMap>> {
 
-    @Resource
-    private ApolloOpenApiClient apolloOpenApiClient;
-    @Resource
-    private Converter<String, List<ClusterAppAssignMap>> converter;
-    @Value("${app.id}")
-    private String appId;
-    @Value("${spring.profiles.active}")
-    private String env;
-    @Value("${apollo.clusterName}")
-    private String clusterName;
-    @Value("${apollo.namespaceName}")
-    private String namespaceName;
+    private final ApolloOpenApiClient apolloOpenApiClient;
 
+    private final Converter<String, List<ClusterAppAssignMap>> converter;
+
+    private final ApolloProperties apolloProperties;
+
+
+    /**
+     * 获取Apollo集群流控规则
+     *
+     * @author: zhou shuai
+     * @date: 2024/2/8 21:57
+     * @param: appName
+     * @return: java.util.List<com.alibaba.csp.sentinel.dashboard.domain.cluster.request.ClusterAppAssignMap>
+     */
     @Override
     public List<ClusterAppAssignMap> getRules(String appName) {
-        String flowDataId = ApolloConfigUtil.getClusterGroupDataId(appName);
-        OpenNamespaceDTO openNamespaceDTO = apolloOpenApiClient.getNamespace(appId, env, clusterName, namespaceName);
+        String env = SpringUtil.getActiveProfile();
+        String flowDataId = ApolloUtil.getClusterGroupDataId(appName);
+        OpenNamespaceDTO openNamespaceDTO = apolloOpenApiClient.getNamespace(apolloProperties.getAppId(), env, apolloProperties.getClusterName(), apolloProperties.getNamespace());
         String rules = openNamespaceDTO
             .getItems()
             .stream()
