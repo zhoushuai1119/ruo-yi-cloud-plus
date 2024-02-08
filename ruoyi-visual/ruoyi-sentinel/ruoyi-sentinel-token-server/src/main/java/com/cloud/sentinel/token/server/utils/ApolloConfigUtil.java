@@ -3,7 +3,7 @@ package com.cloud.sentinel.token.server.utils;
 /**
  * @program: sentinel-parent
  * @description:
- * @author: 01398395
+ * @author: shuai.zhou
  * @create: 2020-07-21 10:20
  **/
 public final class ApolloConfigUtil {

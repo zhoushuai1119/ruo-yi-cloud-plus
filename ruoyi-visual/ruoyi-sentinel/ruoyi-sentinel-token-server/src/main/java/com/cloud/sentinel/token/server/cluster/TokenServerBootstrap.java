@@ -10,6 +10,7 @@ import com.cloud.alarm.dinger.core.entity.enums.MessageSubType;
 import com.cloud.sentinel.token.server.apollo.ApolloClusterConfigManager;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.Resource;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
@@ -27,7 +28,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @author zhoushuai
+ * @author shuai.zhou
  */
 @Component
 @Slf4j
@@ -49,7 +50,7 @@ public class TokenServerBootstrap {
     private static TokenServerClient TOKEN_SERVER_CLIENT;
 
     private final ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor(r ->
-            new Thread(r, "TokenServerCheckMasterThread"));
+        new Thread(r, "TokenServerCheckMasterThread"));
 
     @PostConstruct
     public void init() throws Exception {
@@ -81,7 +82,7 @@ public class TokenServerBootstrap {
                     }
                     apolloClusterConfigManager.changeMasterTokenServerAddress(currentIp, tokenServerPort);
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    log.error("changeMasterTokenServerAddress fail, error:" + e);
                 }
             }
         }, 1000 * 30, 1000 * 60, TimeUnit.MILLISECONDS);
@@ -95,21 +96,23 @@ public class TokenServerBootstrap {
 
     private CuratorFramework buildZkClient() {
         return CuratorFrameworkFactory.builder()
-                //服务器列表，格式host1:port1,host2:port2
-                .connectString(zkAddress)
-                //会话超时时间，单位毫秒
-                .sessionTimeoutMs(30000)
-                //连接创建超时时间，单位毫秒
-                .connectionTimeoutMs(30000)
-                //重试策略
-                .retryPolicy(new ExponentialBackoffRetry(1000, 5))
-                //命名空间: 以此为根目录，在多个应用共用一个Zookeeper集群的场景下，这对于实现不同应用之间的相互隔离十分有意义
-                .namespace("sentinel")
-                .build();
+            //服务器列表，格式host1:port1,host2:port2
+            .connectString(zkAddress)
+            //会话超时时间，单位毫秒
+            .sessionTimeoutMs(30000)
+            //连接创建超时时间，单位毫秒
+            .connectionTimeoutMs(30000)
+            //重试策略
+            .retryPolicy(new ExponentialBackoffRetry(1000, 5))
+            //命名空间: 以此为根目录，在多个应用共用一个Zookeeper集群的场景下，这对于实现不同应用之间的相互隔离十分有意义
+            .namespace("sentinel")
+            .build();
     }
 
     class TokenServerClient implements Closeable {
         private final String name;
+
+        @Getter
         private final LeaderLatch leaderLatch;
 
         public TokenServerClient(CuratorFramework client, String path) {
@@ -144,12 +147,8 @@ public class TokenServerBootstrap {
             try {
                 leaderLatch.start();
             } catch (Exception e) {
-                e.printStackTrace();
+                log.error("leaderLatch start fail, e:", e);
             }
-        }
-
-        public LeaderLatch getLeaderLatch() {
-            return leaderLatch;
         }
     }
 }

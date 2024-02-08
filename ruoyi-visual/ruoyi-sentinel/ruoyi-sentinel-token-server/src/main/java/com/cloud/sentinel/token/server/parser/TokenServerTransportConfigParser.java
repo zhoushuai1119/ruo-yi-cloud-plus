@@ -14,7 +14,7 @@ import java.util.Objects;
 
 /**
  * @description:
- * @author: zhou shuai
+ * @author: shuai.zhou
  * @date: 2022/10/25 19:51
  * @version: v1
  */
