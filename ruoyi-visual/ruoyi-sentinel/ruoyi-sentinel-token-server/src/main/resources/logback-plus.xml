@@ -5,7 +5,7 @@ scanPeriod:设置监测配置文件是否有修改的时间间隔，如果没有
 debug:当此属性设置为true时，将打印出logback内部日志信息，实时查看logback运行状态。默认值为false。 -->
 <configuration scan="true" scanPeriod="60 seconds" debug="false">
     <!-- 模块名称， 影响日志配置名，日志文件名 -->
-    <property name="project.artifactId" value="ruoyi-sentinel-dashboard"/>
+    <property name="project.artifactId" value="ruoyi-sentinel-token-server"/>
     <!-- 日志存放路径 -->
     <property name="log.path" value="/logs/ruoyi/ruoyi-visual/ruoyi-sentinel/${project.artifactId}"/>
     <!-- 定义存储日志文件路径 -->

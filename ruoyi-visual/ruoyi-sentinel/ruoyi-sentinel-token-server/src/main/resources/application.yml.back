@@ -1,0 +1,40 @@
+server:
+  port: 8769
+
+spring:
+  application:
+    name: ruoyi-sentinel-token-server
+
+  profiles:
+    active: dev
+
+  dinger:
+    project-id: ${spring.application.name}
+    default-dinger: wetalk
+    dingers:
+      wetalk:
+        token-id: 0a0b9279-ac5b-4b95-bb69-e30a9dde286e
+
+# logging settings
+logging:
+  config: classpath:logback-plus.xml
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+app:
+  id: ruoyi-sentinel-dashboard
+
+apollo:
+  meta: http://139.196.208.53:8070
+  token: 14ee62a2555a1a003528b8eaefb300fcdcea2401e9700ab74de9f1c8e6bdd7a8
+  user: zhoushuai
+  clusterName: default
+  namespaceName: token-server
+
+zookeeper:
+  address: 139.196.208.53:2181
+
