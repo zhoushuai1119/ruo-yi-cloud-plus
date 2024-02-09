@@ -1,6 +1,16 @@
 server.port=9999
 
 spring.application.name=ruoyi-sentinel-dashboard
+# \u4FEE\u590D sentinel \u63A7\u5236\u53F0\u672A\u9002\u914D springboot 2.6 \u65B0\u8DEF\u7531\u65B9\u5F0F
+spring.mvc.pathmatch.matching-strategy=ant_path_matcher
+
+spring.profiles.active=dev
+
+#nacos
+spring.cloud.nacos.server-addr=139.196.208.53:8848
+spring.cloud.nacos.discovery.namespace=${spring.profiles.active}
+spring.cloud.nacos.discovery.username=nacos
+spring.cloud.nacos.discovery.password=nacos
 
 #spring settings
 server.servlet.encoding.force=true
