@@ -54,7 +54,6 @@ public final class ApolloConfigUtil {
         return TOKEN_SERVER_RULE_KEY;
     }
 
-
     public static String getTokenServerNamespaceSetKey() {
         return TOKEN_SERVER_NAMESPACE_SET_KEY;
     }

@@ -39,11 +39,11 @@ public class ClusterServerFlowConfigParser implements Converter<String, ServerFl
             for (ClusterGroupEntity group : groupList) {
                 if (Objects.equals(group.getIp(), HostNameUtil.getIp())) {
                     return new ServerFlowConfig()
-                            .setExceedCount(ClusterServerConfigManager.getExceedCount())
-                            .setIntervalMs(ClusterServerConfigManager.getIntervalMs())
-                            .setMaxAllowedQps(group.getMaxAllowedQps())
-                            .setMaxOccupyRatio(ClusterServerConfigManager.getMaxOccupyRatio())
-                            .setSampleCount(ClusterServerConfigManager.getSampleCount());
+                        .setExceedCount(ClusterServerConfigManager.getExceedCount())
+                        .setIntervalMs(ClusterServerConfigManager.getIntervalMs())
+                        .setMaxAllowedQps(group.getMaxAllowedQps())
+                        .setMaxOccupyRatio(ClusterServerConfigManager.getMaxOccupyRatio())
+                        .setSampleCount(ClusterServerConfigManager.getSampleCount());
                 }
             }
         }

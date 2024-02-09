@@ -5,9 +5,6 @@ spring:
   application:
     name: ruoyi-sentinel-token-server
 
-  profiles:
-    active: dev
-
   dinger:
     project-id: ${spring.application.name}
     default-dinger: wetalk
