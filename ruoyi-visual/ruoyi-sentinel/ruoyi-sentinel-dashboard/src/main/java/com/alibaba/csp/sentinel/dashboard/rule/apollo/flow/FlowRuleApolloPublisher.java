@@ -18,7 +18,7 @@ package com.alibaba.csp.sentinel.dashboard.rule.apollo.flow;
 import cn.hutool.extra.spring.SpringUtil;
 import com.alibaba.csp.sentinel.dashboard.datasource.entity.rule.FlowRuleEntity;
 import com.alibaba.csp.sentinel.dashboard.rule.DynamicRulePublisher;
-import com.alibaba.csp.sentinel.dashboard.util.ApolloUtil;
+import com.alibaba.csp.sentinel.dashboard.util.ApolloConfigUtil;
 import com.alibaba.csp.sentinel.dashboard.config.properties.ApolloProperties;
 import com.alibaba.csp.sentinel.datasource.Converter;
 import com.alibaba.csp.sentinel.util.AssertUtil;
@@ -66,7 +66,7 @@ public class FlowRuleApolloPublisher implements DynamicRulePublisher<List<FlowRu
         filterField(rules);
         String env = SpringUtil.getActiveProfile();
         // 创建配置
-        String flowDataId = ApolloUtil.getFlowDataId(app);
+        String flowDataId = ApolloConfigUtil.getFlowDataId(app);
         OpenItemDTO openItemDTO = new OpenItemDTO();
         openItemDTO.setKey(flowDataId);
         openItemDTO.setValue(converter.convert(rules));

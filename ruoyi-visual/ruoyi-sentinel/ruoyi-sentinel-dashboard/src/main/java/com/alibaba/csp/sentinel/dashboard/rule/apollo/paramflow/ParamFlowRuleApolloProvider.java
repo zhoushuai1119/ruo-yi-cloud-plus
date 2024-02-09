@@ -4,7 +4,7 @@ import cn.hutool.extra.spring.SpringUtil;
 import com.alibaba.csp.sentinel.dashboard.datasource.entity.rule.ParamFlowRuleEntity;
 import com.alibaba.csp.sentinel.dashboard.datasource.entity.rule.correct.ParamFlowRuleCorrectEntity;
 import com.alibaba.csp.sentinel.dashboard.rule.DynamicRuleProvider;
-import com.alibaba.csp.sentinel.dashboard.util.ApolloUtil;
+import com.alibaba.csp.sentinel.dashboard.util.ApolloConfigUtil;
 import com.alibaba.csp.sentinel.dashboard.config.properties.ApolloProperties;
 import com.alibaba.csp.sentinel.datasource.Converter;
 import com.alibaba.csp.sentinel.slots.block.flow.param.ParamFlowRule;
@@ -47,7 +47,7 @@ public class ParamFlowRuleApolloProvider implements DynamicRuleProvider<List<Par
     @Override
     public List<ParamFlowRuleEntity> getRules(String appName) {
         String env = SpringUtil.getActiveProfile();
-        String flowDataId = ApolloUtil.getParamFlowDataId(appName);
+        String flowDataId = ApolloConfigUtil.getParamFlowDataId(appName);
         OpenNamespaceDTO openNamespaceDTO = apolloOpenApiClient.getNamespace(apolloProperties.getAppId(), env, apolloProperties.getClusterName(), apolloProperties.getNamespace());
         String rules = openNamespaceDTO
             .getItems()

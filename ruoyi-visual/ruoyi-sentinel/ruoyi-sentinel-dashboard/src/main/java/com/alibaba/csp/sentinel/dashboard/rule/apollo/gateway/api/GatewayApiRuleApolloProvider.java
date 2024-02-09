@@ -18,7 +18,7 @@ package com.alibaba.csp.sentinel.dashboard.rule.apollo.gateway.api;
 import cn.hutool.extra.spring.SpringUtil;
 import com.alibaba.csp.sentinel.dashboard.datasource.entity.gateway.ApiDefinitionEntity;
 import com.alibaba.csp.sentinel.dashboard.rule.DynamicRuleProvider;
-import com.alibaba.csp.sentinel.dashboard.util.ApolloUtil;
+import com.alibaba.csp.sentinel.dashboard.util.ApolloConfigUtil;
 import com.alibaba.csp.sentinel.dashboard.config.properties.ApolloProperties;
 import com.alibaba.csp.sentinel.datasource.Converter;
 import com.alibaba.csp.sentinel.util.StringUtil;
@@ -58,7 +58,7 @@ public class GatewayApiRuleApolloProvider implements DynamicRuleProvider<List<Ap
     @Override
     public List<ApiDefinitionEntity> getRules(String appName) {
         String env = SpringUtil.getActiveProfile();
-        String flowDataId = ApolloUtil.getGatewayApiGroupDataId(appName);
+        String flowDataId = ApolloConfigUtil.getGatewayApiGroupDataId(appName);
         OpenNamespaceDTO openNamespaceDTO = apolloOpenApiClient.getNamespace(apolloProperties.getAppId(), env, apolloProperties.getClusterName(), apolloProperties.getGatewayNamespace());
         String rules = openNamespaceDTO
             .getItems()

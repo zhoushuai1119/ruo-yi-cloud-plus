@@ -3,7 +3,7 @@ package com.alibaba.csp.sentinel.dashboard.rule.apollo.system;
 import cn.hutool.extra.spring.SpringUtil;
 import com.alibaba.csp.sentinel.dashboard.datasource.entity.rule.SystemRuleEntity;
 import com.alibaba.csp.sentinel.dashboard.rule.DynamicRulePublisher;
-import com.alibaba.csp.sentinel.dashboard.util.ApolloUtil;
+import com.alibaba.csp.sentinel.dashboard.util.ApolloConfigUtil;
 import com.alibaba.csp.sentinel.dashboard.config.properties.ApolloProperties;
 import com.alibaba.csp.sentinel.datasource.Converter;
 import com.alibaba.csp.sentinel.util.AssertUtil;
@@ -57,7 +57,7 @@ public class SystemRuleApolloPublisher implements DynamicRulePublisher<List<Syst
 
         String env = SpringUtil.getActiveProfile();
         // 创建配置
-        String flowDataId = ApolloUtil.getSystemDataId(app);
+        String flowDataId = ApolloConfigUtil.getSystemDataId(app);
         OpenItemDTO openItemDTO = new OpenItemDTO();
         openItemDTO.setKey(flowDataId);
         openItemDTO.setValue(converter.convert(rules));

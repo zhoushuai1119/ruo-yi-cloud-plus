@@ -3,7 +3,7 @@ package com.alibaba.csp.sentinel.dashboard.rule.apollo.cluster;
 import cn.hutool.extra.spring.SpringUtil;
 import com.alibaba.csp.sentinel.dashboard.domain.cluster.request.ClusterAppAssignMap;
 import com.alibaba.csp.sentinel.dashboard.rule.DynamicRulePublisher;
-import com.alibaba.csp.sentinel.dashboard.util.ApolloUtil;
+import com.alibaba.csp.sentinel.dashboard.util.ApolloConfigUtil;
 import com.alibaba.csp.sentinel.dashboard.config.properties.ApolloProperties;
 import com.alibaba.csp.sentinel.datasource.Converter;
 import com.alibaba.csp.sentinel.util.AssertUtil;
@@ -50,7 +50,7 @@ public class ClusterGroupApolloPublisher implements DynamicRulePublisher<List<Cl
         }
         String env = SpringUtil.getActiveProfile();
         // 创建配置
-        String flowDataId = ApolloUtil.getClusterGroupDataId(app);
+        String flowDataId = ApolloConfigUtil.getClusterGroupDataId(app);
         OpenItemDTO openItemDTO = new OpenItemDTO();
         openItemDTO.setKey(flowDataId);
         openItemDTO.setValue(converter.convert(rules));

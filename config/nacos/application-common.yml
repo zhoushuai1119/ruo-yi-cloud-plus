@@ -49,14 +49,6 @@ spring:
       # 上传单个文件大小限制
       max-file-size: 10MB
   cloud:
-    # sentinel 配置
-    sentinel:
-      # sentinel 开关
-      enabled: true
-      # 取消控制台懒加载
-      eager: true
-      # 关闭 context 整合
-      web-context-unify: false
       transport:
         dashboard: localhost:9999
 

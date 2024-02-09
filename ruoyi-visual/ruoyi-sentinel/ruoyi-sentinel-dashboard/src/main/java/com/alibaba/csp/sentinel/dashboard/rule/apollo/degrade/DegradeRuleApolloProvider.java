@@ -3,7 +3,7 @@ package com.alibaba.csp.sentinel.dashboard.rule.apollo.degrade;
 import cn.hutool.extra.spring.SpringUtil;
 import com.alibaba.csp.sentinel.dashboard.datasource.entity.rule.DegradeRuleEntity;
 import com.alibaba.csp.sentinel.dashboard.rule.DynamicRuleProvider;
-import com.alibaba.csp.sentinel.dashboard.util.ApolloUtil;
+import com.alibaba.csp.sentinel.dashboard.util.ApolloConfigUtil;
 import com.alibaba.csp.sentinel.dashboard.config.properties.ApolloProperties;
 import com.alibaba.csp.sentinel.datasource.Converter;
 import com.alibaba.csp.sentinel.util.StringUtil;
@@ -44,7 +44,7 @@ public class DegradeRuleApolloProvider implements DynamicRuleProvider<List<Degra
     @Override
     public List<DegradeRuleEntity> getRules(String appName) {
         String env = SpringUtil.getActiveProfile();
-        String flowDataId = ApolloUtil.getDegradeDataId(appName);
+        String flowDataId = ApolloConfigUtil.getDegradeDataId(appName);
         OpenNamespaceDTO openNamespaceDTO;
         // 将gateway规则单独放入gatewayNamespace
         if (Objects.equals(appName, apolloProperties.getGatewayServerName())) {

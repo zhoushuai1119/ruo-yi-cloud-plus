@@ -1,0 +1,10 @@
+spring:
+  cloud:
+    # sentinel 配置
+    sentinel:
+      # sentinel 开关
+      enabled: true
+      # 取消控制台懒加载
+      eager: true
+      # 关闭 context 整合（每个接口单独出来一个链路）
+      web-context-unify: false

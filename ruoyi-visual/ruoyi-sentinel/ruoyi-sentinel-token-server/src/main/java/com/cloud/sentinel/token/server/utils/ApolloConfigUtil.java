@@ -5,7 +5,7 @@ package com.cloud.sentinel.token.server.utils;
  *
  * @author shuai.zhou
  */
-public final class ApolloUtil {
+public final class ApolloConfigUtil {
 
     /**
      * sentinel限流规则配置namespace

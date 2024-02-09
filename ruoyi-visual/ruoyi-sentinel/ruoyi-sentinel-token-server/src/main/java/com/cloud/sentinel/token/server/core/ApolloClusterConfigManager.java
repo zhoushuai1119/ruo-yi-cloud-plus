@@ -8,7 +8,7 @@ import com.cloud.alarm.dinger.core.entity.DingerRequest;
 import com.cloud.alarm.dinger.core.entity.enums.MessageSubType;
 import com.cloud.sentinel.token.server.config.properties.ApolloProperties;
 import com.cloud.sentinel.token.server.entity.ClusterGroupEntity;
-import com.cloud.sentinel.token.server.utils.ApolloUtil;
+import com.cloud.sentinel.token.server.utils.ApolloConfigUtil;
 import com.ctrip.framework.apollo.openapi.client.ApolloOpenApiClient;
 import com.ctrip.framework.apollo.openapi.dto.NamespaceReleaseDTO;
 import com.ctrip.framework.apollo.openapi.dto.OpenItemDTO;
@@ -55,7 +55,7 @@ public class ApolloClusterConfigManager {
         }
         // 找到配置了集群限流的item
         Optional<OpenItemDTO> clusterConfigItem =
-            itemDTOList.stream().filter(t -> ApolloUtil.getTokenServerRuleKey().equals(t.getKey())).findFirst();
+            itemDTOList.stream().filter(t -> ApolloConfigUtil.getTokenServerRuleKey().equals(t.getKey())).findFirst();
         if (clusterConfigItem.isEmpty()) {
             return;
         }

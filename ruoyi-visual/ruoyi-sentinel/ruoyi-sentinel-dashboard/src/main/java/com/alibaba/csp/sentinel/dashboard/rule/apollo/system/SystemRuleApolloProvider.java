@@ -3,7 +3,7 @@ package com.alibaba.csp.sentinel.dashboard.rule.apollo.system;
 import cn.hutool.extra.spring.SpringUtil;
 import com.alibaba.csp.sentinel.dashboard.datasource.entity.rule.SystemRuleEntity;
 import com.alibaba.csp.sentinel.dashboard.rule.DynamicRuleProvider;
-import com.alibaba.csp.sentinel.dashboard.util.ApolloUtil;
+import com.alibaba.csp.sentinel.dashboard.util.ApolloConfigUtil;
 import com.alibaba.csp.sentinel.dashboard.config.properties.ApolloProperties;
 import com.alibaba.csp.sentinel.datasource.Converter;
 import com.alibaba.csp.sentinel.util.StringUtil;
@@ -44,7 +44,7 @@ public class SystemRuleApolloProvider implements DynamicRuleProvider<List<System
     @Override
     public List<SystemRuleEntity> getRules(String appName) {
         String env = SpringUtil.getActiveProfile();
-        String flowDataId = ApolloUtil.getSystemDataId(appName);
+        String flowDataId = ApolloConfigUtil.getSystemDataId(appName);
         OpenNamespaceDTO openNamespaceDTO;
         // 将gateway规则单独放入gatewayNamespace
         if (Objects.equals(appName, apolloProperties.getGatewayServerName())) {
