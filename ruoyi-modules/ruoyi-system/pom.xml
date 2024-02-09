@@ -123,9 +123,10 @@
             <artifactId>ruoyi-common-rocketmq</artifactId>
         </dependency>
 
+        <!--Arthas-->
         <dependency>
-            <groupId>com.taobao.arthas</groupId>
-            <artifactId>arthas-spring-boot-starter</artifactId>
+            <groupId>org.dromara</groupId>
+            <artifactId>ruoyi-common-arthas</artifactId>
         </dependency>
 
     </dependencies>

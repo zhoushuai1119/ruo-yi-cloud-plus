@@ -1,0 +1,4 @@
+arthas:
+  app-name: ${spring.application.name}
+  telnetPort: -1
+  httpPort: -1

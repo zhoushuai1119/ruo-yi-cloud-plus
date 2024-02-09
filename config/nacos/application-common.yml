@@ -70,6 +70,10 @@ cloud:
   rocketmq:
     name-server: 139.196.208.53:9876
 
+# arthas配置
+arthas:
+  tunnel-server: ws://139.196.208.53:7777/ws
+
 # 暴露监控端点
 management:
   endpoints:
