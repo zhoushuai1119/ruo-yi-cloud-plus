@@ -58,21 +58,3 @@ powerjob:
     server-address: 127.0.0.1:7700
     # 持久化方式，可选，默认 disk
     store-strategy: disk
-
-#rocketmq配置
-cloud:
-  rocketmq:
-    acl:
-      accessKey: zhoushuai
-      secretKey: zs19921119
-    consumer:
-      enableMsgTrace: false
-      group-name: c-${spring.application.name}
-    name-server: 139.196.208.53:9876
-    producer:
-      enableMsgTrace: false
-      group-name: p-${spring.application.name}
-  time-based-job:
-    discardTaskSeconds: 300
-    enabled: true
-    thread-pool-size: 20

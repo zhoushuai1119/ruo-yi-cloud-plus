@@ -65,6 +65,11 @@ spring:
       timeout: 10s
       ssl.enabled: false
 
+# rocketmq配置
+cloud:
+  rocketmq:
+    name-server: 139.196.208.53:9876
+
 # 暴露监控端点
 management:
   endpoints:

@@ -1,0 +1,15 @@
+cloud:
+  rocketmq:
+    acl:
+      accessKey: zhoushuai
+      secretKey: zs19921119
+    consumer:
+      enableMsgTrace: false
+      group-name: c-${spring.application.name}
+    producer:
+      enableMsgTrace: false
+      group-name: p-${spring.application.name}
+  time-based-job:
+    enabled: false
+    discardTaskSeconds: 300
+    thread-pool-size: 20
