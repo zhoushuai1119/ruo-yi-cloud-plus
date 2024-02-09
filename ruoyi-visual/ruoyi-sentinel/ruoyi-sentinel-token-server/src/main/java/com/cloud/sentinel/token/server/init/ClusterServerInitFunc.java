@@ -94,7 +94,6 @@ public class ClusterServerInitFunc implements InitFunc {
                 ApolloConfigUtil.getTokenServerNamespaceSetKey(), defaultRules, source -> JSON.parseObject(source,
                 new TypeReference<Set<String>>() {
                 }));
-        log.info("namespaceDs : {}", namespaceDs.getProperty());
         ClusterServerConfigManager.registerNamespaceSetProperty(namespaceDs.getProperty());
     }
 
