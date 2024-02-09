@@ -11,7 +11,7 @@ public final class ApolloConfigUtil {
     /**
      * sentinel网关规则配置namespace
      */
-    private static final String SENTINEL_GATEWAY_RULES_NAMESPACE = "sentinel-rules";
+    private static final String SENTINEL_RULES_NAMESPACE = "sentinel-rules";
     /**
      * 网关-api分组id
      */
@@ -45,8 +45,8 @@ public final class ApolloConfigUtil {
         return String.format("%s_%s", appName, SYSTEM_DATA_ID_POSTFIX);
     }
 
-    public static String getSentinelGatewayRulesNamespace() {
-        return SENTINEL_GATEWAY_RULES_NAMESPACE;
+    public static String getSentinelRulesNamespace() {
+        return SENTINEL_RULES_NAMESPACE;
     }
 
 }

@@ -20,7 +20,6 @@ public class SentinelFallbackHandler implements WebExceptionHandler {
 
     @Override
     public Mono<Void> handle(ServerWebExchange exchange, Throwable ex) {
-        ex.printStackTrace();
         if (exchange.getResponse().isCommitted()) {
             return Mono.error(ex);
         }
