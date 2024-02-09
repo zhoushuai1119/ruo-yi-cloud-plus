@@ -6,7 +6,7 @@ spring.mvc.pathmatch.matching-strategy=ant_path_matcher
 
 spring.profiles.active=dev
 
-#nacos
+#nacos setting
 spring.cloud.nacos.server-addr=139.196.208.53:8848
 spring.cloud.nacos.discovery.namespace=${spring.profiles.active}
 spring.cloud.nacos.discovery.username=nacos
@@ -16,6 +16,13 @@ spring.cloud.nacos.discovery.password=nacos
 server.servlet.encoding.force=true
 server.servlet.encoding.charset=UTF-8
 server.servlet.encoding.enabled=true
+
+#undertow settings
+server.undertow.max-http-post-size=-1
+server.undertow.buffer-size=512
+server.undertow.direct-buffers=true
+server.undertow.threads.io=8
+server.undertow.threads.worker=256
 
 #cookie name setting
 server.servlet.session.cookie.name=ruoyi_sentinel_dashboard_cookie
@@ -35,6 +42,10 @@ auth.password=123456
 # Inject the dashboard version. It's required to enable
 # filtering in pom.xml for this resource file.
 sentinel.dashboard.version=1.8.7
+
+# \u66B4\u9732\u76D1\u63A7\u7AEF\u70B9
+management.endpoints.web.exposure.include=*
+management.endpoint.health.show-details=ALWAYS
 
 # apollo config
 apollo.appId=${spring.application.name}
