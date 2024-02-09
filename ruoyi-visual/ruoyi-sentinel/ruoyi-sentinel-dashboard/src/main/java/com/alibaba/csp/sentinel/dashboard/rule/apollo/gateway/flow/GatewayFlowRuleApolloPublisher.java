@@ -72,7 +72,7 @@ public class GatewayFlowRuleApolloPublisher implements DynamicRulePublisher<List
         openItemDTO.setValue(converter.convert(rules));
         openItemDTO.setComment(app + "网关流控规则");
         openItemDTO.setDataChangeCreatedBy(apolloProperties.getUser());
-        apolloOpenApiClient.createOrUpdateItem(apolloProperties.getAppId(), env, apolloProperties.getClusterName(), apolloProperties.getGatewayNamespace(), openItemDTO);
+        apolloOpenApiClient.createOrUpdateItem(apolloProperties.getAppId(), env, apolloProperties.getClusterName(), apolloProperties.getNamespace(), openItemDTO);
 
         // 发布配置
         NamespaceReleaseDTO namespaceReleaseDTO = new NamespaceReleaseDTO();
@@ -80,7 +80,7 @@ public class GatewayFlowRuleApolloPublisher implements DynamicRulePublisher<List
         namespaceReleaseDTO.setReleaseComment("publish GatewayFlowRule config");
         namespaceReleaseDTO.setReleasedBy(apolloProperties.getUser());
         namespaceReleaseDTO.setReleaseTitle("publish GatewayFlowRule config");
-        apolloOpenApiClient.publishNamespace(apolloProperties.getAppId(), env, apolloProperties.getClusterName(), apolloProperties.getGatewayNamespace(), namespaceReleaseDTO);
+        apolloOpenApiClient.publishNamespace(apolloProperties.getAppId(), env, apolloProperties.getClusterName(), apolloProperties.getNamespace(), namespaceReleaseDTO);
         log.info("publish app:{} GatewayFlowRule success rules: {}", app, JSON.toJSONString(rules));
     }
 

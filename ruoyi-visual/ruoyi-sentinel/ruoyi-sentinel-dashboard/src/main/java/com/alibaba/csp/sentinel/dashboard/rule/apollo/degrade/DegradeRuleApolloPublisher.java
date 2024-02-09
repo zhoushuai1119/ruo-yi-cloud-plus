@@ -50,10 +50,6 @@ public class DegradeRuleApolloPublisher implements DynamicRulePublisher<List<Deg
             return;
         }
         filterField(rules);
-        String spaceName = apolloProperties.getNamespace();
-        if (Objects.equals(app, apolloProperties.getGatewayServerName())) {
-            spaceName = apolloProperties.getGatewayNamespace();
-        }
         String env = SpringUtil.getActiveProfile();
         // 创建配置
         String flowDataId = ApolloConfigUtil.getDegradeDataId(app);
@@ -62,7 +58,7 @@ public class DegradeRuleApolloPublisher implements DynamicRulePublisher<List<Deg
         openItemDTO.setValue(converter.convert(rules));
         openItemDTO.setComment(app + "降级规则");
         openItemDTO.setDataChangeCreatedBy(apolloProperties.getUser());
-        apolloOpenApiClient.createOrUpdateItem(apolloProperties.getAppId(), env, apolloProperties.getClusterName(), spaceName, openItemDTO);
+        apolloOpenApiClient.createOrUpdateItem(apolloProperties.getAppId(), env, apolloProperties.getClusterName(), apolloProperties.getNamespace(), openItemDTO);
 
         // 发布配置
         NamespaceReleaseDTO namespaceReleaseDTO = new NamespaceReleaseDTO();
@@ -70,7 +66,7 @@ public class DegradeRuleApolloPublisher implements DynamicRulePublisher<List<Deg
         namespaceReleaseDTO.setReleaseComment("publish DegradeRule config");
         namespaceReleaseDTO.setReleasedBy(apolloProperties.getUser());
         namespaceReleaseDTO.setReleaseTitle("publish DegradeRule config");
-        apolloOpenApiClient.publishNamespace(apolloProperties.getAppId(), env, apolloProperties.getClusterName(), spaceName, namespaceReleaseDTO);
+        apolloOpenApiClient.publishNamespace(apolloProperties.getAppId(), env, apolloProperties.getClusterName(), apolloProperties.getNamespace(), namespaceReleaseDTO);
         log.info("publish app:{} DegradeRule success rules: {}", app, JSON.toJSONString(rules));
     }
 

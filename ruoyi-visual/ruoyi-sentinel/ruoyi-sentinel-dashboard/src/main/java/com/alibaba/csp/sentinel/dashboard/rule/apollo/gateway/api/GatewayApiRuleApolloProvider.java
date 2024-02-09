@@ -59,7 +59,7 @@ public class GatewayApiRuleApolloProvider implements DynamicRuleProvider<List<Ap
     public List<ApiDefinitionEntity> getRules(String appName) {
         String env = SpringUtil.getActiveProfile();
         String flowDataId = ApolloConfigUtil.getGatewayApiGroupDataId(appName);
-        OpenNamespaceDTO openNamespaceDTO = apolloOpenApiClient.getNamespace(apolloProperties.getAppId(), env, apolloProperties.getClusterName(), apolloProperties.getGatewayNamespace());
+        OpenNamespaceDTO openNamespaceDTO = apolloOpenApiClient.getNamespace(apolloProperties.getAppId(), env, apolloProperties.getClusterName(), apolloProperties.getNamespace());
         String rules = openNamespaceDTO
             .getItems()
             .stream()

@@ -50,11 +50,6 @@ public class SystemRuleApolloPublisher implements DynamicRulePublisher<List<Syst
             return;
         }
         filterField(rules);
-        String spaceName = apolloProperties.getNamespace();
-        if (Objects.equals(app, apolloProperties.getGatewayServerName())) {
-            spaceName = apolloProperties.getGatewayNamespace();
-        }
-
         String env = SpringUtil.getActiveProfile();
         // 创建配置
         String flowDataId = ApolloConfigUtil.getSystemDataId(app);
@@ -63,7 +58,7 @@ public class SystemRuleApolloPublisher implements DynamicRulePublisher<List<Syst
         openItemDTO.setValue(converter.convert(rules));
         openItemDTO.setComment(app + "系统规则");
         openItemDTO.setDataChangeCreatedBy(apolloProperties.getUser());
-        apolloOpenApiClient.createOrUpdateItem(apolloProperties.getAppId(), env, apolloProperties.getClusterName(), spaceName, openItemDTO);
+        apolloOpenApiClient.createOrUpdateItem(apolloProperties.getAppId(), env, apolloProperties.getClusterName(), apolloProperties.getNamespace(), openItemDTO);
 
         // 发布配置
         NamespaceReleaseDTO namespaceReleaseDTO = new NamespaceReleaseDTO();
@@ -71,7 +66,7 @@ public class SystemRuleApolloPublisher implements DynamicRulePublisher<List<Syst
         namespaceReleaseDTO.setReleaseComment("publish SystemRule config");
         namespaceReleaseDTO.setReleasedBy(apolloProperties.getUser());
         namespaceReleaseDTO.setReleaseTitle("publish SystemRule config");
-        apolloOpenApiClient.publishNamespace(apolloProperties.getAppId(), env, apolloProperties.getClusterName(), spaceName, namespaceReleaseDTO);
+        apolloOpenApiClient.publishNamespace(apolloProperties.getAppId(), env, apolloProperties.getClusterName(), apolloProperties.getNamespace(), namespaceReleaseDTO);
         log.info("publish app:{} SystemRule success rules: {}", app, JSON.toJSONString(rules));
     }
 

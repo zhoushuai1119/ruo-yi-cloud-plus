@@ -36,13 +36,5 @@ public class ApolloProperties {
      * 限流规则 namespace
      */
     private String namespace;
-    /**
-     * 网关服务名称(gateway-appName)
-     */
-    private String gatewayServerName;
-    /**
-     * 网关限流规则 namespace
-     */
-    private String gatewayNamespace;
 
 }

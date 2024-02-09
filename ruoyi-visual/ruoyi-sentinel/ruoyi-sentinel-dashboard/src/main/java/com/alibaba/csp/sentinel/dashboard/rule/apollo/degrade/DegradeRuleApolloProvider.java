@@ -45,13 +45,7 @@ public class DegradeRuleApolloProvider implements DynamicRuleProvider<List<Degra
     public List<DegradeRuleEntity> getRules(String appName) {
         String env = SpringUtil.getActiveProfile();
         String flowDataId = ApolloConfigUtil.getDegradeDataId(appName);
-        OpenNamespaceDTO openNamespaceDTO;
-        // 将gateway规则单独放入gatewayNamespace
-        if (Objects.equals(appName, apolloProperties.getGatewayServerName())) {
-            openNamespaceDTO = apolloOpenApiClient.getNamespace(apolloProperties.getAppId(), env, apolloProperties.getClusterName(), apolloProperties.getGatewayNamespace());
-        } else {
-            openNamespaceDTO = apolloOpenApiClient.getNamespace(apolloProperties.getAppId(), env, apolloProperties.getClusterName(), apolloProperties.getNamespace());
-        }
+        OpenNamespaceDTO openNamespaceDTO = apolloOpenApiClient.getNamespace(apolloProperties.getAppId(), env, apolloProperties.getClusterName(), apolloProperties.getNamespace());
         String rules = openNamespaceDTO
             .getItems()
             .stream()

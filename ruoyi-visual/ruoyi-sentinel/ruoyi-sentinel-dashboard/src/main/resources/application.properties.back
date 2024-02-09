@@ -26,8 +26,6 @@ auth.password=123456
 # filtering in pom.xml for this resource file.
 sentinel.dashboard.version=1.8.7
 
-spring.profiles.active=dev
-
 # apollo config
 apollo.appId=${spring.application.name}
 apollo.meta=http://139.196.208.53:8070
@@ -35,8 +33,6 @@ apollo.token=14ee62a2555a1a003528b8eaefb300fcdcea2401e9700ab74de9f1c8e6bdd7a8
 apollo.user=zhoushuai
 apollo.clusterName=default
 apollo.namespace=sentinel-rules
-apollo.gatewayServerName=ruoyi-gateway
-apollo.gatewayNamespace=sentinel-gateway-rules
 
 # mysql
 spring.datasource.type= com.zaxxer.hikari.HikariDataSource
