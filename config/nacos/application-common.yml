@@ -48,7 +48,10 @@ spring:
       max-request-size: 20MB
       # 上传单个文件大小限制
       max-file-size: 10MB
+
+  # sentinel-dashboard地址
   cloud:
+    sentinel:
       transport:
         dashboard: localhost:9999
 
