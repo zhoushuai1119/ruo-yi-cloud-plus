@@ -1,6 +1,6 @@
-package com.alibaba.cloud.sentinel.custom.core;
+package org.dromara.common.sentinel.core;
 
-import com.alibaba.cloud.sentinel.custom.utils.ApolloConfigUtil;
+import org.dromara.common.sentinel.utils.ApolloConfigUtil;
 import com.alibaba.csp.sentinel.cluster.ClusterStateManager;
 import com.alibaba.csp.sentinel.cluster.client.config.ClusterClientAssignConfig;
 import com.alibaba.csp.sentinel.cluster.client.config.ClusterClientConfigManager;

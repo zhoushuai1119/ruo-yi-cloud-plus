@@ -1,4 +1,4 @@
-package com.alibaba.cloud.sentinel.custom.entity;
+package org.dromara.common.sentinel.entity;
 
 import lombok.Data;
 

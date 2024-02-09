@@ -1,4 +1,4 @@
-package com.alibaba.cloud.sentinel.custom.utils;
+package org.dromara.common.sentinel.utils;
 
 /**
  * Apollo 工具类

@@ -1,4 +1,4 @@
-package com.alibaba.cloud.sentinel.custom.core;
+package org.dromara.common.sentinel.core;
 
 import com.alibaba.csp.sentinel.adapter.spring.webmvc.callback.RequestOriginParser;
 import jakarta.servlet.http.HttpServletRequest;

@@ -1,4 +1,4 @@
-package com.alibaba.cloud.sentinel.custom.config;
+package org.dromara.common.sentinel.config;
 
 import org.dromara.common.core.factory.YmlPropertySourceFactory;
 import org.springframework.boot.autoconfigure.AutoConfiguration;

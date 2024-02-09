@@ -1,1 +1,1 @@
-com.alibaba.cloud.sentinel.custom.config.SentinelConfiguration
+org.dromara.common.sentinel.config.SentinelConfiguration

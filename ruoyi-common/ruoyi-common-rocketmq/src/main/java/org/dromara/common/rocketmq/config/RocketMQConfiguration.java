@@ -1,4 +1,4 @@
-package com.alibaba.cloud.rocketmq.config;
+package org.dromara.common.rocketmq.config;
 
 import org.dromara.common.core.factory.YmlPropertySourceFactory;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
