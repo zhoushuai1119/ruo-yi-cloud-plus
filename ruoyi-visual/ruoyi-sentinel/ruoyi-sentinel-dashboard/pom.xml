@@ -19,10 +19,10 @@
     <properties>
         <spring-boot.version>2.7.18</spring-boot.version>
         <spring-cloud.version>2021.0.6</spring-cloud.version>
-        <spring-cloud-alibaba.version>2021.0.6.0</spring-cloud-alibaba.version>
+        <spring-cloud-alibaba-nacos.version>2021.0.6.0</spring-cloud-alibaba-nacos.version>
 
         <mysql.version>8.0.33</mysql.version>
-        <mybatis-plus.version>3.5.3.2</mybatis-plus.version>
+        <mybatis-plus.version>3.5.5</mybatis-plus.version>
         <commons-lang.version>2.6</commons-lang.version>
     </properties>
 
@@ -42,13 +42,6 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <dependency>
-                <groupId>com.alibaba.cloud</groupId>
-                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
-                <version>${spring-cloud-alibaba.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -58,6 +51,7 @@
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+            <version>${spring-cloud-alibaba-nacos.version}</version>
         </dependency>
 
         <!-- for Apollo rule publisher sample -->
