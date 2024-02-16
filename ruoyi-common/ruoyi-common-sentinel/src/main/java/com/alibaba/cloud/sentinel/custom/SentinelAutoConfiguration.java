@@ -63,18 +63,22 @@ public class SentinelAutoConfiguration {
 
     @PostConstruct
     public void init() {
-        if (StringUtils.isEmpty(System.getProperty(LogBase.LOG_DIR))
-            && StringUtils.isNotBlank(properties.getLog().getDir())) {
+        String applicationName = SpringUtils.getApplicationName();
+        // 修改sentinel日志生成目录
+        if (StringUtils.isBlank(properties.getLog().getDir())) {
+            System.setProperty(LogBase.LOG_DIR, "/logs/ruoyi/" + applicationName + "/sentinel");
+        } else {
             System.setProperty(LogBase.LOG_DIR, properties.getLog().getDir());
         }
+
         if (StringUtils.isEmpty(System.getProperty(LogBase.LOG_NAME_USE_PID))
             && properties.getLog().isSwitchPid()) {
             System.setProperty(LogBase.LOG_NAME_USE_PID,
                 String.valueOf(properties.getLog().isSwitchPid()));
         }
         if (StringUtils.isEmpty(System.getProperty(SentinelConfig.APP_NAME_PROP_KEY))
-            && StringUtils.isNotBlank(SpringUtils.getApplicationName())) {
-            System.setProperty(SentinelConfig.APP_NAME_PROP_KEY, SpringUtils.getApplicationName());
+            && StringUtils.isNotBlank(applicationName)) {
+            System.setProperty(SentinelConfig.APP_NAME_PROP_KEY, applicationName);
         }
         if (StringUtils.isEmpty(System.getProperty(TransportConfig.SERVER_PORT))
             && StringUtils.isNotBlank(properties.getTransport().getPort())) {

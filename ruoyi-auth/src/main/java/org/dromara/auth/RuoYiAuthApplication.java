@@ -15,8 +15,6 @@ import org.springframework.boot.context.metrics.buffering.BufferingApplicationSt
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 public class RuoYiAuthApplication {
     public static void main(String[] args) {
-        // 修改sentinel日志生成目录
-        System.setProperty("csp.sentinel.log.dir", "/logs/ruoyi/ruoyi-auth/sentinel");
         SpringApplication application = new SpringApplication(RuoYiAuthApplication.class);
         application.setApplicationStartup(new BufferingApplicationStartup(2048));
         application.run(args);
