@@ -16,6 +16,7 @@
 package com.alibaba.csp.sentinel.dashboard;
 
 import com.alibaba.csp.sentinel.init.InitExecutor;
+import com.alibaba.csp.sentinel.log.LogBase;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -31,7 +32,7 @@ public class DashboardApplication {
 
     public static void main(String[] args) {
         // 修改sentinel日志生成目录
-        System.setProperty("csp.sentinel.log.dir", "/logs/ruoyi/ruoyi-visual/ruoyi-sentinel/ruoyi-sentinel-dashboard/sentinel-record");
+        System.setProperty(LogBase.LOG_DIR, "/logs/ruoyi/ruoyi-visual/ruoyi-sentinel/ruoyi-sentinel-dashboard/sentinel-record");
         triggerSentinelInit();
         SpringApplication.run(DashboardApplication.class, args);
     }
