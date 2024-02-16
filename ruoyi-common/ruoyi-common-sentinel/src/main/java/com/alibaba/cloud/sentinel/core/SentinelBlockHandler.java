@@ -10,6 +10,7 @@ import com.alibaba.csp.sentinel.slots.system.SystemBlockException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.dromara.common.core.domain.R;
 
 
 /**
@@ -32,19 +33,18 @@ public class SentinelBlockHandler implements BlockExceptionHandler {
         } else if (ex instanceof SystemBlockException) {
             msg = "系统规则限流或降级!";
         } else if (ex instanceof AuthorityException) {
-            msg = "授权规则不通过!";
             status = 401;
+            msg = "授权规则不通过!";
         }
 
         // http状态码
         response.setStatus(status);
         response.setContentType("application/json;charset=utf-8");
-        // spring mvc自带的json操作工具，叫jackson
         String path = request.getServletPath();
         if (path != null) {
             msg = String.format("接口[%s]%s", path, msg);
         }
-        new ObjectMapper().writeValue(response.getWriter(), msg);
+        new ObjectMapper().writeValue(response.getWriter(), R.fail(status, msg));
     }
 
 }
