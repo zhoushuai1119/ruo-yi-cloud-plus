@@ -128,7 +128,7 @@ public class TokenServerBootstrap {
 
                 @Override
                 public void notLeader() {
-                    log.info("【" + name + "】失去了master");
+                    log.warn("【" + name + "】失去了master");
                     //发送企业微信告警
                     dingerSender.send(MessageSubType.TEXT, DingerRequest.request("【" + name + "】失去了master"));
                 }
