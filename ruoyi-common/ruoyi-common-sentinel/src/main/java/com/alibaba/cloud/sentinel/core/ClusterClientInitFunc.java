@@ -1,11 +1,6 @@
 package com.alibaba.cloud.sentinel.core;
 
-import com.alibaba.csp.sentinel.adapter.gateway.common.api.ApiDefinition;
-import com.alibaba.csp.sentinel.adapter.gateway.common.api.GatewayApiDefinitionManager;
-import com.alibaba.csp.sentinel.adapter.gateway.common.rule.GatewayFlowRule;
-import com.alibaba.csp.sentinel.adapter.gateway.common.rule.GatewayRuleManager;
 import com.alibaba.cloud.sentinel.parser.ClusterAssignConfigParser;
-import com.alibaba.cloud.sentinel.parser.GatewayApiParser;
 import com.alibaba.cloud.sentinel.utils.ApolloConfigUtil;
 import com.alibaba.csp.sentinel.cluster.ClusterStateManager;
 import com.alibaba.csp.sentinel.cluster.client.config.ClusterClientAssignConfig;
@@ -30,7 +25,6 @@ import com.alibaba.fastjson.TypeReference;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author zhoushuai
@@ -76,10 +70,6 @@ public class ClusterClientInitFunc implements InitFunc {
         registerAuthorityRuleProperty(appName);
         //系统规则
         registerSystemRuleProperty(appName);
-        //网关流控规则配置
-        registerGatewayFlowRuleProperty(appName);
-        //网关API管理规则配置
-        registerGatewayApiProperty(appName);
     }
 
     /**
@@ -169,31 +159,6 @@ public class ClusterClientInitFunc implements InitFunc {
             new TypeReference<List<SystemRule>>() {
             }));
         SystemRuleManager.register2Property(systemRuleDataSource.getProperty());
-    }
-
-    /**
-     * 网关流控规则配置
-     *
-     * @param appName 应用名称
-     */
-    private void registerGatewayFlowRuleProperty(String appName) {
-        ReadableDataSource<String, Set<GatewayFlowRule>> gatewayFlowRuleDataSource = new ApolloDataSource<>(sentinelRulesNameSpace,
-            ApolloConfigUtil.getGatewayFlowDataId(appName), defaultRules, source -> JSON.parseObject(source,
-            new TypeReference<Set<GatewayFlowRule>>() {
-            }));
-        GatewayRuleManager.register2Property(gatewayFlowRuleDataSource.getProperty());
-    }
-
-
-    /**
-     * 网关API管理规则配置
-     *
-     * @param appName 应用名称
-     */
-    private void registerGatewayApiProperty(String appName) {
-        ReadableDataSource<String, Set<ApiDefinition>> apiDefinitionDataSource = new ApolloDataSource<>(sentinelRulesNameSpace,
-            ApolloConfigUtil.getGatewayApiGroupDataId(appName), defaultRules, new GatewayApiParser());
-        GatewayApiDefinitionManager.register2Property(apiDefinitionDataSource.getProperty());
     }
 
     /**

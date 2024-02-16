@@ -15,6 +15,11 @@
     </description>
 
     <dependencies>
+        <!-- SpringCloud Alibaba Sentinel Gateway -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-alibaba-sentinel-gateway</artifactId>
+        </dependency>
 
         <!-- SpringCloud Gateway -->
         <dependency>
