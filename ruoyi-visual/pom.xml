@@ -10,6 +10,7 @@
 
     <modules>
         <module>ruoyi-sentinel</module>
+        <module>ruoyi-powerjob-server</module>
     </modules>
 
     <artifactId>ruoyi-visual</artifactId>
