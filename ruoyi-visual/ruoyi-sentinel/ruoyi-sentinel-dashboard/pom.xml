@@ -19,8 +19,8 @@
     <properties>
         <spring-boot.version>2.7.18</spring-boot.version>
         <spring-cloud.version>2021.0.6</spring-cloud.version>
-        <nacos.client.version>2.2.3</nacos.client.version>
         <spring-cloud-alibaba.version>2021.0.6.0</spring-cloud-alibaba.version>
+        <nacos.client.version>2.2.3</nacos.client.version>
 
         <mysql.version>8.0.33</mysql.version>
         <mybatis-plus.version>3.5.5</mybatis-plus.version>
