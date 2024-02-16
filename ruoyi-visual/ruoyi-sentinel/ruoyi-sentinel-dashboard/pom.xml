@@ -112,12 +112,6 @@
         </dependency>
         <!-- spring-boot start -->
 
-        <dependency>
-            <groupId>commons-lang</groupId>
-            <artifactId>commons-lang</artifactId>
-            <version>${commons-lang.version}</version>
-        </dependency>
-
         <!-- org.apache.httpcomponents start -->
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
@@ -137,6 +131,16 @@
         </dependency>
         <!-- org.apache.httpcomponents end -->
 
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>${commons-lang.version}</version>
+        </dependency>
+        <!-- fastjson -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+        </dependency>
         <!-- hutool -->
         <dependency>
             <groupId>cn.hutool</groupId>
