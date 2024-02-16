@@ -19,7 +19,7 @@
     <properties>
         <spring-boot.version>2.7.18</spring-boot.version>
         <spring-cloud.version>2021.0.6</spring-cloud.version>
-        <spring-cloud-alibaba-nacos.version>2021.0.6.0</spring-cloud-alibaba-nacos.version>
+        <spring-cloud-alibaba.version>2021.0.6.0</spring-cloud-alibaba.version>
 
         <powerjob.version>4.3.6</powerjob.version>
     </properties>
@@ -40,6 +40,13 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${spring-cloud-alibaba.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -48,7 +55,6 @@
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-            <version>${spring-cloud-alibaba-nacos.version}</version>
         </dependency>
 
         <!-- PowerJob server-->
