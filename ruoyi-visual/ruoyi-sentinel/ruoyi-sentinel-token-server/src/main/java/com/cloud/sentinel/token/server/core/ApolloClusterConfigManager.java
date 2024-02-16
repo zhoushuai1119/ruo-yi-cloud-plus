@@ -105,9 +105,9 @@ public class ApolloClusterConfigManager {
             namespaceReleaseDTO.setReleaseTitle("publish Token Server Config");
             apolloOpenApiClient.publishNamespace(apolloProperties.getAppId(), env, apolloProperties.getClusterName(), apolloProperties.getNamespace(), namespaceReleaseDTO);
 
-            log.info("Token Server 地址修改成功，namespaceName:【" + apolloProperties.getNamespace() + "】");
-            //发送企业微信告警
-            dingerSender.send(MessageSubType.TEXT, DingerRequest.request("Token Server 地址修改成功，namespaceName:【" + apolloProperties.getNamespace() + "】"));
+            if (log.isDebugEnabled()) {
+                log.debug("Token Server 地址修改成功，namespaceName:【" + apolloProperties.getNamespace() + "】");
+            }
         } catch (Exception e) {
             log.error("Token Server 地址修改失败，namespaceName:【" + apolloProperties.getNamespace() + "】");
             //发送企业微信告警

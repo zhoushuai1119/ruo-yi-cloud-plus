@@ -4,6 +4,17 @@ server:
 spring:
   application:
     name: ruoyi-sentinel-token-server
+  profiles:
+    # 环境配置
+    active: dev
+
+  cloud:
+    nacos:
+      server-addr: 139.196.208.53:8848
+      discovery:
+        namespace: ${spring.profiles.active}
+        username: nacos
+        password: nacos
 
   dinger:
     project-id: ${spring.application.name}
