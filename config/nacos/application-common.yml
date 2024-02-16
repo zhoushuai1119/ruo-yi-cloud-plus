@@ -49,12 +49,6 @@ spring:
       # 上传单个文件大小限制
       max-file-size: 10MB
 
-  # sentinel-dashboard地址
-  cloud:
-    sentinel:
-      transport:
-        dashboard: localhost:9999
-
   # redis通用配置 子服务可以自行配置进行覆盖
   data:
     redis:

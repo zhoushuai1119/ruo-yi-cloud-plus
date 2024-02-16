@@ -8,3 +8,7 @@ spring:
       eager: true
       # 关闭 context 整合（每个接口单独出来一个链路）
       web-context-unify: false
+      transport:
+        # dashboard控制台服务名 用于服务发现
+        server-name: ruoyi-sentinel-dashboard
+        # dashboard: localhost:9999

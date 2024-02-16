@@ -1,7 +1,7 @@
-package org.dromara.common.sentinel.core;
+package com.alibaba.cloud.sentinel.parser;
 
 import cn.hutool.core.collection.CollectionUtil;
-import org.dromara.common.sentinel.entity.ClusterGroupEntity;
+import com.alibaba.cloud.sentinel.entity.ClusterGroupEntity;
 import com.alibaba.csp.sentinel.cluster.client.config.ClusterClientAssignConfig;
 import com.alibaba.csp.sentinel.datasource.Converter;
 import com.alibaba.fastjson.JSON;

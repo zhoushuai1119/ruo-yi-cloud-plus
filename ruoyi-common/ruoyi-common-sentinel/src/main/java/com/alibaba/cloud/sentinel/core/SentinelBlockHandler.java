@@ -1,4 +1,4 @@
-package org.dromara.common.sentinel.core;
+package com.alibaba.cloud.sentinel.core;
 
 import com.alibaba.csp.sentinel.adapter.spring.webmvc.callback.BlockExceptionHandler;
 import com.alibaba.csp.sentinel.slots.block.BlockException;
@@ -10,7 +10,6 @@ import com.alibaba.csp.sentinel.slots.system.SystemBlockException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.stereotype.Component;
 
 
 /**
@@ -18,7 +17,6 @@ import org.springframework.stereotype.Component;
  * @author: shuai.zhou
  * @date: 2021/2/1 15:56
  */
-@Component
 public class SentinelBlockHandler implements BlockExceptionHandler {
 
     @Override

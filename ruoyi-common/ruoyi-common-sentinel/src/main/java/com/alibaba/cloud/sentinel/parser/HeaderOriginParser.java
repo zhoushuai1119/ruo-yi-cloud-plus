@@ -1,9 +1,8 @@
-package org.dromara.common.sentinel.core;
+package com.alibaba.cloud.sentinel.parser;
 
 import com.alibaba.csp.sentinel.adapter.spring.webmvc.callback.RequestOriginParser;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.stereotype.Component;
 
 
 /**
@@ -11,7 +10,6 @@ import org.springframework.stereotype.Component;
  * @author: shuai.zhou
  * @date: 2022/10/21 13:41
  */
-@Component
 public class HeaderOriginParser implements RequestOriginParser {
 
     @Override

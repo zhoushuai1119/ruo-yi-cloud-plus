@@ -1,1 +1,1 @@
-org.dromara.common.sentinel.core.ClusterClientInitFunc
+com.alibaba.cloud.sentinel.core.ClusterClientInitFunc
