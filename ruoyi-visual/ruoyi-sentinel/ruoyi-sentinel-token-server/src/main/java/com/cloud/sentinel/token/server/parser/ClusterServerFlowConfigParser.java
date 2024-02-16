@@ -1,5 +1,6 @@
 package com.cloud.sentinel.token.server.parser;
 
+import cn.hutool.core.collection.CollUtil;
 import com.alibaba.csp.sentinel.cluster.server.config.ClusterServerConfigManager;
 import com.alibaba.csp.sentinel.cluster.server.config.ServerFlowConfig;
 import com.alibaba.csp.sentinel.datasource.Converter;
@@ -8,7 +9,6 @@ import com.alibaba.csp.sentinel.util.HostNameUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.cloud.sentinel.token.server.entity.ClusterGroupEntity;
-import org.apache.commons.collections4.CollectionUtils;
 
 import java.util.List;
 import java.util.Objects;
@@ -35,7 +35,7 @@ public class ClusterServerFlowConfigParser implements Converter<String, ServerFl
     }
 
     private ServerFlowConfig extractServerFlowConfig(List<ClusterGroupEntity> groupList) {
-        if (CollectionUtils.isNotEmpty(groupList)) {
+        if (CollUtil.isNotEmpty(groupList)) {
             for (ClusterGroupEntity group : groupList) {
                 if (Objects.equals(group.getIp(), HostNameUtil.getIp())) {
                     return new ServerFlowConfig()
