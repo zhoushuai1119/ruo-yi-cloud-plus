@@ -21,7 +21,9 @@ public class HeaderOriginParser implements RequestOriginParser {
         if (StringUtils.isBlank(origin)) {
             origin = "blank";
         }
-        log.info("sentinel request header origin is {}", origin);
+        if (log.isDebugEnabled()) {
+            log.debug("sentinel authority rule request header origin is {}", origin);
+        }
         return origin;
     }
 
