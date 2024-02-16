@@ -33,9 +33,6 @@ spring:
     gateway:
       # 打印请求日志(自定义)
       requestLog: true
-      # 默认filter添加请求头参数
-      default-filters:
-        - AddRequestHeader=origin,gateway
       discovery:
         locator:
           lowerCaseServiceId: true

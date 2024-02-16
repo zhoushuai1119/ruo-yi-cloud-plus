@@ -17,6 +17,9 @@ import reactor.core.publisher.Mono;
  */
 @Component
 public class ForwardAuthFilter implements GlobalFilter, Ordered {
+
+    private final static String SENTINEL_ORIGIN_HEADER = "origin";
+
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         // 未开启配置则直接跳过
@@ -28,6 +31,7 @@ public class ForwardAuthFilter implements GlobalFilter, Ordered {
             .mutate()
             // 为请求追加 Same-Token 参数
             .header(SaSameUtil.SAME_TOKEN, SaSameUtil.getToken())
+            .header(SENTINEL_ORIGIN_HEADER, "gateway")
             .build();
         ServerWebExchange newExchange = exchange.mutate().request(newRequest).build();
         return chain.filter(newExchange);
