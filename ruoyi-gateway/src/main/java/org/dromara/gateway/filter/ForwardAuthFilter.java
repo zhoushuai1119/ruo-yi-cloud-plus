@@ -2,6 +2,7 @@ package org.dromara.gateway.filter;
 
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.same.SaSameUtil;
+import org.dromara.common.core.utils.SpringUtils;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
@@ -10,6 +11,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
+import static org.dromara.common.core.constant.SentinelConstants.SENTINEL_ORIGIN_HEADER;
+
 /**
  * 转发认证过滤器(内部服务外网隔离)
  *
@@ -17,8 +20,6 @@ import reactor.core.publisher.Mono;
  */
 @Component
 public class ForwardAuthFilter implements GlobalFilter, Ordered {
-
-    private final static String SENTINEL_ORIGIN_HEADER = "origin";
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
@@ -31,7 +32,8 @@ public class ForwardAuthFilter implements GlobalFilter, Ordered {
             .mutate()
             // 为请求追加 Same-Token 参数
             .header(SaSameUtil.SAME_TOKEN, SaSameUtil.getToken())
-            .header(SENTINEL_ORIGIN_HEADER, "gateway")
+            // sentinel授权规则请求头参数
+            .header(SENTINEL_ORIGIN_HEADER, SpringUtils.getApplicationName())
             .build();
         ServerWebExchange newExchange = exchange.mutate().request(newRequest).build();
         return chain.filter(newExchange);

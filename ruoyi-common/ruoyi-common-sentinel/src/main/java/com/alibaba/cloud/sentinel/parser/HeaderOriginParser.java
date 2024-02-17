@@ -1,9 +1,11 @@
 package com.alibaba.cloud.sentinel.parser;
 
+import cn.hutool.core.util.StrUtil;
 import com.alibaba.csp.sentinel.adapter.spring.webmvc.callback.RequestOriginParser;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
+
+import static org.dromara.common.core.constant.SentinelConstants.SENTINEL_ORIGIN_HEADER;
 
 
 /**
@@ -17,9 +19,9 @@ public class HeaderOriginParser implements RequestOriginParser {
     @Override
     public String parseOrigin(HttpServletRequest request) {
         // 获取请求头
-        String origin = request.getHeader("origin");
-        if (StringUtils.isBlank(origin)) {
-            origin = "blank";
+        String origin = request.getHeader(SENTINEL_ORIGIN_HEADER);
+        if (StrUtil.isBlank(origin)) {
+            origin = StrUtil.EMPTY;
         }
         if (log.isDebugEnabled()) {
             log.debug("sentinel authority rule request header origin is {}", origin);
