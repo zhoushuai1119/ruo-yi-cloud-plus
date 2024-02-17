@@ -29,9 +29,6 @@ spring:
       name: ruoyi
       password: 123456
 
-logging:
-  config: classpath:logback-plus.xml
-
 management:
   endpoints:
     web:
