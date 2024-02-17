@@ -9,6 +9,7 @@
     </parent>
 
     <modules>
+        <module>ruoyi-monitor</module>
         <module>ruoyi-sentinel</module>
         <module>ruoyi-powerjob-server</module>
     </modules>
