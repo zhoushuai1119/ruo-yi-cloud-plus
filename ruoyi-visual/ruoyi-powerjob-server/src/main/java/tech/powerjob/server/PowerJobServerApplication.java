@@ -1,10 +1,9 @@
-package org.dromara.powerjob;
+package tech.powerjob.server;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import tech.powerjob.server.common.utils.PropertyUtils;
 
 /**
  * powerjob 启动程序
@@ -17,7 +16,6 @@ import tech.powerjob.server.common.utils.PropertyUtils;
 public class PowerJobServerApplication {
 
     public static void main(String[] args) {
-        PropertyUtils.init();
         SpringApplication.run(tech.powerjob.server.PowerJobServerApplication.class, args);
         log.info("文档地址: https://www.yuque.com/powerjob/guidence/problem");
     }

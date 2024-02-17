@@ -51,18 +51,18 @@ oms.storage.dfs.mongodb.uri=mongodb://139.196.208.53:27017/powerjob-server
 
 ####### Email properties(Non-core configuration properties) #######
 ####### Delete the following code to disable the mail #######
-#spring.mail.host=smtp.163.com
-#spring.mail.username=zs11195310@163.com
-#spring.mail.password=RQTSNZQRVNDUJDNB
-#spring.mail.properties.mail.smtp.auth=true
-#spring.mail.properties.mail.smtp.starttls.enable=true
-#spring.mail.properties.mail.smtp.starttls.required=true
+spring.mail.host=smtp.163.com
+spring.mail.username=zs11195310@163.com
+spring.mail.password=RQTSNZQRVNDUJDNB
+spring.mail.properties.mail.smtp.auth=true
+spring.mail.properties.mail.smtp.starttls.enable=true
+spring.mail.properties.mail.smtp.starttls.required=true
 
 ####### DingTalk properties(Non-core configuration properties) #######
 ####### Delete the following code to disable the DingTalk #######
-#oms.alarm.ding.app-key=dingauqwkvxxnqskknfv
-#oms.alarm.ding.app-secret=XWrEPdAZMPgJeFtHuL0LH73LRj-74umF2_0BFcoXMfvnX0pCQvt0rpb1JOJU_HLl
-#oms.alarm.ding.agent-id=847044348
+oms.alarm.ding.app-key=dingauqwkvxxnqskknfv
+oms.alarm.ding.app-secret=XWrEPdAZMPgJeFtHuL0LH73LRj-74umF2_0BFcoXMfvnX0pCQvt0rpb1JOJU_HLl
+oms.alarm.ding.agent-id=847044348
 
 ####### Resource cleaning properties #######
 oms.instanceinfo.retention=1
