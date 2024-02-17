@@ -20,6 +20,7 @@ logging.level.org.mongodb=warn
 logging.level.tech.powerjob.server=warn
 logging.level.MONITOR_LOGGER_DB_OPERATION=warn
 logging.level.MONITOR_LOGGER_WORKER_HEART_BEAT=warn
+logging.level.WEB_LOG=warn
 
 # Configuration for uploading files.
 spring.servlet.multipart.enabled=true
