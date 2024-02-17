@@ -254,18 +254,29 @@
                 <version>${velocity.version}</version>
             </dependency>
 
+            <!-- PowerJob server-->
+            <dependency>
+                <groupId>tech.powerjob</groupId>
+                <artifactId>powerjob-server-starter</artifactId>
+                <version>${powerjob.version}</version>
+            </dependency>
+            <!-- PowerJob-Worker -->
+            <dependency>
+                <groupId>tech.powerjob</groupId>
+                <artifactId>powerjob-worker</artifactId>
+                <version>${powerjob.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>tech.powerjob</groupId>
+                <artifactId>powerjob-official-processors</artifactId>
+                <version>${powerjob.version}</version>
+            </dependency>
+
             <!--Cloud 分布式锁-->
             <dependency>
                 <groupId>io.github.zhoushuai1119</groupId>
                 <artifactId>cloud-lock-redisson-spring-boot-starter</artifactId>
                 <version>${cloud-parent.version}</version>
-            </dependency>
-
-            <!-- powerjob-worker -->
-            <dependency>
-                <groupId>tech.powerjob</groupId>
-                <artifactId>powerjob-worker</artifactId>
-                <version>${powerjob.version}</version>
             </dependency>
 
             <!--Cloud RocketMQ-->

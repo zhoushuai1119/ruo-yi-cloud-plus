@@ -1,24 +1,24 @@
 package org.dromara.common.job.config.properties;
 
-
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.context.properties.DeprecatedConfigurationProperty;
+import tech.powerjob.common.enums.Protocol;
+import tech.powerjob.worker.common.constants.StoreStrategy;
+import tech.powerjob.worker.core.processor.ProcessResult;
+import tech.powerjob.worker.core.processor.WorkflowContext;
 
 /**
  * PowerJob properties configuration class.
  *
- * @author songyinyin
+ * @author shuai.zhou
  * @since 2020/7/26 16:37
  */
+@Getter
 @ConfigurationProperties(prefix = "powerjob")
 public class PowerJobProperties {
 
     private final Worker worker = new Worker();
-
-    @Data
-    public Worker getWorker() {
-        return worker;
-    }
 
     /**
      * Powerjob worker configuration properties.
@@ -39,13 +39,6 @@ public class PowerJobProperties {
          */
         private String appName;
         /**
-         * Akka port of Powerjob-worker, optional value. Default value of this property is 27777.
-         * If multiple PowerJob-worker nodes were deployed, different, unique ports should be assigned.
-         * Deprecated, please use 'port'
-         */
-        @Deprecated
-        private int akkaPort = RemoteConstant.DEFAULT_WORKER_PORT;
-        /**
          * port
          */
         private Integer port;
@@ -61,6 +54,10 @@ public class PowerJobProperties {
          * </p>
          */
         private String serverAddress;
+        /**
+         * nacos server name
+         */
+        private String serverName;
         /**
          * Protocol for communication between WORKER and server
          */
