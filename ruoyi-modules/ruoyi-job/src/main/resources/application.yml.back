@@ -40,7 +40,7 @@ powerjob:
   worker:
     enabled: true
     # 需要先在 powerjob 登录页执行应用注册后才能使用
-    app-name: powerjob-worker-samples
+    app-name: ${spring.application.name}
     # 29203 端口 随着主应用端口飘逸 避免集群冲突
     port: 2${server.port}
     # 单个任务追加的工作流上下文最大长度，超过这个长度的会被直接丢弃，默认值 8192

@@ -9,7 +9,6 @@ spring.cloud.nacos.discovery.namespace=${spring.profiles.active}
 spring.cloud.nacos.discovery.username=nacos
 spring.cloud.nacos.discovery.password=nacos
 
-# \u66B4\u9732\u76D1\u63A7\u7AEF\u70B9
 management.endpoints.web.exposure.include=*
 management.endpoint.health.show-details=ALWAYS
 
@@ -35,12 +34,12 @@ oms.akka.port=10086
 oms.http.port=10010
 
 # Prefix for all tables. Default empty string. Config if you have needs, i.e. pj_
-oms.table-prefix=
+oms.table-prefix=pj_
 oms.env=${spring.profiles.active}
 
 ####### Database properties(Configure according to the the environment) #######
 spring.datasource.core.driver-class-name=com.mysql.cj.jdbc.Driver
-spring.datasource.core.jdbc-url=jdbc:mysql://139.196.208.53:3306/powerjob-server?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+spring.datasource.core.jdbc-url=jdbc:mysql://139.196.208.53:3306/ruoyi-plus?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
 spring.datasource.core.username=root
 spring.datasource.core.password=Zs11195310
 spring.datasource.core.maximum-pool-size=20
