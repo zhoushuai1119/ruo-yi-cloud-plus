@@ -157,6 +157,12 @@
 
             <dependency>
                 <groupId>org.dromara</groupId>
+                <artifactId>ruoyi-common-job</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.dromara</groupId>
                 <artifactId>ruoyi-common-arthas</artifactId>
                 <version>${revision}</version>
             </dependency>

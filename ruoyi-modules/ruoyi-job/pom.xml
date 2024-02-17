@@ -51,8 +51,8 @@
 
         <!-- powerjob-worker -->
         <dependency>
-            <groupId>io.github.zhoushuai1119</groupId>
-            <artifactId>powerjob-worker-spring-boot-starter</artifactId>
+            <groupId>org.dromara</groupId>
+            <artifactId>ruoyi-common-job</artifactId>
         </dependency>
 
         <!--Cloud RocketMQ-->

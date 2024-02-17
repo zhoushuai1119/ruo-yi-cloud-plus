@@ -63,7 +63,6 @@
 
         <!-- CLoud 封装 -->
         <cloud-parent.version>3.1.0</cloud-parent.version>
-        <cloud-job.version>4.3.5</cloud-job.version>
         <cloud-apollo.version>2.1.0</cloud-apollo.version>
         <cloud-async-tool>1.4.1</cloud-async-tool>
 
@@ -264,9 +263,9 @@
 
             <!-- powerjob-worker -->
             <dependency>
-                <groupId>io.github.zhoushuai1119</groupId>
-                <artifactId>powerjob-worker-spring-boot-starter</artifactId>
-                <version>${cloud-job.version}</version>
+                <groupId>tech.powerjob</groupId>
+                <artifactId>powerjob-worker</artifactId>
+                <version>${powerjob.version}</version>
             </dependency>
 
             <!--Cloud RocketMQ-->
