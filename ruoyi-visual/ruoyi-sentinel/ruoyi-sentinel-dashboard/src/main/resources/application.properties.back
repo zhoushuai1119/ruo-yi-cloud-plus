@@ -1,7 +1,7 @@
 server.port=9999
 
 spring.application.name=ruoyi-sentinel-dashboard
-# \u4FEE\u590D sentinel \u63A7\u5236\u53F0\u672A\u9002\u914D springboot 2.6 \u65B0\u8DEF\u7531\u65B9\u5F0F
+# 修复 sentinel 控制台未适配 springboot 2.6 新路由方式
 spring.mvc.pathmatch.matching-strategy=ant_path_matcher
 
 spring.profiles.active=dev
@@ -43,7 +43,7 @@ auth.password=123456
 # filtering in pom.xml for this resource file.
 sentinel.dashboard.version=1.8.7
 
-# \u66B4\u9732\u76D1\u63A7\u7AEF\u70B9
+# 暴露监控端点
 management.endpoints.web.exposure.include=*
 management.endpoint.health.show-details=ALWAYS
 
