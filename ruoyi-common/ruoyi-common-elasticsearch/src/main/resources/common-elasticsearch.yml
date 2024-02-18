@@ -21,7 +21,7 @@ easy-es:
   max-conn-per-route: 100
   global-config:
     # 开启控制台打印通过本框架生成的DSL语句,默认为开启,测试稳定后的生产环境建议关闭,以提升少量性能
-    print-dsl: true
+    print-dsl: false
     # 异步处理索引是否阻塞主线程 默认阻塞 数据量过大时调整为非阻塞异步进行 项目启动更快
     async-process-index-blocking: true
     db-config:
