@@ -1,5 +1,6 @@
 package org.dromara.demo;
 
+import org.dromara.easyes.starter.register.EsMapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.metrics.buffering.BufferingApplicationStartup;
@@ -10,6 +11,7 @@ import org.springframework.boot.context.metrics.buffering.BufferingApplicationSt
  * @author shuai.zhou
  */
 @SpringBootApplication
+@EsMapperScan("org.dromara.demo.esmapper")
 public class RuoYiDemoApplication {
     public static void main(String[] args) {
         SpringApplication application = new SpringApplication(RuoYiDemoApplication.class);

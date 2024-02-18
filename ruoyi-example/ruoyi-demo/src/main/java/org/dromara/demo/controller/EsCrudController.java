@@ -1,11 +1,11 @@
 package org.dromara.demo.controller;
 
 import org.dromara.common.core.domain.R;
+import org.dromara.common.core.utils.StringUtils;
 import org.dromara.demo.domain.Document;
 import org.dromara.demo.esmapper.DocumentMapper;
 import lombok.RequiredArgsConstructor;
 import org.dromara.easyes.core.conditions.select.LambdaEsQueryWrapper;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,7 +15,6 @@ import java.util.List;
  *
  * @author shuai.zhou
  */
-@ConditionalOnProperty(value = "easy-es.enable", havingValue = "true")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/es")
@@ -31,7 +30,7 @@ public class EsCrudController {
     @GetMapping("/select")
     public Document select(String title) {
         LambdaEsQueryWrapper<Document> wrapper = new LambdaEsQueryWrapper<>();
-        wrapper.eq(Document::getTitle, title);
+        wrapper.eq(StringUtils.isNotBlank(title), Document::getTitle, title);
         return documentMapper.selectOne(wrapper);
     }
 
@@ -43,7 +42,7 @@ public class EsCrudController {
     @GetMapping("/search")
     public List<Document> search(String key) {
         LambdaEsQueryWrapper<Document> wrapper = new LambdaEsQueryWrapper<>();
-        wrapper.like(Document::getTitle, key);
+        wrapper.like(StringUtils.isNotBlank(key), Document::getTitle, key);
         return documentMapper.selectList(wrapper);
     }
 

@@ -1,8 +1,8 @@
 package org.dromara.common.elasticsearch.config;
 
-import org.dromara.easyes.starter.register.EsMapperScan;
+import org.dromara.common.core.factory.YmlPropertySourceFactory;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.context.annotation.PropertySource;
 
 /**
  * easy-es 配置
@@ -10,8 +10,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
  * @author shuai.zhou
  */
 @AutoConfiguration
-@ConditionalOnProperty(value = "easy-es.enable", havingValue = "true")
-@EsMapperScan("org.dromara.**.esmapper")
+@PropertySource(value = "classpath:common-elasticsearch.yml", factory = YmlPropertySourceFactory.class)
 public class EasyEsConfiguration {
 
 }

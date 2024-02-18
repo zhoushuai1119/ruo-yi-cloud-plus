@@ -1,0 +1,37 @@
+easy-es:
+  # 是否开启EE自动配置
+  enable: true
+  # 默认值为http 可缺省 也支持https免ssl方式 配置此值为 https 即可
+  schema: http
+  # # 默认为true 打印banner 若您不期望打印banner,可配置为false
+  banner: false
+  # 心跳策略时间 单位:ms
+  keep-alive-millis: 30000
+  # 连接超时时间 单位:ms
+  connect-timeout: 5000
+  # 通信超时时间 单位:ms
+  socket-timeout: 5000
+  # 请求超时时间 单位:ms
+  request-timeout: 5000
+  # 连接请求超时时间 单位:ms
+  connection-request-timeout: 5000
+  # 最大连接数 单位:个
+  max-conn-total: 100
+  # 最大连接路由数 单位:个
+  max-conn-per-route: 100
+  global-config:
+    # 开启控制台打印通过本框架生成的DSL语句,默认为开启,测试稳定后的生产环境建议关闭,以提升少量性能
+    print-dsl: true
+    # 异步处理索引是否阻塞主线程 默认阻塞 数据量过大时调整为非阻塞异步进行 项目启动更快
+    async-process-index-blocking: true
+    db-config:
+      # 是否开启下划线转驼峰 默认为false
+      map-underscore-to-camel-case: true
+      # id生成策略 customize为自定义,id值由用户生成,比如取MySQL中的数据id,如缺省此项配置,则id默认策略为es自动生成
+      id-type: customize
+      # 字段更新策略 默认为not_null
+      field-strategy: not_null
+      # 默认开启,查询若指定了size超过1w条时也会自动开启,开启后查询所有匹配数据,若不开启,会导致无法获取数据总条数,其它功能不受影响.
+      enable-track-total-hits: true
+      # 数据刷新策略,默认为不刷新
+      refresh-policy: immediate
