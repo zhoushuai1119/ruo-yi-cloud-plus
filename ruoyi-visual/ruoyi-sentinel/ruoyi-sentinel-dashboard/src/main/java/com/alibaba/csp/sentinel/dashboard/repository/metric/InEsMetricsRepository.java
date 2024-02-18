@@ -1,17 +1,17 @@
 package com.alibaba.csp.sentinel.dashboard.repository.metric;
 
+import cn.hutool.core.collection.CollUtil;
 import com.alibaba.csp.sentinel.dashboard.datasource.entity.MetricEntity;
-import com.alibaba.csp.sentinel.dashboard.service.MetricService;
-import com.alibaba.csp.sentinel.dashboard.datasource.entity.Metric;
+import com.alibaba.csp.sentinel.dashboard.datasource.entity.EsMetric;
+import com.alibaba.csp.sentinel.dashboard.mapper.EsMetricMapper;
+import com.alibaba.csp.sentinel.dashboard.util.SnowflakeUtil;
 import com.alibaba.csp.sentinel.util.StringUtil;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
+import org.dromara.easyes.core.conditions.select.LambdaEsQueryWrapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -25,12 +25,14 @@ import java.util.stream.Collectors;
  * @version: v1
  */
 @Component
-public class InMysqlMetricsRepository implements MetricsRepository<MetricEntity> {
+public class InEsMetricsRepository implements MetricsRepository<MetricEntity> {
+
+    private static final long MAX_METRIC_LIVE_TIME_MS = 1000 * 60 * 5;
 
     private final ReentrantReadWriteLock readWriteLock = new ReentrantReadWriteLock();
 
     @Resource
-    private MetricService metricService;
+    private EsMetricMapper esMetricMapper;
 
     @Override
     public void save(MetricEntity entity) {
@@ -39,7 +41,7 @@ public class InMysqlMetricsRepository implements MetricsRepository<MetricEntity>
         }
         readWriteLock.writeLock().lock();
         try {
-            metricService.save(toPo(entity));
+            esMetricMapper.insert(toPo(entity));
         } finally {
             readWriteLock.writeLock().unlock();
         }
@@ -53,9 +55,9 @@ public class InMysqlMetricsRepository implements MetricsRepository<MetricEntity>
         }
         readWriteLock.writeLock().lock();
         try {
-            List<Metric> metricList = new ArrayList<>();
+            List<EsMetric> metricList = new ArrayList<>();
             metrics.forEach(metric -> metricList.add(toPo(metric)));
-            metricService.saveBatch(metricList);
+            esMetricMapper.insertBatch(metricList);
         } finally {
             readWriteLock.writeLock().unlock();
         }
@@ -72,14 +74,14 @@ public class InMysqlMetricsRepository implements MetricsRepository<MetricEntity>
 
         readWriteLock.readLock().lock();
         try {
-            Metric metric = new Metric();
+            EsMetric metric = new EsMetric();
             metric.setApp(app);
             metric.setResource(resource);
-            QueryWrapper<Metric> queryWrapper = new QueryWrapper<>(metric);
-            queryWrapper.between("timestamp", new Date(startTime), new Date(endTime));
-            List<Metric> metricList = metricService.list(queryWrapper);
+            LambdaEsQueryWrapper<EsMetric> queryWrapper = new LambdaEsQueryWrapper<>();
+            queryWrapper.between("timestamp", startTime, endTime);
+            List<EsMetric> metricList = esMetricMapper.selectList(queryWrapper);
 
-            if (CollectionUtils.isEmpty(metricList)) {
+            if (CollUtil.isEmpty(metricList)) {
                 return results;
             }
 
@@ -97,20 +99,20 @@ public class InMysqlMetricsRepository implements MetricsRepository<MetricEntity>
             return results;
         }
 
-        final long minTimeMs = System.currentTimeMillis() - 1000 * 60 * 5;
+        final long minTimeMs = System.currentTimeMillis() - MAX_METRIC_LIVE_TIME_MS;
         Map<String, MetricEntity> resourceCount = new ConcurrentHashMap<>(32);
 
         readWriteLock.readLock().lock();
         try {
-            QueryWrapper<Metric> queryWrapper = new QueryWrapper<>();
+            LambdaEsQueryWrapper<EsMetric> queryWrapper = new LambdaEsQueryWrapper<>();
             queryWrapper.eq("app", app);
-            queryWrapper.ge("timestamp", new Date(minTimeMs));
-            List<Metric> metricList = metricService.list(queryWrapper);
+            queryWrapper.ge("timestamp", minTimeMs);
+            List<EsMetric> metricList = esMetricMapper.selectList(queryWrapper);
 
             List<MetricEntity> metricEntityList = new ArrayList<>();
             metricList.forEach(e -> metricEntityList.add(toPo(e)));
 
-            if (CollectionUtils.isEmpty(metricEntityList)) {
+            if (CollUtil.isEmpty(metricEntityList)) {
                 return results;
             }
 
@@ -146,13 +148,14 @@ public class InMysqlMetricsRepository implements MetricsRepository<MetricEntity>
         }
     }
 
-    private Metric toPo(MetricEntity metricEntity) {
-        Metric metric = new Metric();
-        BeanUtils.copyProperties(metricEntity, metric, Metric.class);
-        return metric;
+    private EsMetric toPo(MetricEntity metricEntity) {
+        EsMetric esMetric = new EsMetric();
+        BeanUtils.copyProperties(metricEntity, esMetric, EsMetric.class);
+        esMetric.setId(SnowflakeUtil.generMetricId());
+        return esMetric;
     }
 
-    private MetricEntity toPo(Metric metric) {
+    private MetricEntity toPo(EsMetric metric) {
         MetricEntity metricEntity = new MetricEntity();
         BeanUtils.copyProperties(metric, metricEntity, MetricEntity.class);
         return metricEntity;

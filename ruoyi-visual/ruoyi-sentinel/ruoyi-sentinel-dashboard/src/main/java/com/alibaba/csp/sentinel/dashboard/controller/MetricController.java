@@ -41,7 +41,7 @@ public class MetricController {
 
     private static final long MAX_QUERY_INTERVAL_MS = 1000 * 60 * 60;
 
-    @Resource(name = "inMysqlMetricsRepository")
+    @Resource(name = "inEsMetricsRepository")
     private MetricsRepository<MetricEntity> metricStore;
 
     @ResponseBody

@@ -22,8 +22,6 @@
         <spring-cloud-alibaba.version>2021.0.6.0</spring-cloud-alibaba.version>
         <nacos.client.version>2.2.3</nacos.client.version>
 
-        <mysql.version>8.0.33</mysql.version>
-        <mybatis-plus.version>3.5.5</mybatis-plus.version>
         <commons-lang.version>2.6</commons-lang.version>
     </properties>
 
@@ -116,6 +114,14 @@
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-starter-tomcat</artifactId>
                 </exclusion>
+                <exclusion>
+                    <groupId>org.elasticsearch.client</groupId>
+                    <artifactId>elasticsearch-rest-high-level-client</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.elasticsearch</groupId>
+                    <artifactId>elasticsearch</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
         <!-- web 容器使用 undertow 性能更强 -->
@@ -164,17 +170,18 @@
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-extra</artifactId>
         </dependency>
-        <!-- Mysql5.8 -->
+        <!-- easy-es -->
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>${mysql.version}</version>
+            <groupId>org.dromara.easy-es</groupId>
+            <artifactId>easy-es-boot-starter</artifactId>
         </dependency>
-        <!-- Mybatis-plus -->
         <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>${mybatis-plus.version}</version>
+            <groupId>org.elasticsearch</groupId>
+            <artifactId>elasticsearch</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.elasticsearch.client</groupId>
+            <artifactId>elasticsearch-rest-high-level-client</artifactId>
         </dependency>
     </dependencies>
 

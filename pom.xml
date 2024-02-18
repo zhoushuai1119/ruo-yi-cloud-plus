@@ -41,6 +41,7 @@
         <lombok.version>1.18.30</lombok.version>
         <logstash.version>7.4</logstash.version>
         <easy-es.version>2.0.0-beta5</easy-es.version>
+        <elasticsearch.version>7.14.0</elasticsearch.version>
         <skywalking-toolkit.version>8.16.0</skywalking-toolkit.version>
         <bouncycastle.version>1.76</bouncycastle.version>
         <alibaba-ttl.version>2.14.4</alibaba-ttl.version>
@@ -317,6 +318,16 @@
                 <groupId>org.dromara.easy-es</groupId>
                 <artifactId>easy-es-boot-starter</artifactId>
                 <version>${easy-es.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.elasticsearch</groupId>
+                <artifactId>elasticsearch</artifactId>
+                <version>${elasticsearch.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.elasticsearch.client</groupId>
+                <artifactId>elasticsearch-rest-high-level-client</artifactId>
+                <version>${elasticsearch.version}</version>
             </dependency>
 
             <!-- skywalking 整合 logback -->

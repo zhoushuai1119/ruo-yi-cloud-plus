@@ -19,8 +19,11 @@ import com.alibaba.csp.sentinel.adapter.servlet.CommonFilter;
 import com.alibaba.csp.sentinel.adapter.servlet.callback.WebCallbackManager;
 import com.alibaba.csp.sentinel.dashboard.auth.AuthorizationInterceptor;
 import com.alibaba.csp.sentinel.dashboard.auth.LoginAuthenticationFilter;
+import com.alibaba.csp.sentinel.dashboard.config.serializer.BigNumberSerializer;
 import com.alibaba.csp.sentinel.util.StringUtil;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -109,4 +112,16 @@ public class WebConfig implements WebMvcConfigurer {
         registration.setOrder(0);
         return registration;
     }
+
+    @Bean
+    public Jackson2ObjectMapperBuilderCustomizer customizer() {
+        return builder -> {
+            // 全局配置序列化返回 JSON 处理
+            JavaTimeModule javaTimeModule = new JavaTimeModule();
+            javaTimeModule.addSerializer(Long.class, BigNumberSerializer.INSTANCE);
+            javaTimeModule.addSerializer(Long.TYPE, BigNumberSerializer.INSTANCE);
+            builder.modules(javaTimeModule);
+        };
+    }
+
 }

@@ -1,7 +1,7 @@
 server.port=9999
 
 spring.application.name=ruoyi-sentinel-dashboard
-# 修复 sentinel 控制台未适配 springboot 2.6 新路由方式
+# \u4FEE\u590D sentinel \u63A7\u5236\u53F0\u672A\u9002\u914D springboot 2.6 \u65B0\u8DEF\u7531\u65B9\u5F0F
 spring.mvc.pathmatch.matching-strategy=ant_path_matcher
 
 spring.profiles.active=dev
@@ -43,7 +43,7 @@ auth.password=123456
 # filtering in pom.xml for this resource file.
 sentinel.dashboard.version=1.8.7
 
-# 暴露监控端点
+# \u66B4\u9732\u76D1\u63A7\u7AEF\u70B9
 management.endpoints.web.exposure.include=*
 management.endpoint.health.show-details=ALWAYS
 
@@ -55,13 +55,25 @@ apollo.user=zhoushuai
 apollo.clusterName=default
 apollo.namespace=sentinel-rules
 
-# mysql
-spring.datasource.type= com.zaxxer.hikari.HikariDataSource
-spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
-spring.datasource.url=jdbc:mysql://139.196.208.53:3306/ruoyi-plus?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&useSSL=false&testWhileIdle=false
-spring.datasource.username=root
-spring.datasource.password=Zs11195310
+# easy-es
+easy-es.enable=true
+easy-es.address=139.196.208.53:9200
+easy-es.username=elastic
+easy-es.password=Zs195310
+easy-es.schema=http
+easy-es.banner=false
+easy-es.keep-alive-millis=30000
+easy-es.connect-timeout=5000
+easy-es.socket-timeout=5000
+easy-es.request-timeout=5000
+easy-es.connection-request-timeout=5000
+easy-es.max-conn-total=100
+easy-es.max-conn-per-route=100
+easy-es.global-config.print-dsl=true
+easy-es.global-config.async-process-index-blocking=true
+easy-es.global-config.db-config.map-underscore-to-camel-case=true
+easy-es.global-config.db-config.id-type=customize
+easy-es.global-config.db-config.field-strategy=not_null
+easy-es.global-config.db-config.enable-track-total-hits=true
+easy-es.global-config.db-config.refresh-policy=immediate
 
-# mybatis plus
-mybatis-plus.mapperLocations=classpath*:mapper/**/*Mapper.xml
-mybatis-plus.global-config.dbConfig.idType=auto

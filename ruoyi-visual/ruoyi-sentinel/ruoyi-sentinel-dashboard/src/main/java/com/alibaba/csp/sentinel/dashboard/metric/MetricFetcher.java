@@ -65,7 +65,7 @@ public class MetricFetcher {
 
     private final Map<String, AtomicLong> appLastFetchTime = new ConcurrentHashMap<>();
 
-    @Resource(name = "inMysqlMetricsRepository")
+    @Resource(name = "inEsMetricsRepository")
     private MetricsRepository<MetricEntity> metricStore;
 
     @Resource
