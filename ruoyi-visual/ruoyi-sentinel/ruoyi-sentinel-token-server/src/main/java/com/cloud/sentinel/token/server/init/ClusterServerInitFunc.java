@@ -26,11 +26,6 @@ import java.util.Set;
  * @author: shuai.zhou
  * @date: 2022/10/24 15:50
  * @version: v1
- * <p>
- * 启动类加上启动参数:
- * -Dcsp.sentinel.log.use.pid=true
- * -Dproject.name=token-server
- * -Dcsp.sentinel.dashboard.server=127.0.0.1:9999
  */
 @Slf4j
 public class ClusterServerInitFunc implements InitFunc {
