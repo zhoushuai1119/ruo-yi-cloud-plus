@@ -26,7 +26,7 @@ public class TokenServerTransportConfigParser implements Converter<String, Serve
             return null;
         }
         RecordLog.info("[TokenServerTransportConfigParser] Get data: " + source);
-        List<ClusterGroupEntity> groupList = JSON.parseObject(source, new TypeReference<List<ClusterGroupEntity>>() {
+        List<ClusterGroupEntity> groupList = JSON.parseObject(source, new TypeReference<>() {
         });
         if (CollUtil.isEmpty(groupList)) {
             return null;
