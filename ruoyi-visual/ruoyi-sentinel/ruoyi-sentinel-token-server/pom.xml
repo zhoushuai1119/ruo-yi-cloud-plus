@@ -27,18 +27,6 @@
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         </dependency>
 
-        <!-- for Apollo rule publisher sample -->
-        <dependency>
-            <groupId>com.ctrip.framework.apollo</groupId>
-            <artifactId>apollo-openapi</artifactId>
-            <version>${cloud-apollo.version}</version>
-        </dependency>
-        <!-- apollo配置中心 -->
-        <dependency>
-            <groupId>com.ctrip.framework.apollo</groupId>
-            <artifactId>apollo-client</artifactId>
-        </dependency>
-
         <!-- springboot start -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -77,11 +65,6 @@
             <groupId>org.apache.curator</groupId>
             <artifactId>curator-recipes</artifactId>
             <version>${curator.version}</version>
-        </dependency>
-        <!-- hutool -->
-        <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-extra</artifactId>
         </dependency>
         <!--dingtalk-->
         <dependency>

@@ -70,18 +70,6 @@
             <version>${nacos.client.version}</version>
         </dependency>
 
-        <!-- for Apollo rule publisher sample -->
-        <dependency>
-            <groupId>com.ctrip.framework.apollo</groupId>
-            <artifactId>apollo-openapi</artifactId>
-            <version>${cloud-apollo.version}</version>
-        </dependency>
-        <!-- apollo配置中心 -->
-        <dependency>
-            <groupId>com.ctrip.framework.apollo</groupId>
-            <artifactId>apollo-client</artifactId>
-        </dependency>
-
         <!-- sentinel start -->
         <dependency>
             <groupId>com.alibaba.csp</groupId>
@@ -164,11 +152,6 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-        </dependency>
-        <!-- hutool -->
-        <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-extra</artifactId>
         </dependency>
         <!-- easy-es -->
         <dependency>
