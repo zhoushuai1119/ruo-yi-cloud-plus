@@ -11,6 +11,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.dromara.common.core.domain.R;
+import org.springframework.http.MediaType;
+
+import java.nio.charset.StandardCharsets;
 
 
 /**
@@ -22,24 +25,24 @@ public class SentinelBlockHandler implements BlockExceptionHandler {
 
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, BlockException ex) throws Exception {
-        String msg = null;
+        String msg = "非法访问，请稍后重试";
         int status = 429;
         if (ex instanceof FlowException) {
-            msg = "请求被限流了!";
+            msg = "您的访问过于频繁，请稍后重试!";
         } else if (ex instanceof DegradeException) {
-            msg = "请求被降级了!";
+            msg = "调用服务响应异常,已进行降级!";
         } else if (ex instanceof ParamFlowException) {
-            msg = "热点参数限流!";
+            msg = "您对热点参数访问过于频繁，请稍后重试!";
         } else if (ex instanceof SystemBlockException) {
-            msg = "系统规则限流或降级!";
+            msg = "已触碰系统的红线规则，请检查访问参数!";
         } else if (ex instanceof AuthorityException) {
             status = 401;
-            msg = "授权规则不通过!";
+            msg = "授权规则检测不同，请检查访问参数!";
         }
 
         // http状态码
         response.setStatus(status);
-        response.setContentType("application/json;charset=utf-8");
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         String path = request.getServletPath();
         if (path != null) {
             msg = String.format("接口[%s]%s", path, msg);
