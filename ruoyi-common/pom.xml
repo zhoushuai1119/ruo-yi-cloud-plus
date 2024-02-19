@@ -32,6 +32,8 @@
         <module>ruoyi-common-sms</module>
         <module>ruoyi-common-elasticsearch</module>
         <module>ruoyi-common-sentinel</module>
+        <module>ruoyi-common-skylog</module>
+        <module>ruoyi-common-logstash</module>
         <module>ruoyi-common-rocketmq</module>
         <module>ruoyi-common-job</module>
         <module>ruoyi-common-prometheus</module>
