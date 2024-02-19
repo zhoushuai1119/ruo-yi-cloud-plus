@@ -87,11 +87,8 @@ public class ClusterClientInitFunc implements InitFunc {
             }
         }
 
-        // Register token client related data source.
-        // Token client common config
         // 集群限流客户端的配置属性
-        initClientConfigProperty();
-        // Token client assign config (e.g. target token server) retrieved from assign map:
+        // initClientConfigProperty();
         //初始化Token客户端
         initClientServerAssignProperty();
         //初始化客户端状态为client
@@ -170,12 +167,12 @@ public class ClusterClientInitFunc implements InitFunc {
      * @author: zhou shuai
      * @date: 2024/2/19 21:34
      */
-    private void initClientConfigProperty() {
+    /*private void initClientConfigProperty() {
         ReadableDataSource<String, ClusterClientConfig> clientConfigDs = new ApolloDataSource<>(tokenServerNameSpace,
             ApolloConfigUtil.getTokenServerRuleKey(), defaultRules, source -> JSON.parseObject(source, new TypeReference<>() {
         }));
         ClusterClientConfigManager.registerClientConfigProperty(clientConfigDs.getProperty());
-    }
+    }*/
 
     /**
      * 设置 token client 需要链接的token server 的地址
