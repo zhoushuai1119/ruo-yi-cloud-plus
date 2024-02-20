@@ -18,7 +18,7 @@ public class TokenServerApplication {
 
     public static void main(String[] args) {
         // 修改sentinel日志生成目录
-        System.setProperty(LogBase.LOG_DIR, "/logs/ruoyi/ruoyi-visual/ruoyi-sentinel/sentinel-token-server/sentinel-record");
+        System.setProperty(LogBase.LOG_DIR, "/logs/ruoyi/ruoyi-visual/ruoyi-sentinel/ruoyi-sentinel-token-server/sentinel-record");
         SpringApplication.run(TokenServerApplication.class, args);
     }
 
