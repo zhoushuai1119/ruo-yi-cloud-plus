@@ -109,10 +109,10 @@
         </dependency>
 
         <!-- prometheus 监控 -->
-        <!--<dependency>
+        <dependency>
             <groupId>org.dromara</groupId>
             <artifactId>ruoyi-common-prometheus</artifactId>
-        </dependency>-->
+        </dependency>
 
         <!-- 滑块验证码 -->
         <dependency>
