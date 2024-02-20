@@ -5,7 +5,7 @@
     <property name="log.pattern" value="[%tid] %d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"/>
 
     <!-- 日志存放路径 -->
-    <property name="log.path" value="/logs/ruoyi/${app.name}"/>
+    <property name="log.path" value="/logs/ruoyi/ruoyi-visual/${app.name}"/>
     <!-- 定义存储日志文件路径 -->
     <property name="log.file" value="${log.path}/${app.name}.log"/>
     <!-- 定义历史日志文件路径 -->
