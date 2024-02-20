@@ -16,25 +16,28 @@
     <property name="history.error.log.file"
               value="${log.path}/%d{yyyy-MM-dd}/error/${app.name}_error-%i.log.zip"/>
 
-    <!-- 日志最大的历史 30天 -->
-    <property name="log.max.history" value="30"/>
     <!-- 日志文件大小,超过这个大小将被压缩 -->
     <property name="log.max.size" value="100MB"/>
+    <!-- 日志最大的历史 60天 -->
+    <property name="log.max.history" value="60"/>
+    <!-- 日志文件保留的总的最大大小-->
+    <property name="total.size.cap" value="20GB"/>
 
-    <!-- 用来保存输出所有级别的日志 -->
+    <!--RollingFileAppender继承自FileAppender，具有轮转日志文件的功能,是我们最常使用的Appender-->
     <appender name="file_all" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <!-- 设置日志不超过${log.max.size}时的保存路径 -->
         <file>${log.file}</file>
-        <!-- 循环政策：基于时间创建日志文件 -->
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+        <!-- SizeAndTimeBasedRollingPolicy是基于时间和大小的滚动策略，几乎可以涵盖所有日志滚动需求场景，也是使用最多的策略 -->
+        <!-- 该策略适用于1.1.7版本及之后的版本，之前的版本继续采用TimeBasedRollingPolicy加SizeAndTimeBasedFNATP组件实现 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
             <!-- 日志文件名格式 -->
             <fileNamePattern>${history.log.file}</fileNamePattern>
-            <!-- 文件输出日志 (文件大小策略进行文件输出，超过指定大小对文件备份) -->
-            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-                <maxFileSize>${log.max.size}</maxFileSize>
-            </timeBasedFileNamingAndTriggeringPolicy>
-            <!--只保留最近30天的日志-->
+            <!-- 单个日志文件最大大小，当文件达到该大小则触发截断（以及压缩）-->
+            <maxFileSize>${log.max.size}</maxFileSize>
+            <!--只保留最近60天的日志-->
             <maxHistory>${log.max.history}</maxHistory>
+            <!-- 日志文件保留的总的最大大小-->
+            <totalSizeCap>${total.size.cap}</totalSizeCap>
         </rollingPolicy>
         <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
             <layout class="org.apache.skywalking.apm.toolkit.log.logback.v1.x.TraceIdPatternLogbackLayout">
@@ -46,15 +49,17 @@
 
     <appender name="file_error" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${error.log.file}</file>
-        <!-- 循环政策：基于时间创建日志文件 -->
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+        <!-- SizeAndTimeBasedRollingPolicy是基于时间和大小的滚动策略，几乎可以涵盖所有日志滚动需求场景，也是使用最多的策略 -->
+        <!-- 该策略适用于1.1.7版本及之后的版本，之前的版本继续采用TimeBasedRollingPolicy加SizeAndTimeBasedFNATP组件实现 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
             <!-- 日志文件名格式 -->
             <FileNamePattern>${history.error.log.file}</FileNamePattern>
-            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-                <maxFileSize>${log.max.size}</maxFileSize>
-            </timeBasedFileNamingAndTriggeringPolicy>
-            <!--只保留最近30天的日志-->
+            <!-- 单个日志文件最大大小，当文件达到该大小则触发截断（以及压缩）-->
+            <maxFileSize>${log.max.size}</maxFileSize>
+            <!--只保留最近60天的日志-->
             <maxHistory>${log.max.history}</maxHistory>
+            <!-- 日志文件保留的总的最大大小-->
+            <totalSizeCap>${total.size.cap}</totalSizeCap>
         </rollingPolicy>
         <!-- 日志输出的文件的格式 -->
         <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
