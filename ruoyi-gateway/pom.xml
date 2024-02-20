@@ -102,18 +102,14 @@
 
         <!-- ELK 日志收集 -->
         <dependency>
-            <groupId>net.logstash.logback</groupId>
-            <artifactId>logstash-logback-encoder</artifactId>
+            <groupId>org.dromara</groupId>
+            <artifactId>ruoyi-common-logstash</artifactId>
         </dependency>
 
         <!-- skywalking 日志收集 -->
         <dependency>
-            <groupId>org.apache.skywalking</groupId>
-            <artifactId>apm-toolkit-logback-1.x</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.skywalking</groupId>
-            <artifactId>apm-toolkit-trace</artifactId>
+            <groupId>org.dromara</groupId>
+            <artifactId>ruoyi-common-skylog</artifactId>
         </dependency>
 
         <!-- prometheus 监控 -->
