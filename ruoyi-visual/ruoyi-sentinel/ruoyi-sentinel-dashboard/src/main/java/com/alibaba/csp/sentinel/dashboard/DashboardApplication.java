@@ -31,7 +31,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class DashboardApplication {
 
     public static void main(String[] args) {
-        //解决控制台【as that given for appender [CONFIG_LOG_FILE] defined earlier.】问题
+        //关闭nacos默认日志、解决控制台【as that given for appender [CONFIG_LOG_FILE] defined earlier.】问题
         System.setProperty("nacos.logging.default.config.enabled", "false");
         // 修改sentinel日志生成目录
         System.setProperty(LogBase.LOG_DIR, "/logs/ruoyi/ruoyi-visual/ruoyi-sentinel/ruoyi-sentinel-dashboard/sentinel-record");

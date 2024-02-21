@@ -16,7 +16,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 public class PowerJobServerApplication {
 
     public static void main(String[] args) {
-        //解决控制台【as that given for appender [CONFIG_LOG_FILE] defined earlier.】问题
+        //关闭nacos默认日志、解决控制台【as that given for appender [CONFIG_LOG_FILE] defined earlier.】问题
         System.setProperty("nacos.logging.default.config.enabled", "false");
         SpringApplication.run(tech.powerjob.server.PowerJobServerApplication.class, args);
         log.info("文档地址: https://www.yuque.com/powerjob/guidence/problem");
