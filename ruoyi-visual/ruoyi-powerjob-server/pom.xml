@@ -21,6 +21,7 @@
         <spring-cloud.version>2021.0.6</spring-cloud.version>
         <spring-cloud-alibaba.version>2021.0.6.0</spring-cloud-alibaba.version>
         <nacos.client.version>2.2.3</nacos.client.version>
+        <logstash-logback-encoder.version>7.2</logstash-logback-encoder.version>
     </properties>
 
     <dependencyManagement>
@@ -66,7 +67,12 @@
             <artifactId>nacos-client</artifactId>
             <version>${nacos.client.version}</version>
         </dependency>
-
+        <!-- logback appenders -->
+        <dependency>
+            <groupId>net.logstash.logback</groupId>
+            <artifactId>logstash-logback-encoder</artifactId>
+            <version>${logstash-logback-encoder.version}</version>
+        </dependency>
         <!-- apollo配置中心 -->
         <dependency>
             <groupId>com.ctrip.framework.apollo</groupId>
