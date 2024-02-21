@@ -44,3 +44,7 @@ apollo:
 zookeeper:
   address: 139.196.208.53:2181
 
+# logstash日志收集
+logstash:
+  address: 139.196.208.53:4560
+

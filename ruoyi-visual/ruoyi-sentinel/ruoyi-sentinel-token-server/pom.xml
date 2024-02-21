@@ -60,6 +60,11 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <!-- ELK 日志收集 -->
+        <dependency>
+            <groupId>org.dromara</groupId>
+            <artifactId>ruoyi-common-logstash</artifactId>
+        </dependency>
         <!-- 封装了zookeeper一些高级特性，如：Cache事件监听、选举、分布式锁等-->
         <dependency>
             <groupId>org.apache.curator</groupId>
