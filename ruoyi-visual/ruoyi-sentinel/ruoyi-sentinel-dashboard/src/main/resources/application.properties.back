@@ -55,6 +55,9 @@ apollo.user=zhoushuai
 apollo.clusterName=default
 apollo.namespace=sentinel-rules
 
+## logstash
+logstash.address = 139.196.208.53:4560
+
 # easy-es
 easy-es.enable=true
 easy-es.address=139.196.208.53:9200

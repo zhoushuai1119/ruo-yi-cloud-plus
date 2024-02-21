@@ -75,3 +75,6 @@ oms.instance.metadata.cache.size=1024
 ####### Threshold in precise fetching server(0~100). 100 means full detection of server, in which #######
 ####### split-brain could be avoided while performance overhead would increase. #######
 oms.accurate.select.server.percentage=50
+
+## logstash
+logstash.address = 139.196.208.53:4560
