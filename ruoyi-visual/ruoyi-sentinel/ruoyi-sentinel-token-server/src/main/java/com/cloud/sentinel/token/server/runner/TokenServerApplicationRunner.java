@@ -1,4 +1,4 @@
-package com.cloud.sentinel.token.server.core;
+package com.cloud.sentinel.token.server.runner;
 
 import com.alibaba.csp.sentinel.cluster.server.ClusterTokenServer;
 import com.alibaba.csp.sentinel.cluster.server.SentinelDefaultTokenServer;
@@ -7,9 +7,9 @@ import com.alibaba.csp.sentinel.util.HostNameUtil;
 import com.cloud.alarm.dinger.DingerSender;
 import com.cloud.alarm.dinger.core.entity.DingerRequest;
 import com.cloud.alarm.dinger.core.entity.enums.MessageSubType;
-import jakarta.annotation.PostConstruct;
+import com.cloud.sentinel.token.server.core.ApolloClusterConfigManager;
+import jakarta.annotation.Resource;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
@@ -18,6 +18,8 @@ import org.apache.curator.framework.recipes.leader.LeaderLatchListener;
 import org.apache.curator.retry.ExponentialBackoffRetry;
 import org.apache.curator.utils.CloseableUtils;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
 import java.io.Closeable;
@@ -27,16 +29,19 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * 开机启动 Token-Server
+ *
  * @author shuai.zhou
  */
 @Slf4j
 @Component
-@RequiredArgsConstructor
-public class TokenServerBootstrap {
+public class TokenServerApplicationRunner implements ApplicationRunner {
 
-    private final ApolloClusterConfigManager apolloClusterConfigManager;
+    @Resource
+    private ApolloClusterConfigManager apolloClusterConfigManager;
 
-    private final DingerSender dingerSender;
+    @Resource
+    private DingerSender dingerSender;
 
     @Value("${zookeeper.address}")
     private String zkAddress;
@@ -45,13 +50,13 @@ public class TokenServerBootstrap {
 
     private static CuratorFramework ZK_CLIENT;
 
-    private static TokenServerClient TOKEN_SERVER_CLIENT;
+    private static TokenServerApplicationRunner.TokenServerClient TOKEN_SERVER_CLIENT;
 
     private final ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor(r ->
         new Thread(r, "TokenServerCheckMasterThread"));
 
-    @PostConstruct
-    public void init() throws Exception {
+    @Override
+    public void run(ApplicationArguments args) throws Exception {
         ClusterTokenServer tokenServer = new SentinelDefaultTokenServer();
         // Start the server.
         tokenServer.start();
@@ -148,4 +153,5 @@ public class TokenServerBootstrap {
             }
         }
     }
+
 }
