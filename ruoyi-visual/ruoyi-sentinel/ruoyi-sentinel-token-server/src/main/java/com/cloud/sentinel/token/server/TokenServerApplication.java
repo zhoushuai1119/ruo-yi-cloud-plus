@@ -17,6 +17,8 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 public class TokenServerApplication {
 
     public static void main(String[] args) {
+        // 设置project.name
+        System.setProperty("project.name", "token-server");
         // 修改sentinel日志生成目录
         System.setProperty(LogBase.LOG_DIR, "/logs/ruoyi/ruoyi-visual/ruoyi-sentinel/ruoyi-sentinel-token-server/sentinel-record");
         SpringApplication.run(TokenServerApplication.class, args);
