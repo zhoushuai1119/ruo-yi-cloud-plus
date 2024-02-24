@@ -58,11 +58,10 @@ spring.mail.properties.mail.smtp.auth=true
 spring.mail.properties.mail.smtp.starttls.enable=true
 spring.mail.properties.mail.smtp.starttls.required=true
 
-####### DingTalk properties(Non-core configuration properties) #######
-####### Delete the following code to disable the DingTalk #######
-oms.alarm.ding.app-key=dingauqwkvxxnqskknfv
-oms.alarm.ding.app-secret=XWrEPdAZMPgJeFtHuL0LH73LRj-74umF2_0BFcoXMfvnX0pCQvt0rpb1JOJU_HLl
-oms.alarm.ding.agent-id=847044348
+####### dinger #######
+spring.dinger.project-id=${spring.application.name}
+spring.dinger.default-dinger=wetalk
+spring.dinger.dingers.wetalk.token-id=0a0b9279-ac5b-4b95-bb69-e30a9dde286e
 
 ####### Resource cleaning properties #######
 oms.instanceinfo.retention=1
