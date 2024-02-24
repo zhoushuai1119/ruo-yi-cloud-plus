@@ -49,15 +49,6 @@ spring.datasource.core.minimum-idle=5
 ####### Storage properties(Delete if not needed)  #######
 oms.storage.dfs.mongodb.uri=mongodb://139.196.208.53:27017/powerjob-server
 
-####### Email properties(Non-core configuration properties) #######
-####### Delete the following code to disable the mail #######
-spring.mail.host=smtp.163.com
-spring.mail.username=zs11195310@163.com
-spring.mail.password=RQTSNZQRVNDUJDNB
-spring.mail.properties.mail.smtp.auth=true
-spring.mail.properties.mail.smtp.starttls.enable=true
-spring.mail.properties.mail.smtp.starttls.required=true
-
 ####### dinger #######
 spring.dinger.project-id=${spring.application.name}
 spring.dinger.default-dinger=wetalk

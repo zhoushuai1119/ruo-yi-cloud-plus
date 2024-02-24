@@ -20,7 +20,7 @@ public class RemoveRegistryBeanFactoryPostProcessor implements BeanDefinitionReg
     /**
      * 需要移除的BeanDefinitionName集合
      */
-    private static final List<String> REMOVE_BEAN_DEFINITION_NAME_LIST = List.of("dingTalkAlarmService", "webHookAlarmService");
+    private static final List<String> REMOVE_BEAN_DEFINITION_NAME_LIST = List.of("dingTalkAlarmService", "mailAlarmService", "webHookAlarmService");
 
     @Override
     public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry beanDefinitionRegistry) throws BeansException {
