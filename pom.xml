@@ -289,7 +289,7 @@
             <!--Cloud Alarm-->
             <dependency>
                 <groupId>io.github.zhoushuai1119</groupId>
-                <artifactId>cloud-alarm-spring-boot-starter</artifactId>
+                <artifactId>cloud-alarm-spring-boot3-starter</artifactId>
                 <version>${cloud-parent.version}</version>
             </dependency>
 

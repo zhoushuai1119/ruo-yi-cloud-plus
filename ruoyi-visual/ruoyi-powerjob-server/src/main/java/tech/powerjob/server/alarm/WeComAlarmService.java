@@ -2,7 +2,7 @@ package tech.powerjob.server.alarm;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
-import com.github.jaemon.dinger.DingerSender;
+import com.cloud.alarm.dinger.DingerSender;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

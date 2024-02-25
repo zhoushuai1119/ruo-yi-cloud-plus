@@ -81,9 +81,9 @@
         </dependency>
         <!-- 钉钉/企业微信告警 -->
         <dependency>
-            <groupId>com.github.answerail</groupId>
-            <artifactId>dinger-spring-boot-starter</artifactId>
-            <version>${dinger.version}</version>
+            <groupId>io.github.zhoushuai1119</groupId>
+            <artifactId>cloud-alarm-spring-boot-starter</artifactId>
+            <version>${cloud-parent.version}</version>
         </dependency>
         <!-- hutool -->
         <dependency>

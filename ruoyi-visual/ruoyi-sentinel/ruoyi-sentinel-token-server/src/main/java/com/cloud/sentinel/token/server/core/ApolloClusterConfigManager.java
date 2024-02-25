@@ -1,5 +1,6 @@
 package com.cloud.sentinel.token.server.core;
 
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
@@ -15,7 +16,6 @@ import com.ctrip.framework.apollo.openapi.dto.OpenItemDTO;
 import com.ctrip.framework.apollo.openapi.dto.OpenNamespaceDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
@@ -72,7 +72,7 @@ public class ApolloClusterConfigManager {
      */
     private void publishMasterTokenServerAddress(OpenItemDTO openItemDTO, String env, String ip, Integer port) {
         String value = openItemDTO.getValue();
-        if (StringUtils.isEmpty(value)) {
+        if (StrUtil.isEmpty(value)) {
             return;
         }
         try {
