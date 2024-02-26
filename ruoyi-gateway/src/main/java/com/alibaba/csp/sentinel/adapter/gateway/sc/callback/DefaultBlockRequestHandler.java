@@ -15,6 +15,7 @@
  */
 package com.alibaba.csp.sentinel.adapter.gateway.sc.callback;
 
+import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.InvalidMediaTypeException;
 import org.springframework.http.MediaType;
@@ -75,6 +76,7 @@ public class DefaultBlockRequestHandler implements BlockRequestHandler {
         }
     }
 
+    @Getter
     private static class ErrorResult {
         private final int code;
         private final String message;
@@ -82,14 +84,6 @@ public class DefaultBlockRequestHandler implements BlockRequestHandler {
         ErrorResult(int code, String message) {
             this.code = code;
             this.message = message;
-        }
-
-        public int getCode() {
-            return code;
-        }
-
-        public String getMessage() {
-            return message;
         }
     }
 }
