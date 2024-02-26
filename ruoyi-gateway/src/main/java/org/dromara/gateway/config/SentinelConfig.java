@@ -15,8 +15,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.server.ServerResponse;
 
-import static org.dromara.common.core.constant.SentinelConstants.SENTINEL_GATEWAY_ERROR_CODE_HEADER;
-import static org.dromara.common.core.constant.SentinelConstants.SENTINEL_GATEWAY_ERROR_MSG_HEADER;
+import static org.dromara.common.core.constant.SentinelConstants.*;
 
 /**
  * @author: zhou shuai
@@ -29,7 +28,7 @@ public class SentinelConfig {
     public SentinelConfig() {
         GatewayCallbackManager.setBlockHandler((serverWebExchange, ex) -> {
             String msg = "非法访问，请稍后重试";
-            int statusCode = 429;
+            HttpStatus httpStatus = HttpStatus.TOO_MANY_REQUESTS;
             if (ex instanceof FlowException || ex instanceof ParamFlowException) {
                 msg = "您的访问过于频繁，请稍后重试!";
             } else if (ex instanceof DegradeException) {
@@ -37,13 +36,13 @@ public class SentinelConfig {
             } else if (ex instanceof SystemBlockException) {
                 msg = "已触碰系统的红线规则，请检查访问参数!";
             } else if (ex instanceof AuthorityException) {
-                statusCode = 401;
+                httpStatus = HttpStatus.UNAUTHORIZED;
                 msg = "授权规则检测不同，请检查访问参数!";
             }
-            R sentinelResp = R.fail(statusCode, msg);
+            R sentinelResp = R.fail(httpStatus.value(), msg);
             log.info("Blocked by Sentinel Response : {}", JSONUtil.toJsonStr(sentinelResp));
-            return ServerResponse.status(HttpStatus.OK)
-                .header(SENTINEL_GATEWAY_ERROR_CODE_HEADER, String.valueOf(statusCode))
+            return ServerResponse.status(httpStatus)
+                .header(SENTINEL_GATEWAY_HTTP_STATUS_CODE_HEADER, String.valueOf(httpStatus.value()))
                 .header(SENTINEL_GATEWAY_ERROR_MSG_HEADER, msg)
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(BodyInserters.fromValue(sentinelResp));

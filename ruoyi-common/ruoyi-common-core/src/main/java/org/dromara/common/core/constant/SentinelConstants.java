@@ -12,9 +12,9 @@ public interface SentinelConstants {
      */
     String SENTINEL_ORIGIN_HEADER = "origin";
     /**
-     * sentinel gateway错误码请求头参数
+     * sentinel gateway请求状态码请求头参数
      */
-    String SENTINEL_GATEWAY_ERROR_CODE_HEADER = "sentinel_gateway_error_code";
+    String SENTINEL_GATEWAY_HTTP_STATUS_CODE_HEADER = "sentinel_gateway_http_status_code";
     /**
      * sentinel gateway错误信息请求头参数
      */
