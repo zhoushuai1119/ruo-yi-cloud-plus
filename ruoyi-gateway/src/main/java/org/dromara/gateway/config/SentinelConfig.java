@@ -27,17 +27,17 @@ import static org.dromara.common.core.constant.SentinelConstants.*;
 public class SentinelConfig {
     public SentinelConfig() {
         GatewayCallbackManager.setBlockHandler((serverWebExchange, ex) -> {
-            String msg = "非法访问，请稍后重试";
+            String msg = "非法访问,请稍后重试";
             HttpStatus httpStatus = HttpStatus.TOO_MANY_REQUESTS;
             if (ex instanceof FlowException || ex instanceof ParamFlowException) {
-                msg = "您的访问过于频繁，请稍后重试!";
+                msg = "您的访问过于频繁,请稍后重试!";
             } else if (ex instanceof DegradeException) {
                 msg = "调用服务响应异常,已进行降级!";
             } else if (ex instanceof SystemBlockException) {
-                msg = "已触碰系统的红线规则，请检查访问参数!";
+                msg = "已触碰系统的红线规则,请检查访问参数!";
             } else if (ex instanceof AuthorityException) {
                 httpStatus = HttpStatus.UNAUTHORIZED;
-                msg = "授权规则检测不同，请检查访问参数!";
+                msg = "授权规则检测不同,请检查访问参数!";
             }
             R sentinelResp = R.fail(httpStatus.value(), msg);
             log.info("Blocked by Sentinel Response : {}", JSONUtil.toJsonStr(sentinelResp));
