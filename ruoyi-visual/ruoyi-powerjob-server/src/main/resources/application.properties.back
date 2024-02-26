@@ -67,4 +67,4 @@ oms.instance.metadata.cache.size=1024
 oms.accurate.select.server.percentage=50
 
 ## logstash
-logstash.address = 139.196.208.53:4560
+logstash.address=139.196.208.53:4560
