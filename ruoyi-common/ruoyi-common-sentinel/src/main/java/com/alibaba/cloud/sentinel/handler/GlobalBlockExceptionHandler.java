@@ -10,22 +10,25 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 /**
- * 自定义限流系统异常处理器:
+ * 自定义全局限流系统异常处理器:
  *
  * <p>
  * 如果是程序中出现的 Sentinel 报错信息，例如使用热点限流时，因为要配合使用 @SentinelResource 注解时，
  * 此时只自定义了 value 属性，未定义局部 blockHandler 方法，此时系统就会报错，
- * 但这个时候并不会执行 Sentinel 全局自定义异常，而是程序报错，
+ * 但这个时候并不会执行 Sentinel 全局自定义异常SentinelBlockHandler，而是程序报错，
  * 此时就需要使用系统自定义异常来重新定义异常信息了
  * </p>
  *
+ * <p>
+ * 执行优先级是：自定义局部异常 > 自定义全局异常 > 自定义系统异常
+ * <p>
  * 参考链接: https://www.jb51.net/program/305568xon.htm
  *
  * @author shuai.zhou
  */
 @Slf4j
 @RestControllerAdvice
-public class BlockExceptionHandler {
+public class GlobalBlockExceptionHandler {
 
     /**
      * 限流全局异常

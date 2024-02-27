@@ -1,1 +1,1 @@
-com.alibaba.cloud.sentinel.handler.BlockExceptionHandler
+com.alibaba.cloud.sentinel.handler.GlobalBlockExceptionHandler
