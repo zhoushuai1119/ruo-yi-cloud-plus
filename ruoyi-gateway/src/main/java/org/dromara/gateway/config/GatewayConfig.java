@@ -1,7 +1,6 @@
 package org.dromara.gateway.config;
 
 import cn.hutool.json.JSONUtil;
-import com.alibaba.cloud.sentinel.gateway.scg.SentinelSCGAutoConfiguration;
 import com.alibaba.csp.sentinel.adapter.gateway.sc.callback.BlockRequestHandler;
 import com.alibaba.csp.sentinel.adapter.gateway.sc.callback.GatewayCallbackManager;
 import com.alibaba.csp.sentinel.slots.block.authority.AuthorityException;
@@ -12,7 +11,7 @@ import com.alibaba.csp.sentinel.slots.system.SystemBlockException;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.dromara.common.core.domain.R;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.BodyInserters;
@@ -24,7 +23,7 @@ import org.springframework.web.reactive.function.server.ServerResponse;
  * @author shuai.zhou
  */
 @Slf4j
-@AutoConfiguration(after = {SentinelSCGAutoConfiguration.class})
+@Configuration
 public class GatewayConfig {
 
     /**
