@@ -50,7 +50,7 @@ public class GatewayConfig {
             R blockResp = R.fail(httpStatus.value(), msg);
             log.info("Blocked by Sentinel Response : {}", JSONUtil.toJsonStr(blockResp));
             return ServerResponse.status(httpStatus)
-                .contentType(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .body(BodyInserters.fromValue(blockResp));
         };
         GatewayCallbackManager.setBlockHandler(blockRequestHandler);

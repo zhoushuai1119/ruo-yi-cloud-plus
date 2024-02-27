@@ -41,7 +41,7 @@ public class SentinelBlockHandler implements BlockExceptionHandler {
 
         // http状态码
         response.setStatus(httpStatus.value());
-        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
         String errorMsg = String.format("接口[%s]%s", request.getServletPath(), msg);
         new ObjectMapper().writeValue(response.getWriter(), R.fail(httpStatus.value(), errorMsg));
     }
