@@ -35,8 +35,7 @@ spring:
       requestLog: true
       discovery:
         locator:
-          lowerCaseServiceId: true
-          enabled: true
+          enabled: false
       routes:
         # 认证中心
         - id: ruoyi-auth

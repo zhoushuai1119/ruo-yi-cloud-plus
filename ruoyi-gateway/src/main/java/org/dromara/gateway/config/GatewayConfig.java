@@ -1,6 +1,7 @@
 package org.dromara.gateway.config;
 
 import cn.hutool.json.JSONUtil;
+import com.alibaba.cloud.sentinel.gateway.scg.SentinelSCGAutoConfiguration;
 import com.alibaba.csp.sentinel.adapter.gateway.sc.callback.BlockRequestHandler;
 import com.alibaba.csp.sentinel.adapter.gateway.sc.callback.GatewayCallbackManager;
 import com.alibaba.csp.sentinel.slots.block.authority.AuthorityException;
@@ -11,32 +12,20 @@ import com.alibaba.csp.sentinel.slots.system.SystemBlockException;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.dromara.common.core.domain.R;
-import org.dromara.gateway.handler.SentinelFallbackHandler;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.core.Ordered;
-import org.springframework.core.annotation.Order;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.server.ServerResponse;
 
-import static org.dromara.common.core.constant.SentinelConstants.SENTINEL_GATEWAY_ERROR_MSG_HEADER;
-import static org.dromara.common.core.constant.SentinelConstants.SENTINEL_GATEWAY_HTTP_STATUS_CODE_HEADER;
-
 /**
- * 网关限流配置
+ * 网关限流配置 (SentinelSCGAutoConfiguration配置类)
  *
  * @author shuai.zhou
  */
 @Slf4j
-@Configuration
+@AutoConfiguration(after = {SentinelSCGAutoConfiguration.class})
 public class GatewayConfig {
-    @Bean
-    @Order(Ordered.HIGHEST_PRECEDENCE)
-    public SentinelFallbackHandler sentinelGatewayExceptionHandler() {
-        return new SentinelFallbackHandler();
-    }
 
     /**
      * 自定义限流异常
@@ -59,13 +48,11 @@ public class GatewayConfig {
                 httpStatus = HttpStatus.UNAUTHORIZED;
                 msg = "授权规则检测不同,请检查访问参数!";
             }
-            R sentinelResp = R.fail(httpStatus.value(), msg);
-            log.info("Blocked by Sentinel Response : {}", JSONUtil.toJsonStr(sentinelResp));
+            R blockResp = R.fail(httpStatus.value(), msg);
+            log.info("Blocked by Sentinel Response : {}", JSONUtil.toJsonStr(blockResp));
             return ServerResponse.status(httpStatus)
-                .header(SENTINEL_GATEWAY_HTTP_STATUS_CODE_HEADER, String.valueOf(httpStatus.value()))
-                .header(SENTINEL_GATEWAY_ERROR_MSG_HEADER, msg)
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(BodyInserters.fromValue(sentinelResp));
+                .body(BodyInserters.fromValue(blockResp));
         };
         GatewayCallbackManager.setBlockHandler(blockRequestHandler);
     }

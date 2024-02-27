@@ -13,10 +13,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * @description:
+ * 参考链接: https://www.cnblogs.com/sdliangi/p/16393528.html
+ *
  * @author: zhou shuai
  * @date: 2022/10/28 15:12
- * @version: v1
  */
 public class GatewayApiParser implements Converter<String, Set<ApiDefinition>> {
 

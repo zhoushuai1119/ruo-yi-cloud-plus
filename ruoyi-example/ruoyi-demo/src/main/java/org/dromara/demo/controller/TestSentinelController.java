@@ -38,7 +38,8 @@ public class TestSentinelController {
     }
 
     /**
-     * 热点参数规则测试
+     * 热点参数规则测试:
+     * 热点参数限流对默认的SpringMVC资源无效，需要利用@SentinelResource注解标记资源
      */
     @GetMapping("/param/flow/rule/{param}")
     @SentinelResource("hot")
