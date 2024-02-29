@@ -14,7 +14,7 @@ import java.util.concurrent.Executor;
 /**
  * springboot-admin server配置类
  *
- * @author Lion Li
+ * @author shuai.zhou
  */
 @Configuration
 @EnableAdminServer
