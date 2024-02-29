@@ -22,16 +22,12 @@ spring:
         brand: <span>Service Monitoring Center</span>
       discovery:
         # seata 不具有健康检查的能力 防止报错排除掉
-        ignored-services: seata-server,ruoyi-sentinel-dashboard
+        ignored-services: seata-server
 
   security:
     user:
       name: ruoyi
       password: 123456
-
-# 日志配置
-logging:
-  config: classpath:logback-plus.xml
 
 management:
   endpoints:
@@ -41,3 +37,11 @@ management:
   endpoint:
     health:
       show-details: ALWAYS
+
+# 日志配置
+logging:
+  config: classpath:logback-plus.xml
+
+# logstash日志收集
+logstash:
+  address: 139.196.208.53:4560

@@ -23,10 +23,27 @@
             <version>${spring-boot-admin.version}</version>
         </dependency>
 
-        <!-- SpringBoot -->
+        <!-- SpringBoot Web容器 -->
         <dependency>
-            <groupId>org.dromara</groupId>
-            <artifactId>ruoyi-common-web</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <exclusions>
+                <exclusion>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                    <groupId>org.springframework.boot</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!-- web 容器使用 undertow 性能更强 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-undertow</artifactId>
+        </dependency>
+
+        <!-- SpringBoot Actuator -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
 
         <!-- Spring Security -->
@@ -36,10 +53,10 @@
         </dependency>
 
         <!-- apollo配置中心 -->
-        <!--<dependency>
+        <dependency>
             <groupId>com.ctrip.framework.apollo</groupId>
             <artifactId>apollo-client</artifactId>
-        </dependency>-->
+        </dependency>
 
         <!-- nacos注册中心 -->
         <dependency>
