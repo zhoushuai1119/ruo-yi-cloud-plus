@@ -9,9 +9,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author shuai.zhou
  */
 @SpringBootApplication
-public class RuoYiMonitorApplication {
+public class AdminMonitorApplication {
     public static void main(String[] args) {
-        SpringApplication.run(RuoYiMonitorApplication.class, args);
+        SpringApplication.run(AdminMonitorApplication.class, args);
         System.out.println("(♥◠‿◠)ﾉﾞ  SpringBoot-Admin监控中心启动成功   ლ(´ڡ`ლ)ﾞ  ");
     }
 }
