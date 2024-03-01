@@ -371,7 +371,7 @@ public class MonitorService {
         }
 
         if (!infoMap.isEmpty()) {
-            this.monitorListener.reportConsumerRunningInfo(infoMap, monitorRocketMQProperties);
+            this.monitorListener.reportConsumerRunningInfo(consumerGroup, infoMap, monitorRocketMQProperties);
         }
     }
 

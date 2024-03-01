@@ -106,7 +106,7 @@ public class DefaultMonitorListener implements MonitorListener {
     }
 
     @Override
-    public void reportConsumerRunningInfo(TreeMap<String, ConsumerRunningInfo> criTable, MonitorRocketMQProperties monitorRocketMQProperties) {
+    public void reportConsumerRunningInfo(String consumerGroup, TreeMap<String, ConsumerRunningInfo> criTable, MonitorRocketMQProperties monitorRocketMQProperties) {
 
         {
             boolean result = ConsumerRunningInfo.analyzeSubscription(criTable);
@@ -123,7 +123,6 @@ public class DefaultMonitorListener implements MonitorListener {
                     }
                 }
 
-                String consumerGroup = criTable.firstEntry().getValue().getProperties().getProperty("consumerGroup");
                 log.info(String.format(LOG_NOTIFY + "reportConsumerRunningInfo: ConsumerGroup: %s, Subscription different \n%s",
                     consumerGroup, MarkdownCreaterUtil.listMarkdown(details)));
 
@@ -141,7 +140,6 @@ public class DefaultMonitorListener implements MonitorListener {
             for (Entry<String, ConsumerRunningInfo> next : criTable.entrySet()) {
                 String result = CustomConsumerRunningInfo.analyzeProcessQueue(next.getKey(), next.getValue(), monitorRocketMQProperties);
                 if (!result.isEmpty()) {
-                    String consumerGroup = criTable.firstEntry().getValue().getProperties().getProperty("consumerGroup");
                     String clientId = next.getKey();
                     log.info(String.format(LOG_NOTIFY
                             + "reportConsumerRunningInfo: ConsumerGroup: %s, ClientId: %s, %s",

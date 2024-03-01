@@ -38,7 +38,7 @@ public interface MonitorListener {
 
     void reportDeleteMsgsEvent(DeleteMsgsEvent deleteMsgsEvent);
 
-    void reportConsumerRunningInfo(TreeMap<String/* clientId */, ConsumerRunningInfo> criTable, MonitorRocketMQProperties monitorRocketMQProperties);
+    void reportConsumerRunningInfo(String consumerGroup, TreeMap<String/* clientId */, ConsumerRunningInfo> criTable, MonitorRocketMQProperties monitorRocketMQProperties);
 
     void reportStopedBroker(List<String> brokerNames);
 
