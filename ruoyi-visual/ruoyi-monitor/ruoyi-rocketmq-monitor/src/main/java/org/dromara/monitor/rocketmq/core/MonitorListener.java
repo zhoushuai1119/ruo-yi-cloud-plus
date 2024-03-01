@@ -18,6 +18,7 @@
 package org.dromara.monitor.rocketmq.core;
 
 import org.apache.rocketmq.common.protocol.body.ConsumerRunningInfo;
+import org.dromara.monitor.rocketmq.config.MonitorRocketMQProperties;
 
 import java.util.List;
 import java.util.Map;
@@ -37,7 +38,7 @@ public interface MonitorListener {
 
     void reportDeleteMsgsEvent(DeleteMsgsEvent deleteMsgsEvent);
 
-    void reportConsumerRunningInfo(TreeMap<String/* clientId */, ConsumerRunningInfo> criTable);
+    void reportConsumerRunningInfo(TreeMap<String/* clientId */, ConsumerRunningInfo> criTable, MonitorRocketMQProperties monitorRocketMQProperties);
 
     void reportStopedBroker(List<String> brokerNames);
 

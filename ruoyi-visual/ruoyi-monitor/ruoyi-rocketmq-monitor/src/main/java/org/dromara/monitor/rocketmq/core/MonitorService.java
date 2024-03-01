@@ -27,6 +27,7 @@ import org.apache.rocketmq.acl.common.AclClientRPCHook;
 import org.apache.rocketmq.client.consumer.DefaultMQPullConsumer;
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
 import org.apache.rocketmq.client.consumer.PullResult;
+import org.apache.rocketmq.client.consumer.PullStatus;
 import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyStatus;
 import org.apache.rocketmq.client.consumer.listener.MessageListenerConcurrently;
 import org.apache.rocketmq.client.exception.MQBrokerException;
@@ -354,7 +355,7 @@ public class MonitorService {
             throw e;
         }
 
-        TreeMap<String, ConsumerRunningInfo> infoMap = new TreeMap<String, ConsumerRunningInfo>();
+        TreeMap<String, ConsumerRunningInfo> infoMap = new TreeMap<>();
         for (Connection c : cc.getConnectionSet()) {
             String clientId = c.getClientId();
 
@@ -370,7 +371,7 @@ public class MonitorService {
         }
 
         if (!infoMap.isEmpty()) {
-            this.monitorListener.reportConsumerRunningInfo(infoMap);
+            this.monitorListener.reportConsumerRunningInfo(infoMap, monitorRocketMQProperties);
         }
     }
 
@@ -397,15 +398,10 @@ public class MonitorService {
                     long maxOffset = this.defaultMQPullConsumer.maxOffset(mq);
                     if (maxOffset > 0) {
                         PullResult pull = this.defaultMQPullConsumer.pull(mq, "*", maxOffset - 1, 1);
-                        switch (pull.getPullStatus()) {
-                            case FOUND -> {
-                                long delay =
-                                    pull.getMsgFoundList().get(0).getStoreTimestamp() - ow.getLastTimestamp();
-                                if (delay > delayMax) {
-                                    delayMax = delay;
-                                }
-                            }
-                            default -> {
+                        if (Objects.requireNonNull(pull.getPullStatus()) == PullStatus.FOUND) {
+                            long delay = pull.getMsgFoundList().get(0).getStoreTimestamp() - ow.getLastTimestamp();
+                            if (delay > delayMax) {
+                                delayMax = delay;
                             }
                         }
                     }

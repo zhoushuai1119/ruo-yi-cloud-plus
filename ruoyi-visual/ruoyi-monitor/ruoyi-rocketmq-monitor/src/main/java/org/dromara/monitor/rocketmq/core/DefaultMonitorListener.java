@@ -24,6 +24,8 @@ import com.cloud.alarm.dinger.core.entity.DingerRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.common.protocol.body.ConsumerRunningInfo;
+import org.apache.rocketmq.common.protocol.heartbeat.SubscriptionData;
+import org.dromara.monitor.rocketmq.config.MonitorRocketMQProperties;
 import org.dromara.monitor.rocketmq.dto.PushAlterDTO;
 import org.dromara.monitor.rocketmq.enums.JobTypeEnum;
 import org.dromara.monitor.rocketmq.utils.MarkdownCreaterUtil;
@@ -104,18 +106,32 @@ public class DefaultMonitorListener implements MonitorListener {
     }
 
     @Override
-    public void reportConsumerRunningInfo(TreeMap<String, ConsumerRunningInfo> criTable) {
+    public void reportConsumerRunningInfo(TreeMap<String, ConsumerRunningInfo> criTable, MonitorRocketMQProperties monitorRocketMQProperties) {
 
         {
             boolean result = ConsumerRunningInfo.analyzeSubscription(criTable);
             if (!result) {
+                Map<String, Map<String, String>> details = new LinkedHashMap<>();
+
+                Entry<String, ConsumerRunningInfo> prev = criTable.firstEntry();
+                for (Entry<String, ConsumerRunningInfo> next : criTable.entrySet()) {
+                    boolean equals = next.getValue().getSubscriptionSet().equals(prev.getValue().getSubscriptionSet());
+                    if (!equals) {
+                        details.put(prev.getKey(), getSubsciptionInfo(prev.getValue().getSubscriptionSet()));
+                        details.put(next.getKey(), getSubsciptionInfo(next.getValue().getSubscriptionSet()));
+                        break;
+                    }
+                }
+
                 String consumerGroup = criTable.firstEntry().getValue().getProperties().getProperty("consumerGroup");
-                log.info(String.format(LOG_NOTIFY + "reportConsumerRunningInfo: ConsumerGroup: %s, Subscription different", consumerGroup));
+                log.info(String.format(LOG_NOTIFY + "reportConsumerRunningInfo: ConsumerGroup: %s, Subscription different \n%s",
+                    consumerGroup, MarkdownCreaterUtil.listMarkdown(details)));
 
                 PushAlterDTO pushAlterDTO = PushAlterDTO.builder()
                     .alarmType(JobTypeEnum.SUBSCRIPTION_DIFFERENT.getCode())
                     .alarmContent(String.format(LOG_NOTIFY
-                            + "同一消费组订阅信息不一致告警: ConsumerGroup: %s, Subscription different", consumerGroup))
+                            + "同一消费组订阅信息不一致告警: ConsumerGroup: %s, Subscription different \n%s",
+                        consumerGroup, MarkdownCreaterUtil.listMarkdown(details)))
                     .build();
                 dingerSender.send(DingerRequest.request(JSONUtil.toJsonStr(pushAlterDTO)));
             }
@@ -123,7 +139,7 @@ public class DefaultMonitorListener implements MonitorListener {
 
         {
             for (Entry<String, ConsumerRunningInfo> next : criTable.entrySet()) {
-                String result = ConsumerRunningInfo.analyzeProcessQueue(next.getKey(), next.getValue());
+                String result = CustomConsumerRunningInfo.analyzeProcessQueue(next.getKey(), next.getValue(), monitorRocketMQProperties);
                 if (!result.isEmpty()) {
                     String consumerGroup = criTable.firstEntry().getValue().getProperties().getProperty("consumerGroup");
                     String clientId = next.getKey();
@@ -167,4 +183,13 @@ public class DefaultMonitorListener implements MonitorListener {
     public void endRound() {
         log.info(LOG_PREFIX + "=========================================endRound");
     }
+
+    private Map<String, String> getSubsciptionInfo(TreeSet<SubscriptionData> subscriptionData) {
+        Map<String, String> map = new HashMap<>();
+        for (SubscriptionData d : subscriptionData) {
+            map.put(d.getTopic(), d.getTagsSet().toString());
+        }
+        return map;
+    }
+
 }
