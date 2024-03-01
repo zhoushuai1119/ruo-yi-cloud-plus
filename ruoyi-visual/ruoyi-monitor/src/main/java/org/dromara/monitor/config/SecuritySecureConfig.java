@@ -44,10 +44,8 @@ public class SecuritySecureConfig {
                         new AntPathRequestMatcher("/actuator/**")
                     ).permitAll()
                     .anyRequest().authenticated())
-            .formLogin((formLogin) ->
-                formLogin.loginPage(adminContextPath + "/login").successHandler(successHandler))
-            .logout((logout) ->
-                logout.logoutUrl(adminContextPath + "/logout"))
+            .formLogin((formLogin) -> formLogin.loginPage(adminContextPath + "/login").successHandler(successHandler))
+            .logout((logout) -> logout.logoutUrl(adminContextPath + "/logout"))
             .httpBasic(Customizer.withDefaults())
             .csrf(AbstractHttpConfigurer::disable)
             .build();
