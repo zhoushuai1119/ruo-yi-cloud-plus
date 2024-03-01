@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @EnableConfigurationProperties(MonitorRocketMQProperties.class)
-public class MonitorConfig {
+public class MonitorRocketMQConfig {
 
     @Bean
     public AclClientRPCHook aclRPCHook(MonitorRocketMQProperties monitorRocketMQProperties) {

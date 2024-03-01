@@ -154,8 +154,7 @@ public class MonitorService {
         log.info(String.format("mq monitor %s", "shutdown"));
         try {
             TimeUnit.SECONDS.sleep(10L);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ignored) {
         }
     }
 
