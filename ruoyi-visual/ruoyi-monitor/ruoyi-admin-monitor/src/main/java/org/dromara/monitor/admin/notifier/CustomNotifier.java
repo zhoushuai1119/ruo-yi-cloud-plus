@@ -1,4 +1,4 @@
-package org.dromara.monitor.notifier;
+package org.dromara.monitor.admin.notifier;
 
 import de.codecentric.boot.admin.server.domain.entities.Instance;
 import de.codecentric.boot.admin.server.domain.entities.InstanceRepository;

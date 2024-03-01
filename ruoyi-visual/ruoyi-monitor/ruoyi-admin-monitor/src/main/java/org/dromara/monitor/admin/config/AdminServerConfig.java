@@ -1,4 +1,4 @@
-package org.dromara.monitor.config;
+package org.dromara.monitor.admin.config;
 
 import de.codecentric.boot.admin.server.config.EnableAdminServer;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;

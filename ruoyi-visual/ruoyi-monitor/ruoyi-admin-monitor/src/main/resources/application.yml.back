@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: ruoyi-monitor
+    name: ruoyi-admin-monitor
   profiles:
     active: dev
 

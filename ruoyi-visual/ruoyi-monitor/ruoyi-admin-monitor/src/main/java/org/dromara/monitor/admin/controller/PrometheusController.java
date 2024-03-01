@@ -1,4 +1,4 @@
-package org.dromara.monitor.controller;
+package org.dromara.monitor.admin.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

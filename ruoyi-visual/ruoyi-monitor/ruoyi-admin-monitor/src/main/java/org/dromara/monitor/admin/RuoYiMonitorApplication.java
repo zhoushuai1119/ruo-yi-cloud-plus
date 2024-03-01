@@ -1,10 +1,10 @@
-package org.dromara.monitor;
+package org.dromara.monitor.admin;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * 监控中心
+ * SpringBoot-Admin监控中心
  *
  * @author shuai.zhou
  */
@@ -12,6 +12,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class RuoYiMonitorApplication {
     public static void main(String[] args) {
         SpringApplication.run(RuoYiMonitorApplication.class, args);
-        System.out.println("(♥◠‿◠)ﾉﾞ  监控中心启动成功   ლ(´ڡ`ლ)ﾞ  ");
+        System.out.println("(♥◠‿◠)ﾉﾞ  SpringBoot-Admin监控中心启动成功   ლ(´ڡ`ლ)ﾞ  ");
     }
 }
