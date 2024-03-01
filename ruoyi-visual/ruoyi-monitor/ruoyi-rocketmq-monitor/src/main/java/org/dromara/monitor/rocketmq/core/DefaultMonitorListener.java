@@ -20,6 +20,7 @@ package org.dromara.monitor.rocketmq.core;
 import cn.hutool.core.util.StrUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.rocketmq.common.MixAll;
 import org.apache.rocketmq.common.protocol.body.ConsumerRunningInfo;
 import org.apache.rocketmq.common.protocol.heartbeat.SubscriptionData;
 import org.dromara.monitor.rocketmq.config.MonitorRocketMQProperties;
@@ -64,6 +65,9 @@ public class DefaultMonitorListener implements MonitorListener {
 
     @Override
     public void reportConsumerNotOnline(String consumerGroup) {
+        if (Objects.equals(consumerGroup, MixAll.TOOLS_CONSUMER_GROUP)) {
+            return;
+        }
         PushAlterDTO pushAlterDTO = PushAlterDTO.builder()
             .alarmType(JobTypeEnum.REPORT_CONSUMER_NOT_ONLINE.getCode())
             .alarmContent(String.format("消费组不在线: %s", consumerGroup))
