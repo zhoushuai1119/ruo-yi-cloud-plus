@@ -10,6 +10,7 @@
 
     <modules>
         <module>ruoyi-admin-monitor</module>
+        <module>ruoyi-rocketmq-monitor</module>
     </modules>
 
     <artifactId>ruoyi-monitor</artifactId>

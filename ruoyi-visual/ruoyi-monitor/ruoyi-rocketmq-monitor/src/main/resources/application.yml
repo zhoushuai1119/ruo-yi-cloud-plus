@@ -1,0 +1,54 @@
+server:
+  port: 9101
+
+spring:
+  application:
+    name: ruoyi-rocketmq-monitor
+
+  profiles:
+    active: dev
+
+  cloud:
+    nacos:
+      server-addr: 139.196.208.53:8848
+      discovery:
+        namespace: ${spring.profiles.active}
+        username: nacos
+        password: nacos
+
+  # DingTalk告警
+  dinger:
+    project-id: ${spring.application.name}
+    default-dinger: wetalk
+    dingers:
+      wetalk:
+        token-id: 0a0b9279-ac5b-4b95-bb69-e30a9dde286e
+
+monitor:
+  rocketmq:
+    namesrvAddr: 139.196.208.53:9876
+    accessKey: zhoushuai
+    secretKey: zs19921119
+    brokerNames:
+      - broker-a
+    undoneMessageMax: 500
+    undoneMessageMaxTimeMs: 60000
+    tpsThreshold: 1000
+    diskRatioThreshold: 0.45
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: ALWAYS
+
+# 日志配置
+logging:
+  config: classpath:logback-plus.xml
+
+# logstash日志收集
+logstash:
+  address: 139.196.208.53:4560
