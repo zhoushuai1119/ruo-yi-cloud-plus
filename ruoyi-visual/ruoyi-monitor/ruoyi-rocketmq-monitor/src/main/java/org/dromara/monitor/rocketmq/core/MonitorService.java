@@ -17,10 +17,7 @@
 
 package org.dromara.monitor.rocketmq.core;
 
-import cn.hutool.json.JSONUtil;
 import com.alibaba.nacos.shaded.com.google.common.collect.Maps;
-import com.cloud.alarm.dinger.DingerSender;
-import com.cloud.alarm.dinger.core.entity.DingerRequest;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.acl.common.AclClientRPCHook;
@@ -48,6 +45,7 @@ import org.dromara.monitor.rocketmq.config.MonitorRocketMQProperties;
 import org.dromara.monitor.rocketmq.dto.BrokerStatusDTO;
 import org.dromara.monitor.rocketmq.dto.PushAlterDTO;
 import org.dromara.monitor.rocketmq.enums.JobTypeEnum;
+import org.dromara.monitor.rocketmq.service.IDingTalkService;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -74,14 +72,14 @@ public class MonitorService {
     private final MonitorRocketMQProperties monitorRocketMQProperties;
     private final MonitorListener monitorListener;
     private final AclClientRPCHook aclRPCHook;
-    private final DingerSender dingerSender;
+    private final IDingTalkService dingTalkService;
 
     public MonitorService(MonitorRocketMQProperties monitorRocketMQProperties, MonitorListener monitorListener,
-                          AclClientRPCHook aclRPCHook, DingerSender dingerSender) {
+                          AclClientRPCHook aclRPCHook, IDingTalkService dingTalkService) {
         this.monitorRocketMQProperties = monitorRocketMQProperties;
         this.monitorListener = monitorListener;
         this.aclRPCHook = aclRPCHook;
-        this.dingerSender = dingerSender;
+        this.dingTalkService = dingTalkService;
     }
 
     private void initMqAdmin(AclClientRPCHook aclRPCHook) {
@@ -170,7 +168,7 @@ public class MonitorService {
                         .alarmType(JobTypeEnum.MONITOR_WORK_EXCEPTION.getCode())
                         .alarmContent(String.format("doConsumerMonitorWork \n%s", e))
                         .build();
-                    dingerSender.send(DingerRequest.request(JSONUtil.toJsonStr(pushAlterDTO)));
+                    dingTalkService.rocketmqAlarm(pushAlterDTO);
                 }
 
                 try {
@@ -180,7 +178,7 @@ public class MonitorService {
                         .alarmType(JobTypeEnum.MONITOR_WORK_EXCEPTION.getCode())
                         .alarmContent(String.format("doBrokerMonitorWork \n%s", e))
                         .build();
-                    dingerSender.send(DingerRequest.request(JSONUtil.toJsonStr(pushAlterDTO)));
+                    dingTalkService.rocketmqAlarm(pushAlterDTO);
                     log.error("doBrokerMonitorWork", e);
                 }
             }

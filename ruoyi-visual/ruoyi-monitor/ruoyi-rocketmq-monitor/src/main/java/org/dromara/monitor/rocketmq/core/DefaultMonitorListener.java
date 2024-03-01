@@ -18,9 +18,6 @@
 package org.dromara.monitor.rocketmq.core;
 
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.json.JSONUtil;
-import com.cloud.alarm.dinger.DingerSender;
-import com.cloud.alarm.dinger.core.entity.DingerRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.common.protocol.body.ConsumerRunningInfo;
@@ -28,6 +25,7 @@ import org.apache.rocketmq.common.protocol.heartbeat.SubscriptionData;
 import org.dromara.monitor.rocketmq.config.MonitorRocketMQProperties;
 import org.dromara.monitor.rocketmq.dto.PushAlterDTO;
 import org.dromara.monitor.rocketmq.enums.JobTypeEnum;
+import org.dromara.monitor.rocketmq.service.IDingTalkService;
 import org.dromara.monitor.rocketmq.utils.MarkdownCreaterUtil;
 import org.springframework.stereotype.Component;
 
@@ -44,7 +42,7 @@ public class DefaultMonitorListener implements MonitorListener {
     private final static String LOG_PREFIX = "[MONITOR] ";
     private final static String LOG_NOTIFY = LOG_PREFIX + " [NOTIFY] ";
 
-    private final DingerSender dingerSender;
+    private final IDingTalkService dingTalkService;
 
     @Override
     public void beginRound() {
@@ -61,7 +59,7 @@ public class DefaultMonitorListener implements MonitorListener {
             .consumerGroup(undoneMsgs.getConsumerGroup())
             .extendedField(undoneMsgs.getTopic())
             .build();
-        dingerSender.send(DingerRequest.request(JSONUtil.toJsonStr(pushAlterDTO)));
+        dingTalkService.rocketmqAlarm(pushAlterDTO);
     }
 
     @Override
@@ -71,7 +69,7 @@ public class DefaultMonitorListener implements MonitorListener {
             .alarmContent(String.format("消费组不在线: %s", consumerGroup))
             .consumerGroup(consumerGroup)
             .build();
-        dingerSender.send(DingerRequest.request(JSONUtil.toJsonStr(pushAlterDTO)));
+        dingTalkService.rocketmqAlarm(pushAlterDTO);
     }
 
     @Override
@@ -84,7 +82,7 @@ public class DefaultMonitorListener implements MonitorListener {
             .consumerGroup(failedMsgs.getConsumerGroup())
             .extendedField(failedMsgs.getTopic())
             .build();
-        dingerSender.send(DingerRequest.request(JSONUtil.toJsonStr(pushAlterDTO)));
+        dingTalkService.rocketmqAlarm(pushAlterDTO);
     }
 
     @Override
@@ -102,7 +100,7 @@ public class DefaultMonitorListener implements MonitorListener {
             .consumerGroup(consumerGroup)
             .extendedField(extendedField)
             .build();
-        dingerSender.send(DingerRequest.request(JSONUtil.toJsonStr(pushAlterDTO)));
+        dingTalkService.rocketmqAlarm(pushAlterDTO);
     }
 
     @Override
@@ -132,7 +130,7 @@ public class DefaultMonitorListener implements MonitorListener {
                             + "同一消费组订阅信息不一致告警: ConsumerGroup: %s, Subscription different \n%s",
                         consumerGroup, MarkdownCreaterUtil.listMarkdown(details)))
                     .build();
-                dingerSender.send(DingerRequest.request(JSONUtil.toJsonStr(pushAlterDTO)));
+                dingTalkService.rocketmqAlarm(pushAlterDTO);
             }
         }
 
@@ -152,7 +150,7 @@ public class DefaultMonitorListener implements MonitorListener {
                         .consumerGroup(consumerGroup)
                         .extendedField(clientId)
                         .build();
-                    dingerSender.send(DingerRequest.request(JSONUtil.toJsonStr(pushAlterDTO)));
+                    dingTalkService.rocketmqAlarm(pushAlterDTO);
                 }
             }
         }
@@ -165,7 +163,7 @@ public class DefaultMonitorListener implements MonitorListener {
             .alarmContent(String.format(LOG_PREFIX + "broker未启动: %s", brokerNames))
             .extendedField(brokerNames.toString())
             .build();
-        dingerSender.send(DingerRequest.request(JSONUtil.toJsonStr(pushAlterDTO)));
+        dingTalkService.rocketmqAlarm(pushAlterDTO);
     }
 
     @Override
@@ -174,7 +172,7 @@ public class DefaultMonitorListener implements MonitorListener {
             .alarmType(JobTypeEnum.REPORT_RISKED_BROKER.getCode())
             .alarmContent(String.format(LOG_PREFIX + "broker运行状态: \n%s", MarkdownCreaterUtil.listMarkdown(notifyTable)))
             .build();
-        dingerSender.send(DingerRequest.request(JSONUtil.toJsonStr(pushAlterDTO)));
+        dingTalkService.rocketmqAlarm(pushAlterDTO);
     }
 
     @Override
