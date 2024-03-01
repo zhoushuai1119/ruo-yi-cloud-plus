@@ -35,6 +35,7 @@ import org.apache.rocketmq.common.ThreadFactoryImpl;
 import org.apache.rocketmq.common.admin.ConsumeStats;
 import org.apache.rocketmq.common.admin.OffsetWrapper;
 import org.apache.rocketmq.common.message.MessageQueue;
+import org.apache.rocketmq.common.protocol.ResponseCode;
 import org.apache.rocketmq.common.protocol.body.*;
 import org.apache.rocketmq.common.protocol.route.BrokerData;
 import org.apache.rocketmq.common.protocol.topic.OffsetMovedEvent;
@@ -345,7 +346,7 @@ public class MonitorService {
         try {
             cc = defaultMQAdminExt.examineConsumerConnectionInfo(consumerGroup);
         } catch (MQBrokerException e) {
-            if (e.getResponseCode() == 206) {
+            if (e.getResponseCode() == ResponseCode.CONSUMER_NOT_ONLINE) {
                 //CODE: 206  DESC: the consumer group[c_example] not online
                 monitorListener.reportConsumerNotOnline(consumerGroup);
             }

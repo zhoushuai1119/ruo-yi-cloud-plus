@@ -844,13 +844,11 @@ public class DefaultMQAdminExtImpl implements MQAdminExt, MQAdminExtInner {
 
                     if (ifConsumed) {
                         mt.setTrackType(TrackType.CONSUMED);
-                        Iterator<Entry<String, SubscriptionData>> it = cc.getSubscriptionTable().entrySet().iterator();
-                        while (it.hasNext()) {
-                            Entry<String, SubscriptionData> next = it.next();
+                        for (Entry<String, SubscriptionData> next : cc.getSubscriptionTable().entrySet()) {
                             if (next.getKey().equals(msg.getTopic())) {
                                 if (next.getValue().getTagsSet().contains(msg.getTags())
-                                    || next.getValue().getTagsSet().contains("*")
-                                    || next.getValue().getTagsSet().isEmpty()) {
+                                        || next.getValue().getTagsSet().contains("*")
+                                        || next.getValue().getTagsSet().isEmpty()) {
                                 } else {
                                     mt.setTrackType(TrackType.CONSUMED_BUT_FILTERED);
                                 }
@@ -869,17 +867,14 @@ public class DefaultMQAdminExtImpl implements MQAdminExt, MQAdminExtInner {
         return result;
     }
 
-    public boolean consumed(final MessageExt msg,
-                            final String group) throws RemotingException, MQClientException, InterruptedException,
+    public boolean consumed(final MessageExt msg, final String group) throws RemotingException, MQClientException, InterruptedException,
         MQBrokerException {
 
         ConsumeStats cstats = this.examineConsumeStats(group);
 
         ClusterInfo ci = this.examineBrokerClusterInfo();
 
-        Iterator<Entry<MessageQueue, OffsetWrapper>> it = cstats.getOffsetTable().entrySet().iterator();
-        while (it.hasNext()) {
-            Entry<MessageQueue, OffsetWrapper> next = it.next();
+        for (Entry<MessageQueue, OffsetWrapper> next : cstats.getOffsetTable().entrySet()) {
             MessageQueue mq = next.getKey();
             if (mq.getTopic().equals(msg.getTopic()) && mq.getQueueId() == msg.getQueueId()) {
                 BrokerData brokerData = ci.getBrokerAddrTable().get(mq.getBrokerName());
