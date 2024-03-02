@@ -1,5 +1,6 @@
 package org.dromara.monitor.rocketmq.core;
 
+import cn.hutool.core.util.StrUtil;
 import org.apache.rocketmq.common.message.MessageQueue;
 import org.apache.rocketmq.common.protocol.body.ConsumerRunningInfo;
 import org.apache.rocketmq.common.protocol.body.ProcessQueueInfo;
@@ -40,7 +41,7 @@ public class CustomConsumerRunningInfo extends ConsumerRunningInfo {
                 if (orderMsg) {
                     //未获得锁 && 本地未消费的消息大于零
                     if (!pq.isLocked() && (pq.getCachedMsgCount() > 0)) {
-                        sb.append(String.format("%s %s can't lock for a while, %dms%n  ******* info： %s",
+                        sb.append(StrUtil.format("{} {} can't lock for a while, {}  ******* info： {}",
                             clientId,
                             mq,
                             System.currentTimeMillis() - pq.getLastLockTimestamp(),
@@ -48,7 +49,7 @@ public class CustomConsumerRunningInfo extends ConsumerRunningInfo {
                         ));
                     } else {
                         if (pq.isDroped() && (pq.getTryUnlockTimes() > 0)) {
-                            sb.append(String.format("%s %s unlock %d times, still failed%n ******* info： %s",
+                            sb.append(StrUtil.format("{} {} unlock {} times, still failed, ******* info： {}",
                                 clientId,
                                 mq,
                                 pq.getTryUnlockTimes(),
@@ -62,7 +63,7 @@ public class CustomConsumerRunningInfo extends ConsumerRunningInfo {
                     //最后消费时间 1分钟前，积压数据6000 阻塞告警
                     if (diff > monitorRocketMQProperties.getBlockedMessageMaxTimeMs()
                         && pq.getCachedMsgCount() > monitorRocketMQProperties.getBlockedMessageTotal()) {
-                        sb.append(String.format("%s %s can't consume for a while, maybe blocked, %dms%n",
+                        sb.append(StrUtil.format("{} {} can't consume for a while, maybe blocked, {}",
                             clientId,
                             mq,
                             diff));
