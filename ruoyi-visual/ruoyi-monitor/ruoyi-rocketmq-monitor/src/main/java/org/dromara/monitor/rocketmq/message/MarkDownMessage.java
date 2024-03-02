@@ -23,7 +23,7 @@ public class MarkDownMessage implements CustomMessage {
     public String message(String projectId, DingerRequest request) {
         String content = request.getContent();
         String env = SpringUtil.getActiveProfile();
-        String title = StrUtil.isNotBlank(request.getTitle()) ? request.getTitle() : "PowerJob通知";
+        String title = StrUtil.isNotBlank(request.getTitle()) ? request.getTitle() : "RocketMQ通知";
         return MessageFormat.format(
             "#### {0} \n -项目名称: {1}\n -环境: {2}\n -时间: {3}\n -内容: {4}",
             title, projectId, env, DateUtil.now(), content);
