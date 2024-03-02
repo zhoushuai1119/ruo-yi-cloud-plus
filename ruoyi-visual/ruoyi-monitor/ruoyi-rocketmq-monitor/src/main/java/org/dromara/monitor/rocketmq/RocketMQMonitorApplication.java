@@ -16,4 +16,5 @@ public class RocketMQMonitorApplication {
         SpringApplication.run(RocketMQMonitorApplication.class, args);
         System.out.println("(♥◠‿◠)ﾉﾞ  RocketMQ监控中心启动成功   ლ(´ڡ`ლ)ﾞ  ");
     }
+
 }

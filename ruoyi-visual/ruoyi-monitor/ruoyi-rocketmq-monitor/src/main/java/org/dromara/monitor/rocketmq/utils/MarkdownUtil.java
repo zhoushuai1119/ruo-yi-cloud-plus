@@ -5,7 +5,7 @@ import java.util.Map;
 /**
  * @author shuai.zhou
  */
-public class MarkdownCreaterUtil {
+public class MarkdownUtil {
     public static String listMarkdown(Map<String /*title*/, Map<String, String>/*values*/> map) {
         if (map.isEmpty()) {
             return null;

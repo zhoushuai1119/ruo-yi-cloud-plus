@@ -27,7 +27,7 @@ import org.dromara.monitor.rocketmq.config.MonitorRocketMQProperties;
 import org.dromara.monitor.rocketmq.dto.PushAlterDTO;
 import org.dromara.monitor.rocketmq.enums.JobTypeEnum;
 import org.dromara.monitor.rocketmq.service.IDingTalkService;
-import org.dromara.monitor.rocketmq.utils.MarkdownCreaterUtil;
+import org.dromara.monitor.rocketmq.utils.MarkdownUtil;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -126,13 +126,13 @@ public class DefaultMonitorListener implements MonitorListener {
                 }
 
                 log.info(StrUtil.format(LOG_NOTIFY + "reportConsumerRunningInfo: ConsumerGroup: {}, Subscription different \n{}",
-                    consumerGroup, MarkdownCreaterUtil.listMarkdown(details)));
+                    consumerGroup, MarkdownUtil.listMarkdown(details)));
 
                 PushAlterDTO pushAlterDTO = PushAlterDTO.builder()
                     .alarmType(JobTypeEnum.SUBSCRIPTION_DIFFERENT.getCode())
                     .alarmContent(StrUtil.format(LOG_NOTIFY
                             + "同一消费组订阅信息不一致告警: ConsumerGroup: {}, Subscription different \n{}",
-                        consumerGroup, MarkdownCreaterUtil.listMarkdown(details)))
+                        consumerGroup, MarkdownUtil.listMarkdown(details)))
                     .build();
                 dingTalkService.rocketmqAlarm(pushAlterDTO);
             }
@@ -174,7 +174,7 @@ public class DefaultMonitorListener implements MonitorListener {
     public void reportRiskedBroker(Map<String, Map<String, String>> notifyTable) {
         PushAlterDTO pushAlterDTO = PushAlterDTO.builder()
             .alarmType(JobTypeEnum.REPORT_RISKED_BROKER.getCode())
-            .alarmContent(StrUtil.format(LOG_PREFIX + "broker运行状态: \n{}", MarkdownCreaterUtil.listMarkdown(notifyTable)))
+            .alarmContent(StrUtil.format(LOG_PREFIX + "broker运行状态: \n{}", MarkdownUtil.listMarkdown(notifyTable)))
             .build();
         dingTalkService.rocketmqAlarm(pushAlterDTO);
     }

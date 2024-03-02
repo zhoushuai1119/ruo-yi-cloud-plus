@@ -17,6 +17,7 @@
 
 package org.dromara.monitor.rocketmq.core;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.nacos.shaded.com.google.common.collect.Maps;
 import jakarta.annotation.PostConstruct;
@@ -185,7 +186,6 @@ public class MonitorService {
     }
 
     public void doBrokerMonitorWork() throws Exception {
-        Map<String, Object> resultMap = new HashMap<>();
         ClusterInfo clusterInfo = defaultMQAdminExt.examineBrokerClusterInfo();
         Map<String/*brokerName*/, Map<Long/* brokerId */, Object/* brokerDetail */>> brokerServer = Maps.newHashMap();
         Set<String> runningBrokerNames = new HashSet<>();
@@ -206,11 +206,11 @@ public class MonitorService {
         //监控是否有停止运行的broker
         List<String> stopdBrokers = new ArrayList<>();
         for (String brokerName : monitorRocketMQProperties.getBrokerNames()) {
-            if (!runningBrokerNames.contains(brokerName)) {
+            if (!CollUtil.contains(runningBrokerNames, brokerName)) {
                 stopdBrokers.add(brokerName);
             }
         }
-        if (!stopdBrokers.isEmpty()) {
+        if (CollUtil.isNotEmpty(stopdBrokers)) {
             monitorListener.reportStopedBroker(stopdBrokers);
         }
         //判断是否需要输出
