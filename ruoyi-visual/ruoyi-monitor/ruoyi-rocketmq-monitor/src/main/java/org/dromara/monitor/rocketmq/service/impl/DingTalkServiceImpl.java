@@ -8,6 +8,7 @@ import com.cloud.alarm.dinger.core.entity.enums.MessageSubType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.dromara.monitor.rocketmq.dto.PushAlterDTO;
+import org.dromara.monitor.rocketmq.enums.JobTypeEnum;
 import org.dromara.monitor.rocketmq.service.IDingTalkService;
 import org.springframework.stereotype.Service;
 
@@ -36,9 +37,9 @@ public class DingTalkServiceImpl implements IDingTalkService {
      */
     @Override
     public void rocketmqAlarm(PushAlterDTO pushAlterDTO) {
-        String title = pushAlterDTO.getAlarmContent();
+        String alarmTitle = JobTypeEnum.getEnumByValue(pushAlterDTO.getAlarmType()).getCodeDesc();
         StringBuilder mdBuilder = new StringBuilder();
-        String titleContent = StrUtil.format("<font color=\"warning\">【{}】</font>请相关同事注意。\n相关参数如下:\n", title);
+        String titleContent = StrUtil.format("<font color=\"warning\">【{}】</font>请相关同事注意。\n相关参数如下:\n", alarmTitle);
         mdBuilder.append(titleContent);
         Field[] fields = ReflectUtil.getFields(pushAlterDTO.getClass());
         for (Field field : fields) {
@@ -53,7 +54,7 @@ public class DingTalkServiceImpl implements IDingTalkService {
             String fieldContent = StrUtil.format(">**{}:** <font color=\"comment\">{}</font> \n", fieldName, fieldValue);
             mdBuilder.append(fieldContent);
         }
-        DingerRequest dingerRequest = DingerRequest.request(mdBuilder.toString(), title);
+        DingerRequest dingerRequest = DingerRequest.request(mdBuilder.toString(), alarmTitle);
         dingerSender.send(MessageSubType.MARKDOWN, dingerRequest);
     }
 

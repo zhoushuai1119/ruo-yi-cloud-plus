@@ -17,17 +17,16 @@ public class CustomConsumerRunningInfo extends ConsumerRunningInfo {
 
     public static String analyzeProcessQueue(final String clientId, ConsumerRunningInfo info, MonitorRocketMQProperties monitorRocketMQProperties) {
         StringBuilder sb = new StringBuilder();
-        boolean push = false;
+        boolean push;
         {
             String property = info.getProperties().getProperty(ConsumerRunningInfo.PROP_CONSUME_TYPE);
-
             if (property == null) {
                 property = ((ConsumeType) info.getProperties().get(ConsumerRunningInfo.PROP_CONSUME_TYPE)).name();
             }
             push = ConsumeType.valueOf(property) == ConsumeType.CONSUME_PASSIVELY;
         }
 
-        boolean orderMsg = false;
+        boolean orderMsg;
         {
             String property = info.getProperties().getProperty(ConsumerRunningInfo.PROP_CONSUME_ORDERLY);
             orderMsg = Boolean.parseBoolean(property);
@@ -39,18 +38,22 @@ public class CustomConsumerRunningInfo extends ConsumerRunningInfo {
                 ProcessQueueInfo pq = next.getValue();
 
                 if (orderMsg) {
-
-                    if (!pq.isLocked()) {
-                        sb.append(String.format("%s %s can't lock for a while, %dms%n",
-                                clientId,
-                                mq,
-                                System.currentTimeMillis() - pq.getLastLockTimestamp()));
+                    //未获得锁 && 本地未消费的消息大于零
+                    if (!pq.isLocked() && (pq.getCachedMsgCount() > 0)) {
+                        sb.append(String.format("%s %s can't lock for a while, %dms%n  ******* info： %s",
+                            clientId,
+                            mq,
+                            System.currentTimeMillis() - pq.getLastLockTimestamp(),
+                            pq
+                        ));
                     } else {
                         if (pq.isDroped() && (pq.getTryUnlockTimes() > 0)) {
-                            sb.append(String.format("%s %s unlock %d times, still failed%n",
-                                    clientId,
-                                    mq,
-                                    pq.getTryUnlockTimes()));
+                            sb.append(String.format("%s %s unlock %d times, still failed%n ******* info： %s",
+                                clientId,
+                                mq,
+                                pq.getTryUnlockTimes(),
+                                pq
+                            ));
                         }
                     }
 
@@ -58,16 +61,15 @@ public class CustomConsumerRunningInfo extends ConsumerRunningInfo {
                     long diff = System.currentTimeMillis() - pq.getLastConsumeTimestamp();
                     //最后消费时间 1分钟前，积压数据6000 阻塞告警
                     if (diff > monitorRocketMQProperties.getBlockedMessageMaxTimeMs()
-                            && pq.getCachedMsgCount() > monitorRocketMQProperties.getBlockedMessageTotal()) {
+                        && pq.getCachedMsgCount() > monitorRocketMQProperties.getBlockedMessageTotal()) {
                         sb.append(String.format("%s %s can't consume for a while, maybe blocked, %dms%n",
-                                clientId,
-                                mq,
-                                diff));
+                            clientId,
+                            mq,
+                            diff));
                     }
                 }
             }
         }
-
         return sb.toString();
     }
 

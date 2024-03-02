@@ -17,6 +17,7 @@
 
 package org.dromara.monitor.rocketmq.core;
 
+import cn.hutool.core.util.StrUtil;
 import com.alibaba.nacos.shaded.com.google.common.collect.Maps;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
@@ -158,30 +159,27 @@ public class MonitorService {
     }
 
     private void startScheduleTask() {
-        this.scheduledExecutorService.scheduleAtFixedRate(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    doConsumerMonitorWork();
-                } catch (Exception e) {
-                    log.error("doConsumerMonitorWork Exception", e);
-                    PushAlterDTO pushAlterDTO = PushAlterDTO.builder()
-                        .alarmType(JobTypeEnum.MONITOR_WORK_EXCEPTION.getCode())
-                        .alarmContent(String.format("doConsumerMonitorWork \n%s", e))
-                        .build();
-                    dingTalkService.rocketmqAlarm(pushAlterDTO);
-                }
+        this.scheduledExecutorService.scheduleAtFixedRate(() -> {
+            try {
+                doConsumerMonitorWork();
+            } catch (Exception e) {
+                log.error("doConsumerMonitorWork Exception", e);
+                PushAlterDTO pushAlterDTO = PushAlterDTO.builder()
+                    .alarmType(JobTypeEnum.MONITOR_WORK_EXCEPTION.getCode())
+                    .alarmContent(StrUtil.format("doConsumerMonitorWork \n{}", e.getMessage()))
+                    .build();
+                dingTalkService.rocketmqAlarm(pushAlterDTO);
+            }
 
-                try {
-                    doBrokerMonitorWork();
-                } catch (Exception e) {
-                    PushAlterDTO pushAlterDTO = PushAlterDTO.builder()
-                        .alarmType(JobTypeEnum.MONITOR_WORK_EXCEPTION.getCode())
-                        .alarmContent(String.format("doBrokerMonitorWork \n%s", e))
-                        .build();
-                    dingTalkService.rocketmqAlarm(pushAlterDTO);
-                    log.error("doBrokerMonitorWork", e);
-                }
+            try {
+                doBrokerMonitorWork();
+            } catch (Exception e) {
+                log.error("doBrokerMonitorWork Exception", e);
+                PushAlterDTO pushAlterDTO = PushAlterDTO.builder()
+                    .alarmType(JobTypeEnum.MONITOR_WORK_EXCEPTION.getCode())
+                    .alarmContent(StrUtil.format("doBrokerMonitorWork \n{}", e.getMessage()))
+                    .build();
+                dingTalkService.rocketmqAlarm(pushAlterDTO);
             }
         }, 1000 * 20, this.monitorRocketMQProperties.getRoundInterval(), TimeUnit.MILLISECONDS);
     }

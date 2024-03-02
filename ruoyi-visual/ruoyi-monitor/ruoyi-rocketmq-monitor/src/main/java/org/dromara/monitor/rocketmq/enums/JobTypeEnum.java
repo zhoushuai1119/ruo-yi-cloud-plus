@@ -3,6 +3,9 @@ package org.dromara.monitor.rocketmq.enums;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.util.Objects;
+import java.util.stream.Stream;
+
 /**
  * 任务类型
  *
@@ -25,5 +28,12 @@ public enum JobTypeEnum {
     private final String code;
 
     private final String codeDesc;
+
+    public static JobTypeEnum getEnumByValue(String jobType) {
+        return Stream.of(values())
+            .filter(JobType -> Objects.equals(JobType.getCode(), jobType))
+            .findFirst()
+            .orElse(null);
+    }
 
 }

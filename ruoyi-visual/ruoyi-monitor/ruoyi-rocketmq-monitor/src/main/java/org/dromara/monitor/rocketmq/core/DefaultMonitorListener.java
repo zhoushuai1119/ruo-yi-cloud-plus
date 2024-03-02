@@ -70,7 +70,7 @@ public class DefaultMonitorListener implements MonitorListener {
         }
         PushAlterDTO pushAlterDTO = PushAlterDTO.builder()
             .alarmType(JobTypeEnum.REPORT_CONSUMER_NOT_ONLINE.getCode())
-            .alarmContent(String.format("消费组不在线: %s", consumerGroup))
+            .alarmContent(StrUtil.format("消费组不在线: {}", consumerGroup))
             .consumerGroup(consumerGroup)
             .build();
         dingTalkService.rocketmqAlarm(pushAlterDTO);
@@ -125,13 +125,13 @@ public class DefaultMonitorListener implements MonitorListener {
                     }
                 }
 
-                log.info(String.format(LOG_NOTIFY + "reportConsumerRunningInfo: ConsumerGroup: %s, Subscription different \n%s",
+                log.info(StrUtil.format(LOG_NOTIFY + "reportConsumerRunningInfo: ConsumerGroup: {}, Subscription different \n{}",
                     consumerGroup, MarkdownCreaterUtil.listMarkdown(details)));
 
                 PushAlterDTO pushAlterDTO = PushAlterDTO.builder()
                     .alarmType(JobTypeEnum.SUBSCRIPTION_DIFFERENT.getCode())
-                    .alarmContent(String.format(LOG_NOTIFY
-                            + "同一消费组订阅信息不一致告警: ConsumerGroup: %s, Subscription different \n%s",
+                    .alarmContent(StrUtil.format(LOG_NOTIFY
+                            + "同一消费组订阅信息不一致告警: ConsumerGroup: {}, Subscription different \n{}",
                         consumerGroup, MarkdownCreaterUtil.listMarkdown(details)))
                     .build();
                 dingTalkService.rocketmqAlarm(pushAlterDTO);
@@ -141,15 +141,15 @@ public class DefaultMonitorListener implements MonitorListener {
         {
             for (Entry<String, ConsumerRunningInfo> next : criTable.entrySet()) {
                 String result = CustomConsumerRunningInfo.analyzeProcessQueue(next.getKey(), next.getValue(), monitorRocketMQProperties);
-                if (!result.isEmpty()) {
+                if (StrUtil.isNotBlank(result)) {
                     String clientId = next.getKey();
-                    log.info(String.format(LOG_NOTIFY
-                            + "reportConsumerRunningInfo: ConsumerGroup: %s, ClientId: %s, %s",
+                    log.info(StrUtil.format(LOG_NOTIFY
+                            + "reportConsumerRunningInfo: ConsumerGroup: {}, ClientId: {}, {}",
                         consumerGroup, clientId, result));
 
                     PushAlterDTO pushAlterDTO = PushAlterDTO.builder()
                         .alarmType(JobTypeEnum.CONSUMER_GROUP_BLOCK.getCode())
-                        .alarmContent(String.format(LOG_NOTIFY + "消费者阻塞告警: ConsumerGroup: %s, ClientId: %s, %s",
+                        .alarmContent(StrUtil.format(LOG_NOTIFY + "消费者阻塞告警: ConsumerGroup: {}, ClientId: {}, {}",
                             consumerGroup, clientId, result))
                         .consumerGroup(consumerGroup)
                         .extendedField(clientId)
@@ -164,7 +164,7 @@ public class DefaultMonitorListener implements MonitorListener {
     public void reportStopedBroker(List<String> brokerNames) {
         PushAlterDTO pushAlterDTO = PushAlterDTO.builder()
             .alarmType(JobTypeEnum.REPORT_STOPED_BROKER.getCode())
-            .alarmContent(String.format(LOG_PREFIX + "broker未启动: %s", brokerNames))
+            .alarmContent(StrUtil.format(LOG_PREFIX + "broker未启动: {}", brokerNames))
             .extendedField(brokerNames.toString())
             .build();
         dingTalkService.rocketmqAlarm(pushAlterDTO);
@@ -174,7 +174,7 @@ public class DefaultMonitorListener implements MonitorListener {
     public void reportRiskedBroker(Map<String, Map<String, String>> notifyTable) {
         PushAlterDTO pushAlterDTO = PushAlterDTO.builder()
             .alarmType(JobTypeEnum.REPORT_RISKED_BROKER.getCode())
-            .alarmContent(String.format(LOG_PREFIX + "broker运行状态: \n%s", MarkdownCreaterUtil.listMarkdown(notifyTable)))
+            .alarmContent(StrUtil.format(LOG_PREFIX + "broker运行状态: \n{}", MarkdownCreaterUtil.listMarkdown(notifyTable)))
             .build();
         dingTalkService.rocketmqAlarm(pushAlterDTO);
     }
