@@ -120,6 +120,12 @@
             <artifactId>apollo-client</artifactId>
         </dependency>
 
+        <!--Cloud RocketMQ-->
+        <dependency>
+            <groupId>org.dromara</groupId>
+            <artifactId>ruoyi-common-rocketmq</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>com.github.ulisesbocchio</groupId>
             <artifactId>jasypt-spring-boot-starter</artifactId>
