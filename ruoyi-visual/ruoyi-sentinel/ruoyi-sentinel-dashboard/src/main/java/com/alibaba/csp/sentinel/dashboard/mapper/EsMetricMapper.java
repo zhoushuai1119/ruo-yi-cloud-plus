@@ -1,7 +1,7 @@
 package com.alibaba.csp.sentinel.dashboard.mapper;
 
 import com.alibaba.csp.sentinel.dashboard.datasource.entity.EsMetric;
-import org.dromara.easyes.core.core.BaseEsMapper;
+import org.dromara.easyes.core.kernel.BaseEsMapper;
 
 /**
  * <p>
