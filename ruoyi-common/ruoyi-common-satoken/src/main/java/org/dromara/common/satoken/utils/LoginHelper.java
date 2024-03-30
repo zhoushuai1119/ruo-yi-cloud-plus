@@ -60,7 +60,9 @@ public class LoginHelper {
                 .setExtra(USER_KEY, loginUser.getUserId())
                 .setExtra(DEPT_KEY, loginUser.getDeptId())
                 .setExtra(GRANT_TYPE, grantType));
-        StpUtil.getTokenSession().set(LOGIN_USER_KEY, loginUser);
+        SaSession tokenSession = StpUtil.getTokenSession();
+        tokenSession.updateTimeout(model.getTimeout());
+        tokenSession.set(LOGIN_USER_KEY, loginUser);
     }
 
     /**
