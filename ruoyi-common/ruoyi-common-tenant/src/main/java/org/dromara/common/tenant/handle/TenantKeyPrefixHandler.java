@@ -1,6 +1,7 @@
 package org.dromara.common.tenant.handle;
 
 import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.plugins.InterceptorIgnoreHelper;
 import com.cloud.lock.redisson.handler.KeyPrefixHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.dromara.common.core.constant.GlobalConstants;
@@ -27,6 +28,9 @@ public class TenantKeyPrefixHandler extends KeyPrefixHandler {
         if (StringUtils.isBlank(name)) {
             return null;
         }
+        if (InterceptorIgnoreHelper.willIgnoreTenantLine("")) {
+            return super.map(name);
+        }
         if (StringUtils.contains(name, GlobalConstants.GLOBAL_REDIS_KEY)) {
             return super.map(name);
         }
@@ -49,6 +53,9 @@ public class TenantKeyPrefixHandler extends KeyPrefixHandler {
         String unmap = super.unmap(name);
         if (StringUtils.isBlank(unmap)) {
             return null;
+        }
+        if (InterceptorIgnoreHelper.willIgnoreTenantLine("")) {
+            return super.unmap(name);
         }
         if (StringUtils.contains(name, GlobalConstants.GLOBAL_REDIS_KEY)) {
             return super.unmap(name);
