@@ -7,10 +7,21 @@
     <groupId>org.dromara</groupId>
     <artifactId>ruoyi-cloud-plus</artifactId>
     <version>${revision}</version>
+    <packaging>pom</packaging>
 
     <name>RuoYi-Cloud-Plus</name>
     <url>https://gitee.com/dromara/RuoYi-Cloud-Plus</url>
     <description>RuoYi-Cloud-Plus微服务系统</description>
+
+    <modules>
+        <module>ruoyi-auth</module>
+        <module>ruoyi-gateway</module>
+        <module>ruoyi-modules</module>
+        <module>ruoyi-visual</module>
+        <module>ruoyi-api</module>
+        <module>ruoyi-common</module>
+        <module>ruoyi-example</module>
+    </modules>
 
     <properties>
         <revision>2.1.2</revision>
@@ -438,21 +449,6 @@
 
         </dependencies>
     </dependencyManagement>
-
-    <modules>
-        <module>ruoyi-auth</module>
-        <module>ruoyi-gateway</module>
-        <module>ruoyi-modules</module>
-        <module>ruoyi-visual</module>
-        <module>ruoyi-api</module>
-        <module>ruoyi-common</module>
-        <module>ruoyi-example</module>
-    </modules>
-    <packaging>pom</packaging>
-
-    <dependencies>
-
-    </dependencies>
 
     <build>
         <plugins>
