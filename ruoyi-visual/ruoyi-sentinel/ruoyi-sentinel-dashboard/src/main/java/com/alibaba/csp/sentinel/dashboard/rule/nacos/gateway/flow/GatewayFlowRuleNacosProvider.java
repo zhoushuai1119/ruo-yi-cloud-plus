@@ -15,7 +15,7 @@
  */
 package com.alibaba.csp.sentinel.dashboard.rule.nacos.gateway.flow;
 
-import com.alibaba.csp.sentinel.dashboard.config.properties.NacosProperties;
+import com.alibaba.csp.sentinel.dashboard.config.properties.SentinelNacosProperties;
 import com.alibaba.csp.sentinel.dashboard.datasource.entity.gateway.GatewayFlowRuleEntity;
 import com.alibaba.csp.sentinel.dashboard.rule.DynamicRuleProvider;
 import com.alibaba.csp.sentinel.dashboard.util.NacosConfigUtil;
@@ -43,7 +43,7 @@ public class GatewayFlowRuleNacosProvider implements DynamicRuleProvider<List<Ga
 
     private final Converter<String, List<GatewayFlowRuleEntity>> converter;
 
-    private final NacosProperties nacosProperties;
+    private final SentinelNacosProperties sentinelNacosProperties;
 
 
     /**
@@ -57,7 +57,7 @@ public class GatewayFlowRuleNacosProvider implements DynamicRuleProvider<List<Ga
     @Override
     public List<GatewayFlowRuleEntity> getRules(String appName) throws Exception {
         String flowDataId = NacosConfigUtil.getGatewayFlowDataId(appName);
-        String groupId = nacosProperties.getGroupId();
+        String groupId = sentinelNacosProperties.getGroupId();
         String rules = configService.getConfig(flowDataId, groupId, timeoutInMills);
         if (StringUtil.isEmpty(rules)) {
             return new ArrayList<>();

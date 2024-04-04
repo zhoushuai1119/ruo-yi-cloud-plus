@@ -1,6 +1,6 @@
 package com.alibaba.csp.sentinel.dashboard.rule.nacos.auth;
 
-import com.alibaba.csp.sentinel.dashboard.config.properties.NacosProperties;
+import com.alibaba.csp.sentinel.dashboard.config.properties.SentinelNacosProperties;
 import com.alibaba.csp.sentinel.dashboard.datasource.entity.rule.AuthorityRuleEntity;
 import com.alibaba.csp.sentinel.dashboard.datasource.entity.rule.correct.AuthorityRuleCorrectEntity;
 import com.alibaba.csp.sentinel.dashboard.rule.DynamicRuleProvider;
@@ -32,7 +32,7 @@ public class AuthorityRuleNacosProvider implements DynamicRuleProvider<List<Auth
 
     private final Converter<String, List<AuthorityRuleCorrectEntity>> converter;
 
-    private final NacosProperties nacosProperties;
+    private final SentinelNacosProperties sentinelNacosProperties;
 
 
     /**
@@ -46,7 +46,7 @@ public class AuthorityRuleNacosProvider implements DynamicRuleProvider<List<Auth
     @Override
     public List<AuthorityRuleEntity> getRules(String appName) throws Exception {
         String flowDataId = NacosConfigUtil.getAuthorityDataId(appName);
-        String groupId = nacosProperties.getGroupId();
+        String groupId = sentinelNacosProperties.getGroupId();
         String rules = configService.getConfig(flowDataId, groupId, timeoutInMills);
         if (StringUtil.isEmpty(rules)) {
             return new ArrayList<>();

@@ -29,4 +29,5 @@ spring:
         group: @nacos.config.group@
   config:
     import:
+      - optional:nacos:application-common.yml
       - optional:nacos:${spring.application.name}.yml

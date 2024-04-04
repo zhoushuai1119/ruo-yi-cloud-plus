@@ -5,7 +5,7 @@ package com.alibaba.cloud.sentinel.utils;
  *
  * @author shuai.zhou
  */
-public final class ApolloConfigUtil {
+public final class NacosConfigUtil {
 
     /**
      * sentinel限流规则配置namespace

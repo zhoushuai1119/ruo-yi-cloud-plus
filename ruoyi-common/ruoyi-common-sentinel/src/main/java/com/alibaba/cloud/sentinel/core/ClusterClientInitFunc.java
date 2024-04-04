@@ -1,13 +1,12 @@
 package com.alibaba.cloud.sentinel.core;
 
 import com.alibaba.cloud.sentinel.parser.ClusterAssignConfigParser;
-import com.alibaba.cloud.sentinel.utils.ApolloConfigUtil;
+import com.alibaba.cloud.sentinel.utils.NacosConfigUtil;
 import com.alibaba.csp.sentinel.cluster.ClusterStateManager;
 import com.alibaba.csp.sentinel.cluster.client.config.ClusterClientAssignConfig;
-import com.alibaba.csp.sentinel.cluster.client.config.ClusterClientConfig;
 import com.alibaba.csp.sentinel.cluster.client.config.ClusterClientConfigManager;
 import com.alibaba.csp.sentinel.datasource.ReadableDataSource;
-import com.alibaba.csp.sentinel.datasource.apollo.ApolloDataSource;
+import com.alibaba.csp.sentinel.datasource.nacos.NacosDataSource;
 import com.alibaba.csp.sentinel.init.InitFunc;
 import com.alibaba.csp.sentinel.slots.block.authority.AuthorityRule;
 import com.alibaba.csp.sentinel.slots.block.authority.AuthorityRuleManager;
@@ -23,9 +22,11 @@ import com.alibaba.csp.sentinel.transport.config.TransportConfig;
 import com.alibaba.csp.sentinel.util.AppNameUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
+import com.alibaba.nacos.api.PropertyKeyConst;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
+import java.util.Properties;
 
 /**
  * @author zhoushuai
@@ -38,15 +39,18 @@ public class ClusterClientInitFunc implements InitFunc {
     /**
      * token server namespace
      */
-    private final String tokenServerNameSpace = ApolloConfigUtil.getTokenServerRulesNamespace();
+    private final String tokenServerNameSpace = NacosConfigUtil.getTokenServerRulesNamespace();
     /**
      * sentinel限流规则配置namespace
      */
-    private final String sentinelRulesNameSpace = ApolloConfigUtil.getSentinelRulesNamespace();
+    private final String sentinelRulesNameSpace = NacosConfigUtil.getSentinelRulesNamespace();
     /**
      * defaultRules
      */
     private final String defaultRules = "[]";
+    private final String serverAddr = "139.196.208.53:8848";
+    private final String groupId = "SENTINEL_GROUP";
+    private final String namespace = "sentinel";
 
     @Override
     public void init() {
@@ -104,8 +108,8 @@ public class ClusterClientInitFunc implements InitFunc {
      * @param appName 应用名称
      */
     private void registerFlowRuleProperty(String appName) {
-        ReadableDataSource<String, List<FlowRule>> flowRuleDataSource = new ApolloDataSource<>(sentinelRulesNameSpace,
-            ApolloConfigUtil.getFlowDataId(appName), defaultRules, source -> JSON.parseObject(source, new TypeReference<>() {
+        ReadableDataSource<String, List<FlowRule>> flowRuleDataSource = new NacosDataSource<>(nacosProperties(),
+            groupId, NacosConfigUtil.getFlowDataId(appName), source -> JSON.parseObject(source, new TypeReference<>() {
         }));
         //获取apollo中的配置写入本地缓存配置中
         FlowRuleManager.register2Property(flowRuleDataSource.getProperty());
@@ -118,8 +122,8 @@ public class ClusterClientInitFunc implements InitFunc {
      * @param appName 应用名称
      */
     private void registerDegradeRuleProperty(String appName) {
-        ReadableDataSource<String, List<DegradeRule>> degradeRuleDataSource = new ApolloDataSource<>(sentinelRulesNameSpace,
-            ApolloConfigUtil.getDegradeDataId(appName), defaultRules, source -> JSON.parseObject(source, new TypeReference<>() {
+        ReadableDataSource<String, List<DegradeRule>> degradeRuleDataSource = new NacosDataSource<>(nacosProperties(),
+            groupId, NacosConfigUtil.getDegradeDataId(appName), source -> JSON.parseObject(source, new TypeReference<>() {
         }));
         DegradeRuleManager.register2Property(degradeRuleDataSource.getProperty());
     }
@@ -130,8 +134,8 @@ public class ClusterClientInitFunc implements InitFunc {
      * @param appName 应用名称
      */
     private void registerParamFlowRuleProperty(String appName) {
-        ReadableDataSource<String, List<ParamFlowRule>> paramFlowRuleDataSource = new ApolloDataSource<>(sentinelRulesNameSpace,
-            ApolloConfigUtil.getParamFlowDataId(appName), defaultRules, source -> JSON.parseObject(source, new TypeReference<>() {
+        ReadableDataSource<String, List<ParamFlowRule>> paramFlowRuleDataSource = new NacosDataSource<>(nacosProperties(),
+            groupId, NacosConfigUtil.getParamFlowDataId(appName), source -> JSON.parseObject(source, new TypeReference<>() {
         }));
         ParamFlowRuleManager.register2Property(paramFlowRuleDataSource.getProperty());
     }
@@ -143,8 +147,8 @@ public class ClusterClientInitFunc implements InitFunc {
      * @param appName 应用名称
      */
     private void registerAuthorityRuleProperty(String appName) {
-        ReadableDataSource<String, List<AuthorityRule>> authorityRuleDataSource = new ApolloDataSource<>(sentinelRulesNameSpace,
-            ApolloConfigUtil.getAuthorityDataId(appName), defaultRules, source -> JSON.parseObject(source, new TypeReference<>() {
+        ReadableDataSource<String, List<AuthorityRule>> authorityRuleDataSource = new NacosDataSource<>(nacosProperties(),
+            groupId, NacosConfigUtil.getAuthorityDataId(appName), source -> JSON.parseObject(source, new TypeReference<>() {
         }));
         AuthorityRuleManager.register2Property(authorityRuleDataSource.getProperty());
     }
@@ -155,8 +159,8 @@ public class ClusterClientInitFunc implements InitFunc {
      * @param appName 应用名称
      */
     private void registerSystemRuleProperty(String appName) {
-        ReadableDataSource<String, List<SystemRule>> systemRuleDataSource = new ApolloDataSource<>(sentinelRulesNameSpace,
-            ApolloConfigUtil.getSystemDataId(appName), defaultRules, source -> JSON.parseObject(source, new TypeReference<>() {
+        ReadableDataSource<String, List<SystemRule>> systemRuleDataSource = new NacosDataSource<>(nacosProperties(),
+            groupId, NacosConfigUtil.getSystemDataId(appName), source -> JSON.parseObject(source, new TypeReference<>() {
         }));
         SystemRuleManager.register2Property(systemRuleDataSource.getProperty());
     }
@@ -181,8 +185,8 @@ public class ClusterClientInitFunc implements InitFunc {
      * @date: 2024/2/19 21:35
      */
     public void initClientServerAssignProperty() {
-        ReadableDataSource<String, ClusterClientAssignConfig> clientAssignDs = new ApolloDataSource<>(tokenServerNameSpace,
-            ApolloConfigUtil.getTokenServerRuleKey(), defaultRules, new ClusterAssignConfigParser());
+        ReadableDataSource<String, ClusterClientAssignConfig> clientAssignDs = new NacosDataSource<>(nacosProperties(),
+            groupId, NacosConfigUtil.getTokenServerRuleKey(), new ClusterAssignConfigParser());
         ClusterClientConfigManager.registerServerAssignProperty(clientAssignDs.getProperty());
     }
 
@@ -191,6 +195,16 @@ public class ClusterClientInitFunc implements InitFunc {
      */
     private void initStateProperty() {
         ClusterStateManager.applyState(ClusterStateManager.CLUSTER_CLIENT);
+    }
+
+    private Properties nacosProperties() {
+        Properties properties = new Properties();
+        // 这里在创建ConfigService实例时加了Nacos实例地址和命名空间两个属性。
+        properties.put(PropertyKeyConst.SERVER_ADDR, serverAddr);
+        properties.put(PropertyKeyConst.NAMESPACE, namespace);
+        properties.put(PropertyKeyConst.USERNAME, "nacos");
+        properties.put(PropertyKeyConst.PASSWORD, "nacos");
+        return properties;
     }
 
 }

@@ -1,6 +1,6 @@
 package com.alibaba.csp.sentinel.dashboard.rule.nacos.system;
 
-import com.alibaba.csp.sentinel.dashboard.config.properties.NacosProperties;
+import com.alibaba.csp.sentinel.dashboard.config.properties.SentinelNacosProperties;
 import com.alibaba.csp.sentinel.dashboard.datasource.entity.rule.SystemRuleEntity;
 import com.alibaba.csp.sentinel.dashboard.rule.DynamicRulePublisher;
 import com.alibaba.csp.sentinel.dashboard.util.NacosConfigUtil;
@@ -28,7 +28,7 @@ public class SystemRuleNacosPublisher implements DynamicRulePublisher<List<Syste
 
     private final Converter<List<SystemRuleEntity>, String> converter;
 
-    private final NacosProperties nacosProperties;
+    private final SentinelNacosProperties sentinelNacosProperties;
 
 
     /**
@@ -48,7 +48,7 @@ public class SystemRuleNacosPublisher implements DynamicRulePublisher<List<Syste
         filterField(rules);
         // 创建配置
         String flowDataId = NacosConfigUtil.getSystemDataId(app);
-        String groupId = nacosProperties.getGroupId();
+        String groupId = sentinelNacosProperties.getGroupId();
         configService.publishConfig(flowDataId, groupId, converter.convert(rules));
         log.info("publish app:{} SystemRule success rules: {}", app, JSON.toJSONString(rules));
     }

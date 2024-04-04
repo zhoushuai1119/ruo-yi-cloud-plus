@@ -1,6 +1,6 @@
 package com.alibaba.csp.sentinel.dashboard.rule.nacos.degrade;
 
-import com.alibaba.csp.sentinel.dashboard.config.properties.NacosProperties;
+import com.alibaba.csp.sentinel.dashboard.config.properties.SentinelNacosProperties;
 import com.alibaba.csp.sentinel.dashboard.datasource.entity.rule.DegradeRuleEntity;
 import com.alibaba.csp.sentinel.dashboard.rule.DynamicRuleProvider;
 import com.alibaba.csp.sentinel.dashboard.util.NacosConfigUtil;
@@ -28,7 +28,7 @@ public class DegradeRuleNacosProvider implements DynamicRuleProvider<List<Degrad
 
     private final Converter<String, List<DegradeRuleEntity>> converter;
 
-    private final NacosProperties nacosProperties;
+    private final SentinelNacosProperties sentinelNacosProperties;
 
 
     /**
@@ -42,7 +42,7 @@ public class DegradeRuleNacosProvider implements DynamicRuleProvider<List<Degrad
     @Override
     public List<DegradeRuleEntity> getRules(String appName) throws Exception {
         String flowDataId = NacosConfigUtil.getDegradeDataId(appName);
-        String groupId = nacosProperties.getGroupId();
+        String groupId = sentinelNacosProperties.getGroupId();
         String rules = configService.getConfig(flowDataId, groupId, timeoutInMills);
         if (StringUtil.isEmpty(rules)) {
             return new ArrayList<>();

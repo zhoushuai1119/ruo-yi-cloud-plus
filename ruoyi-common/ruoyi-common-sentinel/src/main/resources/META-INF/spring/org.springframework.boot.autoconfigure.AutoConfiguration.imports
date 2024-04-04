@@ -1,1 +1,2 @@
 com.alibaba.cloud.sentinel.handler.GlobalBlockExceptionHandler
+com.alibaba.cloud.sentinel.config.SentinelNacosConfig

@@ -1,6 +1,6 @@
 package com.alibaba.csp.sentinel.dashboard.rule.nacos.paramflow;
 
-import com.alibaba.csp.sentinel.dashboard.config.properties.NacosProperties;
+import com.alibaba.csp.sentinel.dashboard.config.properties.SentinelNacosProperties;
 import com.alibaba.csp.sentinel.dashboard.datasource.entity.rule.ParamFlowRuleEntity;
 import com.alibaba.csp.sentinel.dashboard.datasource.entity.rule.correct.ParamFlowRuleCorrectEntity;
 import com.alibaba.csp.sentinel.dashboard.rule.DynamicRulePublisher;
@@ -31,7 +31,7 @@ public class ParamFlowRuleNacosPublisher implements DynamicRulePublisher<List<Pa
 
     private final Converter<List<ParamFlowRuleCorrectEntity>, String> converter;
 
-    private final NacosProperties nacosProperties;
+    private final SentinelNacosProperties sentinelNacosProperties;
 
 
     /**
@@ -59,7 +59,7 @@ public class ParamFlowRuleNacosPublisher implements DynamicRulePublisher<List<Pa
 
         // 创建配置
         String flowDataId = NacosConfigUtil.getParamFlowDataId(app);
-        String groupId = nacosProperties.getGroupId();
+        String groupId = sentinelNacosProperties.getGroupId();
         configService.publishConfig(flowDataId, groupId, converter.convert(paramFlowRuleList));
         log.info("publish app:{} ParamFlowRule success rules: {}", app, JSON.toJSONString(rules));
     }

@@ -205,3 +205,12 @@ tenant:
 # logstash日志收集
 logstash:
   address: 139.196.208.53:4560
+
+# sentinel nacos 配置
+sentinel:
+  nacos:
+    server-addr: 139.196.208.53:8848
+    group-id: SENTINEL_GROUP
+    namespace: sentinel
+    username: nacos
+    password: nacos

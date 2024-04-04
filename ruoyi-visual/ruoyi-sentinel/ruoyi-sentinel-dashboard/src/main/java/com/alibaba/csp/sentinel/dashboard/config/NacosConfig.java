@@ -15,7 +15,7 @@
  */
 package com.alibaba.csp.sentinel.dashboard.config;
 
-import com.alibaba.csp.sentinel.dashboard.config.properties.NacosProperties;
+import com.alibaba.csp.sentinel.dashboard.config.properties.SentinelNacosProperties;
 import com.alibaba.csp.sentinel.dashboard.datasource.entity.gateway.ApiDefinitionEntity;
 import com.alibaba.csp.sentinel.dashboard.datasource.entity.gateway.GatewayFlowRuleEntity;
 import com.alibaba.csp.sentinel.dashboard.datasource.entity.rule.DegradeRuleEntity;
@@ -42,7 +42,7 @@ import java.util.Properties;
  * @author shuai.zhou
  */
 @Configuration
-@EnableConfigurationProperties(NacosProperties.class)
+@EnableConfigurationProperties(SentinelNacosProperties.class)
 public class NacosConfig {
 
     /**
@@ -203,13 +203,13 @@ public class NacosConfig {
     }
 
     @Bean
-    public ConfigService nacosConfigService(NacosProperties nacosProperties) throws Exception {
+    public ConfigService nacosConfigService(SentinelNacosProperties sentinelNacosProperties) throws Exception {
         Properties properties = new Properties();
         // 这里在创建ConfigService实例时加了Nacos实例地址和命名空间两个属性。
-        properties.put(PropertyKeyConst.SERVER_ADDR, nacosProperties.getServerAddr());
-        properties.put(PropertyKeyConst.NAMESPACE, nacosProperties.getNamespace());
-        properties.put(PropertyKeyConst.USERNAME, nacosProperties.getUsername());
-        properties.put(PropertyKeyConst.PASSWORD, nacosProperties.getPassword());
+        properties.put(PropertyKeyConst.SERVER_ADDR, sentinelNacosProperties.getServerAddr());
+        properties.put(PropertyKeyConst.NAMESPACE, sentinelNacosProperties.getNamespace());
+        properties.put(PropertyKeyConst.USERNAME, sentinelNacosProperties.getUsername());
+        properties.put(PropertyKeyConst.PASSWORD, sentinelNacosProperties.getPassword());
         return ConfigFactory.createConfigService(properties);
     }
 

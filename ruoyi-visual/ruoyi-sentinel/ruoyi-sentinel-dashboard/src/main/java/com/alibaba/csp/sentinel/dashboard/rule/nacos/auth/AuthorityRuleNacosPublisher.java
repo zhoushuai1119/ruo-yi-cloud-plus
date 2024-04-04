@@ -1,6 +1,6 @@
 package com.alibaba.csp.sentinel.dashboard.rule.nacos.auth;
 
-import com.alibaba.csp.sentinel.dashboard.config.properties.NacosProperties;
+import com.alibaba.csp.sentinel.dashboard.config.properties.SentinelNacosProperties;
 import com.alibaba.csp.sentinel.dashboard.datasource.entity.rule.AuthorityRuleEntity;
 import com.alibaba.csp.sentinel.dashboard.datasource.entity.rule.correct.AuthorityRuleCorrectEntity;
 import com.alibaba.csp.sentinel.dashboard.rule.DynamicRulePublisher;
@@ -31,7 +31,7 @@ public class AuthorityRuleNacosPublisher implements DynamicRulePublisher<List<Au
 
     private final Converter<List<AuthorityRuleCorrectEntity>, String> converter;
 
-    private final NacosProperties nacosProperties;
+    private final SentinelNacosProperties sentinelNacosProperties;
 
     /**
      * 推送授权规则至Nacos
@@ -58,7 +58,7 @@ public class AuthorityRuleNacosPublisher implements DynamicRulePublisher<List<Au
 
         // 创建配置
         String flowDataId = NacosConfigUtil.getAuthorityDataId(app);
-        String groupId = nacosProperties.getGroupId();
+        String groupId = sentinelNacosProperties.getGroupId();
         configService.publishConfig(flowDataId, groupId, converter.convert(authorityRuleList));
         log.info("publish app:{} AuthorityRule success rules: {}", app, JSON.toJSONString(rules));
     }

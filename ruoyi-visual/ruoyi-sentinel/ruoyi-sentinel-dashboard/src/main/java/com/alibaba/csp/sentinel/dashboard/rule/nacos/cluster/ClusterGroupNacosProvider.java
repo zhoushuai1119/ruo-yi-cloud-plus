@@ -1,6 +1,6 @@
 package com.alibaba.csp.sentinel.dashboard.rule.nacos.cluster;
 
-import com.alibaba.csp.sentinel.dashboard.config.properties.NacosProperties;
+import com.alibaba.csp.sentinel.dashboard.config.properties.SentinelNacosProperties;
 import com.alibaba.csp.sentinel.dashboard.domain.cluster.request.ClusterAppAssignMap;
 import com.alibaba.csp.sentinel.dashboard.rule.DynamicRuleProvider;
 import com.alibaba.csp.sentinel.dashboard.util.NacosConfigUtil;
@@ -28,7 +28,7 @@ public class ClusterGroupNacosProvider implements DynamicRuleProvider<List<Clust
 
     private final Converter<String, List<ClusterAppAssignMap>> converter;
 
-    private final NacosProperties nacosProperties;
+    private final SentinelNacosProperties sentinelNacosProperties;
 
 
     /**
@@ -42,7 +42,7 @@ public class ClusterGroupNacosProvider implements DynamicRuleProvider<List<Clust
     @Override
     public List<ClusterAppAssignMap> getRules(String appName) throws Exception {
         String flowDataId = NacosConfigUtil.getClusterGroupDataId(appName);
-        String groupId = nacosProperties.getGroupId();
+        String groupId = sentinelNacosProperties.getGroupId();
         String rules = configService.getConfig(flowDataId, groupId, timeoutInMills);
         if (StringUtil.isEmpty(rules)) {
             return new ArrayList<>();

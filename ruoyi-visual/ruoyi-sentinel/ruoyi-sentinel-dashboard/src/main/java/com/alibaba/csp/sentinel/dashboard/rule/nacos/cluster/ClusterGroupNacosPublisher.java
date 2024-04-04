@@ -1,6 +1,6 @@
 package com.alibaba.csp.sentinel.dashboard.rule.nacos.cluster;
 
-import com.alibaba.csp.sentinel.dashboard.config.properties.NacosProperties;
+import com.alibaba.csp.sentinel.dashboard.config.properties.SentinelNacosProperties;
 import com.alibaba.csp.sentinel.dashboard.domain.cluster.request.ClusterAppAssignMap;
 import com.alibaba.csp.sentinel.dashboard.rule.DynamicRulePublisher;
 import com.alibaba.csp.sentinel.dashboard.util.NacosConfigUtil;
@@ -28,7 +28,7 @@ public class ClusterGroupNacosPublisher implements DynamicRulePublisher<List<Clu
 
     private final Converter<List<ClusterAppAssignMap>, String> converter;
 
-    private final NacosProperties nacosProperties;
+    private final SentinelNacosProperties sentinelNacosProperties;
 
 
     /**
@@ -47,7 +47,7 @@ public class ClusterGroupNacosPublisher implements DynamicRulePublisher<List<Clu
         }
         // 创建配置
         String flowDataId = NacosConfigUtil.getClusterGroupDataId(app);
-        String groupId = nacosProperties.getGroupId();
+        String groupId = sentinelNacosProperties.getGroupId();
         configService.publishConfig(flowDataId, groupId, converter.convert(rules));
         log.info("publish app:{} ClusterGroup success rules: {}", app, JSON.toJSONString(rules));
     }

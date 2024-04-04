@@ -1,4 +1,4 @@
-package com.alibaba.csp.sentinel.dashboard.config.properties;
+package com.alibaba.cloud.sentinel.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -9,8 +9,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @author shuai.zhou
  */
 @Data
-@ConfigurationProperties(prefix = "nacos")
-public class NacosProperties {
+@ConfigurationProperties(prefix = "sentinel.nacos")
+public class SentinelNacosProperties {
 
     /**
      * nacos服务器地址
