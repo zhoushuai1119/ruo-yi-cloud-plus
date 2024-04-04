@@ -77,7 +77,7 @@ public class NacosClusterConfigManager {
             clusterGroupEntity.setIp(ip);
             clusterGroupEntity.setPort(port);
 
-            configService.publishConfig(NacosConfigUtil.getTokenServerClusterDataId(), sentinelNacosProperties.getGroupId(), JSON.toJSONString(groupList));
+            configService.publishConfig(NacosConfigUtil.getTokenServerClusterDataId(), sentinelNacosProperties.getGroupId(), JSON.toJSONString(groupList), NacosConfigUtil.getConfigContentType());
             if (log.isDebugEnabled()) {
                 log.debug("Token Server 地址修改成功，dataId:【" + NacosConfigUtil.getTokenServerClusterDataId() + "】");
             }

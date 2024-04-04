@@ -64,7 +64,7 @@ public class GatewayApiRuleNacosPublisher implements DynamicRulePublisher<List<A
         // 创建配置
         String flowDataId = NacosConfigUtil.getGatewayApiGroupDataId(app);
         String groupId = sentinelNacosProperties.getGroupId();
-        configService.publishConfig(flowDataId, groupId, converter.convert(rules));
+        configService.publishConfig(flowDataId, groupId, converter.convert(rules), NacosConfigUtil.getConfigContentType());
         log.info("publish app:{} GatewayApiRule success rules: {}", app, JSON.toJSONString(rules));
     }
 

@@ -48,7 +48,7 @@ public class ClusterGroupNacosPublisher implements DynamicRulePublisher<List<Clu
         // 创建配置
         String flowDataId = NacosConfigUtil.getClusterGroupDataId(app);
         String groupId = sentinelNacosProperties.getGroupId();
-        configService.publishConfig(flowDataId, groupId, converter.convert(rules));
+        configService.publishConfig(flowDataId, groupId, converter.convert(rules), NacosConfigUtil.getConfigContentType());
         log.info("publish app:{} ClusterGroup success rules: {}", app, JSON.toJSONString(rules));
     }
 

@@ -49,7 +49,7 @@ public class DegradeRuleNacosPublisher implements DynamicRulePublisher<List<Degr
         // 创建配置
         String flowDataId = NacosConfigUtil.getDegradeDataId(app);
         String groupId = sentinelNacosProperties.getGroupId();
-        configService.publishConfig(flowDataId, groupId, converter.convert(rules));
+        configService.publishConfig(flowDataId, groupId, converter.convert(rules), NacosConfigUtil.getConfigContentType());
         log.info("publish app:{} DegradeRule success rules: {}", app, JSON.toJSONString(rules));
     }
 

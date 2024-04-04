@@ -60,7 +60,7 @@ public class ParamFlowRuleNacosPublisher implements DynamicRulePublisher<List<Pa
         // 创建配置
         String flowDataId = NacosConfigUtil.getParamFlowDataId(app);
         String groupId = sentinelNacosProperties.getGroupId();
-        configService.publishConfig(flowDataId, groupId, converter.convert(paramFlowRuleList));
+        configService.publishConfig(flowDataId, groupId, converter.convert(paramFlowRuleList), NacosConfigUtil.getConfigContentType());
         log.info("publish app:{} ParamFlowRule success rules: {}", app, JSON.toJSONString(rules));
     }
 

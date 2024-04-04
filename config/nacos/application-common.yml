@@ -148,8 +148,6 @@ springdoc:
     # 关闭SpringDoc文档,使用knife4j
   swagger-ui:
     enable: false
-    # 持久化认证数据
-  #    persistAuthorization: true
   info:
     # 标题
     title: '标题：RuoYi-Cloud-Plus微服务权限管理系统_接口文档'

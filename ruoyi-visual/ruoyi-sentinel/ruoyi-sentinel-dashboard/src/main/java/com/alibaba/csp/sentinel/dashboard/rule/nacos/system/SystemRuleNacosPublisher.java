@@ -49,7 +49,7 @@ public class SystemRuleNacosPublisher implements DynamicRulePublisher<List<Syste
         // 创建配置
         String flowDataId = NacosConfigUtil.getSystemDataId(app);
         String groupId = sentinelNacosProperties.getGroupId();
-        configService.publishConfig(flowDataId, groupId, converter.convert(rules));
+        configService.publishConfig(flowDataId, groupId, converter.convert(rules), NacosConfigUtil.getConfigContentType());
         log.info("publish app:{} SystemRule success rules: {}", app, JSON.toJSONString(rules));
     }
 
