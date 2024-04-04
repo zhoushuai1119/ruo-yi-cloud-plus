@@ -24,12 +24,6 @@
 
     <dependencies>
 
-        <!-- Cloud Apollo -->
-        <dependency>
-            <groupId>com.ctrip.framework.apollo</groupId>
-            <artifactId>apollo-client</artifactId>
-        </dependency>
-
         <!-- ELK 日志收集 -->
         <dependency>
             <groupId>org.dromara</groupId>

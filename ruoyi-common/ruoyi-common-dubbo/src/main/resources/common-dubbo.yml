@@ -16,7 +16,7 @@ dubbo:
     address: nacos://${spring.cloud.nacos.server-addr}
     group: DUBBO_GROUP
     parameters:
-      namespace: ${spring.profiles.active}
+      namespace: dubbo
       username: nacos
       password: nacos
   # 消费者相关配置

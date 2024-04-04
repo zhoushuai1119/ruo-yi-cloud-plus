@@ -1,26 +1,4 @@
-# Tomcat
-server:
-  port: 9203
-
-# Spring
 spring:
-  application:
-    # 应用名称
-    name: ruoyi-job
-  profiles:
-    # 环境配置
-    active: dev
-
-  cloud:
-    nacos:
-      # nacos 服务地址
-      server-addr: 139.196.208.53:8848
-      discovery:
-        # 注册组
-        namespace: ${spring.profiles.active}
-        username: nacos
-        password: nacos
-
   datasource:
     dynamic:
       # 设置默认的数据源或者数据源组,默认值即为 master
@@ -31,9 +9,9 @@ spring:
         master:
           type: ${spring.datasource.type}
           driver-class-name: com.mysql.cj.jdbc.Driver
-          url: ${datasource.system-master.url}
-          username: ${datasource.system-master.username}
-          password: ${datasource.system-master.password}
+          url: ${datasource.job.url}
+          username: ${datasource.job.username}
+          password: ${datasource.job.password}
 
 # powerjob 配置
 powerjob:

@@ -1,24 +1,4 @@
-# Tomcat
-server:
-  port: 9201
-
-# Spring
 spring:
-  application:
-    # 应用名称
-    name: ruoyi-system
-  profiles:
-    # 环境配置
-    active: dev
-
-  cloud:
-    nacos:
-      server-addr: 139.196.208.53:8848
-      discovery:
-        namespace: ${spring.profiles.active}
-        username: nacos
-        password: nacos
-
   # DingTalk告警
   dinger:
     project-id: ${spring.application.name}
