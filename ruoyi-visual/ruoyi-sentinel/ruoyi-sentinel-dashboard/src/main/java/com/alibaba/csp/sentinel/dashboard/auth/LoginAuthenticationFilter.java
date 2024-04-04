@@ -28,7 +28,7 @@ import javax.servlet.Filter;
  * <li>static resources</li>
  * </ul>
  * <p>
- * The excluded urls and urlSuffixes could be configured in {@code application.properties.back} file.
+ * The excluded urls and urlSuffixes could be configured in {@code application.yml} file.
  *
  * @author shuai.zhou
  * @author wxq

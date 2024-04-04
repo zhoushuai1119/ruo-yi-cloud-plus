@@ -43,9 +43,9 @@ public class AuthorityRuleController {
     @Resource
     private RuleRepository<AuthorityRuleEntity, Long> repository;
     @Resource
-    private DynamicRuleProvider<List<AuthorityRuleEntity>> authorityRuleApolloProvider;
+    private DynamicRuleProvider<List<AuthorityRuleEntity>> authorityRuleNacosProvider;
     @Resource
-    private DynamicRulePublisher<List<AuthorityRuleEntity>> authorityRuleApolloPublisher;
+    private DynamicRulePublisher<List<AuthorityRuleEntity>> authorityRuleNacosPublisher;
 
     @GetMapping("/rules")
     @AuthAction(PrivilegeType.READ_RULE)
@@ -54,7 +54,7 @@ public class AuthorityRuleController {
             return Result.ofFail(-1, "app cannot be null or empty");
         }
         try {
-            List<AuthorityRuleEntity> rules = authorityRuleApolloProvider.getRules(app);
+            List<AuthorityRuleEntity> rules = authorityRuleNacosProvider.getRules(app);
             rules = repository.saveAll(rules);
             return Result.ofSuccess(rules);
         } catch (Throwable throwable) {
@@ -163,7 +163,7 @@ public class AuthorityRuleController {
     private boolean publishRules(String app) {
         List<AuthorityRuleEntity> rules = repository.findAllByApp(app);
         try {
-            authorityRuleApolloPublisher.publish(app, rules);
+            authorityRuleNacosPublisher.publish(app, rules);
             return true;
         } catch (Exception e) {
             log.error("Publish authority rules failed");

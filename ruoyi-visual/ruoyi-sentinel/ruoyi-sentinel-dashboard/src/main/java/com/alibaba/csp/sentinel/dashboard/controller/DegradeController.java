@@ -45,9 +45,9 @@ public class DegradeController {
     @Resource
     private RuleRepository<DegradeRuleEntity, Long> repository;
     @Resource
-    private DynamicRuleProvider<List<DegradeRuleEntity>> degradeRuleApolloProvider;
+    private DynamicRuleProvider<List<DegradeRuleEntity>> degradeRuleNacosProvider;
     @Resource
-    private DynamicRulePublisher<List<DegradeRuleEntity>> degradeRuleApolloPublisher;
+    private DynamicRulePublisher<List<DegradeRuleEntity>> degradeRuleNacosPublisher;
 
     @GetMapping("/rules.json")
     @AuthAction(PrivilegeType.READ_RULE)
@@ -56,7 +56,7 @@ public class DegradeController {
             return Result.ofFail(-1, "app can't be null or empty");
         }
         try {
-            List<DegradeRuleEntity> rules = degradeRuleApolloProvider.getRules(app);
+            List<DegradeRuleEntity> rules = degradeRuleNacosProvider.getRules(app);
             rules = repository.saveAll(rules);
             return Result.ofSuccess(rules);
         } catch (Throwable throwable) {
@@ -148,7 +148,7 @@ public class DegradeController {
     private boolean publishRules(String app) {
         List<DegradeRuleEntity> rules = repository.findAllByApp(app);
         try {
-            degradeRuleApolloPublisher.publish(app, rules);
+            degradeRuleNacosPublisher.publish(app, rules);
             return true;
         } catch (Exception e) {
             log.error("Publish degrade rules failed");

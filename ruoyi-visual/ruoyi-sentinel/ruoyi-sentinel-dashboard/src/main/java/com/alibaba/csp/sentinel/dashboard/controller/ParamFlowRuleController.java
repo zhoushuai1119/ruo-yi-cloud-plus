@@ -43,9 +43,9 @@ public class ParamFlowRuleController {
     @Resource
     private RuleRepository<ParamFlowRuleEntity, Long> repository;
     @Resource
-    private DynamicRuleProvider<List<ParamFlowRuleEntity>> paramFlowRuleApolloProvider;
+    private DynamicRuleProvider<List<ParamFlowRuleEntity>> paramFlowRuleNacosProvider;
     @Resource
-    private DynamicRulePublisher<List<ParamFlowRuleEntity>> paramFlowRuleApolloPublisher;
+    private DynamicRulePublisher<List<ParamFlowRuleEntity>> paramFlowRuleNacosPublisher;
 
     @GetMapping("/rules")
     @AuthAction(PrivilegeType.READ_RULE)
@@ -54,7 +54,7 @@ public class ParamFlowRuleController {
             return Result.ofFail(-1, "app cannot be null or empty");
         }
         try {
-            List<ParamFlowRuleEntity> rules = paramFlowRuleApolloProvider.getRules(app);
+            List<ParamFlowRuleEntity> rules = paramFlowRuleNacosProvider.getRules(app);
             rules = repository.saveAll(rules);
             return Result.ofSuccess(rules);
         } catch (Throwable throwable) {
@@ -170,7 +170,7 @@ public class ParamFlowRuleController {
     private void publishRules(String app) {
         List<ParamFlowRuleEntity> rules = repository.findAllByApp(app);
         try {
-            paramFlowRuleApolloPublisher.publish(app, rules);
+            paramFlowRuleNacosPublisher.publish(app, rules);
         } catch (Exception e) {
             log.error("Publish Param Flow rules failed");
         }

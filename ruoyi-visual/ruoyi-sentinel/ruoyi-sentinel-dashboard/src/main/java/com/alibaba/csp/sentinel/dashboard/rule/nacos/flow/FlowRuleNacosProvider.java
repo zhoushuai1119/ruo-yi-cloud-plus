@@ -13,18 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.alibaba.csp.sentinel.dashboard.rule.apollo.flow;
+package com.alibaba.csp.sentinel.dashboard.rule.nacos.flow;
 
-import cn.hutool.extra.spring.SpringUtil;
+import com.alibaba.csp.sentinel.dashboard.config.properties.NacosProperties;
 import com.alibaba.csp.sentinel.dashboard.datasource.entity.rule.FlowRuleEntity;
 import com.alibaba.csp.sentinel.dashboard.rule.DynamicRuleProvider;
-import com.alibaba.csp.sentinel.dashboard.util.ApolloConfigUtil;
-import com.alibaba.csp.sentinel.dashboard.config.properties.ApolloProperties;
+import com.alibaba.csp.sentinel.dashboard.util.NacosConfigUtil;
 import com.alibaba.csp.sentinel.datasource.Converter;
 import com.alibaba.csp.sentinel.util.StringUtil;
-import com.ctrip.framework.apollo.openapi.client.ApolloOpenApiClient;
-import com.ctrip.framework.apollo.openapi.dto.OpenItemDTO;
-import com.ctrip.framework.apollo.openapi.dto.OpenNamespaceDTO;
+import com.alibaba.nacos.api.config.ConfigService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -32,23 +29,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Apollo流控规则
+ * Nacos流控规则
  *
  * @author shuai.zhou
  */
-@Component("flowRuleApolloProvider")
+@Component("flowRuleNacosProvider")
 @RequiredArgsConstructor
-public class FlowRuleApolloProvider implements DynamicRuleProvider<List<FlowRuleEntity>> {
+public class FlowRuleNacosProvider implements DynamicRuleProvider<List<FlowRuleEntity>> {
 
-    private final ApolloOpenApiClient apolloOpenApiClient;
+    private static final long timeoutInMills = 3000;
+
+    private final ConfigService configService;
 
     private final Converter<String, List<FlowRuleEntity>> converter;
 
-    private final ApolloProperties apolloProperties;
+    private final NacosProperties nacosProperties;
 
 
     /**
-     * 获取Apollo流控规则
+     * 获取Nacos流控规则
      *
      * @author: zhou shuai
      * @date: 2024/2/8 22:13
@@ -56,18 +55,10 @@ public class FlowRuleApolloProvider implements DynamicRuleProvider<List<FlowRule
      * @return: java.util.List<com.alibaba.csp.sentinel.dashboard.datasource.entity.rule.FlowRuleEntity>
      */
     @Override
-    public List<FlowRuleEntity> getRules(String appName) {
-        String env = SpringUtil.getActiveProfile();
-        String flowDataId = ApolloConfigUtil.getFlowDataId(appName);
-        OpenNamespaceDTO openNamespaceDTO = apolloOpenApiClient.getNamespace(apolloProperties.getAppId(), env, apolloProperties.getClusterName(), apolloProperties.getNamespace());
-        String rules = openNamespaceDTO
-            .getItems()
-            .stream()
-            .filter(p -> p.getKey().equals(flowDataId))
-            .map(OpenItemDTO::getValue)
-            .findFirst()
-            .orElse("");
-
+    public List<FlowRuleEntity> getRules(String appName) throws Exception {
+        String flowDataId = NacosConfigUtil.getFlowDataId(appName);
+        String groupId = nacosProperties.getGroupId();
+        String rules = configService.getConfig(flowDataId, groupId, timeoutInMills);
         if (StringUtil.isEmpty(rules)) {
             return new ArrayList<>();
         }

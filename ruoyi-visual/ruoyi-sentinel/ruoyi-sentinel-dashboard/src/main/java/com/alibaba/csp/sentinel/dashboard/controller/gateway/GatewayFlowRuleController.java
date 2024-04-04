@@ -54,9 +54,9 @@ public class GatewayFlowRuleController {
     @Resource
     private InMemGatewayFlowRuleStore repository;
     @Resource
-    private DynamicRuleProvider<List<GatewayFlowRuleEntity>> gatewayFlowRuleApolloProvider;
+    private DynamicRuleProvider<List<GatewayFlowRuleEntity>> gatewayFlowRuleNacosProvider;
     @Resource
-    private DynamicRulePublisher<List<GatewayFlowRuleEntity>> gatewayFlowRuleApolloPublisher;
+    private DynamicRulePublisher<List<GatewayFlowRuleEntity>> gatewayFlowRuleNacosPublisher;
 
     @GetMapping("/list.json")
     @AuthAction(AuthService.PrivilegeType.READ_RULE)
@@ -65,7 +65,7 @@ public class GatewayFlowRuleController {
             return Result.ofFail(-1, "app can't be null or empty");
         }
         try {
-            List<GatewayFlowRuleEntity> rules = gatewayFlowRuleApolloProvider.getRules(app);
+            List<GatewayFlowRuleEntity> rules = gatewayFlowRuleNacosProvider.getRules(app);
             repository.saveAll(rules);
             return Result.ofSuccess(rules);
         } catch (Throwable throwable) {
@@ -406,7 +406,7 @@ public class GatewayFlowRuleController {
     private boolean publishRules(String app) {
         List<GatewayFlowRuleEntity> rules = repository.findAllByApp(app);
         try {
-            gatewayFlowRuleApolloPublisher.publish(app, rules);
+            gatewayFlowRuleNacosPublisher.publish(app, rules);
             return true;
         } catch (Exception e) {
             log.error("publish gateway flow rules fail");

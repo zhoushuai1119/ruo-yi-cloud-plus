@@ -15,7 +15,7 @@
  */
 package com.alibaba.csp.sentinel.dashboard.config;
 
-import com.alibaba.csp.sentinel.dashboard.config.properties.ApolloProperties;
+import com.alibaba.csp.sentinel.dashboard.config.properties.NacosProperties;
 import com.alibaba.csp.sentinel.dashboard.datasource.entity.gateway.ApiDefinitionEntity;
 import com.alibaba.csp.sentinel.dashboard.datasource.entity.gateway.GatewayFlowRuleEntity;
 import com.alibaba.csp.sentinel.dashboard.datasource.entity.rule.DegradeRuleEntity;
@@ -26,12 +26,15 @@ import com.alibaba.csp.sentinel.dashboard.datasource.entity.rule.correct.ParamFl
 import com.alibaba.csp.sentinel.dashboard.domain.cluster.request.ClusterAppAssignMap;
 import com.alibaba.csp.sentinel.datasource.Converter;
 import com.alibaba.fastjson.JSON;
-import com.ctrip.framework.apollo.openapi.client.ApolloOpenApiClient;
+import com.alibaba.nacos.api.PropertyKeyConst;
+import com.alibaba.nacos.api.config.ConfigFactory;
+import com.alibaba.nacos.api.config.ConfigService;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.List;
+import java.util.Properties;
 
 /**
  * Apollo 配置类
@@ -39,8 +42,8 @@ import java.util.List;
  * @author shuai.zhou
  */
 @Configuration
-@EnableConfigurationProperties(ApolloProperties.class)
-public class ApolloConfig {
+@EnableConfigurationProperties(NacosProperties.class)
+public class NacosConfig {
 
     /**
      * 流控规则编码
@@ -200,12 +203,14 @@ public class ApolloConfig {
     }
 
     @Bean
-    public ApolloOpenApiClient apolloOpenApiClient(ApolloProperties apolloProperties) {
-        ApolloOpenApiClient client = ApolloOpenApiClient.newBuilder()
-            .withPortalUrl(apolloProperties.getMeta())
-            .withToken(apolloProperties.getToken())
-            .build();
-        return client;
+    public ConfigService nacosConfigService(NacosProperties nacosProperties) throws Exception {
+        Properties properties = new Properties();
+        // 这里在创建ConfigService实例时加了Nacos实例地址和命名空间两个属性。
+        properties.put(PropertyKeyConst.SERVER_ADDR, nacosProperties.getServerAddr());
+        properties.put(PropertyKeyConst.NAMESPACE, nacosProperties.getNamespace());
+        properties.put(PropertyKeyConst.USERNAME, nacosProperties.getUsername());
+        properties.put(PropertyKeyConst.PASSWORD, nacosProperties.getPassword());
+        return ConfigFactory.createConfigService(properties);
     }
 
 }

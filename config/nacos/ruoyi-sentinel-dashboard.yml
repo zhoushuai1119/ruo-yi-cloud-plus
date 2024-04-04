@@ -1,0 +1,88 @@
+spring:
+  mvc:
+    pathmatch:
+      # 修复 sentinel 控制台未适配 springboot 2.6 新路由方式
+      matching-strategy: ant_path_matcher
+
+server:
+  servlet:
+    encoding:
+      force: true
+      charset: UTF-8
+      enabled: true
+    session:
+      cookie:
+        name: ruoyi_sentinel_dashboard_cookie
+  # undertow 配置
+  undertow:
+    # HTTP post内容的最大大小。当值为-1时，默认值为大小是无限的
+    max-http-post-size: -1
+    # 以下的配置会影响buffer,这些buffer会用于服务器连接的IO操作,有点类似netty的池化内存管理
+    # 每块buffer的空间大小,越小的空间被利用越充分
+    buffer-size: 512
+    # 是否分配的直接内存
+    direct-buffers: true
+    threads:
+      # 设置IO线程数, 它主要执行非阻塞的任务,它们会负责多个连接, 默认设置每个CPU核心一个线程
+      io: 8
+      # 阻塞任务线程池, 当执行类似servlet请求阻塞操作, undertow会从这个线程池中取得线程,它的值设置取决于系统的负载
+      worker: 256
+
+logging:
+  config: classpath:logback-plus.xml
+  level:
+    org.springframework.web: info
+
+management:
+  endpoint:
+    health:
+      show-details: ALWAYS
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+auth:
+  username: sentinel
+  password: 123456
+  filter:
+    exclude-url-suffixes: htm,html,js,css,map,ico,ttf,woff,png
+    exclude-urls: /,/auth/login,/auth/logout,/registry/machine,/version,/actuator,/actuator/**
+
+sentinel:
+  dashboard:
+    version: 1.8.7
+
+easy-es:
+  enable: true
+  address: 139.196.208.53:9200
+  username: elastic
+  password: Zs195310
+  schema: http
+  banner: false
+  keep-alive-millis: 30000
+  connect-timeout: 5000
+  socket-timeout: 5000
+  request-timeout: 5000
+  connection-request-timeout: 5000
+  max-conn-total: 100
+  max-conn-per-route: 100
+  global-config:
+    print-dsl: false
+    async-process-index-blocking: true
+    db-config:
+      enable-track-total-hits: true
+      id-type: customize
+      field-strategy: not_null
+      map-underscore-to-camel-case: true
+      refresh-policy: immediate
+
+logstash:
+  address: 139.196.208.53:4560
+
+nacos:
+  server-addr: 139.196.208.53:8848
+  group-id: SENTINEL_GROUP
+  namespace: sentinel
+  username: nacos
+  password: nacos

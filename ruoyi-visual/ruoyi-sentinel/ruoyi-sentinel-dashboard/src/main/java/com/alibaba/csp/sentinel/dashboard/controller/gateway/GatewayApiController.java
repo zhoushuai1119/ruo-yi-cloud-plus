@@ -50,9 +50,9 @@ public class GatewayApiController {
     @Resource
     private InMemApiDefinitionStore repository;
     @Resource
-    private DynamicRuleProvider<List<ApiDefinitionEntity>> gatewayApiRuleApolloProvider;
+    private DynamicRuleProvider<List<ApiDefinitionEntity>> gatewayApiRuleNacosProvider;
     @Resource
-    private DynamicRulePublisher<List<ApiDefinitionEntity>> gatewayApiRuleApolloPublisher;
+    private DynamicRulePublisher<List<ApiDefinitionEntity>> gatewayApiRuleNacosPublisher;
 
 
     @GetMapping("/list.json")
@@ -63,7 +63,7 @@ public class GatewayApiController {
             return Result.ofFail(-1, "app can't be null or empty");
         }
         try {
-            List<ApiDefinitionEntity> apis = gatewayApiRuleApolloProvider.getRules(app);
+            List<ApiDefinitionEntity> apis = gatewayApiRuleNacosProvider.getRules(app);
             repository.saveAll(apis);
             return Result.ofSuccess(apis);
         } catch (Throwable throwable) {
@@ -236,7 +236,7 @@ public class GatewayApiController {
     private boolean publishApis(String app) {
         List<ApiDefinitionEntity> rules = repository.findAllByApp(app);
         try {
-            gatewayApiRuleApolloPublisher.publish(app, rules);
+            gatewayApiRuleNacosPublisher.publish(app, rules);
             return true;
         } catch (Exception e) {
             log.error("publish gateway apis fail");

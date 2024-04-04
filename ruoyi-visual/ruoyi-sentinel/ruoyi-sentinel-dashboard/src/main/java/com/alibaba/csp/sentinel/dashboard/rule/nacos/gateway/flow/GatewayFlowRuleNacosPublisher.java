@@ -13,19 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.alibaba.csp.sentinel.dashboard.rule.apollo.gateway.flow;
+package com.alibaba.csp.sentinel.dashboard.rule.nacos.gateway.flow;
 
-import cn.hutool.extra.spring.SpringUtil;
+import com.alibaba.csp.sentinel.dashboard.config.properties.NacosProperties;
 import com.alibaba.csp.sentinel.dashboard.datasource.entity.gateway.GatewayFlowRuleEntity;
 import com.alibaba.csp.sentinel.dashboard.rule.DynamicRulePublisher;
-import com.alibaba.csp.sentinel.dashboard.util.ApolloConfigUtil;
-import com.alibaba.csp.sentinel.dashboard.config.properties.ApolloProperties;
+import com.alibaba.csp.sentinel.dashboard.util.NacosConfigUtil;
 import com.alibaba.csp.sentinel.datasource.Converter;
 import com.alibaba.csp.sentinel.util.AssertUtil;
 import com.alibaba.fastjson.JSON;
-import com.ctrip.framework.apollo.openapi.client.ApolloOpenApiClient;
-import com.ctrip.framework.apollo.openapi.dto.NamespaceReleaseDTO;
-import com.ctrip.framework.apollo.openapi.dto.OpenItemDTO;
+import com.alibaba.nacos.api.config.ConfigService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -33,24 +30,24 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 /**
- * Apollo网关流控规则
+ * Nacos网关流控规则
  *
  * @author shuai.zhou
  */
 @Slf4j
-@Component("gatewayFlowRuleApolloPublisher")
+@Component("gatewayFlowRuleNacosPublisher")
 @RequiredArgsConstructor
-public class GatewayFlowRuleApolloPublisher implements DynamicRulePublisher<List<GatewayFlowRuleEntity>> {
+public class GatewayFlowRuleNacosPublisher implements DynamicRulePublisher<List<GatewayFlowRuleEntity>> {
 
-    private final ApolloOpenApiClient apolloOpenApiClient;
+    private final ConfigService configService;
 
     private final Converter<List<GatewayFlowRuleEntity>, String> converter;
 
-    private final ApolloProperties apolloProperties;
+    private final NacosProperties nacosProperties;
 
 
     /**
-     * 推送网关流控规则至Apollo
+     * 推送网关流控规则至Nacos
      *
      * @author: zhou shuai
      * @date: 2024/2/8 22:36
@@ -58,29 +55,16 @@ public class GatewayFlowRuleApolloPublisher implements DynamicRulePublisher<List
      * @param: rules
      */
     @Override
-    public void publish(String app, List<GatewayFlowRuleEntity> rules) {
+    public void publish(String app, List<GatewayFlowRuleEntity> rules) throws Exception {
         AssertUtil.notEmpty(app, "app name cannot be empty");
         if (rules == null) {
             return;
         }
         filterField(rules);
-        String env = SpringUtil.getActiveProfile();
         // 创建配置
-        String flowDataId = ApolloConfigUtil.getGatewayFlowDataId(app);
-        OpenItemDTO openItemDTO = new OpenItemDTO();
-        openItemDTO.setKey(flowDataId);
-        openItemDTO.setValue(converter.convert(rules));
-        openItemDTO.setComment(app + "网关流控规则");
-        openItemDTO.setDataChangeCreatedBy(apolloProperties.getUser());
-        apolloOpenApiClient.createOrUpdateItem(apolloProperties.getAppId(), env, apolloProperties.getClusterName(), apolloProperties.getNamespace(), openItemDTO);
-
-        // 发布配置
-        NamespaceReleaseDTO namespaceReleaseDTO = new NamespaceReleaseDTO();
-        namespaceReleaseDTO.setEmergencyPublish(true);
-        namespaceReleaseDTO.setReleaseComment("publish GatewayFlowRule config");
-        namespaceReleaseDTO.setReleasedBy(apolloProperties.getUser());
-        namespaceReleaseDTO.setReleaseTitle("publish GatewayFlowRule config");
-        apolloOpenApiClient.publishNamespace(apolloProperties.getAppId(), env, apolloProperties.getClusterName(), apolloProperties.getNamespace(), namespaceReleaseDTO);
+        String flowDataId = NacosConfigUtil.getGatewayFlowDataId(app);
+        String groupId = nacosProperties.getGroupId();
+        configService.publishConfig(flowDataId, groupId, converter.convert(rules));
         log.info("publish app:{} GatewayFlowRule success rules: {}", app, JSON.toJSONString(rules));
     }
 

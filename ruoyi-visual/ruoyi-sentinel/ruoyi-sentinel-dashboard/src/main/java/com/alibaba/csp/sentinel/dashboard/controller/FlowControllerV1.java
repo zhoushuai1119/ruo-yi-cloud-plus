@@ -43,9 +43,9 @@ public class FlowControllerV1 {
     @Resource
     private InMemoryRuleRepositoryAdapter<FlowRuleEntity> repository;
     @Resource
-    private DynamicRuleProvider<List<FlowRuleEntity>> flowRuleApolloProvider;
+    private DynamicRuleProvider<List<FlowRuleEntity>> flowRuleNacosProvider;
     @Resource
-    private DynamicRulePublisher<List<FlowRuleEntity>> flowRuleApolloPublisher;
+    private DynamicRulePublisher<List<FlowRuleEntity>> flowRuleNacosPublisher;
 
     @GetMapping("/rules")
     @AuthAction(PrivilegeType.READ_RULE)
@@ -54,7 +54,7 @@ public class FlowControllerV1 {
             return Result.ofFail(-1, "app can't be null or empty");
         }
         try {
-            List<FlowRuleEntity> rules = flowRuleApolloProvider.getRules(app);
+            List<FlowRuleEntity> rules = flowRuleNacosProvider.getRules(app);
             if (rules != null && !rules.isEmpty()) {
                 for (FlowRuleEntity entity : rules) {
                     entity.setApp(app);
@@ -243,7 +243,7 @@ public class FlowControllerV1 {
     private void publishRules(String app) {
         List<FlowRuleEntity> rules = repository.findAllByApp(app);
         try {
-            flowRuleApolloPublisher.publish(app, rules);
+            flowRuleNacosPublisher.publish(app, rules);
         } catch (Exception e) {
             log.error("Publish Flow rules failed");
         }

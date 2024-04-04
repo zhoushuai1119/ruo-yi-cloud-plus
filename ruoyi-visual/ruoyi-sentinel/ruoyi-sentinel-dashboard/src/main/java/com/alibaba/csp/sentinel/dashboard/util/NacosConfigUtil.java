@@ -5,7 +5,7 @@ package com.alibaba.csp.sentinel.dashboard.util;
  *
  * @author shuai.zhou
  */
-public final class ApolloConfigUtil {
+public final class NacosConfigUtil {
 
     /**
      * 网关-api分组id
@@ -41,7 +41,7 @@ public final class ApolloConfigUtil {
     public static final String CLUSTER_GROUP_DATA_ID_POSTFIX = "cluster-group-rules";
 
 
-    private ApolloConfigUtil() {
+    private NacosConfigUtil() {
 
     }
 

@@ -1,0 +1,32 @@
+# Tomcat
+server:
+  port: 9999
+
+# Spring
+spring:
+  application:
+    # 应用名称
+    name: ruoyi-sentinel-dashboard
+  profiles:
+    # 环境配置
+    active: @profiles.active@
+
+--- # nacos 配置
+spring:
+  cloud:
+    nacos:
+      # nacos 服务地址
+      server-addr: @nacos.server@
+      discovery:
+        namespace: ${spring.profiles.active}
+        username: nacos
+        password: nacos
+        group: @nacos.discovery.group@
+      config:
+        namespace: ${spring.profiles.active}
+        username: nacos
+        password: nacos
+        group: @nacos.config.group@
+  config:
+    import:
+      - optional:nacos:${spring.application.name}.yml

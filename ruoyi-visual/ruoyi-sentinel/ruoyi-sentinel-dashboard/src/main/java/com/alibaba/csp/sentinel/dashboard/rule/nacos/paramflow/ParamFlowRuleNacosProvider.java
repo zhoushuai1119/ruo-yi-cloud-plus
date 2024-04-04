@@ -1,17 +1,14 @@
-package com.alibaba.csp.sentinel.dashboard.rule.apollo.paramflow;
+package com.alibaba.csp.sentinel.dashboard.rule.nacos.paramflow;
 
-import cn.hutool.extra.spring.SpringUtil;
+import com.alibaba.csp.sentinel.dashboard.config.properties.NacosProperties;
 import com.alibaba.csp.sentinel.dashboard.datasource.entity.rule.ParamFlowRuleEntity;
 import com.alibaba.csp.sentinel.dashboard.datasource.entity.rule.correct.ParamFlowRuleCorrectEntity;
 import com.alibaba.csp.sentinel.dashboard.rule.DynamicRuleProvider;
-import com.alibaba.csp.sentinel.dashboard.util.ApolloConfigUtil;
-import com.alibaba.csp.sentinel.dashboard.config.properties.ApolloProperties;
+import com.alibaba.csp.sentinel.dashboard.util.NacosConfigUtil;
 import com.alibaba.csp.sentinel.datasource.Converter;
 import com.alibaba.csp.sentinel.slots.block.flow.param.ParamFlowRule;
 import com.alibaba.csp.sentinel.util.StringUtil;
-import com.ctrip.framework.apollo.openapi.client.ApolloOpenApiClient;
-import com.ctrip.framework.apollo.openapi.dto.OpenItemDTO;
-import com.ctrip.framework.apollo.openapi.dto.OpenNamespaceDTO;
+import com.alibaba.nacos.api.config.ConfigService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
@@ -21,23 +18,25 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Apollo热点规则
+ * Nacos热点规则
  *
  * @author shuai.zhou
  */
-@Component("paramFlowRuleApolloProvider")
+@Component("paramFlowRuleNacosProvider")
 @RequiredArgsConstructor
-public class ParamFlowRuleApolloProvider implements DynamicRuleProvider<List<ParamFlowRuleEntity>> {
+public class ParamFlowRuleNacosProvider implements DynamicRuleProvider<List<ParamFlowRuleEntity>> {
 
-    private final ApolloOpenApiClient apolloOpenApiClient;
+    private static final long timeoutInMills = 3000;
+
+    private final ConfigService configService;
 
     private final Converter<String, List<ParamFlowRuleCorrectEntity>> converter;
 
-    private final ApolloProperties apolloProperties;
+    private final NacosProperties nacosProperties;
 
 
     /**
-     * 获取Apollo热点规则
+     * 获取Nacos热点规则
      *
      * @author: zhou shuai
      * @date: 2024/2/8 22:40
@@ -45,22 +44,13 @@ public class ParamFlowRuleApolloProvider implements DynamicRuleProvider<List<Par
      * @return: java.util.List<com.alibaba.csp.sentinel.dashboard.datasource.entity.rule.ParamFlowRuleEntity>
      */
     @Override
-    public List<ParamFlowRuleEntity> getRules(String appName) {
-        String env = SpringUtil.getActiveProfile();
-        String flowDataId = ApolloConfigUtil.getParamFlowDataId(appName);
-        OpenNamespaceDTO openNamespaceDTO = apolloOpenApiClient.getNamespace(apolloProperties.getAppId(), env, apolloProperties.getClusterName(), apolloProperties.getNamespace());
-        String rules = openNamespaceDTO
-            .getItems()
-            .stream()
-            .filter(p -> p.getKey().equals(flowDataId))
-            .map(OpenItemDTO::getValue)
-            .findFirst()
-            .orElse("");
-
+    public List<ParamFlowRuleEntity> getRules(String appName) throws Exception {
+        String flowDataId = NacosConfigUtil.getParamFlowDataId(appName);
+        String groupId = nacosProperties.getGroupId();
+        String rules = configService.getConfig(flowDataId, groupId, timeoutInMills);
         if (StringUtil.isEmpty(rules)) {
             return new ArrayList<>();
         }
-
         List<ParamFlowRuleCorrectEntity> entityList = converter.convert(rules);
         return entityList.stream().map(rule -> {
             ParamFlowRule paramFlowRule = new ParamFlowRule();

@@ -1,17 +1,14 @@
-package com.alibaba.csp.sentinel.dashboard.rule.apollo.auth;
+package com.alibaba.csp.sentinel.dashboard.rule.nacos.auth;
 
-import cn.hutool.extra.spring.SpringUtil;
+import com.alibaba.csp.sentinel.dashboard.config.properties.NacosProperties;
 import com.alibaba.csp.sentinel.dashboard.datasource.entity.rule.AuthorityRuleEntity;
 import com.alibaba.csp.sentinel.dashboard.datasource.entity.rule.correct.AuthorityRuleCorrectEntity;
 import com.alibaba.csp.sentinel.dashboard.rule.DynamicRuleProvider;
-import com.alibaba.csp.sentinel.dashboard.util.ApolloConfigUtil;
-import com.alibaba.csp.sentinel.dashboard.config.properties.ApolloProperties;
+import com.alibaba.csp.sentinel.dashboard.util.NacosConfigUtil;
 import com.alibaba.csp.sentinel.datasource.Converter;
 import com.alibaba.csp.sentinel.slots.block.authority.AuthorityRule;
 import com.alibaba.csp.sentinel.util.StringUtil;
-import com.ctrip.framework.apollo.openapi.client.ApolloOpenApiClient;
-import com.ctrip.framework.apollo.openapi.dto.OpenItemDTO;
-import com.ctrip.framework.apollo.openapi.dto.OpenNamespaceDTO;
+import com.alibaba.nacos.api.config.ConfigService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
@@ -21,23 +18,25 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Apollo授权规则
+ * Nacos授权规则
  *
  * @author shuai.zhou
  */
-@Component("authorityRuleApolloProvider")
+@Component("authorityRuleNacosProvider")
 @RequiredArgsConstructor
-public class AuthorityRuleApolloProvider implements DynamicRuleProvider<List<AuthorityRuleEntity>> {
+public class AuthorityRuleNacosProvider implements DynamicRuleProvider<List<AuthorityRuleEntity>> {
 
-    private final ApolloOpenApiClient apolloOpenApiClient;
+    private static final long timeoutInMills = 3000;
+
+    private final ConfigService configService;
 
     private final Converter<String, List<AuthorityRuleCorrectEntity>> converter;
 
-    private final ApolloProperties apolloProperties;
+    private final NacosProperties nacosProperties;
 
 
     /**
-     * 获取Apollo授权规则
+     * 获取Nacos授权规则
      *
      * @author: zhou shuai
      * @date: 2024/2/8 21:29
@@ -45,18 +44,10 @@ public class AuthorityRuleApolloProvider implements DynamicRuleProvider<List<Aut
      * @return: java.util.List<com.alibaba.csp.sentinel.dashboard.datasource.entity.rule.AuthorityRuleEntity>
      */
     @Override
-    public List<AuthorityRuleEntity> getRules(String appName) {
-        String env = SpringUtil.getActiveProfile();
-        String flowDataId = ApolloConfigUtil.getAuthorityDataId(appName);
-        OpenNamespaceDTO openNamespaceDTO = apolloOpenApiClient.getNamespace(apolloProperties.getAppId(), env, apolloProperties.getClusterName(), apolloProperties.getNamespace());
-        String rules = openNamespaceDTO
-            .getItems()
-            .stream()
-            .filter(p -> p.getKey().equals(flowDataId))
-            .map(OpenItemDTO::getValue)
-            .findFirst()
-            .orElse("");
-
+    public List<AuthorityRuleEntity> getRules(String appName) throws Exception {
+        String flowDataId = NacosConfigUtil.getAuthorityDataId(appName);
+        String groupId = nacosProperties.getGroupId();
+        String rules = configService.getConfig(flowDataId, groupId, timeoutInMills);
         if (StringUtil.isEmpty(rules)) {
             return new ArrayList<>();
         }
