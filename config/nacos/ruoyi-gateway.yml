@@ -1,26 +1,5 @@
-# Tomcat
-server:
-  port: 8080
-  servlet:
-    context-path: /
-
-# Spring
 spring:
-  application:
-    # 应用名称
-    name: ruoyi-gateway
-  profiles:
-    # 环境配置
-    active: dev
-
   cloud:
-    nacos:
-      server-addr: 139.196.208.53:8848
-      discovery:
-        namespace: ${spring.profiles.active}
-        username: nacos
-        password: nacos
-
     # sentinel 配置
     sentinel:
       # Sentinel 网关流控默认的粒度是 route 维度以及自定义 API 分组维度，默认不支持 URL 粒度。
@@ -121,4 +100,3 @@ knife4j:
       - name: 演示服务
         url: /demo/v3/api-docs
         order: 4
-

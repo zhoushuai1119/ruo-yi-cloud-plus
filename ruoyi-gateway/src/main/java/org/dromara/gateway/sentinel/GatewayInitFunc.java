@@ -1,18 +1,22 @@
 package org.dromara.gateway.sentinel;
 
+import com.alibaba.cloud.sentinel.config.SentinelNacosProperties;
 import com.alibaba.csp.sentinel.adapter.gateway.common.api.ApiDefinition;
 import com.alibaba.csp.sentinel.adapter.gateway.common.api.GatewayApiDefinitionManager;
 import com.alibaba.csp.sentinel.adapter.gateway.common.rule.GatewayFlowRule;
 import com.alibaba.csp.sentinel.adapter.gateway.common.rule.GatewayRuleManager;
 import com.alibaba.csp.sentinel.datasource.ReadableDataSource;
-import com.alibaba.csp.sentinel.datasource.apollo.ApolloDataSource;
+import com.alibaba.csp.sentinel.datasource.nacos.NacosDataSource;
 import com.alibaba.csp.sentinel.init.InitFunc;
 import com.alibaba.csp.sentinel.util.AppNameUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
+import com.alibaba.nacos.api.PropertyKeyConst;
 import lombok.extern.slf4j.Slf4j;
+import org.dromara.common.core.utils.SpringUtils;
 import org.dromara.gateway.utils.ApolloConfigUtil;
 
+import java.util.Properties;
 import java.util.Set;
 
 /**
@@ -21,14 +25,7 @@ import java.util.Set;
 @Slf4j
 public class GatewayInitFunc implements InitFunc {
 
-    /**
-     * sentinel 网关规则配置namespace
-     */
-    private final String sentinelRulesNameSpace = ApolloConfigUtil.getSentinelRulesNamespace();
-    /**
-     * defaultRules
-     */
-    private final String defaultRules = "[]";
+    private final SentinelNacosProperties sentinelNacosProperties = SpringUtils.getBean(SentinelNacosProperties.class);
 
     @Override
     public void init() {
@@ -46,8 +43,8 @@ public class GatewayInitFunc implements InitFunc {
      * @param appName 应用名称
      */
     private void registerGatewayFlowRuleProperty(String appName) {
-        ReadableDataSource<String, Set<GatewayFlowRule>> gatewayFlowRuleDataSource = new ApolloDataSource<>(sentinelRulesNameSpace,
-            ApolloConfigUtil.getGatewayFlowDataId(appName), defaultRules, source -> JSON.parseObject(source,
+        ReadableDataSource<String, Set<GatewayFlowRule>> gatewayFlowRuleDataSource = new NacosDataSource<>(sentinelNacosProperties(),
+            sentinelNacosProperties.getGroupId(), ApolloConfigUtil.getGatewayFlowDataId(appName), source -> JSON.parseObject(source,
             new TypeReference<Set<GatewayFlowRule>>() {
             }));
         GatewayRuleManager.register2Property(gatewayFlowRuleDataSource.getProperty());
@@ -60,9 +57,19 @@ public class GatewayInitFunc implements InitFunc {
      * @param appName 应用名称
      */
     private void registerGatewayApiProperty(String appName) {
-        ReadableDataSource<String, Set<ApiDefinition>> apiDefinitionDataSource = new ApolloDataSource<>(sentinelRulesNameSpace,
-            ApolloConfigUtil.getGatewayApiGroupDataId(appName), defaultRules, new GatewayApiParser());
+        ReadableDataSource<String, Set<ApiDefinition>> apiDefinitionDataSource = new NacosDataSource<>(sentinelNacosProperties(),
+            sentinelNacosProperties.getGroupId(), ApolloConfigUtil.getGatewayApiGroupDataId(appName), new GatewayApiParser());
         GatewayApiDefinitionManager.register2Property(apiDefinitionDataSource.getProperty());
+    }
+
+    private Properties sentinelNacosProperties() {
+        Properties properties = new Properties();
+        // 这里在创建ConfigService实例时加了Nacos实例地址和命名空间两个属性。
+        properties.put(PropertyKeyConst.SERVER_ADDR, sentinelNacosProperties.getServerAddr());
+        properties.put(PropertyKeyConst.NAMESPACE, sentinelNacosProperties.getNamespace());
+        properties.put(PropertyKeyConst.USERNAME, sentinelNacosProperties.getUsername());
+        properties.put(PropertyKeyConst.PASSWORD, sentinelNacosProperties.getPassword());
+        return properties;
     }
 
 }

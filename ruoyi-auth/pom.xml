@@ -18,8 +18,8 @@
 
         <!-- SpringCloud Alibaba Nacos -->
         <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+            <groupId>org.dromara</groupId>
+            <artifactId>ruoyi-common-nacos</artifactId>
         </dependency>
 
         <dependency>
@@ -82,12 +82,6 @@
         <dependency>
             <groupId>org.dromara</groupId>
             <artifactId>ruoyi-api-resource</artifactId>
-        </dependency>
-
-        <!-- Cloud Apollo -->
-        <dependency>
-            <groupId>com.ctrip.framework.apollo</groupId>
-            <artifactId>apollo-client</artifactId>
         </dependency>
 
         <!--Cloud RocketMQ-->

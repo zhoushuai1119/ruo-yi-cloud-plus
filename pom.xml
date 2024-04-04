@@ -48,7 +48,7 @@
         <poi.version>5.2.3</poi.version>
         <easyexcel.version>3.3.3</easyexcel.version>
         <hutool.version>5.8.24</hutool.version>
-        <powerjob.version>4.3.7</powerjob.version>
+        <powerjob.version>4.3.6</powerjob.version>
         <satoken.version>1.37.0</satoken.version>
         <lombok.version>1.18.30</lombok.version>
         <logstash.version>7.4</logstash.version>
@@ -75,7 +75,6 @@
 
         <!-- CLoud 封装 -->
         <cloud-parent.version>3.1.0</cloud-parent.version>
-        <cloud-apollo.version>2.1.0</cloud-apollo.version>
 
         <!-- OSS 配置 -->
         <aws.sdk.version>2.25.15</aws.sdk.version>
@@ -330,13 +329,6 @@
                 <groupId>io.github.zhoushuai1119</groupId>
                 <artifactId>cloud-alarm-spring-boot3-starter</artifactId>
                 <version>${cloud-parent.version}</version>
-            </dependency>
-
-            <!-- Cloud Apollo -->
-            <dependency>
-                <groupId>com.ctrip.framework.apollo</groupId>
-                <artifactId>apollo-client</artifactId>
-                <version>${cloud-apollo.version}</version>
             </dependency>
 
             <!-- 加密包引入 -->
