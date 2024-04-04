@@ -39,6 +39,10 @@ public final class NacosConfigUtil {
      * 集群流控id
      */
     public static final String CLUSTER_GROUP_DATA_ID_POSTFIX = "cluster-group-rules";
+    /**
+     * 配置文件内容类型
+     */
+    public static final String CONFIG_CONTENT_TYPE = "json";
 
 
     private NacosConfigUtil() {
@@ -75,6 +79,10 @@ public final class NacosConfigUtil {
 
     public static String getAuthorityDataId(String appName) {
         return String.format("%s_%s", appName, AUTHORITY_DATA_ID_POSTFIX);
+    }
+
+    public static String getConfigContentType() {
+        return CONFIG_CONTENT_TYPE;
     }
 
 }

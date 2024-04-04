@@ -59,7 +59,7 @@ public class AuthorityRuleNacosPublisher implements DynamicRulePublisher<List<Au
         // 创建配置
         String flowDataId = NacosConfigUtil.getAuthorityDataId(app);
         String groupId = sentinelNacosProperties.getGroupId();
-        configService.publishConfig(flowDataId, groupId, converter.convert(authorityRuleList));
+        configService.publishConfig(flowDataId, groupId, converter.convert(authorityRuleList), NacosConfigUtil.getConfigContentType());
         log.info("publish app:{} AuthorityRule success rules: {}", app, JSON.toJSONString(rules));
     }
 

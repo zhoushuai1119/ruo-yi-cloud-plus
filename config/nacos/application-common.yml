@@ -59,15 +59,6 @@ spring:
       timeout: 10s
       ssl.enabled: false
 
-# rocketmq配置
-cloud:
-  rocketmq:
-    name-server: 139.196.208.53:9876
-
-# arthas配置
-arthas:
-  tunnel-server: ws://139.196.208.53:7777/ws
-
 # 暴露监控端点
 management:
   endpoints:
@@ -82,6 +73,7 @@ management:
 
 # 日志配置
 logging:
+  config: classpath:logback-plus.xml
   level:
     org.springframework: warn
     org.apache.dubbo: warn
@@ -90,7 +82,6 @@ logging:
     tech.powerjob.worker.background: warn
     RocketmqClient: error
     RocketmqRemoting: warn
-  config: classpath:logback-plus.xml
 
 # Sa-Token配置
 sa-token:
@@ -158,7 +149,7 @@ springdoc:
   swagger-ui:
     enable: false
     # 持久化认证数据
-#    persistAuthorization: true
+  #    persistAuthorization: true
   info:
     # 标题
     title: '标题：RuoYi-Cloud-Plus微服务权限管理系统_接口文档'
@@ -168,7 +159,7 @@ springdoc:
     version: '版本号: 2.1.2'
     # 作者信息
     contact:
-      name: zhou shuai
+      name: shuai.zhou
       email: zs11195310@163.com
       url: https://gitee.com/zhoushuai1119/ruo-yi-cloud-plus
     # 授权许可证信息
@@ -202,6 +193,15 @@ tenant:
     - sys_datasource_config
     - sys_oss_config
 
+# rocketmq配置
+cloud:
+  rocketmq:
+    name-server: 139.196.208.53:9876
+
+# arthas配置
+arthas:
+  tunnel-server: ws://139.196.208.53:7777/ws
+
 # logstash日志收集
 logstash:
   address: 139.196.208.53:4560
@@ -209,7 +209,7 @@ logstash:
 # sentinel nacos 配置
 sentinel:
   nacos:
-    server-addr: 139.196.208.53:8848
+    server-addr: ${spring.cloud.nacos.server-addr}
     group-id: SENTINEL_GROUP
     namespace: sentinel
     username: nacos
