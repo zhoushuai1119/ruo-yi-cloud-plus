@@ -8,21 +8,13 @@ package com.cloud.sentinel.token.server.utils;
 public final class NacosConfigUtil {
 
     /**
-     * sentinel限流规则配置namespace
+     * token-server集群配置 dataId
      */
-    private static final String SENTINEL_RULES_NAMESPACE = "sentinel-rules";
+    private static final String TOKEN_SERVER_CLUSTER_DATA_ID = "token-server-cluster-map.json";
     /**
-     * token server namespace
+     * token-server命名空间集合 dataId
      */
-    private static final String TOKEN_SERVER_NAMESPACE = "token-server";
-    /**
-     * token server rule key
-     */
-    private static final String TOKEN_SERVER_RULE_KEY = "token-server-cluster-map";
-    /**
-     * token server namespace set
-     */
-    private static final String TOKEN_SERVER_NAMESPACE_SET_KEY = "token-server-namespace-set";
+    private static final String TOKEN_SERVER_NAMESPACE_SET_DATA_ID = "token-server-namespace-set.json";
     /**
      * 流控规则id
      */
@@ -32,6 +24,13 @@ public final class NacosConfigUtil {
      */
     public static final String PARAM_FLOW_DATA_ID_POSTFIX = "param-flow-rules";
 
+    public static String getTokenServerClusterDataId() {
+        return TOKEN_SERVER_CLUSTER_DATA_ID;
+    }
+
+    public static String getTokenServerNamespaceSetDataId() {
+        return TOKEN_SERVER_NAMESPACE_SET_DATA_ID;
+    }
 
     public static String getFlowDataId(String appName) {
         return String.format("%s_%s", appName, FLOW_DATA_ID_POSTFIX);
@@ -40,22 +39,6 @@ public final class NacosConfigUtil {
 
     public static String getParamFlowDataId(String appName) {
         return String.format("%s_%s", appName, PARAM_FLOW_DATA_ID_POSTFIX);
-    }
-
-    public static String getSentinelRulesNamespace() {
-        return SENTINEL_RULES_NAMESPACE;
-    }
-
-    public static String getTokenServeNamespace() {
-        return TOKEN_SERVER_NAMESPACE;
-    }
-
-    public static String getTokenServerRuleKey() {
-        return TOKEN_SERVER_RULE_KEY;
-    }
-
-    public static String getTokenServerNamespaceSetKey() {
-        return TOKEN_SERVER_NAMESPACE_SET_KEY;
     }
 
 }

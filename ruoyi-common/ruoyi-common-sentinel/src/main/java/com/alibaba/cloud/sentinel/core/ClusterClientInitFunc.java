@@ -174,7 +174,7 @@ public class ClusterClientInitFunc implements InitFunc {
      */
     public void initClientServerAssignProperty() {
         ReadableDataSource<String, ClusterClientAssignConfig> clientAssignDs = new NacosDataSource<>(sentinelNacosProperties(),
-            sentinelNacosProperties.getGroupId(), NacosConfigUtil.getTokenServerRuleKey(), new ClusterAssignConfigParser());
+            sentinelNacosProperties.getGroupId(), NacosConfigUtil.getTokenServerClusterDataId(), new ClusterAssignConfigParser());
         ClusterClientConfigManager.registerServerAssignProperty(clientAssignDs.getProperty());
     }
 

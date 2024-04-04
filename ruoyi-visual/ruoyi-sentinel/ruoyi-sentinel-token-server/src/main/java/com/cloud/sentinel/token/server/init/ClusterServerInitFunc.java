@@ -87,7 +87,7 @@ public class ClusterServerInitFunc implements InitFunc {
      */
     private void initTokenServerNameSpaces() {
         ReadableDataSource<String, Set<String>> namespaceDs = new NacosDataSource<>(sentinelNacosProperties(),
-            sentinelNacosProperties.getGroupId(), NacosConfigUtil.getTokenServerNamespaceSetKey(), source -> JSON.parseObject(source, new TypeReference<>() {
+            sentinelNacosProperties.getGroupId(), NacosConfigUtil.getTokenServerNamespaceSetDataId(), source -> JSON.parseObject(source, new TypeReference<>() {
         }));
         ClusterServerConfigManager.registerNamespaceSetProperty(namespaceDs.getProperty());
     }
@@ -100,7 +100,7 @@ public class ClusterServerInitFunc implements InitFunc {
      */
     private void initServerTransportConfig() {
         ReadableDataSource<String, ServerTransportConfig> serverTransportDs = new NacosDataSource<>(sentinelNacosProperties(),
-            sentinelNacosProperties.getGroupId(), NacosConfigUtil.getTokenServerRuleKey(), new TokenServerTransportConfigParser());
+            sentinelNacosProperties.getGroupId(), NacosConfigUtil.getTokenServerClusterDataId(), new TokenServerTransportConfigParser());
         ClusterServerConfigManager.registerServerTransportProperty(serverTransportDs.getProperty());
     }
 
@@ -112,7 +112,7 @@ public class ClusterServerInitFunc implements InitFunc {
      */
     private void initServerFlowConfig() {
         ReadableDataSource<String, ServerFlowConfig> serverFlowConfig = new NacosDataSource<>(sentinelNacosProperties(),
-            sentinelNacosProperties.getGroupId(), NacosConfigUtil.getTokenServerRuleKey(), new ClusterServerFlowConfigParser());
+            sentinelNacosProperties.getGroupId(), NacosConfigUtil.getTokenServerClusterDataId(), new ClusterServerFlowConfigParser());
         ClusterServerConfigManager.registerGlobalServerFlowProperty(serverFlowConfig.getProperty());
     }
 

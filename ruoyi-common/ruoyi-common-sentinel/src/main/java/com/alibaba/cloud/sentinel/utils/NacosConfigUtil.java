@@ -8,10 +8,6 @@ package com.alibaba.cloud.sentinel.utils;
 public final class NacosConfigUtil {
 
     /**
-     * sentinel限流规则配置namespace
-     */
-    private static final String SENTINEL_RULES_NAMESPACE = "sentinel-rules";
-    /**
      * 流控规则id
      */
     public static final String FLOW_DATA_ID_POSTFIX = "flow-rules";
@@ -32,13 +28,9 @@ public final class NacosConfigUtil {
      */
     public static final String AUTHORITY_DATA_ID_POSTFIX = "authority-rules";
     /**
-     * token server namespace
+     * token-server集群配置 dataId
      */
-    private static final String TOKEN_SERVER_NAMESPACE = "token-server";
-    /**
-     * token server rule key
-     */
-    private static final String TOKEN_SERVER_RULE_KEY = "token-server-cluster-map";
+    private static final String TOKEN_SERVER_CLUSTER_DATA_ID = "token-server-cluster-map.json";
 
     public static String getFlowDataId(String appName) {
         return String.format("%s_%s", appName, FLOW_DATA_ID_POSTFIX);
@@ -60,16 +52,8 @@ public final class NacosConfigUtil {
         return String.format("%s_%s", appName, AUTHORITY_DATA_ID_POSTFIX);
     }
 
-    public static String getSentinelRulesNamespace() {
-        return SENTINEL_RULES_NAMESPACE;
-    }
-
-    public static String getTokenServerRulesNamespace() {
-        return TOKEN_SERVER_NAMESPACE;
-    }
-
-    public static String getTokenServerRuleKey() {
-        return TOKEN_SERVER_RULE_KEY;
+    public static String getTokenServerClusterDataId() {
+        return TOKEN_SERVER_CLUSTER_DATA_ID;
     }
 
 }

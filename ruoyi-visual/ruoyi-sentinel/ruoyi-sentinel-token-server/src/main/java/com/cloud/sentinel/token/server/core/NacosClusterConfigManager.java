@@ -1,7 +1,6 @@
 package com.cloud.sentinel.token.server.core;
 
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.extra.spring.SpringUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.alibaba.nacos.api.config.ConfigService;
@@ -44,23 +43,21 @@ public class NacosClusterConfigManager {
      * @param: port   tokenServer port
      */
     public void changeMasterTokenServerAddress(String ip, Integer port) throws Exception {
-        String env = SpringUtil.getActiveProfile();
-        String rules = configService.getConfig(NacosConfigUtil.getTokenServerRuleKey(), sentinelNacosProperties.getGroupId(), timeoutInMills);
+        String rules = configService.getConfig(NacosConfigUtil.getTokenServerClusterDataId(), sentinelNacosProperties.getGroupId(), timeoutInMills);
         if (StrUtil.isBlank(rules)) {
             return;
         }
-        publishMasterTokenServerAddress(rules, env, ip, port);
+        publishMasterTokenServerAddress(rules, ip, port);
     }
 
     /**
      * 将master TokenServer的配置写入namespace的集群配置中
      *
-     * @param rules 集群规则所在的item
-     * @param env   环境
+     * @param rules token-server集群配置内容
      * @param ip    tokenServer ip
      * @param port  tokenServer port
      */
-    private void publishMasterTokenServerAddress(String rules, String env, String ip, Integer port) {
+    private void publishMasterTokenServerAddress(String rules, String ip, Integer port) {
         try {
             List<ClusterGroupEntity> groupList = JSON.parseObject(rules, new TypeReference<List<ClusterGroupEntity>>() {
 
@@ -80,14 +77,14 @@ public class NacosClusterConfigManager {
             clusterGroupEntity.setIp(ip);
             clusterGroupEntity.setPort(port);
 
-            configService.publishConfig(NacosConfigUtil.getTokenServerRuleKey(), sentinelNacosProperties.getGroupId(), JSON.toJSONString(groupList));
+            configService.publishConfig(NacosConfigUtil.getTokenServerClusterDataId(), sentinelNacosProperties.getGroupId(), JSON.toJSONString(groupList));
             if (log.isDebugEnabled()) {
-                log.debug("Token Server 地址修改成功，namespaceName:【" + sentinelNacosProperties.getNamespace() + "】");
+                log.debug("Token Server 地址修改成功，dataId:【" + NacosConfigUtil.getTokenServerClusterDataId() + "】");
             }
         } catch (Exception e) {
-            log.error("Token Server 地址修改失败，namespaceName:【" + sentinelNacosProperties.getNamespace() + "】");
+            log.error("Token Server 地址修改失败，dataId:【" + NacosConfigUtil.getTokenServerClusterDataId() + "】");
             //发送企业微信告警
-            dingerSender.send(MessageSubType.TEXT, DingerRequest.request("Token Server 地址修改失败，namespaceName:【" + sentinelNacosProperties.getNamespace() + "】"));
+            dingerSender.send(MessageSubType.TEXT, DingerRequest.request("Token Server 地址修改失败，dataId:【" + NacosConfigUtil.getTokenServerClusterDataId() + "】"));
         }
     }
 
