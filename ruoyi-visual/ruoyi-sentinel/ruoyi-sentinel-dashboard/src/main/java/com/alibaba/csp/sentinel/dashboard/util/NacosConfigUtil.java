@@ -1,7 +1,7 @@
 package com.alibaba.csp.sentinel.dashboard.util;
 
 /**
- * Apollo 工具类
+ * Nacos 工具类
  *
  * @author shuai.zhou
  */

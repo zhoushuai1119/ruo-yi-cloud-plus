@@ -37,7 +37,7 @@ import java.util.List;
 import java.util.Properties;
 
 /**
- * Apollo 配置类
+ * Nacos 配置类
  *
  * @author shuai.zhou
  */

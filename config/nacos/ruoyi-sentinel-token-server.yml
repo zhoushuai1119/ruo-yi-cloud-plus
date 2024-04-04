@@ -1,0 +1,22 @@
+spring:
+  cloud:
+    # sentinel 配置
+    sentinel:
+      # sentinel 开关
+      enabled: true
+      # 取消控制台懒加载
+      eager: true
+      # 关闭 context 整合（每个接口单独出来一个链路）
+      web-context-unify: false
+      transport:
+        dashboard: localhost:9999
+
+  dinger:
+    project-id: ${spring.application.name}
+    default-dinger: wetalk
+    dingers:
+      wetalk:
+        token-id: 0a0b9279-ac5b-4b95-bb69-e30a9dde286e
+
+zookeeper:
+  address: 139.196.208.53:2181

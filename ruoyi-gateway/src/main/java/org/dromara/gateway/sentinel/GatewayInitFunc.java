@@ -14,7 +14,7 @@ import com.alibaba.fastjson.TypeReference;
 import com.alibaba.nacos.api.PropertyKeyConst;
 import lombok.extern.slf4j.Slf4j;
 import org.dromara.common.core.utils.SpringUtils;
-import org.dromara.gateway.utils.ApolloConfigUtil;
+import org.dromara.gateway.utils.NacosConfigUtil;
 
 import java.util.Properties;
 import java.util.Set;
@@ -44,7 +44,7 @@ public class GatewayInitFunc implements InitFunc {
      */
     private void registerGatewayFlowRuleProperty(String appName) {
         ReadableDataSource<String, Set<GatewayFlowRule>> gatewayFlowRuleDataSource = new NacosDataSource<>(sentinelNacosProperties(),
-            sentinelNacosProperties.getGroupId(), ApolloConfigUtil.getGatewayFlowDataId(appName), source -> JSON.parseObject(source,
+            sentinelNacosProperties.getGroupId(), NacosConfigUtil.getGatewayFlowDataId(appName), source -> JSON.parseObject(source,
             new TypeReference<Set<GatewayFlowRule>>() {
             }));
         GatewayRuleManager.register2Property(gatewayFlowRuleDataSource.getProperty());
@@ -58,7 +58,7 @@ public class GatewayInitFunc implements InitFunc {
      */
     private void registerGatewayApiProperty(String appName) {
         ReadableDataSource<String, Set<ApiDefinition>> apiDefinitionDataSource = new NacosDataSource<>(sentinelNacosProperties(),
-            sentinelNacosProperties.getGroupId(), ApolloConfigUtil.getGatewayApiGroupDataId(appName), new GatewayApiParser());
+            sentinelNacosProperties.getGroupId(), NacosConfigUtil.getGatewayApiGroupDataId(appName), new GatewayApiParser());
         GatewayApiDefinitionManager.register2Property(apiDefinitionDataSource.getProperty());
     }
 

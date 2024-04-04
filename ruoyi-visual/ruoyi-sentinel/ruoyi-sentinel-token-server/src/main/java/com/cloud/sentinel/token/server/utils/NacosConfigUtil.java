@@ -1,11 +1,11 @@
 package com.cloud.sentinel.token.server.utils;
 
 /**
- * Apollo 工具类
+ * Nacos 工具类
  *
  * @author shuai.zhou
  */
-public final class ApolloConfigUtil {
+public final class NacosConfigUtil {
 
     /**
      * sentinel限流规则配置namespace

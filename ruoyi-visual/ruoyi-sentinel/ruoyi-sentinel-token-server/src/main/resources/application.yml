@@ -1,0 +1,31 @@
+server:
+  port: 8769
+
+spring:
+  application:
+    name: ruoyi-sentinel-token-server
+  profiles:
+    # 环境配置
+    active: @profiles.active@
+
+--- # nacos 配置
+spring:
+  cloud:
+    nacos:
+      # nacos 服务地址
+      server-addr: @nacos.server@
+      discovery:
+        namespace: ${spring.profiles.active}
+        username: nacos
+        password: nacos
+        group: @nacos.discovery.group@
+      config:
+        namespace: ${spring.profiles.active}
+        username: nacos
+        password: nacos
+        group: @nacos.config.group@
+  config:
+    import:
+      - optional:nacos:application-common.yml
+      - optional:nacos:${spring.application.name}.yml
+

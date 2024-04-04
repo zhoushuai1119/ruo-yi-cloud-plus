@@ -6,7 +6,7 @@ package org.dromara.gateway.utils;
  * @author shuai.zhou
  * @create: 2020-07-21 10:20
  **/
-public final class ApolloConfigUtil {
+public final class NacosConfigUtil {
 
     /**
      * sentinel网关规则配置namespace

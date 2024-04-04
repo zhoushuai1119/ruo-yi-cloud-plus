@@ -7,9 +7,10 @@ import com.alibaba.csp.sentinel.util.HostNameUtil;
 import com.cloud.alarm.dinger.DingerSender;
 import com.cloud.alarm.dinger.core.entity.DingerRequest;
 import com.cloud.alarm.dinger.core.entity.enums.MessageSubType;
-import com.cloud.sentinel.token.server.core.ApolloClusterConfigManager;
+import com.cloud.sentinel.token.server.core.NacosClusterConfigManager;
 import jakarta.annotation.Resource;
 import lombok.Getter;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
@@ -38,7 +39,7 @@ import java.util.concurrent.TimeUnit;
 public class TokenServerApplicationRunner implements ApplicationRunner {
 
     @Resource
-    private ApolloClusterConfigManager apolloClusterConfigManager;
+    private NacosClusterConfigManager nacosClusterConfigManager;
 
     @Resource
     private DingerSender dingerSender;
@@ -72,7 +73,7 @@ public class TokenServerApplicationRunner implements ApplicationRunner {
         ZK_CLIENT.start();
         TOKEN_SERVER_CLIENT.start();
 
-        //每隔1分钟进行一次自检，防止master地址写apollo失败
+        //每隔1分钟进行一次自检，防止master地址写nacos失败
         scheduledExecutorService.scheduleAtFixedRate(() -> {
             //返回true说明当前实例是leader
             boolean hasLeaderShip = TOKEN_SERVER_CLIENT.getLeaderLatch().hasLeadership();
@@ -82,7 +83,7 @@ public class TokenServerApplicationRunner implements ApplicationRunner {
                     if (log.isDebugEnabled()) {
                         log.debug("[Leader定时检查]" + currentIp + ",当前是TokenServer Master,端口:" + tokenServerPort);
                     }
-                    apolloClusterConfigManager.changeMasterTokenServerAddress(currentIp, tokenServerPort);
+                    nacosClusterConfigManager.changeMasterTokenServerAddress(currentIp, tokenServerPort);
                 } catch (Exception e) {
                     log.error("changeMasterTokenServerAddress fail, error:" + e);
                 }
@@ -121,6 +122,7 @@ public class TokenServerApplicationRunner implements ApplicationRunner {
             this.name = HostNameUtil.getIp();
             leaderLatch = new LeaderLatch(client, path);
             leaderLatch.addListener(new LeaderLatchListener() {
+                @SneakyThrows
                 @Override
                 public void isLeader() {
                     String currentIp = HostNameUtil.getIp();
@@ -128,7 +130,7 @@ public class TokenServerApplicationRunner implements ApplicationRunner {
                     log.info("Leader选举;【" + currentIp + "】成为了TokenServer Master,端口:" + tokenServerPort);
                     //发送企业微信告警
                     dingerSender.send(MessageSubType.TEXT, DingerRequest.request("Leader选举;【" + currentIp + "】成为了TokenServer Master,端口:" + tokenServerPort));
-                    apolloClusterConfigManager.changeMasterTokenServerAddress(currentIp, tokenServerPort);
+                    nacosClusterConfigManager.changeMasterTokenServerAddress(currentIp, tokenServerPort);
                 }
 
                 @Override

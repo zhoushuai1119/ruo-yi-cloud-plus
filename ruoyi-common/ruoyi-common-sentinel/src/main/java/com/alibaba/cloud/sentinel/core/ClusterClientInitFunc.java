@@ -90,7 +90,7 @@ public class ClusterClientInitFunc implements InitFunc {
 
     /**
      * 限流规则配置:
-     * 当apollo配置发生变化时，会触发ApolloDataSource中的parser调整Property的，
+     * 当nacos配置发生变化时，会触发NacosDataSource中的parser调整Property的，
      * 并触发FlowRuleManager中FlowPropertyListener监听的configUpdate方法进行配置调整
      *
      * @param appName 应用名称
@@ -99,7 +99,7 @@ public class ClusterClientInitFunc implements InitFunc {
         ReadableDataSource<String, List<FlowRule>> flowRuleDataSource = new NacosDataSource<>(sentinelNacosProperties(),
             sentinelNacosProperties.getGroupId(), NacosConfigUtil.getFlowDataId(appName), source -> JSON.parseObject(source, new TypeReference<>() {
         }));
-        //获取apollo中的配置写入本地缓存配置中
+        //获取nacos中的配置写入本地缓存配置中
         FlowRuleManager.register2Property(flowRuleDataSource.getProperty());
     }
 
@@ -160,8 +160,8 @@ public class ClusterClientInitFunc implements InitFunc {
      * @date: 2024/2/19 21:34
      */
     /*private void initClientConfigProperty() {
-        ReadableDataSource<String, ClusterClientConfig> clientConfigDs = new ApolloDataSource<>(tokenServerNameSpace,
-            ApolloConfigUtil.getTokenServerRuleKey(), defaultRules, source -> JSON.parseObject(source, new TypeReference<>() {
+        ReadableDataSource<String, ClusterClientConfig> clientConfigDs = new NacosDataSource<>(sentinelNacosProperties(),
+            sentinelNacosProperties.getGroupId(), NacosConfigUtil.getTokenServerRuleKey(), source -> JSON.parseObject(source, new TypeReference<>() {
         }));
         ClusterClientConfigManager.registerClientConfigProperty(clientConfigDs.getProperty());
     }*/
