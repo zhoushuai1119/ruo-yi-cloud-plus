@@ -83,18 +83,19 @@
         <!-- nacos start -->
         <dependency>
             <groupId>com.alibaba.nacos</groupId>
-            <artifactId>nacos-sys</artifactId>
+            <artifactId>nacos-config</artifactId>
             <version>${nacos.version}</version>
             <scope>system</scope>
-            <systemPath>${nacos.lib.path}/nacos-sys-${nacos.version}.jar</systemPath>
+            <systemPath>${nacos.lib.path}/nacos-config-${nacos.version}.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.alibaba.nacos</groupId>
-            <artifactId>nacos-core</artifactId>
+            <artifactId>nacos-naming</artifactId>
             <version>${nacos.version}</version>
             <scope>system</scope>
-            <systemPath>${nacos.lib.path}/nacos-core-${nacos.version}.jar</systemPath>
+            <systemPath>${nacos.lib.path}/nacos-naming-${nacos.version}.jar</systemPath>
         </dependency>
+
         <dependency>
             <groupId>com.alibaba.nacos</groupId>
             <artifactId>nacos-auth</artifactId>
@@ -118,6 +119,49 @@
         </dependency>
         <dependency>
             <groupId>com.alibaba.nacos</groupId>
+            <artifactId>nacos-control-plugin</artifactId>
+            <version>${nacos.version}</version>
+            <scope>system</scope>
+            <systemPath>${nacos.lib.path}/nacos-control-plugin-${nacos.version}.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba.nacos</groupId>
+            <artifactId>default-control-plugin</artifactId>
+            <version>${nacos.version}</version>
+            <scope>system</scope>
+            <systemPath>${nacos.lib.path}/default-control-plugin-${nacos.version}.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba.nacos</groupId>
+            <artifactId>nacos-istio</artifactId>
+            <version>${nacos.version}</version>
+            <scope>system</scope>
+            <systemPath>${nacos.lib.path}/nacos-istio-${nacos.version}.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba.nacos</groupId>
+            <artifactId>nacos-prometheus</artifactId>
+            <version>${nacos.version}</version>
+            <scope>system</scope>
+            <systemPath>${nacos.lib.path}/nacos-prometheus-${nacos.version}.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba.nacos</groupId>
+            <artifactId>nacos-sys</artifactId>
+            <version>${nacos.version}</version>
+            <scope>system</scope>
+            <systemPath>${nacos.lib.path}/nacos-sys-${nacos.version}.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba.nacos</groupId>
+            <artifactId>nacos-core</artifactId>
+            <version>${nacos.version}</version>
+            <scope>system</scope>
+            <systemPath>${nacos.lib.path}/nacos-core-${nacos.version}.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba.nacos</groupId>
             <artifactId>nacos-persistence</artifactId>
             <version>${nacos.version}</version>
             <scope>system</scope>
@@ -130,30 +174,6 @@
             <scope>system</scope>
             <systemPath>${nacos.lib.path}/nacos-consistency-${nacos.version}.jar</systemPath>
         </dependency>
-        <dependency>
-            <groupId>com.alibaba.nacos</groupId>
-            <artifactId>nacos-control-plugin</artifactId>
-            <version>${nacos.version}</version>
-            <scope>system</scope>
-            <systemPath>${nacos.lib.path}/nacos-control-plugin-${nacos.version}.jar</systemPath>
-        </dependency>
-
-        <!-- nacos 控制台接口依赖 start -->
-        <dependency>
-            <groupId>com.alibaba.nacos</groupId>
-            <artifactId>nacos-config</artifactId>
-            <version>${nacos.version}</version>
-            <scope>system</scope>
-            <systemPath>${nacos.lib.path}/nacos-config-${nacos.version}.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>com.alibaba.nacos</groupId>
-            <artifactId>nacos-naming</artifactId>
-            <version>${nacos.version}</version>
-            <scope>system</scope>
-            <systemPath>${nacos.lib.path}/nacos-naming-${nacos.version}.jar</systemPath>
-        </dependency>
-        <!-- nacos 控制台接口依赖 end -->
 
         <dependency>
             <groupId>com.alibaba.nacos</groupId>
