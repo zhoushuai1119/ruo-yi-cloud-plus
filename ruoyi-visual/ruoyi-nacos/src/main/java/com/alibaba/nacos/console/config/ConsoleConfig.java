@@ -19,7 +19,6 @@ package com.alibaba.nacos.console.config;
 import com.alibaba.nacos.console.filter.XssFilter;
 import com.alibaba.nacos.core.code.ControllerMethodsCache;
 import lombok.Getter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
 import org.springframework.context.annotation.Bean;
@@ -31,6 +30,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import java.time.ZoneId;
 
 /**
@@ -45,7 +45,7 @@ import java.time.ZoneId;
 @PropertySource("/application.properties")
 public class ConsoleConfig {
 
-    @Autowired
+    @Resource
     private ControllerMethodsCache methodsCache;
 
     @Getter
