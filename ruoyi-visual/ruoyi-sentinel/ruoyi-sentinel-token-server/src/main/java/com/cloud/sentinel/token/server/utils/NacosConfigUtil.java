@@ -23,10 +23,6 @@ public final class NacosConfigUtil {
      * 热点规则id
      */
     public static final String PARAM_FLOW_DATA_ID_POSTFIX = "param-flow-rules";
-    /**
-     * 配置文件内容类型
-     */
-    public static final String CONFIG_CONTENT_TYPE = "json";
 
     public static String getTokenServerClusterDataId() {
         return TOKEN_SERVER_CLUSTER_DATA_ID;
@@ -34,10 +30,6 @@ public final class NacosConfigUtil {
 
     public static String getTokenServerNamespaceSetDataId() {
         return TOKEN_SERVER_NAMESPACE_SET_DATA_ID;
-    }
-
-    public static String getConfigContentType() {
-        return CONFIG_CONTENT_TYPE;
     }
 
     public static String getFlowDataId(String appName) {

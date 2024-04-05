@@ -9,6 +9,7 @@ import com.alibaba.csp.sentinel.datasource.Converter;
 import com.alibaba.csp.sentinel.util.AssertUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.nacos.api.config.ConfigService;
+import com.alibaba.nacos.api.config.ConfigType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -59,7 +60,7 @@ public class AuthorityRuleNacosPublisher implements DynamicRulePublisher<List<Au
         // 创建配置
         String flowDataId = NacosConfigUtil.getAuthorityDataId(app);
         String groupId = sentinelNacosProperties.getGroupId();
-        configService.publishConfig(flowDataId, groupId, converter.convert(authorityRuleList), NacosConfigUtil.getConfigContentType());
+        configService.publishConfig(flowDataId, groupId, converter.convert(authorityRuleList), ConfigType.JSON.getType());
         log.info("publish app:{} AuthorityRule success rules: {}", app, JSON.toJSONString(rules));
     }
 

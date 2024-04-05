@@ -79,17 +79,17 @@ public class EsMetric implements Serializable {
     /**
      * 监控信息时间戳
      */
-    @IndexField(value = "timestamp", fieldType = FieldType.DATE)
+    @IndexField(value = "timestamp", fieldType = FieldType.DATE, dateFormat = "yyyy-MM-dd HH:mm:ss")
     private Date timestamp;
     /**
      * 创建时间
      */
-    @IndexField(value = "gmt_create", fieldType = FieldType.DATE)
+    @IndexField(value = "gmt_create", fieldType = FieldType.DATE, dateFormat = "yyyy-MM-dd HH:mm:ss")
     private Date gmtCreate;
     /**
      * 修改时间
      */
-    @IndexField(value = "gmt_modified", fieldType = FieldType.DATE)
+    @IndexField(value = "gmt_modified", fieldType = FieldType.DATE, dateFormat = "yyyy-MM-dd HH:mm:ss")
     private Date gmtModified;
 
 }

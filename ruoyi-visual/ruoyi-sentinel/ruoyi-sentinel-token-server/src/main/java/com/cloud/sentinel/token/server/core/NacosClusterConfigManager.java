@@ -4,6 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.alibaba.nacos.api.config.ConfigService;
+import com.alibaba.nacos.api.config.ConfigType;
 import com.cloud.alarm.dinger.DingerSender;
 import com.cloud.alarm.dinger.core.entity.DingerRequest;
 import com.cloud.alarm.dinger.core.entity.enums.MessageSubType;
@@ -77,7 +78,7 @@ public class NacosClusterConfigManager {
             clusterGroupEntity.setIp(ip);
             clusterGroupEntity.setPort(port);
 
-            configService.publishConfig(NacosConfigUtil.getTokenServerClusterDataId(), sentinelNacosProperties.getGroupId(), JSON.toJSONString(groupList), NacosConfigUtil.getConfigContentType());
+            configService.publishConfig(NacosConfigUtil.getTokenServerClusterDataId(), sentinelNacosProperties.getGroupId(), JSON.toJSONString(groupList), ConfigType.JSON.getType());
             if (log.isDebugEnabled()) {
                 log.debug("Token Server 地址修改成功，dataId:【" + NacosConfigUtil.getTokenServerClusterDataId() + "】");
             }
