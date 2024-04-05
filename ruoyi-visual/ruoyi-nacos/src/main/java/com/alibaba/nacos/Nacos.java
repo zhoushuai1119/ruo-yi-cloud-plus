@@ -16,15 +16,9 @@
 
 package com.alibaba.nacos;
 
-import com.alibaba.nacos.sys.filter.NacosTypeExcludeFilter;
+import com.alibaba.nacos.annotation.NacosSpringBootApplication;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.AutoConfigurationExcludeFilter;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.context.TypeExcludeFilter;
 import org.springframework.boot.web.servlet.ServletComponentScan;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.ComponentScan.Filter;
-import org.springframework.context.annotation.FilterType;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
@@ -35,11 +29,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  *
  * @author nacos
  */
-@SpringBootApplication
-@ComponentScan(basePackages = "com.alibaba.nacos", excludeFilters = {
-        @Filter(type = FilterType.CUSTOM, classes = {NacosTypeExcludeFilter.class}),
-        @Filter(type = FilterType.CUSTOM, classes = {TypeExcludeFilter.class}),
-        @Filter(type = FilterType.CUSTOM, classes = {AutoConfigurationExcludeFilter.class})})
+@NacosSpringBootApplication
 @ServletComponentScan
 @EnableScheduling
 public class Nacos {
@@ -47,6 +37,7 @@ public class Nacos {
     public static void main(String[] args) {
         // true 单机模式 false 为集群模式 集群模式需搭配 cluster.conf 使用 使用方法请查看文档
         System.setProperty("nacos.standalone", "true");
+        System.setProperty("server.tomcat.accesslog.enabled", "false");
         SpringApplication.run(Nacos.class, args);
     }
 }
