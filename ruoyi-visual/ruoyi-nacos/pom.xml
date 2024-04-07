@@ -19,6 +19,7 @@
         <nacos.version>2.3.2</nacos.version>
         <!-- 需要与 Nacos 内置 Boot 版本保持一致 -->
         <spring-boot.version>2.7.18</spring-boot.version>
+        <spring-boot-admin.version>2.7.11</spring-boot-admin.version>
         <logstash-logback-encoder.version>7.2</logstash-logback-encoder.version>
         <nacos.lib.path>${project.basedir}/src/main/resources/lib</nacos.lib.path>
     </properties>
@@ -248,6 +249,12 @@
             <groupId>net.logstash.logback</groupId>
             <artifactId>logstash-logback-encoder</artifactId>
             <version>${logstash-logback-encoder.version}</version>
+        </dependency>
+        <!-- spring-boot-admin -->
+        <dependency>
+            <groupId>de.codecentric</groupId>
+            <artifactId>spring-boot-admin-starter-client</artifactId>
+            <version>${spring-boot-admin.version}</version>
         </dependency>
     </dependencies>
 
