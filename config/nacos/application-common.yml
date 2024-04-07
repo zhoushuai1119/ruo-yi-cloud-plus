@@ -200,10 +200,6 @@ cloud:
 arthas:
   tunnel-server: ws://139.196.208.53:7777/ws
 
-# logstash日志收集
-logstash:
-  address: 139.196.208.53:4560
-
 # sentinel nacos 配置
 sentinel:
   nacos:

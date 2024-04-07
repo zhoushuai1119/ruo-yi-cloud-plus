@@ -118,6 +118,15 @@ debug:当此属性设置为true时，将打印出logback内部日志信息，实
         <appender-ref ref="file_error"/>
     </appender>
 
+    <!--输出到logstash的appender-->
+    <appender name="logstash_log" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+        <!--可以访问的logstash日志收集端口-->
+        <destination>${logstash.address}</destination>
+        <encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder">
+            <customFields>{"spring.application.name":"${appName}"}</customFields>
+        </encoder>
+    </appender>
+
     <!-- 开启 skywalking 日志收集 -->
     <include resource="logback-skylog.xml" />
 
@@ -126,6 +135,7 @@ debug:当此属性设置为true时，将打印出logback内部日志信息，实
         <appender-ref ref="console"/>
         <appender-ref ref="async_all"/>
         <appender-ref ref="async_error"/>
+        <appender-ref ref="logstash_log"/>
     </root>
 
 </configuration>
