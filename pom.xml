@@ -103,8 +103,11 @@
                 <!-- 环境标识，需要与配置文件的名称相对应 -->
                 <profiles.active>dev</profiles.active>
                 <nacos.server>139.196.208.53:8848</nacos.server>
+                <nacos.username>nacos</nacos.username>
+                <nacos.password>nacos</nacos.password>
                 <nacos.discovery.group>DEFAULT_GROUP</nacos.discovery.group>
                 <nacos.config.group>DEFAULT_GROUP</nacos.config.group>
+                <logstash.address>139.196.208.53:4560</logstash.address>
             </properties>
             <activation>
                 <!-- 默认环境 -->
@@ -116,8 +119,11 @@
             <properties>
                 <profiles.active>prod</profiles.active>
                 <nacos.server>127.0.0.1:8848</nacos.server>
+                <nacos.username>nacos</nacos.username>
+                <nacos.password>nacos</nacos.password>
                 <nacos.discovery.group>DEFAULT_GROUP</nacos.discovery.group>
                 <nacos.config.group>DEFAULT_GROUP</nacos.config.group>
+                <logstash.address>127.0.0.1:4560</logstash.address>
             </properties>
         </profile>
     </profiles>

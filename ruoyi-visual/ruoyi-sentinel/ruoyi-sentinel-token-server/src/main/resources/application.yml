@@ -16,13 +16,13 @@ spring:
       server-addr: @nacos.server@
       discovery:
         namespace: ${spring.profiles.active}
-        username: nacos
-        password: nacos
+        username: @nacos.username@
+        password: @nacos.password@
         group: @nacos.discovery.group@
       config:
         namespace: ${spring.profiles.active}
-        username: nacos
-        password: nacos
+        username: @nacos.username@
+        password: @nacos.password@
         group: @nacos.config.group@
   config:
     import:
