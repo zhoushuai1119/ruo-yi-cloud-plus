@@ -46,16 +46,18 @@ spring:
       # nacos 服务地址
       server-addr: @nacos.server@
       discovery:
-        # 注册组
-        group: @nacos.discovery.group@
         namespace: ${spring.profiles.active}
+        username: @nacos.username@
+        password: @nacos.password@
+        group: @nacos.discovery.group@
         metadata:
           # 解决 er 服务有 context-path 无法监控问题
           management.context-path: ${server.servlet.context-path}/actuator
       config:
-        # 配置组
-        group: @nacos.config.group@
         namespace: ${spring.profiles.active}
+        username: @nacos.username@
+        password: @nacos.password@
+        group: @nacos.config.group@
   config:
     import:
       - optional:nacos:datasource.yml
