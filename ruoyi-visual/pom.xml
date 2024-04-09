@@ -12,7 +12,6 @@
         <module>ruoyi-monitor</module>
         <module>ruoyi-nacos</module>
         <module>ruoyi-sentinel</module>
-        <module>ruoyi-powerjob-server</module>
         <module>ruoyi-easyretry-server</module>
     </modules>
 

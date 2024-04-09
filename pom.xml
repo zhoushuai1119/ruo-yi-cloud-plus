@@ -48,7 +48,6 @@
         <poi.version>5.2.3</poi.version>
         <easyexcel.version>3.3.3</easyexcel.version>
         <hutool.version>5.8.24</hutool.version>
-        <powerjob.version>4.3.6</powerjob.version>
         <easyretry.version>3.2.0</easyretry.version>
         <satoken.version>1.37.0</satoken.version>
         <lombok.version>1.18.30</lombok.version>
@@ -295,24 +294,6 @@
                 <groupId>org.apache.velocity</groupId>
                 <artifactId>velocity-engine-core</artifactId>
                 <version>${velocity.version}</version>
-            </dependency>
-
-            <!-- PowerJob server-->
-            <dependency>
-                <groupId>tech.powerjob</groupId>
-                <artifactId>powerjob-server-starter</artifactId>
-                <version>${powerjob.version}</version>
-            </dependency>
-            <!-- PowerJob-Worker -->
-            <dependency>
-                <groupId>tech.powerjob</groupId>
-                <artifactId>powerjob-worker</artifactId>
-                <version>${powerjob.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>tech.powerjob</groupId>
-                <artifactId>powerjob-official-processors</artifactId>
-                <version>${powerjob.version}</version>
             </dependency>
 
             <!--  EasyRetry Client -->

@@ -13,27 +13,6 @@ spring:
           username: ${datasource.job.username}
           password: ${datasource.job.password}
 
-# powerjob 配置
-powerjob:
-  worker:
-    enabled: true
-    # 需要先在 powerjob 登录页执行应用注册后才能使用
-    app-name: ${spring.application.name}
-    # 29203 端口 随着主应用端口飘逸 避免集群冲突
-    port: 2${server.port}
-    # 单个任务追加的工作流上下文最大长度，超过这个长度的会被直接丢弃，默认值 8192
-    max-appended-wf-context-length: 4096
-    # 任务返回结果信息的最大长度，超过这个长度的信息会被截断，默认值 8192
-    max-result-length: 4096
-    # 通讯协议，4.3.0 开始支持 HTTP 和 AKKA 两种协议，官方推荐使用 HTTP 协议（注意 server 和 worker 都要开放相应端口）
-    protocol: http
-    # 调度服务器地址，IP:Port 或 域名，多值逗号分隔
-    # server-address: 127.0.0.1:7700
-    # 调度中心应用名 通过服务名连接调度中心(启用 server-name 会导致 server-address 不生效)
-    server-name: ruoyi-powerjob-server
-    # 持久化方式，可选，默认 disk
-    store-strategy: disk
-
 easy-retry:
   enabled: true
   # 需要在EasyRetry后台组管理创建对应名称的组,然后创建任务的时候选择对应的组,才能正确分派任务
