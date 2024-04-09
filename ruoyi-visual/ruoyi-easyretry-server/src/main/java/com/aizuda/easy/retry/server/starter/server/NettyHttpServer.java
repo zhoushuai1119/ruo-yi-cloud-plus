@@ -39,11 +39,6 @@ public class NettyHttpServer implements Runnable, Lifecycle {
 
     @Override
     public void run() {
-        // 防止重复启动
-        if (started) {
-            return;
-        }
-
         EventLoopGroup bossGroup = new NioEventLoopGroup();
         EventLoopGroup workerGroup = new NioEventLoopGroup();
 
@@ -88,6 +83,10 @@ public class NettyHttpServer implements Runnable, Lifecycle {
 
     @Override
     public void start() {
+        // 防止重复启动
+        if (started) {
+            return;
+        }
         thread = new Thread(this);
         thread.setDaemon(true);
         thread.start();
