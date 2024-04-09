@@ -1,1 +1,2 @@
 org.dromara.common.job.config.PowerJobAutoConfiguration
+org.dromara.common.job.config.EasyRetryConfig
