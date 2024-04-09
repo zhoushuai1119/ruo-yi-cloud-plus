@@ -30,13 +30,13 @@ debug:当此属性设置为true时，将打印出logback内部日志信息，实
     <include resource="logback-skylog.xml"/>
 
     <!-- EasyRetry appender -->
-    <appender name="easy_server_log_appender"
+    <appender name="easyLogServerAppender"
               class="com.aizuda.easy.retry.server.common.appender.EasyRetryServerLogbackAppender"/>
 
     <!--系统操作日志-->
     <root level="info">
         <appender-ref ref="console"/>
-        <appender-ref ref="easy_server_log_appender"/>
+        <appender-ref ref="easyLogServerAppender"/>
     </root>
 
 </configuration>

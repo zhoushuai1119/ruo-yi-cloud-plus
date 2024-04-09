@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 /**
  * EasyRetry Server 启动程序
  *
- * @author dhb52
+ * @author shuai.zhou
  */
 @SpringBootApplication
 public class EasyRetryServerApplication {

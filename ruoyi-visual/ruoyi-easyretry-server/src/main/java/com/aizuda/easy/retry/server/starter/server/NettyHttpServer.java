@@ -1,9 +1,9 @@
 package com.aizuda.easy.retry.server.starter.server;
 
 import com.aizuda.easy.retry.common.log.EasyRetryLog;
+import com.aizuda.easy.retry.server.common.Lifecycle;
 import com.aizuda.easy.retry.server.common.config.SystemProperties;
 import com.aizuda.easy.retry.server.common.exception.EasyRetryServerException;
-import com.aizuda.easy.retry.server.common.Lifecycle;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -14,7 +14,8 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpServerCodec;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.Resource;
+import lombok.Getter;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -22,21 +23,22 @@ import org.springframework.stereotype.Component;
 /**
  * netty server
  *
- * @author: www.byteblogs.com
- * @date : 2022-03-07 15:54
+ * @author: shuai.zhou
+ * @date : 2024-04-09 15:54
  * @since 1.0.0
  */
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class NettyHttpServer implements Runnable, Lifecycle {
 
-    @Autowired
+    @Resource
     private SystemProperties systemProperties;
     private Thread thread = null;
+    @Getter
     private volatile boolean started = false;
 
     @Override
-    public void run()  {
+    public void run() {
         // 防止重复启动
         if (started) {
             return;
@@ -85,7 +87,7 @@ public class NettyHttpServer implements Runnable, Lifecycle {
     }
 
     @Override
-    public void start()  {
+    public void start() {
         thread = new Thread(this);
         thread.setDaemon(true);
         thread.start();
@@ -98,7 +100,4 @@ public class NettyHttpServer implements Runnable, Lifecycle {
         }
     }
 
-    public boolean isStarted() {
-        return started;
-    }
 }
