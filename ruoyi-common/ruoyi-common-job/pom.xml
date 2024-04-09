@@ -19,6 +19,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-autoconfigure</artifactId>
         </dependency>
+
         <!-- 服务发现组件 -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
@@ -29,17 +30,14 @@
         <dependency>
             <groupId>com.aizuda</groupId>
             <artifactId>easy-retry-client-starter</artifactId>
-            <version>${easyretry.version}</version>
         </dependency>
         <dependency>
             <groupId>com.aizuda</groupId>
             <artifactId>easy-retry-client-core</artifactId>
-            <version>${easyretry.version}</version>
         </dependency>
         <dependency>
             <groupId>com.aizuda</groupId>
             <artifactId>easy-retry-client-job-core</artifactId>
-            <version>${easyretry.version}</version>
         </dependency>
 
         <dependency>
