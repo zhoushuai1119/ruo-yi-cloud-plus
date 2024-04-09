@@ -49,7 +49,6 @@
             <artifactId>ruoyi-common-mybatis</artifactId>
         </dependency>
 
-        <!-- powerjob-worker -->
         <dependency>
             <groupId>org.dromara</groupId>
             <artifactId>ruoyi-common-job</artifactId>
