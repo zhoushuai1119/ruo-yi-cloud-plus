@@ -13,6 +13,12 @@ spring:
           username: ${datasource.job.username}
           password: ${datasource.job.password}
 
+# 日志级别配置
+logging:
+  level:
+    com.aizuda.easy.retry.client.common.netty.NettyHttpClientHandler: warn
+    com.aizuda.easy.retry.client.common.proxy.ClientInvokeHandler: warn
+
 easy-retry:
   enabled: true
   # 需要在EasyRetry后台组管理创建对应名称的组,然后创建任务的时候选择对应的组,才能正确分派任务

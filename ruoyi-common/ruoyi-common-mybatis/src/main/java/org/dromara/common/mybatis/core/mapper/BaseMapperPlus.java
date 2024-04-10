@@ -29,7 +29,6 @@ import java.util.stream.Collectors;
  * @author shuai.zhou
  * @since 2021-05-13
  */
-@SuppressWarnings("unchecked")
 public interface BaseMapperPlus<T, V> extends BaseMapper<T> {
 
     Log log = LogFactory.getLog(BaseMapperPlus.class);
@@ -144,11 +143,26 @@ public interface BaseMapperPlus<T, V> extends BaseMapper<T> {
         return selectVoOne(wrapper, this.currentVoClass());
     }
 
+    default V selectVoOne(Wrapper<T> wrapper, boolean throwEx) {
+        return selectVoOne(wrapper, this.currentVoClass(), throwEx);
+    }
+
     /**
      * 根据 entity 条件，查询一条记录
      */
     default <C> C selectVoOne(Wrapper<T> wrapper, Class<C> voClass) {
         T obj = this.selectOne(wrapper);
+        if (ObjectUtil.isNull(obj)) {
+            return null;
+        }
+        return MapstructUtils.convert(obj, voClass);
+    }
+
+    /**
+     * 根据 entity 条件，查询一条记录
+     */
+    default <C> C selectVoOne(Wrapper<T> wrapper, Class<C> voClass, boolean throwEx) {
+        T obj = this.selectOne(wrapper, throwEx);
         if (ObjectUtil.isNull(obj)) {
             return null;
         }

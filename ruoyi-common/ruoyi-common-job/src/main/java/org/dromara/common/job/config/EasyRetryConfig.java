@@ -35,6 +35,15 @@ import java.util.List;
 @EnableEasyRetry(group = "${easy-retry.group-name}")
 public class EasyRetryConfig {
 
+    /**
+     * 服务端host
+     */
+    private static final String EASY_RETRY_SERVER_HOST = "easy-retry.server.host";
+    /**
+     * 服务端端口
+     */
+    private static final String EASY_RETRY_SERVER_PORT = "easy-retry.server.port";
+
     @Resource
     private EasyRetryServerProperties properties;
 
@@ -61,8 +70,8 @@ public class EasyRetryConfig {
             List<ServiceInstance> instances = discoveryClient.getInstances(serverName);
             if (CollUtil.isNotEmpty(instances)) {
                 ServiceInstance instance = instances.get(0);
-                System.setProperty("easy-retry.server.host", instance.getHost());
-                System.setProperty("easy-retry.server.port", properties.getPort());
+                System.setProperty(EASY_RETRY_SERVER_HOST, instance.getHost());
+                System.setProperty(EASY_RETRY_SERVER_PORT, properties.getPort());
             }
         }
     }
