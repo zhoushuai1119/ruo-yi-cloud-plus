@@ -2,7 +2,6 @@ package org.dromara.easyretry;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import java.util.TimeZone;
 
@@ -12,7 +11,6 @@ import java.util.TimeZone;
  * @author shuai.zhou
  */
 @SpringBootApplication(scanBasePackages = {"com.aizuda.easy.retry.server.starter.*"})
-@EnableTransactionManagement(proxyTargetClass = true)
 public class EasyRetryServerApplication {
 
     public static void main(String[] args) {
