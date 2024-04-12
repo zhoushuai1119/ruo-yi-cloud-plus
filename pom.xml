@@ -72,7 +72,7 @@
         <ip2region.version>2.7.0</ip2region.version>
         <!-- 临时修复 fastjson 漏洞 -->
         <fastjson.version>1.2.83</fastjson.version>
-        <fastjson2.version>2.0.39</fastjson2.version>
+        <fastjson2.version>2.0.48</fastjson2.version>
         <!-- 滑块验证码 -->
         <tianai-captcha.version>1.4.1</tianai-captcha.version>
 
