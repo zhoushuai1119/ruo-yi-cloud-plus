@@ -74,7 +74,7 @@ public class RedissonConfiguration {
                     .setReadMode(clusterServersConfig.getReadMode())
                     .setSubscriptionMode(clusterServersConfig.getSubscriptionMode());
             }
-            log.info("初始化 redis 配置");
+            log.info("初始化【Redisson】配置完成");
         };
     }
 
