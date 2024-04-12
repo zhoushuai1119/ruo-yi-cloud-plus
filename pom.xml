@@ -35,8 +35,8 @@
         <spring-cloud.version>2022.0.4</spring-cloud.version>
         <spring-boot-admin.version>3.1.8</spring-boot-admin.version>
         <spring-boot.mybatis>3.0.3</spring-boot.mybatis>
-        <mybatis.version>3.5.15</mybatis.version>
-        <mybatis-plus.version>3.5.5</mybatis-plus.version>
+        <mybatis.version>3.5.16</mybatis.version>
+        <mybatis-plus.version>3.5.6</mybatis-plus.version>
         <p6spy.version>3.9.1</p6spy.version>
         <dynamic-ds.version>4.3.0</dynamic-ds.version>
         <jasypt.version>3.0.5</jasypt.version>
