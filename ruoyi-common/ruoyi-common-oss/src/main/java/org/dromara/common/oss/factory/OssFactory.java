@@ -7,9 +7,9 @@ import org.dromara.common.oss.constant.OssConstant;
 import org.dromara.common.oss.core.OssClient;
 import org.dromara.common.oss.exception.OssException;
 import org.dromara.common.oss.properties.OssProperties;
-import org.dromara.common.redis.utils.CacheUtil;
+import org.dromara.common.redisson.utils.CacheUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.dromara.common.redis.utils.RedissonUtil;
+import org.dromara.common.redisson.utils.RedissonUtil;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

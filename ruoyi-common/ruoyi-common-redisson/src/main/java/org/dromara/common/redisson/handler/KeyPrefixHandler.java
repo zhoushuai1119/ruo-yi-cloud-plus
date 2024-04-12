@@ -1,4 +1,4 @@
-package org.dromara.common.redis.handler;
+package org.dromara.common.redisson.handler;
 
 import org.dromara.common.core.utils.StringUtils;
 import org.redisson.api.NameMapper;

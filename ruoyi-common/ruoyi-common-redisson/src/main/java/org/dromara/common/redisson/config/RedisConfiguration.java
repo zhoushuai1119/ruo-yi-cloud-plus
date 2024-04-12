@@ -1,7 +1,7 @@
-package org.dromara.common.redis.config;
+package org.dromara.common.redisson.config;
 
-import org.dromara.common.redis.utils.ObjectMapperUtil;
-import org.dromara.common.redis.utils.RedisTemplateUtil;
+import org.dromara.common.redisson.utils.ObjectMapperUtil;
+import org.dromara.common.redisson.utils.RedisTemplateUtil;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

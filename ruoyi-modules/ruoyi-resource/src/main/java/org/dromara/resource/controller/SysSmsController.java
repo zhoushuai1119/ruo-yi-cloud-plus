@@ -8,7 +8,7 @@ import org.dromara.common.core.constant.Constants;
 import org.dromara.common.core.constant.GlobalConstants;
 import org.dromara.common.core.domain.R;
 import org.dromara.common.ratelimiter.annotation.RateLimiter;
-import org.dromara.common.redis.utils.RedissonUtil;
+import org.dromara.common.redisson.utils.RedissonUtil;
 import org.dromara.common.web.core.BaseController;
 import org.dromara.sms4j.api.SmsBlend;
 import org.dromara.sms4j.api.entity.SmsResponse;

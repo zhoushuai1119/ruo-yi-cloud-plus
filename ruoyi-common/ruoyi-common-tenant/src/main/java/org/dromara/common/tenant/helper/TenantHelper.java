@@ -12,7 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.dromara.common.core.constant.GlobalConstants;
 import org.dromara.common.core.utils.SpringUtils;
 import org.dromara.common.core.utils.StringUtils;
-import org.dromara.common.redis.utils.RedissonUtil;
+import org.dromara.common.redisson.utils.RedissonUtil;
 import org.dromara.common.satoken.utils.LoginHelper;
 
 import java.util.function.Supplier;

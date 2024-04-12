@@ -1,7 +1,7 @@
 package org.dromara.common.dict.utils;
 
 import org.dromara.common.core.constant.CacheNames;
-import org.dromara.common.redis.utils.CacheUtil;
+import org.dromara.common.redisson.utils.CacheUtil;
 import org.dromara.system.api.domain.vo.RemoteDictDataVo;
 
 import java.util.List;

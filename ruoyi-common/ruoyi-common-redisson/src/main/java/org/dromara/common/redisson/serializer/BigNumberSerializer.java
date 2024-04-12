@@ -1,4 +1,4 @@
-package org.dromara.common.redis.serializer;
+package org.dromara.common.redisson.serializer;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;

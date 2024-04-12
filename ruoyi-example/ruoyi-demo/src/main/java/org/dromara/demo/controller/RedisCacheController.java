@@ -3,7 +3,7 @@ package org.dromara.demo.controller;
 import org.dromara.common.core.constant.CacheNames;
 import org.dromara.common.core.domain.R;
 import lombok.RequiredArgsConstructor;
-import org.dromara.common.redis.utils.RedissonUtil;
+import org.dromara.common.redisson.utils.RedissonUtil;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;

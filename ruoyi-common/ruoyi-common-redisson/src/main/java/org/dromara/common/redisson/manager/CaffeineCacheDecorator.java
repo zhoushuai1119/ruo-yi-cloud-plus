@@ -1,4 +1,4 @@
-package org.dromara.common.redis.manager;
+package org.dromara.common.redisson.manager;
 
 import org.dromara.common.core.utils.SpringUtils;
 import org.springframework.cache.Cache;

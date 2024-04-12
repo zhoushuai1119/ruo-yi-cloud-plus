@@ -1,11 +1,11 @@
-package org.dromara.common.redis.config;
+package org.dromara.common.redisson.config;
 
 import cn.hutool.core.util.ObjectUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.dromara.common.core.factory.YmlPropertySourceFactory;
-import org.dromara.common.redis.config.properties.RedissonProperties;
-import org.dromara.common.redis.handler.KeyPrefixHandler;
-import org.dromara.common.redis.utils.ObjectMapperUtil;
+import org.dromara.common.redisson.config.properties.RedissonProperties;
+import org.dromara.common.redisson.handler.KeyPrefixHandler;
+import org.dromara.common.redisson.utils.ObjectMapperUtil;
 import org.redisson.client.codec.StringCodec;
 import org.redisson.codec.CompositeCodec;
 import org.redisson.codec.TypedJsonJacksonCodec;

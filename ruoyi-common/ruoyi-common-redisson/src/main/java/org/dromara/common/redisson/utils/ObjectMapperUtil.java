@@ -1,4 +1,4 @@
-package org.dromara.common.redis.utils;
+package org.dromara.common.redisson.utils;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -13,7 +13,7 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
-import org.dromara.common.redis.serializer.BigNumberSerializer;
+import org.dromara.common.redisson.serializer.BigNumberSerializer;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;

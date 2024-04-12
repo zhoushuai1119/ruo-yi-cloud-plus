@@ -1,6 +1,6 @@
 package org.dromara.common.sms.config;
 
-import org.dromara.common.redis.config.RedissonConfiguration;
+import org.dromara.common.redisson.config.RedissonConfiguration;
 import org.dromara.common.sms.core.dao.PlusSmsDao;
 import org.dromara.sms4j.api.dao.SmsDao;
 import org.springframework.boot.autoconfigure.AutoConfiguration;

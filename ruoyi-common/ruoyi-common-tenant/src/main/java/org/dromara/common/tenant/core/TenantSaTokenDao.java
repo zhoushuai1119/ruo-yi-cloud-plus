@@ -1,7 +1,7 @@
 package org.dromara.common.tenant.core;
 
 import org.dromara.common.core.constant.GlobalConstants;
-import org.dromara.common.redis.utils.RedissonUtil;
+import org.dromara.common.redisson.utils.RedissonUtil;
 import org.dromara.common.satoken.core.dao.PlusSaTokenDao;
 
 import java.time.Duration;

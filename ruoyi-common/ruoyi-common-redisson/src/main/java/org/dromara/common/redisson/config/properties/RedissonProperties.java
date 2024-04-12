@@ -1,4 +1,4 @@
-package org.dromara.common.redis.config.properties;
+package org.dromara.common.redisson.config.properties;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
