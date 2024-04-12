@@ -3,16 +3,14 @@ package org.dromara.common.tenant.config;
 import cn.dev33.satoken.dao.SaTokenDao;
 import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.extension.plugins.inner.TenantLineInnerInterceptor;
-import com.cloud.lock.redisson.spring.boot.autoconfigure.properties.RedissonProperties;
 import org.dromara.common.core.utils.reflect.ReflectUtils;
 import org.dromara.common.mybatis.config.MybatisPlusConfiguration;
-import org.dromara.common.redis.config.RedisConfiguration;
+import org.dromara.common.redis.config.properties.RedissonProperties;
 import org.dromara.common.tenant.core.TenantSaTokenDao;
 import org.dromara.common.tenant.handle.PlusTenantLineHandler;
 import org.dromara.common.tenant.handle.TenantKeyPrefixHandler;
 import org.dromara.common.tenant.manager.TenantSpringCacheManager;
 import org.dromara.common.tenant.properties.TenantProperties;
-import org.redisson.api.RedissonClient;
 import org.redisson.config.ClusterServersConfig;
 import org.redisson.config.SingleServerConfig;
 import org.redisson.spring.starter.RedissonAutoConfigurationCustomizer;
@@ -23,6 +21,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.cache.CacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.redis.connection.RedisConfiguration;
 
 /**
  * 租户配置类
@@ -74,8 +73,8 @@ public class TenantConfiguration {
      */
     @Primary
     @Bean
-    public CacheManager tenantCacheManager(RedissonClient redissonClient) {
-        return new TenantSpringCacheManager(redissonClient);
+    public CacheManager tenantCacheManager() {
+        return new TenantSpringCacheManager();
     }
 
     /**

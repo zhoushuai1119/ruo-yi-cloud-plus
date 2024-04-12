@@ -2,7 +2,7 @@ package org.dromara.common.satoken.core.dao;
 
 import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.util.SaFoxUtil;
-import org.dromara.common.redis.utils.RedisUtils;
+import org.dromara.common.redis.utils.RedissonUtils;
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ public class PlusSaTokenDao implements SaTokenDao {
      */
     @Override
     public String get(String key) {
-        return RedisUtils.getCacheObject(key);
+        return RedissonUtils.getCacheObject(key);
     }
 
     /**
@@ -34,9 +34,9 @@ public class PlusSaTokenDao implements SaTokenDao {
         }
         // 判断是否为永不过期
         if (timeout == NEVER_EXPIRE) {
-            RedisUtils.setCacheObject(key, value);
+            RedissonUtils.setCacheObject(key, value);
         } else {
-            RedisUtils.setCacheObject(key, value, Duration.ofSeconds(timeout));
+            RedissonUtils.setCacheObject(key, value, Duration.ofSeconds(timeout));
         }
     }
 
@@ -45,8 +45,8 @@ public class PlusSaTokenDao implements SaTokenDao {
      */
     @Override
     public void update(String key, String value) {
-        if (RedisUtils.hasKey(key)) {
-            RedisUtils.setCacheObject(key, value, true);
+        if (RedissonUtils.hasKey(key)) {
+            RedissonUtils.setCacheObject(key, value, true);
         }
     }
 
@@ -55,7 +55,7 @@ public class PlusSaTokenDao implements SaTokenDao {
      */
     @Override
     public void delete(String key) {
-        RedisUtils.deleteObject(key);
+        RedissonUtils.deleteObject(key);
     }
 
     /**
@@ -63,7 +63,7 @@ public class PlusSaTokenDao implements SaTokenDao {
      */
     @Override
     public long getTimeout(String key) {
-        long timeout = RedisUtils.getTimeToLive(key);
+        long timeout = RedissonUtils.getTimeToLive(key);
         return timeout < 0 ? timeout : timeout / 1000;
     }
 
@@ -72,7 +72,7 @@ public class PlusSaTokenDao implements SaTokenDao {
      */
     @Override
     public void updateTimeout(String key, long timeout) {
-        RedisUtils.expire(key, Duration.ofSeconds(timeout));
+        RedissonUtils.expire(key, Duration.ofSeconds(timeout));
     }
 
 
@@ -81,7 +81,7 @@ public class PlusSaTokenDao implements SaTokenDao {
      */
     @Override
     public Object getObject(String key) {
-        return RedisUtils.getCacheObject(key);
+        return RedissonUtils.getCacheObject(key);
     }
 
     /**
@@ -94,9 +94,9 @@ public class PlusSaTokenDao implements SaTokenDao {
         }
         // 判断是否为永不过期
         if (timeout == NEVER_EXPIRE) {
-            RedisUtils.setCacheObject(key, object);
+            RedissonUtils.setCacheObject(key, object);
         } else {
-            RedisUtils.setCacheObject(key, object, Duration.ofSeconds(timeout));
+            RedissonUtils.setCacheObject(key, object, Duration.ofSeconds(timeout));
         }
     }
 
@@ -105,8 +105,8 @@ public class PlusSaTokenDao implements SaTokenDao {
      */
     @Override
     public void updateObject(String key, Object object) {
-        if (RedisUtils.hasKey(key)) {
-            RedisUtils.setCacheObject(key, object, true);
+        if (RedissonUtils.hasKey(key)) {
+            RedissonUtils.setCacheObject(key, object, true);
         }
     }
 
@@ -115,7 +115,7 @@ public class PlusSaTokenDao implements SaTokenDao {
      */
     @Override
     public void deleteObject(String key) {
-        RedisUtils.deleteObject(key);
+        RedissonUtils.deleteObject(key);
     }
 
     /**
@@ -123,7 +123,7 @@ public class PlusSaTokenDao implements SaTokenDao {
      */
     @Override
     public long getObjectTimeout(String key) {
-        long timeout = RedisUtils.getTimeToLive(key);
+        long timeout = RedissonUtils.getTimeToLive(key);
         return timeout < 0 ? timeout : timeout / 1000;
     }
 
@@ -132,7 +132,7 @@ public class PlusSaTokenDao implements SaTokenDao {
      */
     @Override
     public void updateObjectTimeout(String key, long timeout) {
-        RedisUtils.expire(key, Duration.ofSeconds(timeout));
+        RedissonUtils.expire(key, Duration.ofSeconds(timeout));
     }
 
 
@@ -141,7 +141,7 @@ public class PlusSaTokenDao implements SaTokenDao {
      */
     @Override
     public List<String> searchData(String prefix, String keyword, int start, int size, boolean sortType) {
-        Collection<String> keys = RedisUtils.keys(prefix + "*" + keyword + "*");
+        Collection<String> keys = RedissonUtils.keys(prefix + "*" + keyword + "*");
         List<String> list = new ArrayList<>(keys);
         return SaFoxUtil.searchList(list, start, size, sortType);
     }

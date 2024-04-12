@@ -1,1 +1,3 @@
-org.dromara.common.redis.config.RedisConfiguration
+org.dromara.common.redis.config.CacheConfiguration
+org.dromara.common.redis.config.RedisAutoConfiguration
+org.dromara.common.redis.config.RedissonAutoConfiguration

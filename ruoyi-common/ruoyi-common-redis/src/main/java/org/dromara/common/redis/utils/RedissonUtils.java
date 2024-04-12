@@ -15,13 +15,13 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- * redis 工具类
+ * Redisson 工具类
  *
  * @author shuai.zhou
  * @version 3.1.0 新增
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class RedisUtils {
+public class RedissonUtils {
 
     private static final RedissonClient CLIENT = SpringUtils.getBean(RedissonClient.class);
 

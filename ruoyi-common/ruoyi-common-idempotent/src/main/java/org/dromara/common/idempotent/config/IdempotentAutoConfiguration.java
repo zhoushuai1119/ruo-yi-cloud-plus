@@ -1,7 +1,7 @@
 package org.dromara.common.idempotent.config;
 
 import org.dromara.common.idempotent.aspectj.RepeatSubmitAspect;
-import org.dromara.common.redis.config.RedisConfiguration;
+import org.dromara.common.redis.config.RedissonAutoConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Bean;
 
@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Bean;
  *
  * @author shuai.zhou
  */
-@AutoConfiguration(after = RedisConfiguration.class)
+@AutoConfiguration(after = RedissonAutoConfiguration.class)
 public class IdempotentAutoConfiguration {
 
 	@Bean

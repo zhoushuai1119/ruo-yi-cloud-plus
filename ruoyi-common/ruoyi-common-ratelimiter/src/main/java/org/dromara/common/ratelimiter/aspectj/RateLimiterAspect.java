@@ -13,7 +13,7 @@ import org.dromara.common.core.utils.SpringUtils;
 import org.dromara.common.core.utils.StringUtils;
 import org.dromara.common.ratelimiter.annotation.RateLimiter;
 import org.dromara.common.ratelimiter.enums.LimitType;
-import org.dromara.common.redis.utils.RedisUtils;
+import org.dromara.common.redis.utils.RedissonUtils;
 import org.redisson.api.RateType;
 import org.springframework.context.expression.BeanFactoryResolver;
 import org.springframework.context.expression.MethodBasedEvaluationContext;
@@ -60,7 +60,7 @@ public class RateLimiterAspect {
             if (rateLimiter.limitType() == LimitType.CLUSTER) {
                 rateType = RateType.PER_CLIENT;
             }
-            long number = RedisUtils.rateLimiter(combineKey, rateType, count, time);
+            long number = RedissonUtils.rateLimiter(combineKey, rateType, count, time);
             if (number == -1) {
                 String message = rateLimiter.message();
                 if (StringUtils.startsWith(message, "{") && StringUtils.endsWith(message, "}")) {
@@ -104,7 +104,7 @@ public class RateLimiterAspect {
             stringBuffer.append(ServletUtils.getClientIP()).append(":");
         } else if (rateLimiter.limitType() == LimitType.CLUSTER) {
             // 获取客户端实例id
-            stringBuffer.append(RedisUtils.getClient().getId()).append(":");
+            stringBuffer.append(RedissonUtils.getClient().getId()).append(":");
         }
         return stringBuffer.append(key).toString();
     }

@@ -20,7 +20,7 @@ import org.dromara.common.core.utils.ServletUtils;
 import org.dromara.common.core.utils.SpringUtils;
 import org.dromara.common.core.utils.ip.AddressUtils;
 import org.dromara.common.log.event.LogininforEvent;
-import org.dromara.common.redis.utils.RedisUtils;
+import org.dromara.common.redis.utils.RedissonUtils;
 import org.dromara.common.satoken.utils.LoginHelper;
 import org.dromara.system.api.RemoteUserService;
 import org.dromara.system.api.domain.SysUserOnline;
@@ -70,9 +70,9 @@ public class UserActionListener implements SaTokenListener {
             userOnline.setDeptName(user.getDeptName());
         }
         if (tokenConfig.getTimeout() == -1) {
-            RedisUtils.setCacheObject(CacheConstants.ONLINE_TOKEN_KEY + tokenValue, userOnline);
+            RedissonUtils.setCacheObject(CacheConstants.ONLINE_TOKEN_KEY + tokenValue, userOnline);
         } else {
-            RedisUtils.setCacheObject(CacheConstants.ONLINE_TOKEN_KEY + tokenValue, userOnline, Duration.ofSeconds(tokenConfig.getTimeout()));
+            RedissonUtils.setCacheObject(CacheConstants.ONLINE_TOKEN_KEY + tokenValue, userOnline, Duration.ofSeconds(tokenConfig.getTimeout()));
         }
         // 记录登录日志
         LogininforEvent logininforEvent = new LogininforEvent();
@@ -99,7 +99,7 @@ public class UserActionListener implements SaTokenListener {
      */
     @Override
     public void doLogout(String loginType, Object loginId, String tokenValue) {
-        RedisUtils.deleteObject(CacheConstants.ONLINE_TOKEN_KEY + tokenValue);
+        RedissonUtils.deleteObject(CacheConstants.ONLINE_TOKEN_KEY + tokenValue);
         log.info("user doLogout, useId:{}, token:{}", loginId, tokenValue);
     }
 
@@ -108,7 +108,7 @@ public class UserActionListener implements SaTokenListener {
      */
     @Override
     public void doKickout(String loginType, Object loginId, String tokenValue) {
-        RedisUtils.deleteObject(CacheConstants.ONLINE_TOKEN_KEY + tokenValue);
+        RedissonUtils.deleteObject(CacheConstants.ONLINE_TOKEN_KEY + tokenValue);
         log.info("user doLogoutByLoginId, useId:{}, token:{}", loginId, tokenValue);
     }
 
@@ -117,7 +117,7 @@ public class UserActionListener implements SaTokenListener {
      */
     @Override
     public void doReplaced(String loginType, Object loginId, String tokenValue) {
-        RedisUtils.deleteObject(CacheConstants.ONLINE_TOKEN_KEY + tokenValue);
+        RedissonUtils.deleteObject(CacheConstants.ONLINE_TOKEN_KEY + tokenValue);
         log.info("user doReplaced, useId:{}, token:{}", loginId, tokenValue);
     }
 

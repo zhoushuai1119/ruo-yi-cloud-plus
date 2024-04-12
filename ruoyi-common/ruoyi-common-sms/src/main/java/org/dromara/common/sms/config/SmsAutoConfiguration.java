@@ -1,6 +1,6 @@
 package org.dromara.common.sms.config;
 
-import org.dromara.common.redis.config.RedisConfiguration;
+import org.dromara.common.redis.config.RedissonAutoConfiguration;
 import org.dromara.common.sms.core.dao.PlusSmsDao;
 import org.dromara.sms4j.api.dao.SmsDao;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Primary;
  *
  * @author shuai.zhou
  */
-@AutoConfiguration(after = {RedisConfiguration.class})
+@AutoConfiguration(after = {RedissonAutoConfiguration.class})
 public class SmsAutoConfiguration {
 
     @Primary

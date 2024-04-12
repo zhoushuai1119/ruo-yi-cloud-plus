@@ -1,6 +1,5 @@
 # redisson 配置
 redisson:
-  enable: true
   # redis key前缀
   keyPrefix:
   # 线程池数量
@@ -22,10 +21,9 @@ redisson:
     # 发布和订阅连接池大小
     subscriptionConnectionPoolSize: 50
 
-# 分布式锁配置
-cloud:
-  lock:
-    # 获取分布式锁超时时间，默认为 3秒
-    acquire-timeout: 3
-    # 分布式锁的超时时间，默认为 30 秒
-    expire: 30
+# 分布式锁 lock4j 全局配置
+lock4j:
+  # 获取分布式锁超时时间，默认为 3000 毫秒
+  acquire-timeout: 3000
+  # 分布式锁的超时时间，默认为 30 秒
+  expire: 30000

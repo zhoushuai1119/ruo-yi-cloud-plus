@@ -16,7 +16,6 @@ import java.util.Set;
  * @date 2022/8/13
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-@SuppressWarnings(value = {"unchecked"})
 public class CacheUtils {
 
     private static final CacheManager CACHE_MANAGER = SpringUtils.getBean(CacheManager.class);

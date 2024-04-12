@@ -1,9 +1,9 @@
 package org.dromara.demo.controller;
 
-import com.cloud.lock.core.LockInfo;
-import com.cloud.lock.core.LockTemplate;
-import com.cloud.lock.core.annotation.CloudLock;
-import com.cloud.lock.redisson.executor.RedissonLockExecutor;
+import com.baomidou.lock.LockInfo;
+import com.baomidou.lock.LockTemplate;
+import com.baomidou.lock.annotation.Lock4j;
+import com.baomidou.lock.executor.RedissonLockExecutor;
 import lombok.extern.slf4j.Slf4j;
 import org.dromara.common.core.domain.R;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +30,7 @@ public class RedisLockController {
     /**
      * 测试lock4j 注解
      */
-    @CloudLock(keys = {"#key"})
+    @Lock4j(keys = {"#key"})
     @GetMapping("/testLock4j")
     public R<String> testLock4j(String key, String value) {
         System.out.println("start:" + key + ",time:" + LocalTime.now());

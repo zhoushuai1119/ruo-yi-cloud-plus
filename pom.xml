@@ -48,6 +48,8 @@
         <poi.version>5.2.3</poi.version>
         <easyexcel.version>3.3.3</easyexcel.version>
         <hutool.version>5.8.24</hutool.version>
+        <redisson.version>3.24.3</redisson.version>
+        <lock4j.version>2.2.7</lock4j.version>
         <easyretry.version>3.2.0</easyretry.version>
         <satoken.version>1.37.0</satoken.version>
         <lombok.version>1.18.30</lombok.version>
@@ -70,6 +72,7 @@
         <ip2region.version>2.7.0</ip2region.version>
         <!-- 临时修复 fastjson 漏洞 -->
         <fastjson.version>1.2.83</fastjson.version>
+        <fastjson2.version>2.0.39</fastjson2.version>
         <!-- 滑块验证码 -->
         <tianai-captcha.version>1.4.1</tianai-captcha.version>
 
@@ -296,6 +299,19 @@
                 <version>${velocity.version}</version>
             </dependency>
 
+            <!--redisson-->
+            <dependency>
+                <groupId>org.redisson</groupId>
+                <artifactId>redisson-spring-boot-starter</artifactId>
+                <version>${redisson.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>lock4j-redisson-spring-boot-starter</artifactId>
+                <version>${lock4j.version}</version>
+            </dependency>
+
             <!--  EasyRetry Client -->
             <dependency>
                 <groupId>com.aizuda</groupId>
@@ -438,6 +454,12 @@
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
                 <version>${fastjson.version}</version>
+            </dependency>
+            <!--fastjson2-->
+            <dependency>
+                <groupId>com.alibaba.fastjson2</groupId>
+                <artifactId>fastjson2</artifactId>
+                <version>${fastjson2.version}</version>
             </dependency>
 
             <dependency>

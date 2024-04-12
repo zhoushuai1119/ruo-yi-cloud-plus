@@ -8,8 +8,8 @@ import org.dromara.common.oss.core.OssClient;
 import org.dromara.common.oss.exception.OssException;
 import org.dromara.common.oss.properties.OssProperties;
 import org.dromara.common.redis.utils.CacheUtils;
-import org.dromara.common.redis.utils.RedisUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.dromara.common.redis.utils.RedissonUtils;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -31,7 +31,7 @@ public class OssFactory {
      */
     public static OssClient instance() {
         // 获取redis 默认类型
-        String configKey = RedisUtils.getCacheObject(OssConstant.DEFAULT_CONFIG_KEY);
+        String configKey = RedissonUtils.getCacheObject(OssConstant.DEFAULT_CONFIG_KEY);
         if (StringUtils.isEmpty(configKey)) {
             throw new OssException("文件存储服务类型无法找到!");
         }

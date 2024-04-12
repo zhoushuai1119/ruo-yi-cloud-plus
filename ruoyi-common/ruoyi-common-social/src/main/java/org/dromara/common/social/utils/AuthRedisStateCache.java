@@ -3,7 +3,7 @@ package org.dromara.common.social.utils;
 import lombok.AllArgsConstructor;
 import me.zhyd.oauth.cache.AuthStateCache;
 import org.dromara.common.core.constant.GlobalConstants;
-import org.dromara.common.redis.utils.RedisUtils;
+import org.dromara.common.redis.utils.RedissonUtils;
 
 import java.time.Duration;
 
@@ -22,7 +22,7 @@ public class AuthRedisStateCache implements AuthStateCache {
     @Override
     public void cache(String key, String value) {
         // 授权超时时间 默认三分钟
-        RedisUtils.setCacheObject(GlobalConstants.SOCIAL_AUTH_CODE_KEY + key, value, Duration.ofMinutes(3));
+        RedissonUtils.setCacheObject(GlobalConstants.SOCIAL_AUTH_CODE_KEY + key, value, Duration.ofMinutes(3));
     }
 
     /**
@@ -34,7 +34,7 @@ public class AuthRedisStateCache implements AuthStateCache {
      */
     @Override
     public void cache(String key, String value, long timeout) {
-        RedisUtils.setCacheObject(GlobalConstants.SOCIAL_AUTH_CODE_KEY + key, value, Duration.ofMillis(timeout));
+        RedissonUtils.setCacheObject(GlobalConstants.SOCIAL_AUTH_CODE_KEY + key, value, Duration.ofMillis(timeout));
     }
 
     /**
@@ -45,7 +45,7 @@ public class AuthRedisStateCache implements AuthStateCache {
      */
     @Override
     public String get(String key) {
-        return RedisUtils.getCacheObject(GlobalConstants.SOCIAL_AUTH_CODE_KEY + key);
+        return RedissonUtils.getCacheObject(GlobalConstants.SOCIAL_AUTH_CODE_KEY + key);
     }
 
     /**
@@ -56,6 +56,6 @@ public class AuthRedisStateCache implements AuthStateCache {
      */
     @Override
     public boolean containsKey(String key) {
-        return RedisUtils.hasKey(GlobalConstants.SOCIAL_AUTH_CODE_KEY + key);
+        return RedissonUtils.hasKey(GlobalConstants.SOCIAL_AUTH_CODE_KEY + key);
     }
 }

@@ -4,7 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.dromara.common.redis.utils.RedisUtils;
+import org.dromara.common.redis.utils.RedissonUtils;
 import org.dromara.common.websocket.dto.WebSocketMessageDto;
 import org.dromara.common.websocket.holder.WebSocketSessionHolder;
 import org.springframework.web.socket.PongMessage;
@@ -45,7 +45,7 @@ public class WebSocketUtils {
      * @param consumer 自定义处理
      */
     public static void subscribeMessage(Consumer<WebSocketMessageDto> consumer) {
-        RedisUtils.subscribe(WEB_SOCKET_TOPIC, WebSocketMessageDto.class, consumer);
+        RedissonUtils.subscribe(WEB_SOCKET_TOPIC, WebSocketMessageDto.class, consumer);
     }
 
     /**
@@ -68,7 +68,7 @@ public class WebSocketUtils {
             WebSocketMessageDto broadcastMessage = new WebSocketMessageDto();
             broadcastMessage.setMessage(webSocketMessage.getMessage());
             broadcastMessage.setSessionKeys(unsentSessionKeys);
-            RedisUtils.publish(WEB_SOCKET_TOPIC, broadcastMessage, consumer -> {
+            RedissonUtils.publish(WEB_SOCKET_TOPIC, broadcastMessage, consumer -> {
                 log.info("WebSocket发送主题订阅消息topic:{} session keys:{} message:{}",
                     WEB_SOCKET_TOPIC, unsentSessionKeys, webSocketMessage.getMessage());
             });
@@ -83,7 +83,7 @@ public class WebSocketUtils {
     public static void publishAll(String message) {
         WebSocketMessageDto broadcastMessage = new WebSocketMessageDto();
         broadcastMessage.setMessage(message);
-        RedisUtils.publish(WEB_SOCKET_TOPIC, broadcastMessage, consumer -> {
+        RedissonUtils.publish(WEB_SOCKET_TOPIC, broadcastMessage, consumer -> {
             log.info("WebSocket发送主题订阅消息topic:{} message:{}", WEB_SOCKET_TOPIC, message);
         });
     }
