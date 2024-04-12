@@ -12,10 +12,9 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @description: Redis操作工具类
- * @author: zhou shuai
- * @date: 2021/2/6 15:58
- * @version: V1.0
+ * Redis操作工具类
+ *
+ * @author shuai.zhou
  */
 @RequiredArgsConstructor
 public class RedisTemplateUtil {

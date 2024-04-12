@@ -20,7 +20,7 @@
         <!-- RuoYi Common Security -->
         <dependency>
             <groupId>org.dromara</groupId>
-            <artifactId>ruoyi-common-redis</artifactId>
+            <artifactId>ruoyi-common-redisson</artifactId>
         </dependency>
 
         <dependency>

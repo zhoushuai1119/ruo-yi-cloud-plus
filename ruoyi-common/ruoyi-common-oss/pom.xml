@@ -23,7 +23,7 @@
 
         <dependency>
             <groupId>org.dromara</groupId>
-            <artifactId>ruoyi-common-redis</artifactId>
+            <artifactId>ruoyi-common-redisson</artifactId>
         </dependency>
 
         <!--  AWS SDK for Java 2.x  -->

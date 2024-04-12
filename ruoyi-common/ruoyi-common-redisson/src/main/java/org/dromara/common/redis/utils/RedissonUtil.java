@@ -18,7 +18,6 @@ import java.util.stream.Stream;
  * Redisson 工具类
  *
  * @author shuai.zhou
- * @version 3.1.0 新增
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class RedissonUtil {

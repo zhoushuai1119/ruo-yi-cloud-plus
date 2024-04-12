@@ -10,10 +10,9 @@ import org.springframework.cache.CacheManager;
 import java.util.Set;
 
 /**
- * 缓存操作工具类 {@link }
+ * 缓存操作工具类
  *
  * @author shuai.zhou
- * @date 2022/8/13
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class CacheUtil {
