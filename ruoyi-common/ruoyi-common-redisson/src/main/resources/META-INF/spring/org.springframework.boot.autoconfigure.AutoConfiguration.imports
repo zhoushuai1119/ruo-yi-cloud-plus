@@ -1,3 +1,2 @@
 org.dromara.common.redisson.config.CacheConfiguration
-org.dromara.common.redisson.config.RedisConfiguration
 org.dromara.common.redisson.config.RedissonConfiguration

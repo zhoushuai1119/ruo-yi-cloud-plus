@@ -1,11 +1,14 @@
 package org.dromara.common.redisson.config;
 
 import cn.hutool.core.util.ObjectUtil;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.dromara.common.core.factory.YmlPropertySourceFactory;
 import org.dromara.common.redisson.config.properties.RedissonProperties;
 import org.dromara.common.redisson.handler.KeyPrefixHandler;
-import org.dromara.common.redisson.utils.ObjectMapperUtil;
 import org.redisson.client.codec.StringCodec;
 import org.redisson.codec.CompositeCodec;
 import org.redisson.codec.TypedJsonJacksonCodec;
@@ -27,9 +30,13 @@ import org.springframework.context.annotation.PropertySource;
 public class RedissonConfiguration {
 
     @Bean
-    public RedissonAutoConfigurationCustomizer redissonCustomizer(RedissonProperties redissonProperties) {
+    public RedissonAutoConfigurationCustomizer redissonCustomizer(RedissonProperties redissonProperties, ObjectMapper objectMapper) {
         return config -> {
-            TypedJsonJacksonCodec jsonCodec = new TypedJsonJacksonCodec(Object.class, ObjectMapperUtil.OBJECT_MAPPER);
+            ObjectMapper om = objectMapper.copy();
+            om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
+            // 指定序列化输入的类型，类必须是非final修饰的。序列化时将对象全类名一起保存下来
+            om.activateDefaultTyping(LaissezFaireSubTypeValidator.instance, ObjectMapper.DefaultTyping.NON_FINAL);
+            TypedJsonJacksonCodec jsonCodec = new TypedJsonJacksonCodec(Object.class, om);
             // 组合序列化 key 使用 String 内容使用通用 json 格式
             CompositeCodec codec = new CompositeCodec(StringCodec.INSTANCE, jsonCodec, jsonCodec);
             config.setThreads(redissonProperties.getThreads())

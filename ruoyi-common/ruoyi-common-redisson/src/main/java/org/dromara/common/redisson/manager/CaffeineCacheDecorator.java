@@ -41,7 +41,7 @@ public class CaffeineCacheDecorator implements Cache {
         return (ValueWrapper) o;
     }
 
-    @SuppressWarnings("unchecked")
+    @Override
     public <T> T get(Object key, Class<T> type) {
         Object o = CAFFEINE.get(getUniqueKey(key), k -> cache.get(key, type));
         return (T) o;
@@ -52,6 +52,7 @@ public class CaffeineCacheDecorator implements Cache {
         cache.put(key, value);
     }
 
+    @Override
     public ValueWrapper putIfAbsent(Object key, Object value) {
         return cache.putIfAbsent(key, value);
     }
@@ -61,6 +62,7 @@ public class CaffeineCacheDecorator implements Cache {
         evictIfPresent(key);
     }
 
+    @Override
     public boolean evictIfPresent(Object key) {
         boolean b = cache.evictIfPresent(key);
         if (b) {
@@ -74,6 +76,7 @@ public class CaffeineCacheDecorator implements Cache {
         cache.clear();
     }
 
+    @Override
     public boolean invalidate() {
         return cache.invalidate();
     }
