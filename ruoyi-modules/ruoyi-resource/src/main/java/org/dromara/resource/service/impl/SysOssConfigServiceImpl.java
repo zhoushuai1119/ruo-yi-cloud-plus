@@ -16,8 +16,8 @@ import org.dromara.common.json.utils.JsonUtils;
 import org.dromara.common.mybatis.core.page.PageQuery;
 import org.dromara.common.mybatis.core.page.TableDataInfo;
 import org.dromara.common.oss.constant.OssConstant;
-import org.dromara.common.redis.utils.CacheUtils;
-import org.dromara.common.redis.utils.RedissonUtils;
+import org.dromara.common.redis.utils.CacheUtil;
+import org.dromara.common.redis.utils.RedissonUtil;
 import org.dromara.resource.domain.SysOssConfig;
 import org.dromara.resource.domain.bo.SysOssConfigBo;
 import org.dromara.resource.domain.vo.SysOssConfigVo;
@@ -53,9 +53,9 @@ public class SysOssConfigServiceImpl implements ISysOssConfigService {
         for (SysOssConfig config : list) {
             String configKey = config.getConfigKey();
             if ("0".equals(config.getStatus())) {
-                RedissonUtils.setCacheObject(OssConstant.DEFAULT_CONFIG_KEY, configKey);
+                RedissonUtil.setCacheObject(OssConstant.DEFAULT_CONFIG_KEY, configKey);
             }
-            CacheUtils.put(CacheNames.SYS_OSS_CONFIG, config.getConfigKey(), JsonUtils.toJsonString(config));
+            CacheUtil.put(CacheNames.SYS_OSS_CONFIG, config.getConfigKey(), JsonUtils.toJsonString(config));
         }
     }
 
@@ -89,7 +89,7 @@ public class SysOssConfigServiceImpl implements ISysOssConfigService {
         if (flag) {
             // 从数据库查询完整的数据做缓存
             config = baseMapper.selectById(config.getOssConfigId());
-            CacheUtils.put(CacheNames.SYS_OSS_CONFIG, config.getConfigKey(), JsonUtils.toJsonString(config));
+            CacheUtil.put(CacheNames.SYS_OSS_CONFIG, config.getConfigKey(), JsonUtils.toJsonString(config));
         }
         return flag;
     }
@@ -108,7 +108,7 @@ public class SysOssConfigServiceImpl implements ISysOssConfigService {
         if (flag) {
             // 从数据库查询完整的数据做缓存
             config = baseMapper.selectById(config.getOssConfigId());
-            CacheUtils.put(CacheNames.SYS_OSS_CONFIG, config.getConfigKey(), JsonUtils.toJsonString(config));
+            CacheUtil.put(CacheNames.SYS_OSS_CONFIG, config.getConfigKey(), JsonUtils.toJsonString(config));
         }
         return flag;
     }
@@ -137,7 +137,7 @@ public class SysOssConfigServiceImpl implements ISysOssConfigService {
         boolean flag = baseMapper.deleteBatchIds(ids) > 0;
         if (flag) {
             list.forEach(sysOssConfig ->
-                CacheUtils.evict(CacheNames.SYS_OSS_CONFIG, sysOssConfig.getConfigKey()));
+                CacheUtil.evict(CacheNames.SYS_OSS_CONFIG, sysOssConfig.getConfigKey()));
         }
         return flag;
     }
@@ -167,7 +167,7 @@ public class SysOssConfigServiceImpl implements ISysOssConfigService {
             .set(SysOssConfig::getStatus, "1"));
         row += baseMapper.updateById(sysOssConfig);
         if (row > 0) {
-            RedissonUtils.setCacheObject(OssConstant.DEFAULT_CONFIG_KEY, sysOssConfig.getConfigKey());
+            RedissonUtil.setCacheObject(OssConstant.DEFAULT_CONFIG_KEY, sysOssConfig.getConfigKey());
         }
         return row;
     }

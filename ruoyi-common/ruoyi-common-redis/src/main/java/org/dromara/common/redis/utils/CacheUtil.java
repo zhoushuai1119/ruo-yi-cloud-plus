@@ -16,7 +16,7 @@ import java.util.Set;
  * @date 2022/8/13
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class CacheUtils {
+public class CacheUtil {
 
     private static final CacheManager CACHE_MANAGER = SpringUtils.getBean(CacheManager.class);
 

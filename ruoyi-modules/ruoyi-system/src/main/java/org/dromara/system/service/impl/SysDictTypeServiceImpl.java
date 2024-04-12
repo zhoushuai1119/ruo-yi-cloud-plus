@@ -13,7 +13,7 @@ import org.dromara.common.core.utils.MapstructUtils;
 import org.dromara.common.core.utils.StringUtils;
 import org.dromara.common.mybatis.core.page.PageQuery;
 import org.dromara.common.mybatis.core.page.TableDataInfo;
-import org.dromara.common.redis.utils.CacheUtils;
+import org.dromara.common.redis.utils.CacheUtil;
 import org.dromara.system.domain.SysDictData;
 import org.dromara.system.domain.SysDictType;
 import org.dromara.system.domain.bo.SysDictTypeBo;
@@ -135,7 +135,7 @@ public class SysDictTypeServiceImpl implements ISysDictTypeService {
                 .eq(SysDictData::getDictType, dictType.getDictType()))) {
                 throw new ServiceException(String.format("%1$s已分配,不能删除", dictType.getDictName()));
             }
-            CacheUtils.evict(CacheNames.SYS_DICT, dictType.getDictType());
+            CacheUtil.evict(CacheNames.SYS_DICT, dictType.getDictType());
         }
         baseMapper.deleteBatchIds(Arrays.asList(dictIds));
     }
@@ -145,7 +145,7 @@ public class SysDictTypeServiceImpl implements ISysDictTypeService {
      */
     @Override
     public void resetDictCache() {
-        CacheUtils.clear(CacheNames.SYS_DICT);
+        CacheUtil.clear(CacheNames.SYS_DICT);
     }
 
     /**
@@ -183,7 +183,7 @@ public class SysDictTypeServiceImpl implements ISysDictTypeService {
             .eq(SysDictData::getDictType, oldDict.getDictType()));
         int row = baseMapper.updateById(dict);
         if (row > 0) {
-            CacheUtils.evict(CacheNames.SYS_DICT, oldDict.getDictType());
+            CacheUtil.evict(CacheNames.SYS_DICT, oldDict.getDictType());
             return dictDataMapper.selectDictDataByType(dict.getDictType());
         }
         throw new ServiceException("操作失败");

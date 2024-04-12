@@ -3,7 +3,7 @@ package org.dromara.demo.controller;
 import org.dromara.common.core.constant.CacheNames;
 import org.dromara.common.core.domain.R;
 import lombok.RequiredArgsConstructor;
-import org.dromara.common.redis.utils.RedissonUtils;
+import org.dromara.common.redis.utils.RedissonUtil;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
@@ -80,15 +80,15 @@ public class RedisCacheController {
      */
     @GetMapping("/test6")
     public R<Boolean> test6(String key, String value) {
-        RedissonUtils.setCacheObject(key, value);
-        boolean flag = RedissonUtils.expire(key, Duration.ofSeconds(10));
+        RedissonUtil.setCacheObject(key, value);
+        boolean flag = RedissonUtil.expire(key, Duration.ofSeconds(10));
         System.out.println("***********" + flag);
         try {
             Thread.sleep(11 * 1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        Object obj = RedissonUtils.getCacheObject(key);
+        Object obj = RedissonUtil.getCacheObject(key);
         return R.ok(value.equals(obj));
     }
 

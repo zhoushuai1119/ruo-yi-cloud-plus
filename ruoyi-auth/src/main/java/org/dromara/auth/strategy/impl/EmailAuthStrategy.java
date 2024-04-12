@@ -15,7 +15,7 @@ import org.dromara.common.core.utils.MessageUtils;
 import org.dromara.common.core.utils.StringUtils;
 import org.dromara.common.core.utils.ValidatorUtils;
 import org.dromara.common.json.utils.JsonUtils;
-import org.dromara.common.redis.utils.RedissonUtils;
+import org.dromara.common.redis.utils.RedissonUtil;
 import org.dromara.system.api.RemoteUserService;
 import org.dromara.system.api.domain.vo.RemoteClientVo;
 import org.dromara.system.api.model.LoginUser;
@@ -62,7 +62,7 @@ public class EmailAuthStrategy extends AbstractAuthStrategy {
      * 校验邮箱验证码
      */
     private boolean validateEmailCode(String tenantId, String email, String emailCode) {
-        String code = RedissonUtils.getCacheObject(GlobalConstants.EMAIL_CODE_KEY + email);
+        String code = RedissonUtil.getCacheObject(GlobalConstants.EMAIL_CODE_KEY + email);
         if (StringUtils.isBlank(code)) {
             loginService.recordLogininfor(tenantId, email, Constants.LOGIN_FAIL, MessageUtils.message("user.jcaptcha.expire"));
             throw new CaptchaExpireException();

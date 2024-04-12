@@ -11,7 +11,7 @@ import org.dromara.common.core.domain.R;
 import org.dromara.common.mail.config.properties.MailProperties;
 import org.dromara.common.mail.utils.MailUtils;
 import org.dromara.common.ratelimiter.annotation.RateLimiter;
-import org.dromara.common.redis.utils.RedissonUtils;
+import org.dromara.common.redis.utils.RedissonUtil;
 import org.dromara.common.web.core.BaseController;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -48,7 +48,7 @@ public class SysEmailController extends BaseController {
         }
         String key = GlobalConstants.EMAIL_CODE_KEY + email;
         String code = RandomUtil.randomNumbers(4);
-        RedissonUtils.setCacheObject(key, code, Duration.ofMinutes(Constants.EMAIL_CODE_EXPIRATION));
+        RedissonUtil.setCacheObject(key, code, Duration.ofMinutes(Constants.EMAIL_CODE_EXPIRATION));
         try {
             MailUtils.sendText(email, "RuoYi-Cloud-Plus邮箱登录验证码", "您本次验证码为：" + code + "，有效性为" + Constants.EMAIL_CODE_EXPIRATION + "分钟，请尽快填写。");
         } catch (Exception e) {

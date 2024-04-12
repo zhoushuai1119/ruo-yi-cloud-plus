@@ -16,7 +16,7 @@ import org.dromara.common.core.utils.SpringUtils;
 import org.dromara.common.core.utils.StringUtils;
 import org.dromara.common.core.utils.TreeBuildUtils;
 import org.dromara.common.mybatis.helper.DataBaseHelper;
-import org.dromara.common.redis.utils.CacheUtils;
+import org.dromara.common.redis.utils.CacheUtil;
 import org.dromara.common.satoken.utils.LoginHelper;
 import org.dromara.system.domain.SysDept;
 import org.dromara.system.domain.SysRole;
@@ -320,7 +320,7 @@ public class SysDeptServiceImpl implements ISysDeptService {
         }
         if (CollUtil.isNotEmpty(list)) {
             if (baseMapper.updateBatchById(list)) {
-                list.forEach(dept -> CacheUtils.evict(CacheNames.SYS_DEPT, dept.getDeptId()));
+                list.forEach(dept -> CacheUtil.evict(CacheNames.SYS_DEPT, dept.getDeptId()));
             }
         }
     }

@@ -1,7 +1,7 @@
 package org.dromara.common.tenant.core;
 
 import org.dromara.common.core.constant.GlobalConstants;
-import org.dromara.common.redis.utils.RedissonUtils;
+import org.dromara.common.redis.utils.RedissonUtil;
 import org.dromara.common.satoken.core.dao.PlusSaTokenDao;
 
 import java.time.Duration;
@@ -69,7 +69,7 @@ public class TenantSaTokenDao extends PlusSaTokenDao {
             }
             return;
         }
-        RedissonUtils.expire(GlobalConstants.GLOBAL_REDIS_KEY + key, Duration.ofSeconds(timeout));
+        RedissonUtil.expire(GlobalConstants.GLOBAL_REDIS_KEY + key, Duration.ofSeconds(timeout));
     }
 
 
@@ -134,7 +134,7 @@ public class TenantSaTokenDao extends PlusSaTokenDao {
             }
             return;
         }
-        RedissonUtils.expire(GlobalConstants.GLOBAL_REDIS_KEY + key, Duration.ofSeconds(timeout));
+        RedissonUtil.expire(GlobalConstants.GLOBAL_REDIS_KEY + key, Duration.ofSeconds(timeout));
     }
 
 

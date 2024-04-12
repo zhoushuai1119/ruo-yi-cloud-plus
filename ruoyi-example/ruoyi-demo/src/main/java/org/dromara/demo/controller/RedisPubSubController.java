@@ -2,7 +2,7 @@ package org.dromara.demo.controller;
 
 import org.dromara.common.core.domain.R;
 import lombok.RequiredArgsConstructor;
-import org.dromara.common.redis.utils.RedissonUtils;
+import org.dromara.common.redis.utils.RedissonUtil;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,7 +25,7 @@ public class RedisPubSubController {
      */
     @GetMapping("/pub")
     public R<Void> pub(String key, String value) {
-        RedissonUtils.publish(key, value, consumer -> {
+        RedissonUtil.publish(key, value, consumer -> {
             System.out.println("发布通道 => " + key + ", 发送值 => " + value);
         });
         return R.ok("操作成功");
@@ -38,7 +38,7 @@ public class RedisPubSubController {
      */
     @GetMapping("/sub")
     public R<Void> sub(String key) {
-        RedissonUtils.subscribe(key, String.class, msg -> {
+        RedissonUtil.subscribe(key, String.class, msg -> {
             System.out.println("订阅通道 => " + key + ", 接收值 => " + msg);
         });
         return R.ok("操作成功");

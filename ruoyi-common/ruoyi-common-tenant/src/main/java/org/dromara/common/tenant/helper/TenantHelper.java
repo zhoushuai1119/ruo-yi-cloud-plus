@@ -12,7 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.dromara.common.core.constant.GlobalConstants;
 import org.dromara.common.core.utils.SpringUtils;
 import org.dromara.common.core.utils.StringUtils;
-import org.dromara.common.redis.utils.RedissonUtils;
+import org.dromara.common.redis.utils.RedissonUtil;
 import org.dromara.common.satoken.utils.LoginHelper;
 
 import java.util.function.Supplier;
@@ -93,7 +93,7 @@ public class TenantHelper {
             return;
         }
         String cacheKey = DYNAMIC_TENANT_KEY + ":" + LoginHelper.getUserId();
-        RedissonUtils.setCacheObject(cacheKey, tenantId);
+        RedissonUtil.setCacheObject(cacheKey, tenantId);
         SaHolder.getStorage().set(cacheKey, tenantId);
     }
 
@@ -114,7 +114,7 @@ public class TenantHelper {
         if (StringUtils.isNotBlank(tenantId)) {
             return tenantId;
         }
-        tenantId = RedissonUtils.getCacheObject(cacheKey);
+        tenantId = RedissonUtil.getCacheObject(cacheKey);
         SaHolder.getStorage().set(cacheKey, tenantId);
         return tenantId;
     }
@@ -131,7 +131,7 @@ public class TenantHelper {
             return;
         }
         String cacheKey = DYNAMIC_TENANT_KEY + ":" + LoginHelper.getUserId();
-        RedissonUtils.deleteObject(cacheKey);
+        RedissonUtil.deleteObject(cacheKey);
         SaHolder.getStorage().delete(cacheKey);
     }
 

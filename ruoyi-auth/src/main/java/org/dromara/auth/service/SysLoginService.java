@@ -26,7 +26,7 @@ import org.dromara.common.core.utils.ServletUtils;
 import org.dromara.common.core.utils.SpringUtils;
 import org.dromara.common.core.utils.StringUtils;
 import org.dromara.common.log.event.LogininforEvent;
-import org.dromara.common.redis.utils.RedissonUtils;
+import org.dromara.common.redis.utils.RedissonUtil;
 import org.dromara.common.satoken.utils.LoginHelper;
 import org.dromara.common.tenant.exception.TenantException;
 import org.dromara.common.tenant.helper.TenantHelper;
@@ -155,8 +155,8 @@ public class SysLoginService {
      */
     public void validateCaptcha(String tenantId, String username, String code, String uuid) {
         String verifyKey = GlobalConstants.CAPTCHA_CODE_KEY + StringUtils.defaultString(uuid, "");
-        String captcha = RedissonUtils.getCacheObject(verifyKey);
-        RedissonUtils.deleteObject(verifyKey);
+        String captcha = RedissonUtil.getCacheObject(verifyKey);
+        RedissonUtil.deleteObject(verifyKey);
         if (captcha == null) {
             recordLogininfor(tenantId, username, Constants.REGISTER, MessageUtils.message("user.jcaptcha.expire"));
             throw new CaptchaExpireException();
@@ -196,7 +196,7 @@ public class SysLoginService {
         Integer lockTime = userPasswordProperties.getLockTime();
 
         // 获取用户登录错误次数，默认为0 (可自定义限制策略 例如: key + username + ip)
-        int errorNumber = ObjectUtil.defaultIfNull(RedissonUtils.getCacheObject(errorKey), 0);
+        int errorNumber = ObjectUtil.defaultIfNull(RedissonUtil.getCacheObject(errorKey), 0);
         // 锁定时间内登录 则踢出
         if (errorNumber >= maxRetryCount) {
             recordLogininfor(tenantId, username, loginFail, MessageUtils.message(loginType.getRetryLimitExceed(), maxRetryCount, lockTime));
@@ -206,7 +206,7 @@ public class SysLoginService {
         if (supplier.get()) {
             // 错误次数递增
             errorNumber++;
-            RedissonUtils.setCacheObject(errorKey, errorNumber, Duration.ofMinutes(lockTime));
+            RedissonUtil.setCacheObject(errorKey, errorNumber, Duration.ofMinutes(lockTime));
             // 达到规定错误次数 则锁定登录
             if (errorNumber >= maxRetryCount) {
                 recordLogininfor(tenantId, username, loginFail, MessageUtils.message(loginType.getRetryLimitExceed(), maxRetryCount, lockTime));
@@ -219,7 +219,7 @@ public class SysLoginService {
         }
 
         // 登录成功 清空错误次数
-        RedissonUtils.deleteObject(errorKey);
+        RedissonUtil.deleteObject(errorKey);
     }
 
     /**

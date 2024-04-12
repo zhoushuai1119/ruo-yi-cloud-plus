@@ -10,7 +10,7 @@ import org.dromara.common.core.utils.MapstructUtils;
 import org.dromara.common.core.utils.StringUtils;
 import org.dromara.common.mybatis.core.page.PageQuery;
 import org.dromara.common.mybatis.core.page.TableDataInfo;
-import org.dromara.common.redis.utils.CacheUtils;
+import org.dromara.common.redis.utils.CacheUtil;
 import org.dromara.system.domain.SysDictData;
 import org.dromara.system.domain.bo.SysDictDataBo;
 import org.dromara.system.domain.vo.SysDictDataVo;
@@ -97,7 +97,7 @@ public class SysDictDataServiceImpl implements ISysDictDataService {
         for (Long dictCode : dictCodes) {
             SysDictData data = baseMapper.selectById(dictCode);
             baseMapper.deleteById(dictCode);
-            CacheUtils.evict(CacheNames.SYS_DICT, data.getDictType());
+            CacheUtil.evict(CacheNames.SYS_DICT, data.getDictType());
         }
     }
 

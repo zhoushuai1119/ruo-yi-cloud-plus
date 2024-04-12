@@ -24,7 +24,7 @@ import org.springframework.context.annotation.PropertySource;
 @AutoConfiguration
 @EnableConfigurationProperties(RedissonProperties.class)
 @PropertySource(value = "classpath:common-redisson.yml", factory = YmlPropertySourceFactory.class)
-public class RedissonAutoConfiguration {
+public class RedissonConfiguration {
 
     @Bean
     public RedissonAutoConfigurationCustomizer redissonCustomizer(RedissonProperties redissonProperties) {

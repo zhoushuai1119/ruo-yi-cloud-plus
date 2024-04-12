@@ -4,7 +4,7 @@ import cn.dev33.satoken.annotation.SaCheckPermission;
 import lombok.RequiredArgsConstructor;
 import org.dromara.common.core.constant.GlobalConstants;
 import org.dromara.common.core.domain.R;
-import org.dromara.common.redis.utils.RedissonUtils;
+import org.dromara.common.redis.utils.RedissonUtil;
 import org.dromara.common.satoken.utils.LoginHelper;
 import org.dromara.common.web.core.BaseController;
 import org.dromara.common.excel.utils.ExcelUtil;
@@ -93,8 +93,8 @@ public class SysLogininforController extends BaseController {
     @GetMapping("/unlock/{userName}")
     public R<Void> unlock(@PathVariable("userName") String userName) {
         String loginName = GlobalConstants.PWD_ERR_CNT_KEY + userName;
-        if (RedissonUtils.hasKey(loginName)) {
-            RedissonUtils.deleteObject(loginName);
+        if (RedissonUtil.hasKey(loginName)) {
+            RedissonUtil.deleteObject(loginName);
         }
         return R.ok();
     }

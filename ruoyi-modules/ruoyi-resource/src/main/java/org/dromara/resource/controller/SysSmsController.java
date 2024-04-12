@@ -8,7 +8,7 @@ import org.dromara.common.core.constant.Constants;
 import org.dromara.common.core.constant.GlobalConstants;
 import org.dromara.common.core.domain.R;
 import org.dromara.common.ratelimiter.annotation.RateLimiter;
-import org.dromara.common.redis.utils.RedissonUtils;
+import org.dromara.common.redis.utils.RedissonUtil;
 import org.dromara.common.web.core.BaseController;
 import org.dromara.sms4j.api.SmsBlend;
 import org.dromara.sms4j.api.entity.SmsResponse;
@@ -42,7 +42,7 @@ public class SysSmsController extends BaseController {
     public R<Void> smsCaptcha(@NotBlank(message = "{user.phonenumber.not.blank}") @PathVariable("phonenumber") String phonenumber) {
         String key = GlobalConstants.PHONE_CODE_KEY + phonenumber;
         String code = RandomUtil.randomNumbers(4);
-        RedissonUtils.setCacheObject(key, code, Duration.ofMinutes(Constants.PHONE_CODE_EXPIRATION));
+        RedissonUtil.setCacheObject(key, code, Duration.ofMinutes(Constants.PHONE_CODE_EXPIRATION));
         SmsBlend smsBlend = SmsFactory.getSmsBlend("alibaba");
         SmsResponse smsResponse = smsBlend.sendMessage(phonenumber, code);
         if (!smsResponse.isSuccess()) {

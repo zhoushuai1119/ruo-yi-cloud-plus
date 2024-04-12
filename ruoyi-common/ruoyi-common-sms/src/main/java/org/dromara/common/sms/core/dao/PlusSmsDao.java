@@ -1,7 +1,7 @@
 package org.dromara.common.sms.core.dao;
 
 import org.dromara.common.core.constant.GlobalConstants;
-import org.dromara.common.redis.utils.RedissonUtils;
+import org.dromara.common.redis.utils.RedissonUtil;
 import org.dromara.sms4j.api.dao.SmsDao;
 
 import java.time.Duration;
@@ -23,7 +23,7 @@ public class PlusSmsDao implements SmsDao {
      */
     @Override
     public void set(String key, Object value, long cacheTime) {
-        RedissonUtils.setCacheObject(GlobalConstants.GLOBAL_REDIS_KEY + key, value, Duration.ofSeconds(cacheTime));
+        RedissonUtil.setCacheObject(GlobalConstants.GLOBAL_REDIS_KEY + key, value, Duration.ofSeconds(cacheTime));
     }
 
     /**
@@ -34,7 +34,7 @@ public class PlusSmsDao implements SmsDao {
      */
     @Override
     public void set(String key, Object value) {
-        RedissonUtils.setCacheObject(GlobalConstants.GLOBAL_REDIS_KEY + key, value, true);
+        RedissonUtil.setCacheObject(GlobalConstants.GLOBAL_REDIS_KEY + key, value, true);
     }
 
     /**
@@ -45,7 +45,7 @@ public class PlusSmsDao implements SmsDao {
      */
     @Override
     public Object get(String key) {
-        return RedissonUtils.getCacheObject(GlobalConstants.GLOBAL_REDIS_KEY + key);
+        return RedissonUtil.getCacheObject(GlobalConstants.GLOBAL_REDIS_KEY + key);
     }
 
     /**
@@ -58,7 +58,7 @@ public class PlusSmsDao implements SmsDao {
      */
     @Override
     public Object remove(String key) {
-        return RedissonUtils.deleteObject(GlobalConstants.GLOBAL_REDIS_KEY + key);
+        return RedissonUtil.deleteObject(GlobalConstants.GLOBAL_REDIS_KEY + key);
     }
 
     /**
@@ -66,7 +66,7 @@ public class PlusSmsDao implements SmsDao {
      */
     @Override
     public void clean() {
-        RedissonUtils.deleteObject(GlobalConstants.GLOBAL_REDIS_KEY + "sms:");
+        RedissonUtil.deleteObject(GlobalConstants.GLOBAL_REDIS_KEY + "sms:");
     }
 
 }

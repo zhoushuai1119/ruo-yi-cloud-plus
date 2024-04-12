@@ -7,9 +7,9 @@ import org.dromara.common.oss.constant.OssConstant;
 import org.dromara.common.oss.core.OssClient;
 import org.dromara.common.oss.exception.OssException;
 import org.dromara.common.oss.properties.OssProperties;
-import org.dromara.common.redis.utils.CacheUtils;
+import org.dromara.common.redis.utils.CacheUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.dromara.common.redis.utils.RedissonUtils;
+import org.dromara.common.redis.utils.RedissonUtil;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -31,7 +31,7 @@ public class OssFactory {
      */
     public static OssClient instance() {
         // 获取redis 默认类型
-        String configKey = RedissonUtils.getCacheObject(OssConstant.DEFAULT_CONFIG_KEY);
+        String configKey = RedissonUtil.getCacheObject(OssConstant.DEFAULT_CONFIG_KEY);
         if (StringUtils.isEmpty(configKey)) {
             throw new OssException("文件存储服务类型无法找到!");
         }
@@ -42,7 +42,7 @@ public class OssFactory {
      * 根据类型获取实例
      */
     public static synchronized OssClient instance(String configKey) {
-        String json = CacheUtils.get(CacheNames.SYS_OSS_CONFIG, configKey);
+        String json = CacheUtil.get(CacheNames.SYS_OSS_CONFIG, configKey);
         if (json == null) {
             throw new OssException("系统异常, '" + configKey + "'配置信息不存在!");
         }

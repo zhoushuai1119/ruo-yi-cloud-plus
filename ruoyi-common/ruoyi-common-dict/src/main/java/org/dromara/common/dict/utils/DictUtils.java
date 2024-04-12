@@ -1,7 +1,7 @@
 package org.dromara.common.dict.utils;
 
 import org.dromara.common.core.constant.CacheNames;
-import org.dromara.common.redis.utils.CacheUtils;
+import org.dromara.common.redis.utils.CacheUtil;
 import org.dromara.system.api.domain.vo.RemoteDictDataVo;
 
 import java.util.List;
@@ -19,7 +19,7 @@ public class DictUtils {
      * @param dictDatas 字典数据列表
      */
     public static void setDictCache(String key, List<RemoteDictDataVo> dictDatas) {
-        CacheUtils.put(CacheNames.SYS_DICT, key, dictDatas);
+        CacheUtil.put(CacheNames.SYS_DICT, key, dictDatas);
     }
 
     /**
@@ -29,7 +29,7 @@ public class DictUtils {
      * @return dictDatas 字典数据列表
      */
     public static List<RemoteDictDataVo> getDictCache(String key) {
-        return CacheUtils.get(CacheNames.SYS_DICT, key);
+        return CacheUtil.get(CacheNames.SYS_DICT, key);
     }
 
     /**
@@ -38,14 +38,14 @@ public class DictUtils {
      * @param key 字典键
      */
     public static void removeDictCache(String key) {
-        CacheUtils.evict(CacheNames.SYS_DICT, key);
+        CacheUtil.evict(CacheNames.SYS_DICT, key);
     }
 
     /**
      * 清空字典缓存
      */
     public static void clearDictCache() {
-        CacheUtils.clear(CacheNames.SYS_DICT);
+        CacheUtil.clear(CacheNames.SYS_DICT);
     }
 
 }

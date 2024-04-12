@@ -21,7 +21,7 @@ import java.util.stream.Stream;
  * @version 3.1.0 新增
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class RedissonUtils {
+public class RedissonUtil {
 
     private static final RedissonClient CLIENT = SpringUtils.getBean(RedissonClient.class);
 

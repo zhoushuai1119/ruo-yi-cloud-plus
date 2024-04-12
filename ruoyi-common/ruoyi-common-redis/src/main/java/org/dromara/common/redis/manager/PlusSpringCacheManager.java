@@ -15,7 +15,7 @@
  */
 package org.dromara.common.redis.manager;
 
-import org.dromara.common.redis.utils.RedissonUtils;
+import org.dromara.common.redis.utils.RedissonUtil;
 import org.redisson.api.RMap;
 import org.redisson.api.RMapCache;
 import org.redisson.spring.cache.CacheConfig;
@@ -153,7 +153,7 @@ public class PlusSpringCacheManager implements CacheManager {
     }
 
     private Cache createMap(String name, CacheConfig config) {
-        RMap<Object, Object> map = RedissonUtils.getClient().getMap(name);
+        RMap<Object, Object> map = RedissonUtil.getClient().getMap(name);
 
         Cache cache = new CaffeineCacheDecorator(new RedissonCache(map, allowNullValues));
         if (transactionAware) {
@@ -167,7 +167,7 @@ public class PlusSpringCacheManager implements CacheManager {
     }
 
     private Cache createMapCache(String name, CacheConfig config) {
-        RMapCache<Object, Object> map = RedissonUtils.getClient().getMapCache(name);
+        RMapCache<Object, Object> map = RedissonUtil.getClient().getMapCache(name);
 
         Cache cache = new CaffeineCacheDecorator(new RedissonCache(map, config, allowNullValues));
         if (transactionAware) {
