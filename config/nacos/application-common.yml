@@ -38,6 +38,10 @@ dubbo:
     log-level: info
 
 spring:
+  threads:
+    # 开启虚拟线程 仅jdk21可用
+    virtual:
+      enabled: false
   # 资源信息
   messages:
     # 国际化资源文件路径
