@@ -15,11 +15,36 @@
         ruoyi-common-seata 分布式事务
     </description>
 
-	<dependencies>
+    <dependencies>
 
         <dependency>
             <groupId>org.dromara</groupId>
             <artifactId>ruoyi-common-core</artifactId>
+        </dependency>
+
+        <!-- SpringBoot Seata -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-seata</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>io.seata</groupId>
+                    <artifactId>seata-spring-boot-starter</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.dubbo.extensions</groupId>
+                    <artifactId>dubbo-filter-seata</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.logging.log4j</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>io.seata</groupId>
+            <artifactId>seata-spring-boot-starter</artifactId>
         </dependency>
 
         <dependency>
@@ -34,21 +59,6 @@
             </exclusions>
         </dependency>
 
-        <!-- SpringBoot Seata -->
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-seata</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.apache.logging.log4j</groupId>
-                    <artifactId>*</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.apache.dubbo.extensions</groupId>
-                    <artifactId>dubbo-filter-seata</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
     </dependencies>
 
 </project>
