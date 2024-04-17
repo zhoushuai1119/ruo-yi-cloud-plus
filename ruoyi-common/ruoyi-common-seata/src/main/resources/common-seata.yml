@@ -4,8 +4,11 @@ seata:
   enabled: true
   # Seata 应用编号，默认为应用名
   application-id: ${spring.application.name}
+  # 此处配置自定义的seata事务分组名称
+  tx-service-group: ${spring.application.name}-tx-group
   # 关闭自动代理
   enable-auto-data-source-proxy: false
+  # 注册中心
   registry:
     type: nacos
     nacos:
@@ -15,3 +18,13 @@ seata:
       namespace: ${spring.profiles.active}
       username: nacos
       password: nacos
+  # 配置中心
+  config:
+    type: nacos
+    nacos:
+      server-addr: ${spring.cloud.nacos.server-addr}
+      group: SEATA_GROUP
+      namespace: ${spring.profiles.active}
+      username: nacos
+      password: nacos
+      data-id: seata.properties

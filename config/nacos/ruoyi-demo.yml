@@ -26,15 +26,6 @@ easy-es:
   #如果无账号密码则可不配置此行
   password: Zs195310
 
-# seata配置
-seata:
-  # Seata 事务组编号，用于 TC 集群名
-  tx-service-group: demo_tx_group
-  # vgroup-mapping下一定要有一个对应tx-service-group的映射，映射到default（seata默认的集群名称）
-  service:
-    vgroup-mapping:
-      demo_tx_group: default
-
 # jasypt加密,默认ENC,为了和dynamic区分，重命名
 jasypt:
   encryptor:
