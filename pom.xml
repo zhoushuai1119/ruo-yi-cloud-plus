@@ -58,7 +58,7 @@
         <elasticsearch.version>7.14.0</elasticsearch.version>
         <skywalking-toolkit.version>8.16.0</skywalking-toolkit.version>
         <bouncycastle.version>1.76</bouncycastle.version>
-        <alibaba-ttl.version>2.14.4</alibaba-ttl.version>
+        <alibaba-ttl.version>2.14.5</alibaba-ttl.version>
         <mapstruct-plus.version>1.4.0</mapstruct-plus.version>
         <mapstruct-plus.lombok.version>0.2.0</mapstruct-plus.lombok.version>
         <arthas.version>3.7.2</arthas.version>
