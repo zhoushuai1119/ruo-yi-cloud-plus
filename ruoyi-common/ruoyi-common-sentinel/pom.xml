@@ -33,6 +33,18 @@
             </exclusions>
         </dependency>
 
+        <dependency>
+            <groupId>com.alibaba.nacos</groupId>
+            <artifactId>nacos-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba.nacos</groupId>
+            <artifactId>nacos-common</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba.nacos</groupId>
+            <artifactId>nacos-client</artifactId>
+        </dependency>
         <!-- Sentinel Datasource Nacos -->
         <dependency>
             <groupId>com.alibaba.csp</groupId>
@@ -43,11 +55,6 @@
                     <artifactId>nacos-client</artifactId>
                 </exclusion>
             </exclusions>
-        </dependency>
-
-        <dependency>
-            <groupId>com.alibaba.nacos</groupId>
-            <artifactId>nacos-client</artifactId>
         </dependency>
 
         <dependency>

@@ -50,7 +50,7 @@ captcha:
     # 二次验证缓存key前缀，默认是 captcha:secondary
     keyPrefix: "captcha:secondary"
 
---- # 三方授权
+# 三方授权
 justauth:
   # 前端外网访问地址
   address: http://localhost:80

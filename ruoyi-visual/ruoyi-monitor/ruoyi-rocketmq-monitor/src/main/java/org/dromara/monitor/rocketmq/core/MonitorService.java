@@ -19,7 +19,6 @@ package org.dromara.monitor.rocketmq.core;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
-import com.alibaba.nacos.shaded.com.google.common.collect.Maps;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.acl.common.AclClientRPCHook;
@@ -187,13 +186,13 @@ public class MonitorService {
 
     public void doBrokerMonitorWork() throws Exception {
         ClusterInfo clusterInfo = defaultMQAdminExt.examineBrokerClusterInfo();
-        Map<String/*brokerName*/, Map<Long/* brokerId */, Object/* brokerDetail */>> brokerServer = Maps.newHashMap();
+        Map<String/*brokerName*/, Map<Long/* brokerId */, Object/* brokerDetail */>> brokerServer = new HashMap<>();
         Set<String> runningBrokerNames = new HashSet<>();
 
         List<BrokerStatusDTO> brokerStatusList = new ArrayList<>();
 
         for (BrokerData brokerData : clusterInfo.getBrokerAddrTable().values()) {
-            Map<Long, Object> brokerMasterSlaveMap = Maps.newHashMap();
+            Map<Long, Object> brokerMasterSlaveMap = new HashMap<>();
             for (Entry<Long/* brokerid */, String/* broker address */> brokerAddr : brokerData.getBrokerAddrs().entrySet()) {
                 KVTable kvTable = defaultMQAdminExt.fetchBrokerRuntimeStats(brokerAddr.getValue());
                 brokerMasterSlaveMap.put(brokerAddr.getKey(), kvTable.getTable());

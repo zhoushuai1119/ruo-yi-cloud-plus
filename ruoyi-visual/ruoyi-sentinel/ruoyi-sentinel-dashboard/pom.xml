@@ -20,7 +20,7 @@
         <spring-boot.version>2.7.18</spring-boot.version>
         <spring-cloud.version>2021.0.6</spring-cloud.version>
         <spring-cloud-alibaba.version>2021.0.6.0</spring-cloud-alibaba.version>
-        <nacos.client.version>2.2.3</nacos.client.version>
+        <nacos.version>2.3.2</nacos.version>
         <logstash-logback-encoder.version>7.2</logstash-logback-encoder.version>
 
         <commons-lang.version>2.6</commons-lang.version>
@@ -54,6 +54,21 @@
 
     <!-- 公共属性 -->
     <dependencies>
+        <dependency>
+            <groupId>com.alibaba.nacos</groupId>
+            <artifactId>nacos-api</artifactId>
+            <version>${nacos.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba.nacos</groupId>
+            <artifactId>nacos-common</artifactId>
+            <version>${nacos.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba.nacos</groupId>
+            <artifactId>nacos-client</artifactId>
+            <version>${nacos.version}</version>
+        </dependency>
         <!-- SpringCloud Alibaba Nacos -->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
@@ -64,11 +79,6 @@
                     <artifactId>nacos-client</artifactId>
                 </exclusion>
             </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>com.alibaba.nacos</groupId>
-            <artifactId>nacos-client</artifactId>
-            <version>${nacos.client.version}</version>
         </dependency>
 
         <!-- SpringCloud Alibaba Nacos Config -->
@@ -111,6 +121,12 @@
         <dependency>
             <groupId>com.alibaba.csp</groupId>
             <artifactId>sentinel-datasource-nacos</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.alibaba.nacos</groupId>
+                    <artifactId>nacos-client</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <!-- spring-boot start -->
