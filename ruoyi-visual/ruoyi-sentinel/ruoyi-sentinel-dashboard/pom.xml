@@ -21,8 +21,7 @@
         <spring-cloud.version>2021.0.6</spring-cloud.version>
         <spring-cloud-alibaba.version>2021.0.6.0</spring-cloud-alibaba.version>
         <nacos.version>2.3.2</nacos.version>
-        <logstash-logback-encoder.version>7.2</logstash-logback-encoder.version>
-
+        <logstash.version>7.2</logstash.version>
         <commons-lang.version>2.6</commons-lang.version>
     </properties>
 
@@ -91,7 +90,7 @@
         <dependency>
             <groupId>net.logstash.logback</groupId>
             <artifactId>logstash-logback-encoder</artifactId>
-            <version>${logstash-logback-encoder.version}</version>
+            <version>${logstash.version}</version>
         </dependency>
 
         <!-- sentinel start -->
