@@ -52,6 +52,9 @@ spring:
       max-request-size: 20MB
       # 上传单个文件大小限制
       max-file-size: 10MB
+  mvc:
+    # 设置静态资源路径 防止所有请求都去查静态资源
+    static-path-pattern: /static/**
 
   # redis通用配置 子服务可以自行配置进行覆盖
   data:
