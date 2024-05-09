@@ -1,13 +1,13 @@
 package org.dromara.common.dict.service.impl;
 
-import cn.dev33.satoken.context.SaHolder;
-import cn.hutool.core.util.ObjectUtil;
+import com.github.benmanes.caffeine.cache.Cache;
+import jakarta.annotation.Resource;
+import org.apache.dubbo.config.annotation.DubboReference;
 import org.dromara.common.core.constant.CacheConstants;
 import org.dromara.common.core.service.DictService;
 import org.dromara.common.core.utils.StreamUtils;
 import org.dromara.common.core.utils.StringUtils;
 import org.dromara.system.api.RemoteDictService;
-import org.apache.dubbo.config.annotation.DubboReference;
 import org.dromara.system.api.domain.vo.RemoteDictDataVo;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +24,9 @@ import java.util.stream.Collectors;
 @Service
 public class DictServiceImpl implements DictService {
 
+    @Resource
+    private Cache<Object, Object> ceffeine;
+
     @DubboReference
     private RemoteDictService remoteDictService;
 
@@ -35,16 +38,12 @@ public class DictServiceImpl implements DictService {
      * @param separator 分隔符
      * @return 字典标签
      */
-    @SuppressWarnings("unchecked cast")
     @Override
     public String getDictLabel(String dictType, String dictValue, String separator) {
         // 优先从本地缓存获取
-        List<RemoteDictDataVo> datas = (List<RemoteDictDataVo>) SaHolder.getStorage().get(CacheConstants.SYS_DICT_KEY + dictType);
-        if (ObjectUtil.isNull(datas)) {
-            datas = remoteDictService.selectDictDataByType(dictType);
-            SaHolder.getStorage().set(CacheConstants.SYS_DICT_KEY + dictType, datas);
-        }
-
+        List<RemoteDictDataVo> datas = (List<RemoteDictDataVo>) ceffeine.get(CacheConstants.SYS_DICT_KEY + "remote:" + dictType, k -> {
+            return remoteDictService.selectDictDataByType(dictType);
+        });
         Map<String, String> map = StreamUtils.toMap(datas, RemoteDictDataVo::getDictValue, RemoteDictDataVo::getDictLabel);
         if (StringUtils.containsAny(dictValue, separator)) {
             return Arrays.stream(dictValue.split(separator))
@@ -63,16 +62,12 @@ public class DictServiceImpl implements DictService {
      * @param separator 分隔符
      * @return 字典值
      */
-    @SuppressWarnings("unchecked cast")
     @Override
     public String getDictValue(String dictType, String dictLabel, String separator) {
         // 优先从本地缓存获取
-        List<RemoteDictDataVo> datas = (List<RemoteDictDataVo>) SaHolder.getStorage().get(CacheConstants.SYS_DICT_KEY + dictType);
-        if (ObjectUtil.isNull(datas)) {
-            datas = remoteDictService.selectDictDataByType(dictType);
-            SaHolder.getStorage().set(CacheConstants.SYS_DICT_KEY + dictType, datas);
-        }
-
+        List<RemoteDictDataVo> datas = (List<RemoteDictDataVo>) ceffeine.get(CacheConstants.SYS_DICT_KEY + "remote:" + dictType, k -> {
+            return remoteDictService.selectDictDataByType(dictType);
+        });
         Map<String, String> map = StreamUtils.toMap(datas, RemoteDictDataVo::getDictLabel, RemoteDictDataVo::getDictValue);
         if (StringUtils.containsAny(dictLabel, separator)) {
             return Arrays.stream(dictLabel.split(separator))
