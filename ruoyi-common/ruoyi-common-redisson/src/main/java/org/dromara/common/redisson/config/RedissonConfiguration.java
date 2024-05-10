@@ -15,6 +15,7 @@ import org.dromara.common.core.factory.YmlPropertySourceFactory;
 import org.dromara.common.core.utils.SpringUtils;
 import org.dromara.common.redisson.config.properties.RedissonProperties;
 import org.dromara.common.redisson.handler.KeyPrefixHandler;
+import org.dromara.common.redisson.handler.LockExceptionHandler;
 import org.redisson.client.codec.StringCodec;
 import org.redisson.codec.CompositeCodec;
 import org.redisson.codec.TypedJsonJacksonCodec;
@@ -101,6 +102,14 @@ public class RedissonConfiguration {
             }
             log.info("初始化【Redisson】配置完成");
         };
+    }
+
+    /**
+     * 异常处理器
+     */
+    @Bean
+    public LockExceptionHandler lockExceptionHandler() {
+        return new LockExceptionHandler();
     }
 
     /**

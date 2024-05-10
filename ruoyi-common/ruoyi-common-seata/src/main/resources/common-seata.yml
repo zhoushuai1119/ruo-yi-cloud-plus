@@ -16,8 +16,8 @@ seata:
       server-addr: ${spring.cloud.nacos.server-addr}
       group: SEATA_GROUP
       namespace: ${spring.profiles.active}
-      username: ${spring.cloud.nacos.discovery.username}
-      password: ${spring.cloud.nacos.discovery.password}
+      username: ${spring.cloud.nacos.username}
+      password: ${spring.cloud.nacos.password}
   # 配置中心
   config:
     type: nacos
@@ -25,6 +25,6 @@ seata:
       server-addr: ${spring.cloud.nacos.server-addr}
       group: SEATA_GROUP
       namespace: ${spring.profiles.active}
-      username: ${spring.cloud.nacos.config.username}
-      password: ${spring.cloud.nacos.config.password}
+      username: ${spring.cloud.nacos.username}
+      password: ${spring.cloud.nacos.password}
       data-id: seata.properties

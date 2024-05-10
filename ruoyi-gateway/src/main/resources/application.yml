@@ -19,15 +19,13 @@ spring:
     nacos:
       # nacos 服务地址
       server-addr: @nacos.server@
+      username: @nacos.username@
+      password: @nacos.password@
       discovery:
         namespace: ${spring.profiles.active}
-        username: @nacos.username@
-        password: @nacos.password@
         group: @nacos.discovery.group@
       config:
         namespace: ${spring.profiles.active}
-        username: @nacos.username@
-        password: @nacos.password@
         group: @nacos.config.group@
   config:
     import:

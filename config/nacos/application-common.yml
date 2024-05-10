@@ -212,5 +212,5 @@ sentinel:
     server-addr: ${spring.cloud.nacos.server-addr}
     group-id: SENTINEL_GROUP
     namespace: sentinel
-    username: nacos
-    password: nacos
+    username: ${spring.cloud.nacos.username}
+    password: ${spring.cloud.nacos.password}
