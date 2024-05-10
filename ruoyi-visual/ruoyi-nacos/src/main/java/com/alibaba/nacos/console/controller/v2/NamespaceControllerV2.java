@@ -56,22 +56,22 @@ import java.util.regex.Pattern;
 @RequestMapping("/v2/console/namespace")
 @ExtractorManager.Extractor(httpExtractor = ConsoleDefaultHttpParamExtractor.class)
 public class NamespaceControllerV2 {
-    
+
     private final NamespaceOperationService namespaceOperationService;
 
-    private NamespacePersistService namespacePersistService;
-    
+    private final NamespacePersistService namespacePersistService;
+
     public NamespaceControllerV2(NamespaceOperationService namespaceOperationService, NamespacePersistService namespacePersistService) {
         this.namespaceOperationService = namespaceOperationService;
         this.namespacePersistService = namespacePersistService;
     }
-    
+
     private final Pattern namespaceIdCheckPattern = Pattern.compile("^[\\w-]+");
 
     private final Pattern namespaceNameCheckPattern = Pattern.compile("^[^@#$%^&*]+$");
-    
+
     private static final int NAMESPACE_ID_MAX_LENGTH = 128;
-    
+
     /**
      * Get namespace list.
      *
@@ -81,7 +81,7 @@ public class NamespaceControllerV2 {
     public Result<List<Namespace>> getNamespaceList() {
         return Result.success(namespaceOperationService.getNamespaceList());
     }
-    
+
     /**
      * get namespace all info by namespace id.
      *
@@ -94,7 +94,7 @@ public class NamespaceControllerV2 {
     public Result<Namespace> getNamespace(@RequestParam("namespaceId") String namespaceId) throws NacosException {
         return Result.success(namespaceOperationService.getNamespace(namespaceId));
     }
-    
+
     /**
      * create namespace.
      *
@@ -105,13 +105,13 @@ public class NamespaceControllerV2 {
     @Secured(resource = AuthConstants.CONSOLE_RESOURCE_NAME_PREFIX
             + "namespaces", action = ActionTypes.WRITE, signType = SignType.CONSOLE)
     public Result<Boolean> createNamespace(NamespaceForm namespaceForm) throws NacosException {
-        
+
         namespaceForm.validate();
-        
+
         String namespaceId = namespaceForm.getNamespaceId();
         String namespaceName = namespaceForm.getNamespaceName();
         String namespaceDesc = namespaceForm.getNamespaceDesc();
-        
+
         if (StringUtils.isBlank(namespaceId)) {
             namespaceId = UUID.randomUUID().toString();
         } else {
@@ -137,7 +137,7 @@ public class NamespaceControllerV2 {
         }
         return Result.success(namespaceOperationService.createNamespace(namespaceId, namespaceName, namespaceDesc));
     }
-    
+
     /**
      * edit namespace.
      *
@@ -158,7 +158,7 @@ public class NamespaceControllerV2 {
                 .editNamespace(namespaceForm.getNamespaceId(), namespaceForm.getNamespaceName(),
                         namespaceForm.getNamespaceDesc()));
     }
-    
+
     /**
      * delete namespace by id.
      *
