@@ -22,21 +22,15 @@ import com.alibaba.nacos.common.model.RestResult;
 import com.alibaba.nacos.common.model.RestResultUtils;
 import com.alibaba.nacos.common.utils.StringUtils;
 import com.alibaba.nacos.console.paramcheck.ConsoleDefaultHttpParamExtractor;
-import com.alibaba.nacos.core.namespace.repository.NamespacePersistService;
 import com.alibaba.nacos.core.namespace.model.Namespace;
+import com.alibaba.nacos.core.namespace.repository.NamespacePersistService;
 import com.alibaba.nacos.core.paramcheck.ExtractorManager;
 import com.alibaba.nacos.core.service.NamespaceOperationService;
 import com.alibaba.nacos.plugin.auth.constant.ActionTypes;
 import com.alibaba.nacos.plugin.auth.impl.constant.AuthConstants;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.UUID;
 import java.util.regex.Pattern;
@@ -50,19 +44,19 @@ import java.util.regex.Pattern;
 @RequestMapping("/v1/console/namespaces")
 @ExtractorManager.Extractor(httpExtractor = ConsoleDefaultHttpParamExtractor.class)
 public class NamespaceController {
-    
-    @Autowired
+
+    @Resource
     private NamespacePersistService namespacePersistService;
-    
-    @Autowired
+
+    @Resource
     private NamespaceOperationService namespaceOperationService;
-    
+
     private final Pattern namespaceIdCheckPattern = Pattern.compile("^[\\w-]+");
 
     private final Pattern namespaceNameCheckPattern = Pattern.compile("^[^@#$%^&*]+$");
-    
+
     private static final int NAMESPACE_ID_MAX_LENGTH = 128;
-    
+
     /**
      * Get namespace list.
      *
@@ -72,7 +66,7 @@ public class NamespaceController {
     public RestResult<List<Namespace>> getNamespaces() {
         return RestResultUtils.success(namespaceOperationService.getNamespaceList());
     }
-    
+
     /**
      * get namespace all info by namespace id.
      *
@@ -83,7 +77,7 @@ public class NamespaceController {
     public Namespace getNamespace(@RequestParam("namespaceId") String namespaceId) throws NacosException {
         return namespaceOperationService.getNamespace(namespaceId);
     }
-    
+
     /**
      * create namespace.
      *
@@ -121,7 +115,7 @@ public class NamespaceController {
             return false;
         }
     }
-    
+
     /**
      * check namespaceId exist.
      *
@@ -135,7 +129,7 @@ public class NamespaceController {
         }
         return (namespacePersistService.tenantInfoCountByTenantId(namespaceId) > 0);
     }
-    
+
     /**
      * edit namespace.
      *
@@ -155,7 +149,7 @@ public class NamespaceController {
         }
         return namespaceOperationService.editNamespace(namespace, namespaceShowName, namespaceDesc);
     }
-    
+
     /**
      * del namespace by id.
      *
@@ -167,5 +161,5 @@ public class NamespaceController {
     public Boolean deleteNamespace(@RequestParam("namespaceId") String namespaceId) {
         return namespaceOperationService.removeNamespace(namespaceId);
     }
-    
+
 }
