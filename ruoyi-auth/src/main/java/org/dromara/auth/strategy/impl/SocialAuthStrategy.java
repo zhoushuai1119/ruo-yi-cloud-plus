@@ -24,7 +24,7 @@ import org.dromara.system.api.model.LoginUser;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.Objects;
 
 import static org.dromara.common.core.enums.LoginType.SOCIAL;
 
@@ -63,19 +63,18 @@ public class SocialAuthStrategy extends AbstractAuthStrategy {
         }
         AuthUser authUserData = response.getData();
         String authId = authUserData.getSource() + authUserData.getUuid();
-        List<RemoteSocialVo> list = remoteSocialService.selectByAuthId(authId);
-        if (CollUtil.isEmpty(list)) {
+        List<RemoteSocialVo> socialList = remoteSocialService.selectByAuthId(authId);
+        if (CollUtil.isEmpty(socialList)) {
             throw new ServiceException("你还没有绑定第三方账号，绑定后才可以登录！");
         }
         RemoteSocialVo socialVo;
         if (TenantHelper.isEnable()) {
-            Optional<RemoteSocialVo> opt = list.stream().filter(x -> x.getTenantId().equals(loginBody.getTenantId())).findAny();
-            if (opt.isEmpty()) {
+            socialVo = socialList.stream().filter(x -> x.getTenantId().equals(loginBody.getTenantId())).findFirst().orElse(null);
+            if (Objects.isNull(socialVo)) {
                 throw new ServiceException("对不起，你没有权限登录当前租户！");
             }
-            socialVo = opt.get();
         } else {
-            socialVo = list.get(0);
+            socialVo = socialList.get(0);
         }
         LoginUser loginUser = remoteUserService.getUserInfo(socialVo.getUserId(), socialVo.getTenantId());
         return loginClient(client, loginUser, loginBody.getGrantType());
