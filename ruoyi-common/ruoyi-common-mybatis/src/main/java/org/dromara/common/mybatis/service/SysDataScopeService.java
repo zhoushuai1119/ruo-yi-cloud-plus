@@ -1,8 +1,7 @@
 package org.dromara.common.mybatis.service;
 
-import org.dromara.system.api.RemoteDataScopeService;
 import org.apache.dubbo.config.annotation.DubboReference;
-import org.springframework.stereotype.Service;
+import org.dromara.system.api.RemoteDataScopeService;
 
 /**
  * 数据权限 实现
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Service;
  *
  * @author shuai.zhou
  */
-@Service("sdss")
 public class SysDataScopeService {
 
     @DubboReference
