@@ -69,7 +69,7 @@ public class SocialAuthStrategy extends AbstractAuthStrategy {
         }
         RemoteSocialVo socialVo;
         if (TenantHelper.isEnable()) {
-            socialVo = socialList.stream().filter(x -> x.getTenantId().equals(loginBody.getTenantId())).findFirst().orElse(null);
+            socialVo = socialList.stream().filter(x -> x.getTenantId().equals(loginBody.getTenantId())).findAny().orElse(null);
             if (Objects.isNull(socialVo)) {
                 throw new ServiceException("对不起，你没有权限登录当前租户！");
             }
