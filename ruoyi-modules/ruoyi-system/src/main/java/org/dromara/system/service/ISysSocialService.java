@@ -12,7 +12,6 @@ import java.util.List;
  */
 public interface ISysSocialService {
 
-
     /**
      * 查询社会化关系
      */
@@ -21,7 +20,7 @@ public interface ISysSocialService {
     /**
      * 查询社会化关系列表
      */
-    List<SysSocialVo> queryList();
+    List<SysSocialVo> queryList(SysSocialBo bo);
 
     /**
      * 查询社会化关系列表
@@ -36,7 +35,6 @@ public interface ISysSocialService {
     /**
      * 更新社会化关系
      */
-
     Boolean updateByBo(SysSocialBo bo);
 
     /**
@@ -44,15 +42,11 @@ public interface ISysSocialService {
      */
     Boolean deleteWithValidById(Long id);
 
-
     /**
-     * 根据 authId和tenantId 查询 SysSocial 表和 SysUser 表，返回 SysSocialAuthResult 映射的对象
-     *
-     * @param authId   认证ID
-     * @param tenantId 租户ID
+     * 根据 authId 查询 SysSocial 表和 SysUser 表，返回 SysSocialAuthResult 映射的对象
+     * @param authId 认证ID
      * @return SysSocial
      */
-    SysSocialVo selectByAuthId(String authId, String tenantId);
-
+    List<SysSocialVo> selectByAuthId(String authId);
 
 }

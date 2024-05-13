@@ -1,9 +1,10 @@
 package org.dromara.system.service.impl;
 
-import cn.hutool.core.util.StrUtil;
+import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import lombok.RequiredArgsConstructor;
 import org.dromara.common.core.utils.MapstructUtils;
+import org.dromara.common.core.utils.StringUtils;
 import org.dromara.system.domain.SysSocial;
 import org.dromara.system.domain.bo.SysSocialBo;
 import org.dromara.system.domain.vo.SysSocialVo;
@@ -35,13 +36,20 @@ public class SysSocialServiceImpl implements ISysSocialService {
     }
 
     /**
-     * 授权列表
+     * 查询社会化关系列表
      */
     @Override
-    public List<SysSocialVo> queryList() {
-        return baseMapper.selectVoList();
+    public List<SysSocialVo> queryList(SysSocialBo bo) {
+        LambdaQueryWrapper<SysSocial> lqw = new LambdaQueryWrapper<SysSocial>()
+            .eq(ObjectUtil.isNotNull(bo.getUserId()), SysSocial::getUserId, bo.getUserId())
+            .eq(StringUtils.isNotBlank(bo.getAuthId()), SysSocial::getAuthId, bo.getAuthId())
+            .eq(StringUtils.isNotBlank(bo.getSource()), SysSocial::getSource, bo.getSource());
+        return baseMapper.selectVoList(lqw);
     }
 
+    /**
+     * 查询社会化关系列表
+     */
     @Override
     public List<SysSocialVo> queryListByUserId(Long userId) {
         return baseMapper.selectVoList(new LambdaQueryWrapper<SysSocial>().eq(SysSocial::getUserId, userId));
@@ -95,18 +103,14 @@ public class SysSocialServiceImpl implements ISysSocialService {
 
 
     /**
-     * 根据 authId和tenantId 查询 SysSocial 表和 SysUser 表，返回 SysSocialAuthResult 映射的对象
+     * 根据 authId 查询用户信息
      *
-     * @param authId   认证ID
-     * @param tenantId 租户ID
-     * @return SysSocial
+     * @param authId 认证id
+     * @return 授权信息
      */
     @Override
-    public SysSocialVo selectByAuthId(String authId, String tenantId) {
-        LambdaQueryWrapper<SysSocial> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        lambdaQueryWrapper.eq(StrUtil.isNotBlank(authId), SysSocial::getAuthId, authId);
-        lambdaQueryWrapper.eq(StrUtil.isNotBlank(tenantId), SysSocial::getTenantId, tenantId);
-        return baseMapper.selectVoOne(lambdaQueryWrapper);
+    public List<SysSocialVo> selectByAuthId(String authId) {
+        return baseMapper.selectVoList(new LambdaQueryWrapper<SysSocial>().eq(SysSocial::getAuthId, authId));
     }
 
 }

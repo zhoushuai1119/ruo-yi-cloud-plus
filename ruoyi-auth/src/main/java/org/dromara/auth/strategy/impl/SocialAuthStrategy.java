@@ -1,5 +1,6 @@
 package org.dromara.auth.strategy.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.zhyd.oauth.model.AuthResponse;
@@ -14,6 +15,7 @@ import org.dromara.common.core.utils.ValidatorUtils;
 import org.dromara.common.json.utils.JsonUtils;
 import org.dromara.common.social.config.properties.SocialProperties;
 import org.dromara.common.social.utils.SocialUtils;
+import org.dromara.common.tenant.helper.TenantHelper;
 import org.dromara.system.api.RemoteSocialService;
 import org.dromara.system.api.RemoteUserService;
 import org.dromara.system.api.domain.vo.RemoteClientVo;
@@ -21,7 +23,8 @@ import org.dromara.system.api.domain.vo.RemoteSocialVo;
 import org.dromara.system.api.model.LoginUser;
 import org.springframework.stereotype.Service;
 
-import java.util.Objects;
+import java.util.List;
+import java.util.Optional;
 
 import static org.dromara.common.core.enums.LoginType.SOCIAL;
 
@@ -52,7 +55,6 @@ public class SocialAuthStrategy extends AbstractAuthStrategy {
     public LoginVo login(String body, RemoteClientVo client) {
         SocialLoginBody loginBody = JsonUtils.parseObject(body, SocialLoginBody.class);
         ValidatorUtils.validate(loginBody);
-        String tenantId = loginBody.getTenantId();
         AuthResponse<AuthUser> response = SocialUtils.loginAuth(
             loginBody.getSource(), loginBody.getSocialCode(),
             loginBody.getSocialState(), socialProperties);
@@ -61,11 +63,21 @@ public class SocialAuthStrategy extends AbstractAuthStrategy {
         }
         AuthUser authUserData = response.getData();
         String authId = authUserData.getSource() + authUserData.getUuid();
-        RemoteSocialVo socialVo = remoteSocialService.selectByAuthId(authId, tenantId);
-        if (Objects.isNull(socialVo)) {
-            throw new ServiceException("您在当前租户下还没有绑定该第三方账号，绑定后才可以登录！");
+        List<RemoteSocialVo> list = remoteSocialService.selectByAuthId(authId);
+        if (CollUtil.isEmpty(list)) {
+            throw new ServiceException("你还没有绑定第三方账号，绑定后才可以登录！");
         }
-        LoginUser loginUser = remoteUserService.getUserInfo(socialVo.getUserId(), tenantId);
+        RemoteSocialVo socialVo;
+        if (TenantHelper.isEnable()) {
+            Optional<RemoteSocialVo> opt = list.stream().filter(x -> x.getTenantId().equals(loginBody.getTenantId())).findAny();
+            if (opt.isEmpty()) {
+                throw new ServiceException("对不起，你没有权限登录当前租户！");
+            }
+            socialVo = opt.get();
+        } else {
+            socialVo = list.get(0);
+        }
+        LoginUser loginUser = remoteUserService.getUserInfo(socialVo.getUserId(), socialVo.getTenantId());
         return loginClient(client, loginUser, loginBody.getGrantType());
     }
 
