@@ -12,7 +12,7 @@
         <module>ruoyi-monitor</module>
         <module>ruoyi-nacos</module>
         <module>ruoyi-sentinel</module>
-        <module>ruoyi-easyretry-server</module>
+        <module>ruoyi-snailjob-server</module>
     </modules>
 
     <artifactId>ruoyi-visual</artifactId>

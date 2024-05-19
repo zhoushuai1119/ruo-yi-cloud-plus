@@ -9,18 +9,18 @@
         <version>${revision}</version>
     </parent>
 
-    <artifactId>ruoyi-easyretry-server</artifactId>
+    <artifactId>ruoyi-snailjob-server</artifactId>
     <packaging>jar</packaging>
 
     <description>
-        easy-retry分布式任务重试和分布式任务调度平台
+        snail-job分布式任务重试和分布式任务调度平台
     </description>
 
     <dependencies>
         <dependency>
             <groupId>com.aizuda</groupId>
-            <artifactId>easy-retry-server-starter</artifactId>
-            <version>${easyretry.version}</version>
+            <artifactId>snail-job-server-starter</artifactId>
+            <version>${snailjob.version}</version>
         </dependency>
 
         <dependency>
