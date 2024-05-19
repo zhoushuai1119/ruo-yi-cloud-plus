@@ -49,11 +49,13 @@ public class CaffeineCacheDecorator implements Cache {
 
     @Override
     public void put(Object key, Object value) {
+        CAFFEINE.invalidate(getUniqueKey(key));
         cache.put(key, value);
     }
 
     @Override
     public ValueWrapper putIfAbsent(Object key, Object value) {
+        CAFFEINE.invalidate(getUniqueKey(key));
         return cache.putIfAbsent(key, value);
     }
 
