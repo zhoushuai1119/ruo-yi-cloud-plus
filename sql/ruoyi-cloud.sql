@@ -576,7 +576,7 @@ insert into sys_menu values('304',  '数据库文档',       '3',    '4', 'dbdoc
 insert into sys_role_menu values ('2', '304');
 
 -- 中间件控制台
-insert into sys_menu values('305',  'EasyRetry控制台', '3',    '5', 'http://localhost:8800/easy-retry',  '',     '', 0, 0, 'C', '0', '0', 'monitor:job:list',             'job',           103, 1, sysdate(), null, null, 'ER定时任务菜单');
+insert into sys_menu values('305',  'SnailJob控制台', '3',     '5', 'http://localhost:8800/snail-job',   '',     '', 0, 0, 'C', '0', '0', 'monitor:job:list',             'job',           103, 1, sysdate(), null, null, 'snail-job定时任务菜单');
 insert into sys_menu values('306',  'Sentinel控制台',  '3',    '6', 'http://localhost:8718',             '',     '', 0, 0, 'C', '0', '0', 'monitor:sentinel:list',        'sentinel',      103, 1, sysdate(), null, null, '流量控制菜单');
 insert into sys_menu values('307',  'Nacos控制台',     '3',    '7', 'http://139.196.208.53:8848/nacos',  '',     '', 0, 0, 'C', '0', '0', 'monitor:nacos:list',           'nacos',         103, 1, sysdate(), null, null, '服务治理菜单');
 insert into sys_menu values('308',  'RocketMQ控制台',  '3',    '8', 'http://139.196.208.53:18888',       '',     '', 0, 0, 'C', '0', '0', 'monitor:rocketmq:list',        'rocketmq',      103, 1, sysdate(), null, null, '服务RocketMQ菜单');
