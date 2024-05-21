@@ -1,6 +1,5 @@
 package org.dromara.common.tenant.helper;
 
-import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.convert.Convert;
 import com.alibaba.ttl.TransmittableThreadLocal;
@@ -87,6 +86,9 @@ public class TenantHelper {
      * 设置动态租户(一直有效 需要手动清理)
      * <p>
      * 如果为未登录状态下 那么只在当前线程内生效
+     *
+     * @param tenantId 租户id
+     * @param global   是否全局生效
      */
     public static void setDynamic(String tenantId, boolean global) {
         if (!isEnable()) {
