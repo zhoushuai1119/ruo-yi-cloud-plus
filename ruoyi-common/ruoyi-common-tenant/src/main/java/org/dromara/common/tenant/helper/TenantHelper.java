@@ -79,22 +79,25 @@ public class TenantHelper {
         }
     }
 
+    public static void setDynamic(String tenantId) {
+        setDynamic(tenantId, false);
+    }
+
     /**
      * 设置动态租户(一直有效 需要手动清理)
      * <p>
      * 如果为未登录状态下 那么只在当前线程内生效
      */
-    public static void setDynamic(String tenantId) {
+    public static void setDynamic(String tenantId, boolean global) {
         if (!isEnable()) {
             return;
         }
-        if (!isLogin()) {
+        if (!isLogin() || !global) {
             TEMP_DYNAMIC_TENANT.set(tenantId);
             return;
         }
         String cacheKey = DYNAMIC_TENANT_KEY + ":" + LoginHelper.getUserId();
         RedissonUtil.setCacheObject(cacheKey, tenantId);
-        SaHolder.getStorage().set(cacheKey, tenantId);
     }
 
     /**
@@ -109,13 +112,13 @@ public class TenantHelper {
         if (!isLogin()) {
             return TEMP_DYNAMIC_TENANT.get();
         }
-        String cacheKey = DYNAMIC_TENANT_KEY + ":" + LoginHelper.getUserId();
-        String tenantId = (String) SaHolder.getStorage().get(cacheKey);
+        // 如果线程内有值 优先返回
+        String tenantId = TEMP_DYNAMIC_TENANT.get();
         if (StringUtils.isNotBlank(tenantId)) {
             return tenantId;
         }
+        String cacheKey = DYNAMIC_TENANT_KEY + ":" + LoginHelper.getUserId();
         tenantId = RedissonUtil.getCacheObject(cacheKey);
-        SaHolder.getStorage().set(cacheKey, tenantId);
         return tenantId;
     }
 
@@ -130,9 +133,9 @@ public class TenantHelper {
             TEMP_DYNAMIC_TENANT.remove();
             return;
         }
+        TEMP_DYNAMIC_TENANT.remove();
         String cacheKey = DYNAMIC_TENANT_KEY + ":" + LoginHelper.getUserId();
         RedissonUtil.deleteObject(cacheKey);
-        SaHolder.getStorage().delete(cacheKey);
     }
 
     /**
