@@ -118,6 +118,13 @@
             <artifactId>ruoyi-common-prometheus</artifactId>
         </dependency>
 
+        <!-- 修复gateway启动报错 -->
+        <dependency>
+            <groupId>io.grpc</groupId>
+            <artifactId>grpc-netty</artifactId>
+            <version>1.57.2</version>
+        </dependency>
+
     </dependencies>
 
     <build>
