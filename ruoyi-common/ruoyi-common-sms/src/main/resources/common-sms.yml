@@ -16,9 +16,9 @@ sms:
       # 厂商标识，标定此配置是哪个厂商，详细请看厂商标识介绍部分
       supplier: alibaba
       # 阿里云accessKey
-      access-key-id: LTAI5tQFL317FWXUTsiyzZWN
+      access-key-id: ************
       # 阿里云accessKeySecret
-      access-key-secret: 53wla4Ic4HeVNtjYMvF8BphBK8g8e4
+      access-key-secret: 53wla*****8g8e4
       # 阿里云短信签名
       signature: 周帅个人博客
       # 模板ID
